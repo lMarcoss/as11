@@ -11,6 +11,7 @@ public class CalcularIdECP {
     // Se concatena el id_persona + los 8 primeros caracteres del id_administrador
     public String CalcularId(String id_persona, String id_jefe) {
         String id;
+        System.out.println("calcularID.CalcularIdECP.CalcularId()");
         id = id_persona+ id_jefe.substring(0,8);
         return id;
     }
