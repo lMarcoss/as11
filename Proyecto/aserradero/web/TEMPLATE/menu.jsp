@@ -9,6 +9,7 @@
             <li class="submenu">
                 <a href="#" id="registros">Registros</a>
                 <ul class="children">
+                    <li id="municipios"><a href="/aserradero/MunicipioController?action=listar">hola</a></li>
                     <li id="municipios"><a href="/aserradero/MunicipioController?action=listar">Municipios</a></li>
                     <li id="localidades"><a href="/aserradero/LocalidadController?action=listar">Localidades</a></li>
                     <li id="personas"><a href="/aserradero/PersonaController?action=listar">Personas</a></li>
