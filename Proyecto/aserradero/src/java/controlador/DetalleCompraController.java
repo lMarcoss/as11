@@ -1,6 +1,6 @@
 package controlador;
 
-import dao.EntradaMaderaCRUD;
+import dao.EntradaMaderaRolloCRUD;
 import dao.CostoMaderaEntradaCRUD;
 import dao.DetalleCompraCRUD;
 import entidades.EntradaMaderaRollo;
@@ -58,7 +58,7 @@ public class DetalleCompraController extends HttpServlet {
         DetalleCompra detallecompra;
         DetalleCompraCRUD detallecompraCRUD;
         CostoMaderaEntradaCRUD costomaderacompracrud;
-        EntradaMaderaCRUD compracrud;
+        EntradaMaderaRolloCRUD compracrud;
         switch(action){
           case "nuevo":
               try{
@@ -67,7 +67,7 @@ public class DetalleCompraController extends HttpServlet {
                   costomaderacompras = (List<CostoMaderaEntrada>)costomaderacompracrud.listar();
                   request.setAttribute("costomaderacompras",costomaderacompras);
 
-                  compracrud = new EntradaMaderaCRUD();
+                  compracrud = new EntradaMaderaRolloCRUD();
                   List<EntradaMaderaRollo> compras;
                   compras = (List<EntradaMaderaRollo>)compracrud.listarComprasNoPagadas();
                   request.setAttribute("compras",compras);

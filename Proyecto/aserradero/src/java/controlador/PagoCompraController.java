@@ -1,6 +1,6 @@
 package controlador;
 
-import dao.EntradaMaderaCRUD;
+import dao.EntradaMaderaRolloCRUD;
 import dao.PagoCompraCRUD;
 import entidades.EntradaMaderaRollo;
 import entidades.PagoCompra;
@@ -58,7 +58,7 @@ public class PagoCompraController extends HttpServlet {
         PagoCompraCRUD pagoCompraCRUD;
         switch(action){
             case "nuevo":
-                EntradaMaderaCRUD compraCRUD= new EntradaMaderaCRUD();
+                EntradaMaderaRolloCRUD compraCRUD= new EntradaMaderaRolloCRUD();
                 List<EntradaMaderaRollo> compras;
                 try {
                     compras = (List<EntradaMaderaRollo>)compraCRUD.listar();

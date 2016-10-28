@@ -30,12 +30,15 @@
                         <td>
                             <select name="nombre_campo" >
                                 <option value="fecha">Fecha</option>
-                                <option value="id_empleado">Id de empleado</option>
-                                <option value="id_compra">Id compra</option>
-                                <option value="id_proveedor">Id proveedor</option>
-                                <option value="id_chofer">Id chofer</option>
-                                <option value="num_piezas">Cant. Piezas</option>
-                                <option value="estatus">Estatus</option>
+                                <option value="proveedor">Proveedor</option>
+                                <option value="chofer">Chofer</option>
+                                <option value="empleado">Empleado</option>
+                                <option value="num_piezas">Número de piezas</option>
+                                <option value="volumen_primario">Volumen primario</option>
+                                <option value="volumen_secundario">Volumen secundario</option>
+                                <option value="volumen_terciario">Volumen terciario</option>
+                                <option value="volumen_total">Volumen total</option>
+                                <option value="monto_total">Monto total</option>
                             </select>
                         </td>
                         <td><input type="text" name="dato" placeholder="Escriba su búsqueda"></td>

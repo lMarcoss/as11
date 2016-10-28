@@ -1,6 +1,6 @@
 package controlador;
 
-import dao.EntradaMaderaCRUD;
+import dao.EntradaMaderaRolloCRUD;
 import dao.EmpleadoCRUD;
 import dao.ProveedorCRUD;
 import entidades.EntradaMaderaRollo;
@@ -59,7 +59,7 @@ public class EntradaMaderaRolloController extends HttpServlet {
         String action = request.getParameter("action");
         EntradaMaderaRollo entradaMaderaRolloEC ;
         EntradaMaderaRollo entrada;
-        EntradaMaderaCRUD entradaMaderaRolloCRUD;
+        EntradaMaderaRolloCRUD entradaMaderaRolloCRUD;
         EmpleadoCRUD empleadoCRUD;
         ProveedorCRUD proveedorCRUD;
         switch(action){
@@ -97,7 +97,7 @@ public class EntradaMaderaRolloController extends HttpServlet {
             case "modificar":
                 entradaMaderaRolloEC = new EntradaMaderaRollo();
                 entradaMaderaRolloEC.setId_entrada(Integer.valueOf(request.getParameter("id_entrada")));
-                entradaMaderaRolloCRUD = new EntradaMaderaCRUD();
+                entradaMaderaRolloCRUD = new EntradaMaderaRolloCRUD();
                 try {
                     //enviamos la entradaMaderaRollo a modificar
                     entrada = (EntradaMaderaRollo) entradaMaderaRolloCRUD.modificar(entradaMaderaRolloEC);
@@ -123,7 +123,7 @@ public class EntradaMaderaRolloController extends HttpServlet {
             case "eliminar":
                 entradaMaderaRolloEC = new EntradaMaderaRollo();
                 entradaMaderaRolloEC.setId_entrada(Integer.valueOf(request.getParameter("id_entrada")));
-                entradaMaderaRolloCRUD = new EntradaMaderaCRUD();
+                entradaMaderaRolloCRUD = new EntradaMaderaRolloCRUD();
                 try {
                     entradaMaderaRolloCRUD.eliminar(entradaMaderaRolloEC);
                     listarEntradaMaderas(request, response,"eliminado");
@@ -135,7 +135,7 @@ public class EntradaMaderaRolloController extends HttpServlet {
             case "ver_reporte":
                 try {
                     List<EntradaMaderaRollo> datos_reporte;
-//                    EntradaMaderaCRUD entradaMaderaRolloCRUD =new EntradaMaderaCRUD();                          
+//                    EntradaMaderaRolloCRUD entradaMaderaRolloCRUD =new EntradaMaderaRolloCRUD();                          
 //                    datos_reporte = (List<EntradaMadera>)entradaMaderaRolloCRUD.listarDatosReporteEntradaMadera();
 //                    request.setAttribute("datos_reporte", datos_reporte);            
                     RequestDispatcher view=request.getRequestDispatcher("entradaMaderaRollo/reporte.jsp");
@@ -163,22 +163,22 @@ public class EntradaMaderaRolloController extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         String action = request.getParameter("action");
         EntradaMaderaRollo entradaMaderaRollo;
-        EntradaMaderaCRUD entradaMaderaRolloCRUD;
+        EntradaMaderaRolloCRUD entradaMaderaRolloCRUD;
         switch (action){
             case "nuevo_entrada":
                 entradaMaderaRollo = extraerEntradaMaderaForm(request);
-                entradaMaderaRolloCRUD = new EntradaMaderaCRUD();
+                entradaMaderaRolloCRUD = new EntradaMaderaRolloCRUD();
                 try {
                     entradaMaderaRolloCRUD.registrar(entradaMaderaRollo);
                     listarEntradaMaderas(request, response,"registrado");
                 } catch (Exception ex) {
-                    listarEntradaMaderas(request, response, "error_registrar");
+                    listarEntradaMaderas(request, response, "error_registrar_entrada_madera_rollo");
                     Logger.getLogger(EntradaMaderaRolloController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             case "actualizar":
                 entradaMaderaRollo = extraerEntradaMaderaForm(request);
-                entradaMaderaRolloCRUD = new EntradaMaderaCRUD();
+                entradaMaderaRolloCRUD = new EntradaMaderaRolloCRUD();
                 try {
                     entradaMaderaRolloCRUD.actualizar(entradaMaderaRollo);
                     listarEntradaMaderas(request, response,"actualizado");
@@ -192,7 +192,7 @@ public class EntradaMaderaRolloController extends HttpServlet {
                 List <EntradaMaderaRollo> entradaMaderaRollos;
                 String nombre_campo = request.getParameter("nombre_campo");
                 String dato = request.getParameter("dato");
-                entradaMaderaRolloCRUD = new EntradaMaderaCRUD();
+                entradaMaderaRolloCRUD = new EntradaMaderaRolloCRUD();
                 try {
                     entradaMaderaRollos = (List<EntradaMaderaRollo>)entradaMaderaRolloCRUD.buscar(nombre_campo, dato);
                     request.setAttribute("entradaMaderaRollos",entradaMaderaRollos);
@@ -217,7 +217,7 @@ public class EntradaMaderaRolloController extends HttpServlet {
     }// </editor-fold>
     private void listarEntradaMaderas(HttpServletRequest request, HttpServletResponse response,String mensaje){
         List<EntradaMaderaRollo> entradas;
-        EntradaMaderaCRUD entradaMaderaRolloCRUD = new EntradaMaderaCRUD();
+        EntradaMaderaRolloCRUD entradaMaderaRolloCRUD = new EntradaMaderaRolloCRUD();
         try {
             //enviamos la lista de entradasMadera
             entradas = (List<EntradaMaderaRollo>)entradaMaderaRolloCRUD.listar();

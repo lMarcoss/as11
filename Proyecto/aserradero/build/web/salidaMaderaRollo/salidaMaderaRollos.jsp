@@ -42,7 +42,6 @@
             </form>
         </div> <!-- Fin opción de búsqueda-->
         <!-- ************************* Resultado Consulta-->
-        <%if(!salidas.isEmpty()){%>
         <div>
             <table class="table-condensed">
                     <tr>
@@ -63,7 +62,7 @@
                                 +"<td>"+salida.getNum_piezas()+"</td>"
                                 +"<td>"+salida.getVolumen_total()+"</td>"
                                 +"<td>"+salida.getEmpleado()+"</td>"
-//                                +"<td><a href=\"/aserradero/SalidaMaderaRolloController?action=modificar&id_compra="+compra.getId_compra()+"\">Actualizar</a></td>"
+                                +"<td><a href=\"/aserradero/SalidaMaderaRolloController?action=modificar&id_salida="+salida.getId_salida()+"\">Actualizar</a></td>"
 //                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/SalidaMaderaRolloController?action=eliminar&id_compra="+compra.getId_compra()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;
@@ -74,6 +73,5 @@
                 <input type="button" value="Registrar salida" onClick=" window.location.href='/aserradero/SalidaMaderaRolloController?action=nuevo_salida'">
             </div>
         </div><!-- Resultado Consulta-->
-        <%}%>
     </body>
 </html>

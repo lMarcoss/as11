@@ -83,7 +83,7 @@ public class SalidaMaderaRolloController extends HttpServlet {
                 break;
             case "modificar":
                 salidaMaderaRolloEC = new SalidaMaderaRollo();
-//                salidaMaderaRolloEC.setId_salidaMaderaRollo(request.getParameter("id_salidaMaderaRollo"));
+                salidaMaderaRolloEC.setId_salida(Integer.valueOf(request.getParameter("id_salida")));
                 salidaMaderaRolloCRUD = new SalidaMaderaRolloCRUD();
                 try {
                     //enviamos la salidaMaderaRollo a modificar

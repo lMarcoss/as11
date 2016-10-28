@@ -22,8 +22,8 @@
     <body>
         <!--menu-->
         <%@ include file="/TEMPLATE/menu.jsp" %>
-        
-        <!-- ******************* Formulario de registro-->
+        <div>
+            <!-- ******************* Formulario de registro-->
             <form action="/aserradero/SalidaMaderaRolloController?action=nuevo_salida" method="POST">
                 <h3>Registrar salida</h3>
                 <fieldset id="user-details">

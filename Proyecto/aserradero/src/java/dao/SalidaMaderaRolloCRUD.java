@@ -62,7 +62,20 @@ public class SalidaMaderaRolloCRUD extends Conexion implements OperacionesCRUD{
 
     @Override
     public Object modificar(Object objeto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SalidaMaderaRollo salidaM = (SalidaMaderaRollo) objeto;
+        SalidaMaderaRollo salida = null;
+        this.abrirConexion();
+        try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_SALIDA_MADERA_ROLLO WHERE id_salida = ?")) {
+            st.setInt(1, salidaM.getId_salida());
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    salida = (SalidaMaderaRollo) extraerObject(rs);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return salida;
     }
 
     @Override

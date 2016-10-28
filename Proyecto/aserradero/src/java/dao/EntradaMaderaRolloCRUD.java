@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author rcortes
  */
-public class EntradaMaderaCRUD  extends Conexion implements OperacionesCRUD{
+public class EntradaMaderaRolloCRUD  extends Conexion implements OperacionesCRUD{
     @Override
     public void registrar(Object objeto) throws Exception {
         EntradaMaderaRollo entrada = (EntradaMaderaRollo) objeto;
@@ -117,7 +117,7 @@ public class EntradaMaderaCRUD  extends Conexion implements OperacionesCRUD{
         List<EntradaMaderaRollo> entradas;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM ENTRADA_MADERA_ROLLO WHERE "+nombre_campo+" like ?")){
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_ENTRADA_MADERA_ROLLO WHERE "+nombre_campo+" like ?")){
                 st.setString(1, "%"+dato+"%");
                 entradas = new ArrayList<>();
                 try (ResultSet rs = st.executeQuery()){
