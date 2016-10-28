@@ -30,7 +30,7 @@
                         <input type="hidden" name="id_salida" value="<%=salida.getId_salida()%>" readonly=""/>
                         <tr>
                             <td style="padding-left: 10px;"><label>Fecha</label></td>
-                            <td style="padding-left: 10px;"><input type="number" name="fecha" value="<%=salida.getFecha()%>" readonly=""/></td>
+                            <td style="padding-left: 10px;"><input type="date" name="fecha" value="<%=salida.getFecha()%>" readonly=""/></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>Empleado</label></td>
