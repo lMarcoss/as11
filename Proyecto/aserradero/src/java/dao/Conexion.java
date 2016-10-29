@@ -34,8 +34,4 @@ public class Conexion {
             conexion.close();
         }
     }
-//    public static void main(String[] args) throws Exception{
-//        Conexion con = new Conexion();
-//        con.conectar();
-//    }
 }
