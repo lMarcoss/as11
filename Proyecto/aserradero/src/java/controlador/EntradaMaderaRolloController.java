@@ -132,19 +132,6 @@ public class EntradaMaderaRolloController extends HttpServlet {
                     Logger.getLogger(EntradaMaderaRolloController.class.getName()).log(Level.SEVERE, null, e);
                 }
                 break;
-            case "ver_reporte":
-                try {
-                    List<EntradaMaderaRollo> datos_reporte;
-//                    EntradaMaderaRolloCRUD entradaMaderaRolloCRUD =new EntradaMaderaRolloCRUD();                          
-//                    datos_reporte = (List<EntradaMadera>)entradaMaderaRolloCRUD.listarDatosReporteEntradaMadera();
-//                    request.setAttribute("datos_reporte", datos_reporte);            
-                    RequestDispatcher view=request.getRequestDispatcher("entradaMaderaRollo/reporte.jsp");
-                    view.forward(request, response);            
-                } catch (IOException | ServletException e) {
-                    listarEntradaMaderas(request, response, "error_generar_reporte");
-                    System.out.println(e);
-                }
-                break;
         }
     }
 

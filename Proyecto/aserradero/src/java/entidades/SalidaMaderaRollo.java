@@ -83,6 +83,4 @@ public class SalidaMaderaRollo {
     public float getVolumen_total() {
         return volumen_total;
     }
-
-    
 }

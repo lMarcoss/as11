@@ -12,6 +12,7 @@ import java.util.List;
 /**
  *
  * @author rcortes
+ * Modificador por lmarcoss
  */
 public class EntradaMaderaRolloCRUD  extends Conexion implements OperacionesCRUD{
     @Override

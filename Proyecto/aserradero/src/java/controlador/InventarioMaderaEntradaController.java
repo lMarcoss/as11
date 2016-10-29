@@ -50,9 +50,6 @@ public class InventarioMaderaEntradaController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
         String action = request.getParameter("action");
-        InventarioMaderaEntrada inventariomaderaentradaEC ;
-        InventarioMaderaEntrada inventariomaderaentrada;
-        InventarioMaderaEntradaCRUD inventariomaderaentradaCRUD;
         switch(action){
             case "listar":
                 try {
@@ -61,33 +58,6 @@ public class InventarioMaderaEntradaController extends HttpServlet {
                     System.out.println(e);
                 }                      
                 break;
-
-//            case "modificar":
-//                inventariomaderaentradaEC = new InventarioMaderaEntrada();
-//                inventariomaderaentradaEC.setClasificacion(request.getParameter("clasificacion"));
-//                inventariomaderaentradaCRUD = new InventarioMaderaEntradaCRUD();
-//                try {
-//                    inventariomaderaentrada = (InventarioMaderaEntrada) inventariomaderaentradaCRUD.modificar(inventariomaderaentradaEC);
-//                    request.setAttribute("inventariomaderaentrada",inventariomaderaentrada);
-//                    RequestDispatcher view = request.getRequestDispatcher("inventariomaderaentrada/actualizarInventarioMaderaEntrada.jsp");
-//                    view.forward(request,response);
-//                } catch (Exception ex) {
-//                    listarInventarioMaderaEntradas(request, response, "error_modificar");
-//                    Logger.getLogger(InventarioMaderaEntradaController.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                break;
-//            case "eliminar":
-//                inventariomaderaentradaEC = new InventarioMaderaEntrada();
-//                inventariomaderaentradaEC.setClasificacion(request.getParameter("clasificacion"));
-//                inventariomaderaentradaCRUD = new InventarioMaderaEntradaCRUD();
-//                try {
-//                    inventariomaderaentradaCRUD.eliminar(inventariomaderaentradaEC);
-//                    listarInventarioMaderaEntradas(request, response,"eliminado");
-//                } catch (Exception e) {
-//                    listarInventarioMaderaEntradas(request, response, "error_eliminar");
-//                    Logger.getLogger(InventarioMaderaEntradaController.class.getName()).log(Level.SEVERE, null, e);
-//                }
-//            break;
         }
     }
 
@@ -104,50 +74,6 @@ public class InventarioMaderaEntradaController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         response.setCharacterEncoding("utf-8");
-//        String action = request.getParameter("action");
-//        InventarioMaderaEntrada inventariomaderaentrada;
-//        InventarioMaderaEntradaCRUD inventariomaderaentradacrud;
-//        switch (action){
-//          case "nuevo":
-//              inventariomaderaentrada = extraerCompraForm(request);
-//              inventariomaderaentradacrud = new InventarioMaderaEntradaCRUD();
-//              try {
-//                  inventariomaderaentradacrud.registrar(inventariomaderaentrada);
-//                  listarInventarioMaderaEntradas(request, response,"registrado");
-//              } catch (Exception ex) {
-//                  //enviamos mensaje de error al registrar
-//                  listarInventarioMaderaEntradas(request, response, "error_registrar");
-//                  Logger.getLogger(InventarioMaderaEntradaController.class.getName()).log(Level.SEVERE, null, ex);
-//              }
-//              break;
-//          case "actualizar":
-//              inventariomaderaentrada = extraerCompraForm(request);
-//              inventariomaderaentradacrud = new InventarioMaderaEntradaCRUD();
-//              try {
-//                  inventariomaderaentradacrud.actualizar(inventariomaderaentrada);
-//                  listarInventarioMaderaEntradas(request, response,"actualizado");
-//              } catch (Exception ex) {
-//                  listarInventarioMaderaEntradas(request, response, "error_actualizar");
-//                  System.out.println(ex);
-//                  Logger.getLogger(InventarioMaderaEntradaController.class.getName()).log(Level.SEVERE, null, ex);
-//              }
-//              break;
-//          case "buscar":
-//              List <InventarioMaderaEntrada> inventarioMaderaEntradas;
-//              String nombre_campo = request.getParameter("nombre_campo");
-//              String dato = request.getParameter("dato");
-//              inventariomaderaentradacrud = new InventarioMaderaEntradaCRUD();
-//              try {
-//                  inventarioMaderaEntradas = (List<InventarioMaderaEntrada>)inventariomaderaentradacrud.buscar(nombre_campo, dato);
-//                  request.setAttribute("inventarioMaderaEntradas",inventarioMaderaEntradas);
-//                  RequestDispatcher view = request.getRequestDispatcher("inventariomaderaentrada/inventarioMaderaEntradas.jsp");
-//                  view.forward(request,response);
-//              } catch (Exception ex) {
-//                  listarInventarioMaderaEntradas(request, response, "error_buscar_campo");
-//                  Logger.getLogger(InventarioMaderaEntradaController.class.getName()).log(Level.SEVERE, null, ex);
-//              }
-//              break;
-//        }
     }
 
     /**
@@ -176,12 +102,4 @@ public class InventarioMaderaEntradaController extends HttpServlet {
         }
 
     }
-    private InventarioMaderaEntrada extraerCompraForm(HttpServletRequest request){
-//      InventarioMaderaEntrada inventariomaderaentrada = new InventarioMaderaEntrada();
-//      inventariomaderaentrada.setClasificacion(request.getParameter("clasificacion"));
-//      inventariomaderaentrada.setVolumen(Float.valueOf(request.getParameter("volumen")));         
-//      return inventariomaderaentrada;
-        return null;
-    }
-
 }

@@ -5,6 +5,7 @@ import java.sql.Date;
 /**
  *
  * @author Ricardo Cortés Cruz ->> ricardo.crts.crz@gmail.com
+ * Modificado por: lmarcoss
  */
 
  public class EntradaMaderaRollo{
