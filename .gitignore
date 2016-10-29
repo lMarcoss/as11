@@ -13,4 +13,4 @@ hs_err_pid*
 /Proyecto/aserradero/dist/
 
 # ignorar el archivo de contraseña: para no cambiar contraseña a los colaboradores
-/Proyecto/aserradero/src/java/dao/Conexion.java
+Proyecto/aserradero/src/java/dao/Conexion.java
