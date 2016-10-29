@@ -33,7 +33,7 @@
                     <li class="detalle_compra"><a href="/aserradero/SalidaMaderaRolloController?action=listar_salida">Salida</a></li>
                     <!--<li class="pagos_copra"><a href="/aserradero/PagoCompraController?action=listar">Pagos compra</a></li>-->
                     <li class="inventario_madera_entrada"><a href="/aserradero/InventarioMaderaEntradaController?action=listar">Inventario</a></li>
-                    <li class="costo_madera_entrada"><a href="/aserradero/CostoMaderaEntradaController?action=listar">Clasficación</a></li>
+                    <li class="costo_madera_entrada"><a href="/aserradero/ClasificacionMaderaEntradaController?action=listar">Clasficación</a></li>
                 </ul>
             </li>
             <li class="submenu" id="ventas">

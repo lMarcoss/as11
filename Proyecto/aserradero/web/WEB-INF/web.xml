@@ -57,8 +57,8 @@
         <servlet-class>controlador.MaderaClasificacionController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CostoMaderaController</servlet-name>
-        <servlet-class>controlador.CostoMaderaController</servlet-class>
+        <servlet-name>ClasificacionMaderaEntradaController</servlet-name>
+        <servlet-class>controlador.ClasificacionMaderaEntradaController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ProduccionMaderaController</servlet-name>
@@ -81,12 +81,8 @@
         <servlet-class>controlador.VehiculoController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DetalleEntradaMaderaRolloController</servlet-name>
-        <servlet-class>controlador.DetalleEntradaMaderaRolloController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>CostoMaderaEntradaController</servlet-name>
-        <servlet-class>controlador.CostoMaderaEntradaController</servlet-class>
+        <servlet-class>controlador.ClasificacionMaderaEntradaController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>InventarioMaderaEntradaController</servlet-name>
@@ -189,8 +185,8 @@
         <url-pattern>/MaderaClasificacionController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CostoMaderaController</servlet-name>
-        <url-pattern>/CostoMaderaController</url-pattern>
+        <servlet-name>ClasificacionMaderaEntradaController</servlet-name>
+        <url-pattern>/ClasificacionMaderaEntradaController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProduccionMaderaController</servlet-name>
@@ -211,10 +207,6 @@
     <servlet-mapping>
         <servlet-name>VehiculoController</servlet-name>
         <url-pattern>/VehiculoController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DetalleEntradaMaderaRolloController</servlet-name>
-        <url-pattern>/DetalleEntradaMaderaRolloController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CostoMaderaEntradaController</servlet-name>

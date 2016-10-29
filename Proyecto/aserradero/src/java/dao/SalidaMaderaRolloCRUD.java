@@ -99,7 +99,6 @@ public class SalidaMaderaRolloCRUD extends Conexion implements OperacionesCRUD{
 
     @Override
     public void eliminar(Object objeto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
