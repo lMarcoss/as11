@@ -25,7 +25,6 @@ public class SalidaMaderaRolloCRUD extends Conexion implements OperacionesCRUD{
             st.executeUpdate();
         }catch(Exception e){
             System.err.println(e);
-            System.out.println("Hola:"+e);
             throw e;
         }finally{
             this.cerrarConexion();
