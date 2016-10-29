@@ -548,3 +548,38 @@ BEGIN
 		WHERE id_administrador = _id_administrador;
 END;//
 DELIMITER ;
+
+-- Actualizar inventario cada que se modifica una salida de madera
+DELIMITER //
+CREATE TRIGGER ACTUALIZAR_SALIDA_MADERA_ROLLO BEFORE UPDATE ON SALIDA_MADERA_ROLLO
+FOR EACH ROW
+BEGIN
+	DECLARE _id_administrador VARCHAR(18);	
+    DECLARE _num_piezas_disponible INT;	-- numero de piezas disponible en inventario
+    DECLARE _volumen_disponible DECIMAL(10,3); 			-- volumen disponible en inventario
+    
+    -- consultamos el jefe del empleado que registra
+    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado;
+    
+    -- Consultamos inventario disponible
+    SELECT num_piezas INTO _num_piezas_disponible FROM INVENTARIO_MADERA_ENTRADA WHERE id_administrador = _id_administrador;
+    SELECT volumen_total INTO _volumen_disponible FROM INVENTARIO_MADERA_ENTRADA WHERE id_administrador = _id_administrador;
+    
+    -- si el inventario es inalcansable se termina la transacción
+    IF((_num_piezas_disponible < NEW.num_piezas-OLD.num_piezas) or (_volumen_disponible<NEW.volumen_total-OLD.volumen_total))THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Inventario inalcansable';
+    END IF;
+    
+    -- Sumamos los valores antiguos en inventario madera rollo
+    UPDATE INVENTARIO_MADERA_ENTRADA -- actualizamos inventario si existe inventario asociado al administrador
+			SET num_piezas = (num_piezas + OLD.num_piezas), 
+            volumen_total = (volumen_total + OLD.volumen_total)
+            WHERE id_administrador = _id_administrador;
+    
+	-- actualizamos inventario restando los nuevos valores
+	UPDATE INVENTARIO_MADERA_ENTRADA 
+		SET num_piezas = (num_piezas - NEW.num_piezas), 
+		volumen_total = (volumen_total - NEW.volumen_total)
+		WHERE id_administrador = _id_administrador;
+END;//
+DELIMITER ;
