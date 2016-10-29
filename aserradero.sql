@@ -50,4 +50,3 @@ BEGIN
 		WHERE id_administrador = _id_administrador;
 END;//
 DELIMITER ;
-
