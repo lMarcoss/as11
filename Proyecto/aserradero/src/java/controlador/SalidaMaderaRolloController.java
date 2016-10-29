@@ -215,7 +215,6 @@ public class SalidaMaderaRolloController extends HttpServlet {
         salida.setId_salida(Integer.valueOf(request.getParameter("id_salida")));
         salida.setFecha(Date.valueOf(request.getParameter("fecha")));
         salida.setId_empleado(request.getParameter("id_empleado"));
-        System.out.println(salida.getId_empleado());
         salida.setNum_piezas(Integer.valueOf(request.getParameter("num_piezas")));
         salida.setVolumen_total(Float.valueOf(request.getParameter("volumen_total")));
         return salida;

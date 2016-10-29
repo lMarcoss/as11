@@ -81,7 +81,6 @@ public class SalidaMaderaRolloCRUD extends Conexion implements OperacionesCRUD{
     @Override
     public void actualizar(Object objeto) throws Exception {
         SalidaMaderaRollo salida = (SalidaMaderaRollo) objeto;
-        System.out.println(salida.getId_empleado());
         try {
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement("UPDATE SALIDA_MADERA_ROLLO SET fecha = ?, id_empleado = ?, num_piezas = ?, volumen_total = ? WHERE id_salida = ?");
