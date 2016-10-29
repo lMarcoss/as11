@@ -34,5 +34,4 @@ public class Conexion {
             conexion.close();
         }
     }
-    // Cambio
 }
