@@ -189,13 +189,13 @@ public class EntradaMaderaRolloController extends HttpServlet {
                 }
                 break;
             case "buscar":
-                List <EntradaMaderaRollo> entradaMaderaRollos;
+                List <EntradaMaderaRollo> entradas;
                 String nombre_campo = request.getParameter("nombre_campo");
                 String dato = request.getParameter("dato");
                 entradaMaderaRolloCRUD = new EntradaMaderaRolloCRUD();
                 try {
-                    entradaMaderaRollos = (List<EntradaMaderaRollo>)entradaMaderaRolloCRUD.buscar(nombre_campo, dato);
-                    request.setAttribute("entradaMaderaRollos",entradaMaderaRollos);
+                    entradas = (List<EntradaMaderaRollo>)entradaMaderaRolloCRUD.buscar(nombre_campo, dato);
+                    request.setAttribute("entradas",entradas);
                     RequestDispatcher view = request.getRequestDispatcher("entradaMaderaRollo/entradaMaderaRollos.jsp");
                     view.forward(request,response);
                 } catch (Exception ex) {

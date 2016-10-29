@@ -80,14 +80,16 @@ public class SalidaMaderaRolloCRUD extends Conexion implements OperacionesCRUD{
 
     @Override
     public void actualizar(Object objeto) throws Exception {
-        SalidaMaderaRollo entrada = (SalidaMaderaRollo) objeto;
+        SalidaMaderaRollo salida = (SalidaMaderaRollo) objeto;
+        System.out.println(salida.getId_empleado());
         try {
             this.abrirConexion();
-            PreparedStatement st = this.conexion.prepareStatement("UPDATE ENTRADA_MADERA_ROLLO SET num_piezas = ?, volumen_primario = ?, volumen_secundario = ?, volumen_terciario = ? WHERE id_entrada = ?");
-            st.setDate(1, entrada.getFecha());
-            st.setString(2, entrada.getId_empleado());
-            st.setInt(3, entrada.getNum_piezas());
-            st.setFloat(4, entrada.getVolumen_total());
+            PreparedStatement st = this.conexion.prepareStatement("UPDATE SALIDA_MADERA_ROLLO SET fecha = ?, id_empleado = ?, num_piezas = ?, volumen_total = ? WHERE id_salida = ?");
+            st.setDate(1, salida.getFecha());
+            st.setString(2, salida.getId_empleado());
+            st.setInt(3, salida.getNum_piezas());
+            st.setFloat(4, salida.getVolumen_total());
+            st.setFloat(5, salida.getId_salida());
             st.executeUpdate();
         }catch(Exception e){
             System.out.println(e);
@@ -104,7 +106,32 @@ public class SalidaMaderaRolloCRUD extends Conexion implements OperacionesCRUD{
 
     @Override
     public <T> List buscar(String nombre_campo, String dato) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<SalidaMaderaRollo> salidas;
+        try {
+            this.abrirConexion();
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_SALIDA_MADERA_ROLLO WHERE "+nombre_campo+" like ?")){
+                st.setString(1, "%"+dato+"%");
+                salidas = new ArrayList<>();
+                try (ResultSet rs = st.executeQuery()){
+                    while (rs.next()) {
+                        SalidaMaderaRollo salida = (SalidaMaderaRollo) extraerObject(rs);
+                        salidas.add(salida);
+                    }
+                }catch(Exception e){
+                    System.out.println(e);
+                    throw e;
+                }
+            }catch(Exception e){
+                System.out.println(e);
+            throw e;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            throw e;
+        }finally{
+            this.cerrarConexion();
+        }
+        return salidas;
     }
 
     @Override

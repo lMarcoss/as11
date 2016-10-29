@@ -28,6 +28,7 @@
                 <h3>Registrar salida</h3>
                 <fieldset id="user-details">
                     <table>
+                        <input type="hidden" name="id_salida" value="1"/>
                         <tr>
                             <td style="padding-left: 10px;"><label>Fecha</label></td>
                             <td style="padding-left: 10px;"><input type="date" name="fecha" value="<%=fechaActual%>"/></td>

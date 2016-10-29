@@ -35,9 +35,8 @@
                         <tr>
                             <td style="padding-left: 10px;"><label>Empleado</label></td>
                             <td style="padding-left: 10px;">
-                                <select name="id_empleado" required="" title="Si no existe el datospersona que busca, primero agreguelo en la lista de datospersona" disabled="">
-                                    <option></option>
-                                    <option value="<%=salida.getEmpleado()%>" selected=""><%=salida.getEmpleado()%></option>
+                                <select name="id_empleado" required="" title="Si no existe el datospersona que busca, primero agreguelo en la lista de datospersona">
+                                    <option value="<%=salida.getId_empleado()%>" selected=""><%=salida.getEmpleado()%></option>
                                 </select>
                             </td>
                         </tr>

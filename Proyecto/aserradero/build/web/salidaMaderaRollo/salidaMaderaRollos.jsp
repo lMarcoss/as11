@@ -32,7 +32,7 @@
                                 <option value="fecha">Fecha</option>
                                 <option value="empleado">Empleado</option>
                                 <option value="num_piezas">Número de piezas</option>
-                                <option value="volumen">Volumen</option>
+                                <option value="volumen_total">Volumen</option>
                             </select>
                         </td>
                         <td><input type="text" name="dato" placeholder="Escriba su búsqueda"></td>

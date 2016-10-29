@@ -166,13 +166,13 @@ public class SalidaMaderaRolloController extends HttpServlet {
                 }
                 break;
             case "buscar":
-                List <SalidaMaderaRollo> salidaMaderaRollos;
+                List <SalidaMaderaRollo> salidas;
                 String nombre_campo = request.getParameter("nombre_campo");
                 String dato = request.getParameter("dato");
                 salidaMaderaRolloCRUD = new SalidaMaderaRolloCRUD();
                 try {
-                    salidaMaderaRollos = (List<SalidaMaderaRollo>)salidaMaderaRolloCRUD.buscar(nombre_campo, dato);
-                    request.setAttribute("salidaMaderaRollos",salidaMaderaRollos);
+                    salidas = (List<SalidaMaderaRollo>)salidaMaderaRolloCRUD.buscar(nombre_campo, dato);
+                    request.setAttribute("salidas",salidas);
                     RequestDispatcher view = request.getRequestDispatcher("salidaMaderaRollo/salidaMaderaRollos.jsp");
                     view.forward(request,response);
                 } catch (Exception ex) {
@@ -212,8 +212,10 @@ public class SalidaMaderaRolloController extends HttpServlet {
 
     private SalidaMaderaRollo extraerSalidaMaderaRolloForm(HttpServletRequest request) {
         SalidaMaderaRollo salida = new SalidaMaderaRollo();
+        salida.setId_salida(Integer.valueOf(request.getParameter("id_salida")));
         salida.setFecha(Date.valueOf(request.getParameter("fecha")));
         salida.setId_empleado(request.getParameter("id_empleado"));
+        System.out.println(salida.getId_empleado());
         salida.setNum_piezas(Integer.valueOf(request.getParameter("num_piezas")));
         salida.setVolumen_total(Float.valueOf(request.getParameter("volumen_total")));
         return salida;
