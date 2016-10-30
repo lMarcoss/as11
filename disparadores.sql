@@ -63,30 +63,7 @@ DELIMITER ;
 
 
 
-INSERT INTO MADERA_CLASIFICACION (id_madera,grueso,ancho,largo,volumen) VALUES 
-("clase12",0.75,12,8.25,6.187),
-("clase10",0.75,10,8.25,5.156),
-("clase8",0.75,8,8.25,4.125),
-("clase6",0.75,6,8.25,3.093),
-("clase4",0.75,4,8.25,2.062),
 
-("tercera12",0.75,12,8.25,6.187),
-("tercera10",0.75,10,8.25,5.156),
-("tercera8",0.75,8,8.25,4.125),
-("tercera6",0.75,6,8.25,3.093),
-("tercera4",0.75,4,6.25,2.062),
-
-("cuarta12",0.75,12,8.25,6.187),
-("cuarta10",0.75,10,8.25,5.156),
-("cuarta8",0.75,8,8.25,4.125),
-("cuarta6",0.75,6,8.25,3.093),
-("cuarta4",0.75,4,6.25,2.062),
-
-("quinta12",0.75,12,8.25,6.187),
-("quinta10",0.75,10,8.25,5.156),
-("quinta8",0.75,8,8.25,4.125),
-("quinta6",0.75,6,8.25,3.093),
-("quinta4",0.75,4,6.25,2.062);
 
 INSERT INTO COSTO_MADERA (id_madera,monto_volumen) VALUES 
 ("clase12",9.55),

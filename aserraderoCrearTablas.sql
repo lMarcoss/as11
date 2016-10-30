@@ -117,14 +117,6 @@ CREATE TABLE SALIDA_MADERA_ROLLO( -- entrada_madera
 
 -- CREATE TABLE PAGO_COMPRA(fecha		DATE,id_compra	CHAR(7) NOT NULL,monto 		DECIMAL(10,2),pago 		ENUM('Anticipado','Normal'),PRIMARY KEY (fecha,id_compra),	FOREIGN KEY (id_compra) REFERENCES COMPRA (id_compra) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
--- producción
-CREATE TABLE PRODUCCION_MADERA(
-	fecha 			DATE,
-	id_produccion	CHAR(10) NOT NULL,
-	id_empleado 	CHAR(26) NOT NULL,
-	PRIMARY KEY (id_produccion),
-	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
-
 CREATE TABLE MADERA_CLASIFICACION(
 	id_madera	VARCHAR(20) NOT NULL,
 	grueso		DECIMAL(6,2),
@@ -132,6 +124,19 @@ CREATE TABLE MADERA_CLASIFICACION(
 	largo		DECIMAL(6,2),
 	volumen		DECIMAL(8,3),
 	primary key(id_madera))ENGINE=InnoDB;
+    
+-- producción
+CREATE TABLE PRODUCCION_MADERA(
+	id_produccion	INT NOT NULL AUTO_INCREMENT,
+	fecha 			DATE,
+ 	id_madera    	VARCHAR(20) NOT NULL,
+ 	num_piezas 		INT,
+    id_empleado 	CHAR(26) NOT NULL,
+ 	PRIMARY KEY (id_produccion),
+    FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera),
+    FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
+
+
 
 -- CREATE TABLE PRODUCCION_DETALLE(
 -- 	id_produccion	CHAR(10) NOT NULL,
@@ -165,8 +170,8 @@ CREATE TABLE VENTA(
 	tipo_venta 	ENUM('Paquete','Mayoreo','Extra'),
     tipo_pago 	ENUM('Anticipado','Normal'),
 	PRIMARY KEY(id_venta),
-	FOREIGN KEY (id_cliente) REFERENCES CLIENTE (id_cliente) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (id_cliente) REFERENCES CLIENTE (id_cliente),
+	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 CREATE TABLE VENTA_MAYOREO(
 	id_venta 	INT NOT NULL,
@@ -176,7 +181,7 @@ CREATE TABLE VENTA_MAYOREO(
 	monto		DECIMAL(10,2),
 	PRIMARY KEY(id_venta,id_madera),
 	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera))ENGINE=InnoDB;
 
 CREATE TABLE VENTA_PAQUETE(
 	id_venta 		INT NOT NULL,
@@ -187,7 +192,7 @@ CREATE TABLE VENTA_PAQUETE(
 	monto		DECIMAL(10,2),
 	PRIMARY KEY(id_venta,numero_paquete,id_madera),
 	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera))ENGINE=InnoDB;
 
 CREATE TABLE VENTA_EXTRA(
 	id_venta 		INT NOT NULL,
@@ -243,8 +248,8 @@ CREATE TABLE ANTICIPO_CLIENTE(
 	id_empleado 	VARCHAR(26) NOT NULL,
 	monto_anticipo	DECIMAL(10,2),
 	PRIMARY KEY(id_anticipo_c),
-	FOREIGN KEY (id_cliente) REFERENCES CLIENTE (id_cliente) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (id_cliente) REFERENCES CLIENTE (id_cliente),
+	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 CREATE TABLE ANTICIPO_PROVEEDOR(
 	id_anticipo_p	INT NOT NULL AUTO_INCREMENT,
@@ -253,8 +258,8 @@ CREATE TABLE ANTICIPO_PROVEEDOR(
 	id_empleado 	VARCHAR(26) NOT NULL,
 	monto_anticipo	DECIMAL(10,2),
 	PRIMARY KEY(id_anticipo_p),
-	FOREIGN KEY (id_proveedor) REFERENCES PROVEEDOR (id_proveedor) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (id_proveedor) REFERENCES PROVEEDOR (id_proveedor),
+	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 
 CREATE TABLE CUENTA_POR_PAGAR(
@@ -313,6 +318,31 @@ INSERT INTO PERSONA (id_persona,nombre,apellido_paterno,apellido_materno,localid
 ("MAXP20160916HOCRXD","Pedro","Martinez","","Santa Cruz Monjas","H","2016-09-16","1234567890"),
 ("PAXA20160913HOCSXN","Antonio","Pascual","","Santa Cruz Monjas","H","2016-09-13","1234567890"),
 ("PEXF20160910HOCRXR","Francisco","Perez","","Santa Cruz Monjas","H","2016-09-10","1234567890");
+
+INSERT INTO MADERA_CLASIFICACION (id_madera,grueso,ancho,largo,volumen) VALUES 
+("clase12",0.75,12,8.25,6.187),
+("clase10",0.75,10,8.25,5.156),
+("clase8",0.75,8,8.25,4.125),
+("clase6",0.75,6,8.25,3.093),
+("clase4",0.75,4,8.25,2.062),
+
+("tercera12",0.75,12,8.25,6.187),
+("tercera10",0.75,10,8.25,5.156),
+("tercera8",0.75,8,8.25,4.125),
+("tercera6",0.75,6,8.25,3.093),
+("tercera4",0.75,4,6.25,2.062),
+
+("cuarta12",0.75,12,8.25,6.187),
+("cuarta10",0.75,10,8.25,5.156),
+("cuarta8",0.75,8,8.25,4.125),
+("cuarta6",0.75,6,8.25,3.093),
+("cuarta4",0.75,4,6.25,2.062),
+
+("quinta12",0.75,12,8.25,6.187),
+("quinta10",0.75,10,8.25,5.156),
+("quinta8",0.75,8,8.25,4.125),
+("quinta6",0.75,6,8.25,3.093),
+("quinta4",0.75,4,6.25,2.062);
 
 -- lista de administradores
 CREATE VIEW PERSONAL_ADMINISTRADOR AS
@@ -583,3 +613,14 @@ BEGIN
 		WHERE id_administrador = _id_administrador;
 END;//
 DELIMITER ;
+
+CREATE VIEW VISTA_PRODUCCION_MADERA AS
+SELECT 
+	id_produccion,
+    fecha,
+    id_madera,
+    num_piezas,
+    id_empleado,
+    (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) from PERSONA where id_persona = SUBSTRING(PRODUCCION_MADERA.id_empleado,1,18)) as empleado,
+    (select id_jefe from EMPLEADO where id_empleado = PRODUCCION_MADERA.id_empleado) as id_jefe
+FROM PRODUCCION_MADERA;
