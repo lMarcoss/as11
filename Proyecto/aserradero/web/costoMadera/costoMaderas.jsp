@@ -65,7 +65,7 @@
                     %>
             </table>
             <div>
-                <input type="button" value="Agregar nuevo costo madera venta" onClick=" window.location.href='/aserradero/CostoMaderaController?action=nuevo' ">
+                <input type="button" value="Registrar nuevo costo" onClick=" window.location.href='/aserradero/CostoMaderaController?action=nuevo' ">
             </div>
         </div><!-- Resultado Consulta-->
     </body>

@@ -1,8 +1,10 @@
 package controlador;
 
 import dao.EmpleadoCRUD;
+import dao.MaderaClasificacionCRUD;
 import dao.ProduccionMaderaCRUD;
 import entidades.Empleado;
+import entidades.MaderaClasificacion;
 import entidades.ProduccionMadera;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -59,9 +61,16 @@ public class ProduccionMaderaController extends HttpServlet {
         switch(action){
             case "nuevo":
                 try {
+                    //Enviamos la lista de empleados
                     EmpleadoCRUD empleadoCRUD = new EmpleadoCRUD();
                     List<Empleado> empleados = (List<Empleado>)empleadoCRUD.listar();
                     request.setAttribute("empleados",empleados);
+                    
+                    //enviamos lista de maderaClasificación al jsp
+                    MaderaClasificacionCRUD maderaClasificacionCRUD= new MaderaClasificacionCRUD();
+                    List<MaderaClasificacion> clasificaciones = (List<MaderaClasificacion>)maderaClasificacionCRUD.listar();
+                    request.setAttribute("clasificaciones",clasificaciones);
+                    
                     RequestDispatcher view = request.getRequestDispatcher("produccionMadera/nuevoProduccionMadera.jsp");
                     view.forward(request,response);
                 } catch (Exception ex) {
@@ -73,9 +82,25 @@ public class ProduccionMaderaController extends HttpServlet {
             case "listar":
                 listarProduccionMaderas(request, response,"Lista de produccion madera");
                 break;
+            case "modificar":
+                produccionMaderaEC = new ProduccionMadera();
+                produccionMaderaEC.setId_produccion(Integer.valueOf(request.getParameter("id_produccion")));
+                produccionMaderaCRUD = new ProduccionMaderaCRUD();
+                try {
+                    //enviamos la produccionMadera a modificar
+                    ProduccionMadera produccion = (ProduccionMadera) produccionMaderaCRUD.modificar(produccionMaderaEC);
+                    request.setAttribute("produccion",produccion);
+                                        
+                    RequestDispatcher view = request.getRequestDispatcher("produccionMadera/actualizarProduccionMadera.jsp");
+                    view.forward(request,response);
+                } catch (Exception ex) {
+                    listarProduccionMaderas(request, response, "error_modificar");
+                    Logger.getLogger(ProduccionMaderaController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
             case "eliminar":
                 produccionMaderaEC = new ProduccionMadera();
-                produccionMaderaEC.setId_produccion(request.getParameter("id_produccion"));
+                produccionMaderaEC.setId_produccion(Integer.valueOf(request.getParameter("id_produccion")));
                 produccionMaderaCRUD = new ProduccionMaderaCRUD();
                 try {
                     produccionMaderaCRUD.eliminar(produccionMaderaEC);
@@ -86,8 +111,8 @@ public class ProduccionMaderaController extends HttpServlet {
                 }
                 break;
             case "buscar_produccion":
-                String id_produccionMadera = request.getParameter("id_produccion");
-                buscarProduccionMaderaPorId(request, response, id_produccionMadera);
+                String fecha = request.getParameter("fecha");
+                buscarProduccionMaderaPorFecha(request, response, fecha);
                 break;
         }
     }
@@ -119,6 +144,17 @@ public class ProduccionMaderaController extends HttpServlet {
                 } catch (Exception ex) {
                     listarProduccionMaderas(request, response,"error_registrar");
                     Logger.getLogger(ProduccionMaderaController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case "actualizar":
+                produccionMadera = extraerProduccionMaderaForm(request);
+                produccionMaderaCRUD = new ProduccionMaderaCRUD();
+                try {
+                    produccionMaderaCRUD.actualizar(produccionMadera);
+                    listarProduccionMaderas(request, response,"actualizado");
+                } catch (Exception ex) {
+                    listarProduccionMaderas(request, response,"error_actualizar");
+                    Logger.getLogger(PersonaController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             case "buscar":
@@ -166,26 +202,29 @@ public class ProduccionMaderaController extends HttpServlet {
             Logger.getLogger(ProduccionMaderaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void buscarProduccionMaderaPorId(HttpServletRequest request, HttpServletResponse response,String id_produccionMadera) {
+    private void buscarProduccionMaderaPorFecha(HttpServletRequest request, HttpServletResponse response,String fecha) {
         List<ProduccionMadera> produccionMaderas;
-        ProduccionMaderaCRUD produccionMaderaCrud = new ProduccionMaderaCRUD();
+        ProduccionMaderaCRUD produccionMaderaCRUD = new ProduccionMaderaCRUD();
         try {
-            produccionMaderas = (List<ProduccionMadera>)produccionMaderaCrud.buscarPorId(id_produccionMadera);
-            //Enviamos las listas al jsp
+            //consultamos la lista de maderas producidas por fecha
+            produccionMaderas = (List<ProduccionMadera>)produccionMaderaCRUD.buscarPorFecha(fecha);
+            //enviamos la lista a la vista
             request.setAttribute("produccionMaderas",produccionMaderas);
-            RequestDispatcher view = request.getRequestDispatcher("produccionMadera/produccionMaderas.jsp");
+
+            RequestDispatcher view = request.getRequestDispatcher("produccionMadera/nuevoProduccionMadera.jsp");
             view.forward(request,response);
         } catch (Exception ex) {
-            listarProduccionMaderas(request, response, "error_buscar_id");
-            System.out.println(ex);
+            listarProduccionMaderas(request, response, "error_buscar_fecha");
             Logger.getLogger(ProduccionMaderaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     // Extraer datos del formulario
     private ProduccionMadera extraerProduccionMaderaForm(HttpServletRequest request) {
         ProduccionMadera produccionMadera = new ProduccionMadera();
+        produccionMadera.setId_produccion(Integer.valueOf(request.getParameter("id_produccion")));
         produccionMadera.setFecha(Date.valueOf(request.getParameter("fecha")));
-        produccionMadera.setId_produccion(request.getParameter("id_produccion"));
+        produccionMadera.setId_madera(request.getParameter("id_madera"));
+        produccionMadera.setNum_piezas(Integer.valueOf(request.getParameter("num_piezas")));
         produccionMadera.setId_empleado(request.getParameter("id_empleado"));
         return produccionMadera;
     }

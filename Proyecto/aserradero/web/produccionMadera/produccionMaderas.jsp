@@ -30,8 +30,9 @@
                         <td>
                             <select name="nombre_campo" >
                             <option value="fecha">Fecha</option>
-                            <option value="id_produccion">Id producción</option>
-                            <option value="id_empleado">Id empleado</option>
+                            <option value="id_madera">Id producción</option>
+                            <option value="num_piezas">Número de piezas</option>
+                            <option value="empleado">Empleado</option>
                         </select>
                         </td>
                         <td><input type="search" name="dato" placeholder="Escriba su búsqueda"></td>
@@ -47,7 +48,8 @@
                     <tr>
                         <th>N°</th>
                         <th>Fecha</th>
-                        <th>Id_producción</th>
+                        <th>Id_madera</th>
+                        <th>Núm. piezas</th>
                         <th>Empleado</th>
                         <th></th>
                         <th></th>
@@ -58,8 +60,10 @@
                             out.print("<tr>"
                                 +"<td>"+(i+1)+"</td>"
                                 +"<td>"+produccionMadera.getFecha()+"</td>"
-                                +"<td>"+produccionMadera.getId_produccion()+"</td>"
-                                +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+produccionMadera.getId_empleado()+"\">"+produccionMadera.getId_empleado()+"</a></td>"
+                                +"<td>"+produccionMadera.getId_madera()+"</td>"
+                                +"<td>"+produccionMadera.getNum_piezas()+"</td>"
+                                +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+produccionMadera.getId_empleado().substring(0,18)+"\">"+produccionMadera.getEmpleado()+"</a></td>"
+                                +"<td><a href=\"/aserradero/ProduccionMaderaController?action=modificar&id_produccion="+produccionMadera.getId_produccion()+"\">Modificar</a></td>"
                                 + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/ProduccionMaderaController?action=eliminar&id_produccion="+produccionMadera.getId_produccion()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;

@@ -20,7 +20,7 @@ public class ProduccionMaderaCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement(
-                    "INSERT INTO PRODUCCION_MADERA (fecha,id_produccion,id_empleado) VALUES (?,?,?)");
+                    "INSERT INTO PRODUCCION_MADERA (fecha,id_madera,num_piezas,id_empleado) VALUES (?,?,?,?)");
             st = cargarObject(st, produccionMadera);
             st.executeUpdate();
         }catch(Exception e){
@@ -36,7 +36,7 @@ public class ProduccionMaderaCRUD extends Conexion implements OperacionesCRUD{
         List<ProduccionMadera> produccionMaderas;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PRODUCCION_MADERA")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PRODUCCION_MADERA")) {
                 produccionMaderas = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -59,13 +59,35 @@ public class ProduccionMaderaCRUD extends Conexion implements OperacionesCRUD{
 
     @Override
     public Object modificar(Object objeto) throws Exception {
-        //no se va a modificar
-        return null;
+        ProduccionMadera produccionM = (ProduccionMadera) objeto;
+        ProduccionMadera produccion = null;
+        this.abrirConexion();
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PRODUCCION_MADERA WHERE id_produccion = ?")) {
+                st.setInt(1, produccionM.getId_produccion());
+                try (ResultSet rs = st.executeQuery()) {
+                    while (rs.next()) {
+                        produccion = (ProduccionMadera) extraerObject(rs);
+                    }
+                }
+            }
+        return produccion;
     }
 
     @Override
     public void actualizar(Object objeto) throws Exception {
-        //no se va a actualizar tabla
+        ProduccionMadera produccion = (ProduccionMadera) objeto;
+        try{
+            this.abrirConexion();
+            PreparedStatement st= this.conexion.prepareStatement("UPDATE PRODUCCION_MADERA SET num_piezas = ? WHERE id_produccion = ?");
+            st.setInt(1,produccion.getNum_piezas());
+            st.setInt(2,produccion.getId_produccion());
+            st.executeUpdate();
+        }catch(Exception e){
+            System.out.println(e);
+            throw e;
+        }finally{
+            this.cerrarConexion();
+        }
     }
 
     @Override
@@ -74,7 +96,7 @@ public class ProduccionMaderaCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             PreparedStatement st= this.conexion.prepareStatement("DELETE FROM PRODUCCION_MADERA WHERE id_produccion = ?");
-            st.setString(1,produccionMadera.getId_produccion());
+            st.setInt(1,produccionMadera.getId_produccion());
             st.executeUpdate();
         }catch(Exception e){
             System.out.println(e);
@@ -89,7 +111,7 @@ public class ProduccionMaderaCRUD extends Conexion implements OperacionesCRUD{
         List<ProduccionMadera> produccionMaderas;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PRODUCCION_MADERA WHERE "+nombre_campo+" like ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PRODUCCION_MADERA WHERE "+nombre_campo+" like ?")) {
                 st.setString(1, "%"+dato+"%");
                 produccionMaderas = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
@@ -111,9 +133,14 @@ public class ProduccionMaderaCRUD extends Conexion implements OperacionesCRUD{
     @Override
     public Object extraerObject(ResultSet rs) throws SQLException {
         ProduccionMadera produccionMadera = new ProduccionMadera();
+        produccionMadera.setId_produccion(rs.getInt("id_produccion"));
         produccionMadera.setFecha(rs.getDate("fecha"));
-        produccionMadera.setId_produccion(rs.getString("id_produccion"));
+        produccionMadera.setId_madera(rs.getString("id_madera"));
+        produccionMadera.setNum_piezas(rs.getInt("num_piezas"));
         produccionMadera.setId_empleado(rs.getString("id_empleado"));
+        produccionMadera.setEmpleado(rs.getString("empleado"));
+        produccionMadera.setId_jefe(rs.getString("id_jefe"));
+        
         return produccionMadera;
     }
 
@@ -121,17 +148,18 @@ public class ProduccionMaderaCRUD extends Conexion implements OperacionesCRUD{
     public PreparedStatement cargarObject(PreparedStatement st, Object objeto) throws SQLException {
         ProduccionMadera produccionMadera = (ProduccionMadera) objeto;
         st.setDate(1,produccionMadera.getFecha());
-        st.setString(2,produccionMadera.getId_produccion());
-        st.setString(3,produccionMadera.getId_empleado());
+        st.setString(2,produccionMadera.getId_madera());
+        st.setInt(3,produccionMadera.getNum_piezas());
+        st.setString(4,produccionMadera.getId_empleado());
         return st;
     }
     
-    public List<ProduccionMadera> buscarPorId(String id_produccion) throws Exception {
+    public List<ProduccionMadera> buscarPorFecha(String fecha) throws Exception {
         List<ProduccionMadera> produccionMaderas;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PRODUCCION_MADERA WHERE id_produccion = ?")) {
-                st.setString(1, id_produccion);
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PRODUCCION_MADERA WHERE fecha = ?")) {
+                st.setString(1, fecha);
                 produccionMaderas = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {

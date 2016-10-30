@@ -75,7 +75,7 @@
                     %>
             </table>
             <div>
-                <input type="button" value="Agregar nuevo tipo de madera producción" onClick=" window.location.href='/aserradero/MaderaClasificacionController?action=nuevo' ">
+                <input type="button" value="Registrar nueva clasificación" onClick=" window.location.href='/aserradero/MaderaClasificacionController?action=nuevo' ">
             </div>
         </div><!-- Resultado Consulta-->
     </body>

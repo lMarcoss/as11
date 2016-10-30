@@ -43,6 +43,7 @@
                     <li id="ventas_extras"><a href="/aserradero/VentaExtraController?action=listar">Ventas extras</a></li>
                     <li id="ventas_mayoreo"><a href="/aserradero/VentaMayoreoController?action=listar">Ventas Mayoreo</a></li>
                     <li id="ventas_por_paquete"><a href="/aserradero/VentaPaqueteController?action=listar">Ventas por paquete</a></li>
+                    <li id="costo_madera_produccion"><a href="/aserradero/CostoMaderaController?action=listar">Costo Madera</a></li>
                 </ul>
             </li>
             <li class="submenu" id="anticipos">
@@ -61,10 +62,8 @@
             <li class="submenu" id="produccion">
                 <a href="/aserradero/ProduccionMaderaController?action=listar">Producción</a>
                 <ul class="children">
-                    <li id="produccio_detalle"><a href="/aserradero/ProduccionDetalleController?action=listar">Produccion detalle</a></li>
-                    <li id="clasificacion_madera"><a href="/aserradero/MaderaClasificacionController?action=listar">Clasificación madera</a></li>
+                    <li id="clasificacion_madera"><a href="/aserradero/MaderaClasificacionController?action=listar">Clasificación producción</a></li>
                     <li id="inventario_produccion"><a href="/aserradero/InventarioMaderaProduccionController?action=listar">Inventario producción</a></li>
-                    <li id="costo_madera_produccion"><a href="/aserradero/CostoMaderaController?action=listar">Costo Madera producción</a></li>
                 </ul>
             </li>
             <li class="submenu" id="gastos">
