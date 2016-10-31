@@ -30,7 +30,7 @@
                         <td>
                             <select name="nombre_campo" >
                             <option value="fecha">Fecha</option>
-                            <option value="id_madera">Id producción</option>
+                            <option value="id_madera">Id madera</option>
                             <option value="num_piezas">Número de piezas</option>
                             <option value="empleado">Empleado</option>
                         </select>
@@ -62,9 +62,11 @@
                                 +"<td>"+produccionMadera.getFecha()+"</td>"
                                 +"<td>"+produccionMadera.getId_madera()+"</td>"
                                 +"<td>"+produccionMadera.getNum_piezas()+"</td>"
-                                +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+produccionMadera.getId_empleado().substring(0,18)+"\">"+produccionMadera.getEmpleado()+"</a></td>"
+                                +"<td>"+produccionMadera.getEmpleado()+"</td>"
+                                        
+//                                +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+produccionMadera.getId_empleado().substring(0,18)+"\">"+produccionMadera.getEmpleado()+"</a></td>"
                                 +"<td><a href=\"/aserradero/ProduccionMaderaController?action=modificar&id_produccion="+produccionMadera.getId_produccion()+"\">Modificar</a></td>"
-                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/ProduccionMaderaController?action=eliminar&id_produccion="+produccionMadera.getId_produccion()+"';};\">Eliminar</a></td>"
+//                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/ProduccionMaderaController?action=eliminar&id_produccion="+produccionMadera.getId_produccion()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;
                         }

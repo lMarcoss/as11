@@ -18,9 +18,9 @@
                 </ul>
             </li>
             <li class="submenu" id="empleados">
-                <a href="/aserradero/EmpleadoController?action=listar">Empleados</a>
+                <a href="#">Empleados</a>
                 <ul class="children">
-                    <!--<li id="empleados_jefe"><a href="/aserradero/EmpleadoJefeController?action=listar">Asignar jefe</a></li>-->
+                    <li id="empleado"><a href="/aserradero/EmpleadoController?action=listar">Registros</a></li>
                     <li id="pago_empleado"><a href="/aserradero/PagoEmpleadoController?action=listar">Pago empleado</a></li>
                     <li id="administrador"><a href="/aserradero/AdministradorController?action=listar">Administradores</a></li>
                 </ul>
@@ -34,6 +34,14 @@
                     <!--<li class="pagos_copra"><a href="/aserradero/PagoCompraController?action=listar">Pagos compra</a></li>-->
                     <li class="inventario_madera_entrada"><a href="/aserradero/InventarioMaderaEntradaController?action=listar">Inventario</a></li>
                     <li class="costo_madera_entrada"><a href="/aserradero/ClasificacionMaderaEntradaController?action=listar">Clasficación</a></li>
+                </ul>
+            </li>
+            <li class="submenu" id="produccion">
+                <a href="#">Madera aserrada</a>
+                <ul class="children">
+                    <li id="produccion_madera"><a href="/aserradero/ProduccionMaderaController?action=listar">Registro</a></li>
+                    <li id="clasificacion_madera"><a href="/aserradero/MaderaClasificacionController?action=listar">Clasificación</a></li>
+                    <li id="inventario_produccion"><a href="/aserradero/InventarioMaderaProduccionController?action=listar">Inventario</a></li>
                 </ul>
             </li>
             <li class="submenu" id="ventas">
@@ -57,13 +65,6 @@
                     <li id="cuentas_por_pagar"><a href="/aserradero/CuentaPorPagarController?action=listar_clientes">Cuentas por pagar clientes</a></li>
                     
                     
-                </ul>
-            </li>
-            <li class="submenu" id="produccion">
-                <a href="/aserradero/ProduccionMaderaController?action=listar">Producción</a>
-                <ul class="children">
-                    <li id="clasificacion_madera"><a href="/aserradero/MaderaClasificacionController?action=listar">Clasificación producción</a></li>
-                    <li id="inventario_produccion"><a href="/aserradero/InventarioMaderaProduccionController?action=listar">Inventario producción</a></li>
                 </ul>
             </li>
             <li class="submenu" id="gastos">
