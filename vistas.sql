@@ -4,12 +4,6 @@
 use aserradero;
 
 
--- Vista para CostoMaderaClasificación
-CREATE VIEW COSTO_MADERA_CLASIFICACION AS 
-SELECT COSTO_MADERA.id_madera AS id_madera, grueso, ancho, largo,volumen, monto_volumen
-	FROM MADERA_CLASIFICACION
-	INNER JOIN COSTO_MADERA WHERE MADERA_CLASIFICACION.id_madera = COSTO_MADERA.id_madera;
-
 -- lista cuentas por cobrar proveedor
 CREATE VIEW CUENTA_POR_COBRAR_PROVEEDOR AS
 SELECT CUENTA_POR_COBRAR.id_persona,

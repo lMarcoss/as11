@@ -26,18 +26,7 @@ BEGIN
 END;//
 DELIMITER ;
 
--- Disparador para actualizar el inventario de madera producida cada que se inserta datos en produccionDetalle
-DELIMITER //
-CREATE TRIGGER INVENTARIO_MADERA_PRODUCCION  AFTER INSERT ON PRODUCCION_DETALLE
-FOR EACH ROW
-BEGIN
-INSERT INTO INVENTARIO_MADERA_PRODUCCION SET
-                  INVENTARIO_MADERA_PRODUCCION.id_madera=NEW.id_madera,
-                  INVENTARIO_MADERA_PRODUCCION.num_piezas=NEW.num_piezas
-	ON DUPLICATE KEY UPDATE 
-      INVENTARIO_MADERA_PRODUCCION.num_piezas= INVENTARIO_MADERA_PRODUCCION.num_piezas+NEW.num_piezas;
-END;//
-DELIMITER ;
+
 
 -- Disparador para insertar pago compra al insertar datos en detalle compra
 -- También actualiza inventario madera entrada

@@ -113,7 +113,6 @@ CREATE TABLE SALIDA_MADERA_ROLLO( -- entrada_madera
     volumen_total	DECIMAL(10,3),	-- cantidad de volumen primaria
 	PRIMARY KEY (id_salida),
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
--- CREATE TABLE DETALLE_COMPRA(id_compra		CHAR(9) NOT NULL,clasificacion	ENUM('Primario','Secundario','Terciario') NOT NULL,volumen			DECIMAL(8,3),monto 			DECIMAL(10,2),PRIMARY KEY (id_compra,clasificacion),FOREIGN KEY (id_compra) REFERENCES COMPRA (id_compra) ON DELETE CASCADE ON UPDATE CASCADE,FOREIGN KEY (clasificacion) REFERENCES COSTO_MADERA_COMPRA (clasificacion) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;	
 
 -- CREATE TABLE PAGO_COMPRA(fecha		DATE,id_compra	CHAR(7) NOT NULL,monto 		DECIMAL(10,2),pago 		ENUM('Anticipado','Normal'),PRIMARY KEY (fecha,id_compra),	FOREIGN KEY (id_compra) REFERENCES COMPRA (id_compra) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
@@ -136,21 +135,13 @@ CREATE TABLE PRODUCCION_MADERA(
     FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera),
     FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
-
-
--- CREATE TABLE PRODUCCION_DETALLE(
--- 	id_produccion	CHAR(10) NOT NULL,
--- 	id_madera    	VARCHAR(20) NOT NULL,
--- 	num_piezas 		INT,
--- 	PRIMARY KEY (id_produccion,id_madera),
--- 	FOREIGN KEY (id_produccion) REFERENCES PRODUCCION_MADERA (id_produccion) ON DELETE CASCADE ON UPDATE CASCADE,
--- 	FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
-
--- CREATE TABLE INVENTARIO_MADERA_PRODUCCION(
--- 	id_madera	VARCHAR(20) NOT NULL,
--- 	num_piezas	INT,
--- 	PRIMARY KEY(id_madera),
--- 	FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+CREATE TABLE INVENTARIO_MADERA_PRODUCCION(
+	id_administrador	VARCHAR(18) NOT NULL,
+	id_madera	VARCHAR(20) NOT NULL,
+	num_piezas	INT,
+	PRIMARY KEY(id_administrador,id_madera),
+    FOREIGN KEY (id_administrador) REFERENCES ADMINISTRADOR (id_administrador) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera)ON UPDATE CASCADE)ENGINE=InnoDB;
 
 CREATE TABLE CLIENTE(
 	id_cliente 	CHAR(26) NOT NULL,
@@ -566,13 +557,13 @@ BEGIN
     SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado;
     
     -- Restamos los valores antiguos en inventario madera rollo
-    UPDATE INVENTARIO_MADERA_ENTRADA -- actualizamos inventario si existe inventario asociado al administrador
+    UPDATE INVENTARIO_MADERA_ENTRADA
 			SET num_piezas = (num_piezas - OLD.num_piezas), 
             volumen_total = (volumen_total - _volumen_total_old)
             WHERE id_administrador = _id_administrador;
     
 	-- actualizamos inventario con los nuevos valores
-	UPDATE INVENTARIO_MADERA_ENTRADA -- actualizamos inventario si existe inventario asociado al administrador
+	UPDATE INVENTARIO_MADERA_ENTRADA 
 		SET num_piezas = (num_piezas + NEW.num_piezas), 
 		volumen_total = (volumen_total + NEW.volumen_primario+NEW.volumen_secundario+NEW.volumen_terciario)
 		WHERE id_administrador = _id_administrador;
@@ -624,3 +615,58 @@ SELECT
     (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) from PERSONA where id_persona = SUBSTRING(PRODUCCION_MADERA.id_empleado,1,18)) as empleado,
     (select id_jefe from EMPLEADO where id_empleado = PRODUCCION_MADERA.id_empleado) as id_jefe
 FROM PRODUCCION_MADERA;
+
+
+-- Vista para CostoMaderaClasificación
+CREATE VIEW COSTO_MADERA_CLASIFICACION AS 
+SELECT COSTO_MADERA.id_madera AS id_madera, grueso, ancho, largo,volumen, monto_volumen
+	FROM MADERA_CLASIFICACION
+	INNER JOIN COSTO_MADERA WHERE MADERA_CLASIFICACION.id_madera = COSTO_MADERA.id_madera;
+
+-- Disparador para insertar inventario de madera producida cada que se inserta una producción
+DELIMITER //
+CREATE TRIGGER AGREGAR_INVENTARIO_PRODUCCION  AFTER INSERT ON PRODUCCION_MADERA
+FOR EACH ROW
+BEGIN
+	-- consultamos el administrador
+	DECLARE _id_administrador VARCHAR(18);	
+    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado;
+    
+	INSERT INTO INVENTARIO_MADERA_PRODUCCION SET
+		INVENTARIO_MADERA_PRODUCCION.id_administrador = _id_administrador,
+		INVENTARIO_MADERA_PRODUCCION.id_madera = NEW.id_madera,
+		INVENTARIO_MADERA_PRODUCCION.num_piezas = NEW.num_piezas
+	ON DUPLICATE KEY UPDATE 
+      INVENTARIO_MADERA_PRODUCCION.num_piezas = INVENTARIO_MADERA_PRODUCCION.num_piezas + NEW.num_piezas;
+END;//
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS ACTUALIZAR_INVENTARIO_PRODUCCION;
+
+-- Disparador para actualizar inventario de madera producida cada que actualiza producción_madera
+DELIMITER //
+CREATE TRIGGER ACTUALIZAR_INVENTARIO_PRODUCCION  BEFORE UPDATE ON PRODUCCION_MADERA
+FOR EACH ROW
+BEGIN
+	-- consultamos el administrador
+	DECLARE _id_administrador VARCHAR(18);	
+    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado;
+    
+    -- aeguramos que existe el inventario
+    IF EXISTS (SELECT id_administrador FROM INVENTARIO_MADERA_PRODUCCION WHERE id_administrador = _id_administrador AND id_madera = new.id_madera) THEN
+		-- Restamos los valores antiguos en inventario madera producción
+		UPDATE INVENTARIO_MADERA_PRODUCCION
+				SET num_piezas = (num_piezas - OLD.num_piezas)
+		WHERE id_administrador = _id_administrador and id_madera = OLD.id_madera;
+		
+		-- actualizamos inventario con los nuevos valores
+		UPDATE INVENTARIO_MADERA_PRODUCCION 
+			SET num_piezas = (num_piezas + NEW.num_piezas)
+		WHERE id_administrador = _id_administrador and id_madera = OLD.id_madera;
+	ELSE
+		INSERT INTO INVENTARIO_MADERA_PRODUCCION VALUES (_id_administrador,NEW.id_madera,NEW.num_piezas);
+    END IF;
+    
+	
+END;//
+DELIMITER ;
