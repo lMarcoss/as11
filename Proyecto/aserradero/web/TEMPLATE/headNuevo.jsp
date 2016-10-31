@@ -11,8 +11,6 @@
 <link rel="stylesheet" href="/aserradero/css/menu/bootstrap.css">
 <link rel="stylesheet" href="/aserradero/css/estilos.css">
 <!-- Theme style  -->
-<link rel="stylesheet" href="/aserradero/css/menu/style.css">
-<link rel="stylesheet" href="/aserradero/css/formulario.css">
 
 <script src="/aserradero/js/id_persona.js"></script>
 <script src="/aserradero/js/validarFormulario.js"></script>
