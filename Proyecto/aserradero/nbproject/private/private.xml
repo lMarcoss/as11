@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/li-906/NetBeansProjects/Proyecto/aserradero/Proyecto/aserradero/web/anticipoCliente/anticipoClientes.jsp</file>
-            <file>file:/home/li-906/NetBeansProjects/Proyecto/aserradero/Proyecto/aserradero/src/java/entidades/AnticipoCliente.java</file>
-            <file>file:/home/li-906/NetBeansProjects/Proyecto/aserradero/Proyecto/aserradero/src/java/dao/AnticipoClienteCRUD.java</file>
-            <file>file:/home/li-906/NetBeansProjects/Proyecto/aserradero/Proyecto/aserradero/src/java/dao/Conexion.java</file>
-            <file>file:/home/li-906/NetBeansProjects/Proyecto/aserradero/Proyecto/aserradero/web/anticipoCliente/actualizarAnticipoCliente.jsp</file>
-            <file>file:/home/li-906/NetBeansProjects/Proyecto/aserradero/Proyecto/aserradero/src/java/controlador/AnticipoClienteController.java</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/web/produccionMadera/produccionMaderas.jsp</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/web/inventarioMaderaProduccion/inventarioMaderaProducciones.jsp</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/web/TEMPLATE/menu.jsp</file>
         </group>
     </open-files>
 </project-private>
