@@ -1,149 +1,119 @@
-* {
-	padding:0;
-	margin:0;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
+*{margin:0;padding:0;text-decoration:none}
+header{
+    position:relative;
+    width:100%;
+    margin-bottom: 10px;
 }
-.menu_bar {
-	display:none;
+nav{
+    background: #2B2B2B;
+    background-image: -webkit-linear-gradient(bottom, #2B2B2B 7%, #333333 100%);
+    background-image: -moz-linear-gradient(bottom, #2B2B2B 7%, #333333 100%);
+    background-image: -o-linear-gradient(bottom, #2B2B2B 7%, #333333 100%);
+    background-image: linear-gradient(bottom, #2B2B2B 7%, #333333 100%);
+    position:relative;
+    width:100%;
+    z-index:1000;
+    margin:0 auto;
+    text-shadow: 1px 1px 1px #0E0E0E;
+    -webkit-box-shadow: 2px 2px 3px #888;
+    -moz-box-shadow: 2px 2px 3px #888;
+    box-shadow: 2px 2px 3px #888;    
 }
-
-header {
-        margin: 0 auto;
-	width: 100%;
+header nav,header nav ul,header nav ul li,header nav ul li a{
+    border:0;
+    list-style:none;        
+    display:block;
+    line-height: 1;
+    position:relative;    
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
 }
-
-header nav {
-	z-index:1000;
-	width:100%;
-	margin:0px auto;
-        background:#333;
+header nav:after,header nav > ul:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0}
+header nav > ul > li{float:left}
+header nav > ul > li > a{
+    padding:18px 25px;
+    font-size:14px;
+    text-decoration:none;
+    color:#fff;
+    font-weight:300;    
+    text-decoration: none;
 }
-header nav ul {
-	list-style:none;
+header nav > ul > li:hover > a,header nav ul li.active a{
+    color:#fff;
+    text-decoration: none;
 }
-
-header nav ul li {
-	display:inline-block;
-	position: relative;        
+header nav > ul > li:hover,header nav ul li.active:hover,header nav ul li.active,header nav ul li.has-sub.active:hover{
+    background:#448D00!important;
+    -webkit-transition:background .3s ease;
+    -ms-transition:background .3s ease;
+    transition:background .3s ease;    
 }
-header nav ul li:hover {
-    background:#448D00;    
+header nav ul ul{position:absolute;left:-9999px}
+header nav ul ul li{
+    height:0;
+    -webkit-transition:all .25s ease;-ms-transition:all .25s ease;
+    background:#333;
+    transition:all .25s ease;
 }
-header nav ul li a {
-	color:#fff;
-	display:block;
-	text-decoration:none;
-	padding:15px 20px;
+header nav ul ul li:hover{}
+header nav li:hover > ul{left:auto}
+header nav li:hover > ul > li{height:100%;}
+header nav ul ul ul{margin-left:100%;top:0}
+header nav ul ul li a{
+    border-bottom:1px solid rgba(150,150,150,0.15);
+    padding:18px 25px;
+    width:170px;font-size:14px;
+    text-decoration:none;
+    color:#ddd;
+    font-weight:500;
 }
-header nav ul li a:hover {
-	color:#fff;
-	text-decoration:none;
+header nav ul ul li:last-child > a,header nav ul ul li.last-item > a{border-bottom:0}
+header nav ul ul li:hover > a,header nav ul ul li a:hover{
+    color:#fff;
+    text-decoration: none;
+    background:#448D00!important;
 }
-header nav ul li a span {
-	margin-right:10px;
-}
-
-header nav ul li:hover .children {
-	display:block;
-}
-
-header nav ul li .children {
-	display: none;
-	background:#333;
-	position: absolute;
-	width: 150%;
-	z-index:1000;        
-}
-header nav ul li .children li {
-	display:block;
-	overflow: hidden;
-	border-bottom: 1px solid rgba(255,255,255,.5);
-}
-header nav ul li .children li a {
-	display: block;
-}
-header nav ul li .children li a span {
-	float: right;
-	position: relative;
-	top:3px;
-	margin-right:0;
-	margin-left:10px;
-}
-
-header nav ul li .caret {
-	position: relative;
-	top:3px;
-	margin-left:10px;
-	margin-right:0px;
-}
-
+header nav ul ul ul li.active a{border-left:1px solid #333}
+header nav > ul > li.has-sub > ul > li.active > a,header nav > ul ul > li.has-sub > ul > li.active> a{border-top:1px solid #333}
 header nav > ul > li.submenu > a:after{position:absolute;top:22px;right:11px;width:8px;height:2px;display:block;background:#ddd;content:''}
 header nav > ul > li.submenu > a:before{position:absolute;top:19px;right:14px;display:block;width:2px;height:8px;background:#ddd;content:'';-webkit-transition:all .45s ease;-ms-transition:all .45s ease;transition:all .45s ease}
 header nav > ul > li.submenu:hover > a:before{top:0px;height:0}
 
-@media screen and (max-width: 800px) {
-	body {
-		padding-top:80px;
-	}
-
-	.menu_bar {
-		display:block;
-		width:100%;
-		position: fixed;
-		top:0;
-		background:#E6344A;
-	}
-
-	.menu_bar .bt-menu {
-		display: block;
-		padding: 20px;
-		color: #fff;
-		overflow: hidden;
-		font-size: 25px;
-		font-weight: bold;
-		text-decoration: none;
-	}
-
-	.menu_bar span {
-		float: right;
-		font-size: 40px;
-	}
-
-	header nav {
-		width: 80%;
-		height: calc(100% - 80px);
-		position: fixed;
-		right:100%;
-		margin: 0;
-		overflow: scroll;
-	}
-
-	header nav ul li {
-		display: block;
-		border-bottom:1px solid rgba(255,255,255,.5);
-	}
-
-	header nav ul li a {
-		display: block;
-	}
-
-	header nav ul li:hover .children {
-		display: none;
-	}
-
-	header nav ul li .children {
-		width: 100%;
-		position: relative;
-	}
-
-	header nav ul li .children li a {
-		margin-left:20px;
-	}
-
-	header nav ul li .caret {
-		float: right;
-	}
+@media screen and (max-width:700px){
+.logo{position:absolute;top:0;left: 0;width:100%;height:46px;text-align:center;padding:10px 0 0 0 ;float:none}
+.logo2{display:none}
+nav{width:100%;}
+header nav{width:100%}
+header nav ul{width:100%;display:none}
+header nav ul li{width:100%;border-top:1px solid #444}
+header nav ul li:hover{background:#363636;}
+header nav ul ul li,header nav li:hover > ul > li{height:auto}
+header nav ul li a,header nav ul ul li a{width:100%;border-bottom:0}
+header nav > ul > li{float:none}
+header nav ul ul li a{padding-left:25px}
+header nav ul ul li{background:#333!important;}
+header nav ul ul li:hover{background:#363636!important}
+header nav ul ul ul li a{padding-left:35px}
+header nav ul ul li a{color:#ddd;background:none}
+header nav ul ul li:hover > a,header nav ul ul li.active > a{color:#fff}
+header nav ul ul,header nav ul ul ul{position:relative;left:0;width:100%;margin:0;text-align:left}
+header nav > ul > li.has-sub > a:after,header nav > ul > li.has-sub > a:before,header nav ul ul > li.has-sub > a:after,header nav ul ul > li.has-sub > a:before{display:none}
+header nav #head-mobile{display:block;padding:23px;color:#ddd;font-size:12px;font-weight:700}
+.button{width:55px;height:46px;position:absolute;right:0;top:0;cursor:pointer;z-index: 12399994;}
+.button:after{position:absolute;top:22px;right:20px;display:block;height:4px;width:20px;border-top:2px solid #dddddd;border-bottom:2px solid #dddddd;content:''}
+.button:before{-webkit-transition:all .3s ease;-ms-transition:all .3s ease;transition:all .3s ease;position:absolute;top:16px;right:20px;display:block;height:2px;width:20px;background:#ddd;content:''}
+.button.menu-opened:after{-webkit-transition:all .3s ease;-ms-transition:all .3s ease;transition:all .3s ease;top:23px;border:0;height:2px;width:19px;background:#fff;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);-o-transform:rotate(45deg);transform:rotate(45deg)}
+.button.menu-opened:before{top:23px;background:#fff;width:19px;-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-ms-transform:rotate(-45deg);-o-transform:rotate(-45deg);transform:rotate(-45deg)}
+header nav .submenu-button{position:absolute;z-index:99;right:0;top:0;display:block;border-left:1px solid #444;height:46px;width:46px;cursor:pointer}
+header nav .submenu-button.submenu-opened{background:#262626}
+header nav ul ul .submenu-button{height:34px;width:34px}
+header nav .submenu-button:after{position:absolute;top:22px;right:19px;width:8px;height:2px;display:block;background:#ddd;content:''}
+header nav ul ul .submenu-button:after{top:15px;right:13px}
+header nav .submenu-button.submenu-opened:after{background:#fff}
+header nav .submenu-button:before{position:absolute;top:19px;right:22px;display:block;width:2px;height:8px;background:#ddd;content:''}
+header nav ul ul .submenu-button:before{top:12px;right:16px}
+header nav .submenu-button.submenu-opened:before{display:none}
+header nav ul ul ul li.active a{border-left:none}
+header nav > ul > li.has-sub > ul > li.active > a,header nav > ul ul > li.has-sub > ul > li.active > a{border-top:none}
 }
-
