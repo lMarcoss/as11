@@ -29,3 +29,4 @@
 <link rel="stylesheet" href="/aserradero/js/Ricardo/js/rc_complement.css">
 <!-- Fin de Scripts para creación de tabla con jquery-->
 <link rel="stylesheet" href="/aserradero/css/menu/bootstrap.css">
+<script src="/aserradero/js/Ricardo/js/ajax_venta_mayoreo.js"></script>

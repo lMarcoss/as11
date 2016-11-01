@@ -1,8 +1,12 @@
 package controlador;
 
+import dao.ClienteCRUD;
+import dao.EmpleadoCRUD;
 import dao.MaderaClasificacionCRUD;
 import dao.VentaCRUD;
 import dao.VentaMayoreoCRUD;
+import entidades.Cliente;
+import entidades.Empleado;
 import entidades.Venta;
 import entidades.VentaMayoreo;
 import entidadesVirtuales.CostoMaderaClasificacion;
@@ -66,6 +70,16 @@ public class VentaMayoreoController extends HttpServlet {
                     List<Venta> ventas;
                     ventas = (List<Venta>)ventaCRUD.listarVentasMayoreo();
                     request.setAttribute("ventas",ventas);
+                    
+                    //Enviamos la lista de clientes
+                    ClienteCRUD clienteCRUD= new ClienteCRUD();
+                    List<Cliente> clientes = (List<Cliente>)clienteCRUD.listar();
+                    request.setAttribute("clientes",clientes);
+                    
+                    //Enviamos la lista de empleados
+                    EmpleadoCRUD empleadoCRUD= new EmpleadoCRUD();
+                    List<Empleado> empleados = (List<Empleado>)empleadoCRUD.listarEmpleadoPorRoll("Empleado");
+                    request.setAttribute("empleados",empleados);
                     //enviamos lista de maderaClasificación al jsp
                     MaderaClasificacionCRUD maderaClasificacionCRUD= new MaderaClasificacionCRUD();
                     List<CostoMaderaClasificacion> costoMaderaClasificaciones;
@@ -219,5 +233,4 @@ public class VentaMayoreoController extends HttpServlet {
         ventaMayoreo.setMonto(Float.valueOf(request.getParameter("monto")));
         return ventaMayoreo;
     }
-
 }
