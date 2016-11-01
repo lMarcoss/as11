@@ -103,7 +103,7 @@
                                             <option></option>
                                             <%
                                                 for (CostoMaderaClasificacion costoMaderaClasificacion : costoMaderaClasificaciones) {
-                                                    out.print("<option value='"+costoMaderaClasificacion.getId_madera()+"'>"+costoMaderaClasificacion.getId_madera()+"</option>");
+                                                    out.print("<option value='"+costoMaderaClasificacion.getMonto_volumen()+"'>"+costoMaderaClasificacion.getMonto_volumen()+"</option>");
                                                 }
                                             %>
                                         </select>
