@@ -65,7 +65,12 @@
                     </li>
                     <li id="cuentas_por_cobrar"><a href="/aserradero/CuentaPorCobrarController?action=listar_proveedores">Cuentas por cobrar proveedores</a></li>
                     <li id="cuentas_por_pagar"><a href="/aserradero/CuentaPorPagarController?action=listar_proveedores">Cuentas por pagar proveedores</a></li>
-                    <li id="anticipo_clientes"><a href="/aserradero/AnticipoClienteController?action=listar">Anticipo clientes</a></li>
+                    <li id="anticipo_clientes"><a href="/aserradero/AnticipoClienteController?action=listar">Anticipo clientes</a>
+                        <ul class="children_n2 children">
+                            <li><a href="/aserradero/AnticipoProveedorController?action=listar">Cuentas por pagar</a></li>
+                            <li><a href="/aserradero/AnticipoProveedorController?action=listar">Cuentas por cobrar</a></li>
+                        </ul>
+                    </li>
                     <li id="cuentas_por_cobrar"><a href="/aserradero/CuentaPorCobrarController?action=listar_clientes">Cuentas por cobrar clientes</a></li>
                     <li id="cuentas_por_pagar"><a href="/aserradero/CuentaPorPagarController?action=listar_clientes">Cuentas por pagar clientes</a></li>
                     
