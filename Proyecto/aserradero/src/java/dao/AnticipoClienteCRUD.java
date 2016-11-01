@@ -36,7 +36,7 @@ public class AnticipoClienteCRUD extends Conexion implements OperacionesCRUD{
         List<AnticipoCliente> anticipoClientes;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM ANTICIPO_CLIENTE")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_ANTICIPO_CLIENTE")) {
                 anticipoClientes = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -62,7 +62,7 @@ public class AnticipoClienteCRUD extends Conexion implements OperacionesCRUD{
         AnticipoCliente anticipoClienteM = (AnticipoCliente) objeto;
         AnticipoCliente anticipoCliente = null;
         this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM ANTICIPO_CLIENTE WHERE id_anticipo_c=?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_ANTICIPO_CLIENTE WHERE id_anticipo_c=?")) {
                 st.setInt(1, anticipoClienteM.getId_anticipo_c());
             
                 try (ResultSet rs = st.executeQuery()) {
@@ -137,7 +137,9 @@ public class AnticipoClienteCRUD extends Conexion implements OperacionesCRUD{
         anticipoCliente.setId_anticipo_c(rs.getInt("id_anticipo_c"));
         anticipoCliente.setFecha(rs.getDate("fecha"));
         anticipoCliente.setId_cliente(rs.getString("id_cliente"));
+        anticipoCliente.setCliente(rs.getString("cliente"));
         anticipoCliente.setId_empleado(rs.getString("id_empleado"));
+        anticipoCliente.setEmpleado(rs.getString("empleado"));
         anticipoCliente.setMonto_anticipo(rs.getFloat("monto_anticipo"));
         
         return anticipoCliente;

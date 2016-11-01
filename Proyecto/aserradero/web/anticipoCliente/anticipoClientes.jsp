@@ -32,7 +32,6 @@
                     <tr>
                         <td>
                             <select name="nombre_campo" >
-                            <option value="id_anticipo_c">Id anticipo</option>
                             <option value="fecha">Fecha</option>
                             <option value="id_cliente">Id cliente</option>
                             <option value="id_empleado">Id empleado</option>
@@ -51,13 +50,12 @@
             <table class="table-condensed">
                     <tr>
                         <th>N°</th>
-                        <th>Id anticipo</th>
                         <th>Fecha</th>
                         <th>Id cliente</th>
                         <th>Id empleado</th>
                         <th>Monto anticipo </th>
                         <th> </th>
-                        <th> </th>
+                        <!--<th> </th>-->
                     </tr>
                     <%
                         
@@ -65,12 +63,12 @@
                         for (AnticipoCliente anticipoCliente : anticipoClientes) {
                             out.print("<tr>"
                                 +"<td>"+(i+1)+"</td>"
-                                +"<td>"+anticipoCliente.getId_anticipo_c()+"</td>"
                                 +"<td>"+anticipoCliente.getFecha()+"</td>"
-                                +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+anticipoCliente.getId_cliente()+"\">"+anticipoCliente.getId_cliente()+"</a></td>"    
-                                +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+anticipoCliente.getId_empleado()+"\">"+anticipoCliente.getId_empleado()+"</a></td>"
+                                +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+anticipoCliente.getId_cliente()+"\">"+anticipoCliente.getCliente()+"</a></td>"    
+                                +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+anticipoCliente.getId_empleado()+"\">"+anticipoCliente.getEmpleado()+"</a></td>"
                                 +"<td>"+anticipoCliente.getMonto_anticipo()+"</td>"
-                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/AnticipoClienteController?action=eliminar&id_anticipo_c="+anticipoCliente.getId_anticipo_c()+"';};\">Eliminar</a></td>"
+                                +"<td><a href=\"/aserradero/AnticipoClienteController?action=modificar&id_anticipo_c="+anticipoCliente.getId_anticipo_c()+"\">Modificar</a></td>"
+//                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/AnticipoClienteController?action=eliminar&id_anticipo_c="+anticipoCliente.getId_anticipo_c()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;
                         }

@@ -26,33 +26,30 @@
                 <fieldset id="user-details">
                     
                     <table>
+                        <input type="hidden" name="id_anticipo_c" value="<%=anticipoCliente.getId_anticipo_c()%>" readonly=""/>
                         <tr>
-                            <td style="padding-left: 10px;"><label>Id anticipo:</label></td>
-                            <td style="padding-left: 10px;">
-                                <input name="id_anticipo_c" value="<%=anticipoCliente.getId_anticipo_c()%>" readonly=""/>
-                            </td>
-                        </tr>
-                         <tr>
                             <td style="padding-left: 10px;"><label>Fecha:</label></td>
                             <td style="padding-left: 10px;"><input type="date" name="fecha" value="<%=anticipoCliente.getFecha()%>" required="" /></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>cliente:</label></td>
                             <td style="padding-left: 10px;">
-                                <input name="id_cliente" value="<%=anticipoCliente.getId_cliente()%>" readonly=""/>
+                                <input type="hidden" name="id_cliente" value="<%=anticipoCliente.getId_cliente()%>" readonly=""/>
+                                <input type="text" name="cliente" value="<%=anticipoCliente.getCliente()%>" readonly=""/>
                             </td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>empleado:</label></td>
                             <td style="padding-left: 10px;">
-                                <input name="id_empleado" value="<%=anticipoCliente.getId_empleado()%>" readonly=""/>
+                                <input type="hidden" name="id_empleado" value="<%=anticipoCliente.getId_empleado()%>" readonly=""/>
+                                <input type="text" name="empleado" value="<%=anticipoCliente.getEmpleado()%>" readonly=""/>
                             </td>
                         </tr>
                         
                         <tr>
                             <td style="padding-left: 10px;"><label>Monto:</label></td>
                             <td style="padding-left: 10px;">
-                                <input name="monto_anticipo" type="number" value="<%=anticipoCliente.getMonto_anticipo()%>" step="any" required=""/>                             
+                                <input type="number" name="monto_anticipo" value="<%=anticipoCliente.getMonto_anticipo()%>" step="0.01" min="0.01" max="99999999.99" required=""/>                             
                             </td>
                         </tr>
                         <tr>

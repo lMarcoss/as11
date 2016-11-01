@@ -670,3 +670,14 @@ BEGIN
 	
 END;//
 DELIMITER ;
+
+CREATE VIEW VISTA_ANTICIPO_CLIENTE AS 
+SELECT id_anticipo_c,
+		fecha,
+        id_cliente,
+        (SELECT concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(ANTICIPO_CLIENTE.id_cliente,1,18)) as cliente,
+        id_empleado,
+        (SELECT concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(ANTICIPO_CLIENTE.id_empleado,1,18)) as empleado,
+        (SELECT id_jefe FROM EMPLEADO WHERE id_empleado = ANTICIPO_CLIENTE.id_empleado) as id_jefe,
+        monto_anticipo
+FROM ANTICIPO_CLIENTE;
