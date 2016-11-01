@@ -681,3 +681,39 @@ SELECT id_anticipo_c,
         (SELECT id_jefe FROM EMPLEADO WHERE id_empleado = ANTICIPO_CLIENTE.id_empleado) as id_jefe,
         monto_anticipo
 FROM ANTICIPO_CLIENTE;
+
+-- lista cuentas por cobrar proveedor
+CREATE VIEW CUENTA_POR_COBRAR_PROVEEDOR AS
+SELECT CUENTA_POR_COBRAR.id_persona,
+	(select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(CUENTA_POR_COBRAR.id_persona,1,18)) as persona,
+    PROVEEDOR.id_jefe as id_jefe,
+    monto
+	FROM CUENTA_POR_COBRAR,PROVEEDOR WHERE CUENTA_POR_COBRAR.id_persona=id_proveedor;
+SELECT * FROM CUENTA_POR_COBRAR_PROVEEDOR;
+
+-- lista de cuentas por cobrar clientes
+CREATE VIEW CUENTA_POR_COBRAR_CLIENTE AS
+SELECT CUENTA_POR_COBRAR.id_persona,
+	(select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(CUENTA_POR_COBRAR.id_persona,1,18)) as persona,
+    CLIENTE.id_jefe as id_jefe,
+    monto
+	FROM CUENTA_POR_COBRAR,CLIENTE WHERE CUENTA_POR_COBRAR.id_persona=id_cliente;
+SELECT * FROM CUENTA_POR_COBRAR_CLIENTE;
+
+-- lista de cuentas por pagar proveedores
+CREATE VIEW CUENTA_POR_PAGAR_PROVEEDOR AS
+SELECT CUENTA_POR_PAGAR.id_persona,
+		(select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(CUENTA_POR_PAGAR.id_persona,1,18)) as persona,
+        PROVEEDOR.id_jefe,
+        monto
+	FROM CUENTA_POR_PAGAR,PROVEEDOR WHERE CUENTA_POR_PAGAR.id_persona = PROVEEDOR.id_proveedor;
+SELECT * FROM CUENTA_POR_PAGAR_PROVEEDOR;
+
+-- lista cuentas por pagar a clientes
+CREATE VIEW CUENTA_POR_PAGAR_CLIENTE AS
+SELECT CUENTA_POR_PAGAR.id_persona,
+		(select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(CUENTA_POR_PAGAR.id_persona,1,18)) as persona,
+        CLIENTE.id_jefe,
+        monto
+	FROM CUENTA_POR_PAGAR,CLIENTE WHERE CUENTA_POR_PAGAR.id_persona = CLIENTE.id_cliente;
+SELECT * FROM CUENTA_POR_PAGAR_CLIENTE;
