@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : rcortes
 */
 #page-wrapper{
-    width: 85%;
+    width: 95%;
     margin: 0 auto;
 }
 .lado_derecho{               
@@ -46,4 +46,13 @@ and open the template in the editor.
   -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
           transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+.margen-boton{
+    margin-bottom: 3px;   
+}
+.bordebajo{
+ border-bottom: 1px double #ddd;   
+}
+.centrar-btn{
+    margin-top:35px;
 }

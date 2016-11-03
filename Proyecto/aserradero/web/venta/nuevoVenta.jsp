@@ -20,6 +20,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%@ include file="/TEMPLATE/head.jsp" %>
         <%@ include file="/TEMPLATE/headNuevo.jsp" %>
         <title>Nuevo</title>
     </head>

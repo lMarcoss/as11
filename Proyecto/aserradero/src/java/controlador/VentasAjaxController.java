@@ -8,7 +8,7 @@ package controlador;
 
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import entidades.VentaExtra;
 import entidades.VentaMayoreo;
@@ -80,26 +80,24 @@ public class VentasAjaxController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/xml");
-        response.setContentType("application/json");
+            throws ServletException, IOException {        
+        response.setContentType("text/html;charset=UTF-8");
         processRequest(request, response);
         request.setCharacterEncoding("UTF-8");
         VentaMayoreo VM= new VentaMayoreo();
         Integer id_venta=Integer.valueOf(request.getParameter("id_venta"));
         String accion=request.getParameter("accion");
+        Gson json=new Gson();
+        JsonArray jArray = new JsonArray();
         JsonObject jsonreturn =new JsonObject();
-        PrintWriter out = response.getWriter();             
+        PrintWriter out = response.getWriter();
         HttpSession sesion_ajax = request.getSession(true);//Instanciamos la sesión
         System.out.println(accion);
         switch(accion){
-            case "add_venta_extra":
+            case "add_venta_extra":                
                 String tipo=request.getParameter("tipo");
                 float Monto_Ex=Float.valueOf(request.getParameter("monto"));
                 String observacion=request.getParameter("observacion");
-                System.out.println(tipo);
-                System.out.println(Monto_Ex);
-                System.out.println(observacion);
                 try {
                     ArrayList<VentaExtra> VentaExt = sesion_ajax.getAttribute("detalle_venta_extra") == null ? new ArrayList<>() : (ArrayList) sesion_ajax.getAttribute("detalle_venta_extra");
                     boolean bandera=false;
@@ -116,10 +114,13 @@ public class VentasAjaxController extends HttpServlet {
                      VentaExt.add(new VentaExtra(id_venta,tipo,Monto_Ex,observacion));   
                     }
                     jsonreturn.addProperty("success", true);
-                    response.getWriter().print("{success: true}"); 
+                    response.getWriter().print("{success: true}");
                     jsonreturn.addProperty("msj", "errors");
+                    json.toJson(jsonreturn);
+                    jArray.add(jsonreturn);
                     out.print(jsonreturn.toString());
-                    out.close();
+                    out.print(json);
+                    response.getWriter().print(jArray);
                     sesion_ajax.setAttribute("detalle_venta_extra", VentaExt);
                 } catch (Exception e) {
                     jsonreturn.addProperty("success", false);                    
@@ -128,6 +129,7 @@ public class VentasAjaxController extends HttpServlet {
             break;
             case "del_venta_extra":
                 tipo=request.getParameter("tipo");
+                System.out.println(tipo+"***");
                 ArrayList<VentaExtra> VentaExt = sesion_ajax.getAttribute("detalle_venta_extra") == null ? new ArrayList<>() : (ArrayList) sesion_ajax.getAttribute("detalle_venta_extra");
                 if(VentaExt!=null){
                     for(VentaExtra a:VentaExt){
@@ -138,6 +140,8 @@ public class VentasAjaxController extends HttpServlet {
                     }
                 }
                 out.print(jsonreturn.toString());
+                jArray.add(jsonreturn);
+                response.getWriter().print(jArray);
                 out.close();
                 sesion_ajax.setAttribute("detalle_venta_extra", VentaExt);
             break;    
@@ -147,7 +151,7 @@ public class VentasAjaxController extends HttpServlet {
                 Integer num_piezas=Integer.valueOf(request.getParameter("num_piezas"));
                 float Monto=Float.valueOf(request.getParameter("monto"));
                 try {
-                    ArrayList<VentaMayoreo>  VentaMay = sesion_ajax.getAttribute("detalle") == null ? new ArrayList<>() : (ArrayList) sesion_ajax.getAttribute("detalle");
+                    ArrayList<VentaMayoreo>  VentaMay = sesion_ajax.getAttribute("detalle_venta_mayoreo") == null ? new ArrayList<>() : (ArrayList) sesion_ajax.getAttribute("detalle_venta_mayoreo");
                     boolean bandera=false;
                     if(VentaMay.size()>0){
                         for(VentaMayoreo a:VentaMay){
@@ -167,7 +171,7 @@ public class VentasAjaxController extends HttpServlet {
                     jsonreturn.addProperty("msj", "errors");
                     out.print(jsonreturn.toString());
                     out.close();
-                    sesion_ajax.setAttribute("detalle", VentaMay);
+                    sesion_ajax.setAttribute("detalle_venta_mayoreo", VentaMay);
                 } catch (Exception e) {
                     jsonreturn.addProperty("success", false);
                     System.out.println(e);
@@ -175,7 +179,7 @@ public class VentasAjaxController extends HttpServlet {
             break;    
             case "del_venta_mayoreo":
                 Madera=request.getParameter("id_madera");
-                ArrayList<VentaMayoreo> VentaMay = sesion_ajax.getAttribute("detalle") == null ? new ArrayList<>() : (ArrayList) sesion_ajax.getAttribute("detalle");
+                ArrayList<VentaMayoreo> VentaMay = sesion_ajax.getAttribute("detalle_venta_mayoreo") == null ? new ArrayList<>() : (ArrayList) sesion_ajax.getAttribute("detalle_venta_mayoreo");
                 if(VentaMay!=null){
                     for(VentaMayoreo a:VentaMay){
                         if(a.getId_madera().equals(Madera)){
@@ -186,7 +190,7 @@ public class VentasAjaxController extends HttpServlet {
                 }
                 out.print(jsonreturn.toString());
                 out.close();
-                sesion_ajax.setAttribute("detalle", VentaMay);
+                sesion_ajax.setAttribute("detalle_venta_mayoreo", VentaMay);
             break;
             default:break;
         }

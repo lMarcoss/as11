@@ -4,15 +4,20 @@ import ticketVenta.DatosClienteTicket;
 import dao.ClienteCRUD;
 import dao.EmpleadoCRUD;
 import dao.VentaCRUD;
+import dao.VentaExtraCRUD;
+import dao.VentaMayoreoCRUD;
 import entidades.Cliente;
 import entidades.Empleado;
 import entidades.Venta;
+import entidades.VentaExtra;
+import entidades.VentaMayoreo;
 import ticketVenta.Madera;
 import ticketVenta.Paquete;
 import ticketVenta.DatosVentaExtra;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +26,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -161,6 +167,7 @@ public class VentaController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
         String action = request.getParameter("action");
+        String tipo_venta = request.getParameter("tipo_venta");
         Venta venta;
         VentaCRUD ventaCRUD;
         switch(action){
@@ -169,6 +176,31 @@ public class VentaController extends HttpServlet {
                 ventaCRUD = new VentaCRUD();
                 try {
                     ventaCRUD.registrar(venta);
+                    switch(tipo_venta){//Este tipo de venta es mayoreo y proviene de ajax
+                        case "mayoreo":
+                            //VentaMayoreo VM=new VentaMayoreo();
+                            HttpSession sesion_ajax = request.getSession(true);
+                            ArrayList<VentaMayoreo> VentaMay = (ArrayList<VentaMayoreo>) sesion_ajax.getAttribute("detalle_venta_mayoreo");
+                            VentaMayoreoCRUD ventaMayoreoCRUD;
+                            ventaMayoreoCRUD = new VentaMayoreoCRUD();
+                            for(VentaMayoreo a:VentaMay){
+                                ventaMayoreoCRUD.registrar(a);
+                            }
+                            break;
+                        case "extra":
+                            sesion_ajax = request.getSession(true);
+                            ArrayList<VentaExtra> VentaExt = (ArrayList<VentaExtra>) sesion_ajax.getAttribute("detalle_venta_mayoreo");                            
+                            VentaExtraCRUD VentaExtraCrud;
+                            VentaExtraCrud = new VentaExtraCRUD();
+                            for(VentaExtra a:VentaExt){
+                                VentaExtraCrud.registrar(a);
+                            }
+                            break;
+                        case "paquete":
+                            
+                            break;
+                        default:break;
+                    }
                     listarVentas(request, response,"registrado");
                 } catch (Exception ex) {
                     listarVentas(request, response,"error_registrar");

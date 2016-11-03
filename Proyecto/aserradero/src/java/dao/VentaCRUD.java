@@ -131,7 +131,16 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         }
         return pagado;
     }
-
+    public int SiguienteIDVenta()throws Exception{
+        Integer id_sig_venta=0;
+        this.abrirConexion();
+        PreparedStatement st=this.conexion.prepareStatement("select MAX(id_venta) from VENTA;");
+        ResultSet res = st.executeQuery();
+        if(res.next()){
+            id_sig_venta=Integer.valueOf(res.getString(0));
+        }
+        return id_sig_venta+1;        
+    }
     @Override
     public <T> List buscar(String nombre_campo, String dato) throws Exception {
         List<Venta> ventas;

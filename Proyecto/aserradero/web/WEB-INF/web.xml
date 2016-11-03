@@ -132,6 +132,10 @@
         <servlet-name>SalidaMaderaRolloController</servlet-name>
         <servlet-class>controlador.SalidaMaderaRolloController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VentasAjaxController</servlet-name>
+        <servlet-class>controlador.VentasAjaxController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IniciarSesion</servlet-name>
         <url-pattern>/Iniciar</url-pattern>
@@ -259,6 +263,10 @@
     <servlet-mapping>
         <servlet-name>SalidaMaderaRolloController</servlet-name>
         <url-pattern>/SalidaMaderaRolloController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VentasAjaxController</servlet-name>
+        <url-pattern>/VentasAjaxController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

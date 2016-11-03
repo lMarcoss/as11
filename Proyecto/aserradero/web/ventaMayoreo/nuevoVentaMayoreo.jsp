@@ -24,12 +24,13 @@
 %>
 <%
     HttpSession sesion_ajax = request.getSession(true);
-    sesion_ajax.setAttribute("detalle", null);
+    sesion_ajax.setAttribute("detalle_venta_mayoreo", null);
 %>
 <!DOCTYPE html>
 <html>
     <head>
         <%@ include file="/TEMPLATE/headNuevo.jsp" %>
+        <%@ include file="/TEMPLATE/head.jsp" %>
         <title>Nuevo</title>
     </head>
     <body>
@@ -103,7 +104,7 @@
                                             <option></option>
                                             <%
                                                 for (CostoMaderaClasificacion costoMaderaClasificacion : costoMaderaClasificaciones) {
-                                                    out.print("<option value='"+costoMaderaClasificacion.getId_madera()+"'>"+costoMaderaClasificacion.getId_madera()+"</option>");
+                                                    out.print("<option value='"+costoMaderaClasificacion.getVolumen()+"'>"+costoMaderaClasificacion.getVolumen()+"</option>");
                                                 }
                                             %>
                                         </select>
@@ -112,24 +113,24 @@
                                         <label class="control-label" >Costo volumen</label>
                                         <select name="costo_volumen" class="form-control" id="costo_volumen" readonly="" disabled="">
                                             <option></option>
-                                          <%
-                                              for (CostoMaderaClasificacion costoMaderaClasificacion : costoMaderaClasificaciones) {
-                                                  out.print("<option value='"+costoMaderaClasificacion.getMonto_volumen()+"'>"+costoMaderaClasificacion.getMonto_volumen()+"</option>");
-                                              }
-                                          %>
+                                            <%
+                                                for (CostoMaderaClasificacion costoMaderaClasificacion : costoMaderaClasificaciones) {
+                                                    out.print("<option value='"+costoMaderaClasificacion.getMonto_volumen()+"'>"+costoMaderaClasificacion.getMonto_volumen()+"</option>");
+                                                }
+                                            %>
                                         </select>
                                         <label class="control-label" >Número de piezas:</label>
                                         <input type="number" class="form-control" name="num_piezas" id="num_piezas" min="1" max="999" required="" title="Escribe la cantidad de piezas" onblur="calcularVolumenTotal()"/>
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label class="control-label" >Volumen:</label>
-                                        <input type="number" class="form-control" name="volumen" id="volumen" step="0.001" min="0.001" max="99999.999" required="" readonly=""/>
+                                        <input class="form-control" type="number" name="volumen" id="volumen" step="0.001" min="0.001" max="99999.999" required="" readonly="" disabled=""/>
                                         <label class="control-label" >Monto:</label>
                                         <input type="number" name="monto" class="form-control" id="monto" step="0.01" min="0.01" max="99999999.99"  required="" readonly=""/>
                                     </div>
                                     <div class="col-md-3">
                                         <br><br><br>
-                                        <input id="agregar_venta_detalle" type="button" class="btn btn-info col-md-9" value="Agregar producto"/>
+                                        <input id="agregar_venta_mayoreo" type="button" class="btn btn-info col-md-9" value="Agregar producto"/>
                                     </div>
                                 </div>
                             </div>
