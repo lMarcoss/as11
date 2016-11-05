@@ -1,18 +1,18 @@
-use aserradero;
 -- Disparador para insertar datos en la tabla cuentas por pagar cada que se hace un anticipoCliente
 -- verifica si hay se tiene cuenta pro cobrar con el cliente para restarle y si no, entonces inserta en cuentas por pagar
-DROP TRIGGER IF EXISTS UPDATE_CUENTAS_AFTER_ANTICIPO;
+DROP TRIGGER IF EXISTS UPDATE_CUENTAS_AFTER_ANTICIPO_CLIENTE;
 DELIMITER //
-CREATE TRIGGER UPDATE_CUENTAS_AFTER_ANTICIPO  AFTER INSERT ON ANTICIPO_CLIENTE
+CREATE TRIGGER UPDATE_CUENTAS_AFTER_ANTICIPO_CLIENTE  AFTER INSERT ON ANTICIPO_CLIENTE
 FOR EACH ROW
 BEGIN
-	CALL UPDATE_CUENTAS_AFTER_ANTICIPO(NEW.fecha,NEW.id_cliente,NEW.id_empleado,NEW.monto_anticipo);
+	CALL UPDATE_CUENTAS_AFTER_ANTICIPO_CLIENTE(NEW.fecha,NEW.id_cliente,NEW.id_empleado,NEW.monto_anticipo);
 END;//
 DELIMITER ;
 
-DROP PROCEDURE IF EXISTS UPDATE_CUENTAS_AFTER_ANTICIPO;
+-- Procedimiento de actualización de cuentas para anticipo clientes
+DROP PROCEDURE IF EXISTS UPDATE_CUENTAS_AFTER_ANTICIPO_CLIENTE;
 DELIMITER //
-CREATE PROCEDURE UPDATE_CUENTAS_AFTER_ANTICIPO (IN fecha_a DATE,IN id_cliente_a CHAR(26),IN id_empleado_a CHAR(26), IN monto_anticipo_a DECIMAL(10,2))
+CREATE PROCEDURE UPDATE_CUENTAS_AFTER_ANTICIPO_CLIENTE (IN fecha_a DATE,IN id_cliente_a CHAR(26),IN id_empleado_a CHAR(26), IN monto_anticipo_a DECIMAL(10,2))
 BEGIN
     -- si el cliente debe dinero, entonce se cobra 
 	IF EXISTS (SELECT id_persona FROM CUENTA_POR_COBRAR WHERE id_persona = id_cliente_a) THEN
@@ -44,11 +44,10 @@ BEGIN
 END;//
 DELIMITER ;
 
-DROP TRIGGER IF EXISTS ACTUALIZAR_CUENTAS;
-use aserradero;
--- Disparador para actualizar cuentas (Cuentas por pagar y por cobrar)
+DROP TRIGGER IF EXISTS ACTUALIZAR_CUENTAS_CLIENTE;
+-- Disparador para actualizar cuentas (Cuentas por pagar y por cobrar, Cuando se modifica el anticipo: controla los errores de anticipo)
 DELIMITER //
-CREATE TRIGGER ACTUALIZAR_CUENTAS  BEFORE UPDATE ON ANTICIPO_CLIENTE
+CREATE TRIGGER ACTUALIZAR_CUENTAS_CLIENTE  BEFORE UPDATE ON ANTICIPO_CLIENTE
 FOR EACH ROW
 BEGIN
 	DECLARE cuenta_pagar_existente decimal(10,2);
@@ -74,33 +73,32 @@ BEGIN
     
     -- Si hay cuenta por pagar restamos el anticipo antiguo
     IF(cuenta_pagar_existente > 0 AND cuenta_cobrar_existente = 0) THEN 
-		SET cuenta_pagar_nuevo = cuenta_pagar_existente - OLD.monto_anticipo;
-        IF(cuenta_pagar_nuevo < 0) THEN
-			INSERT INTO CUENTA_POR_COBRAR VALUES (NEW.id_cliente,ABS(cuenta_pagar_nuevo));
-		ELSE IF(cuenta_pagar_nuevo > 0) THEN
-				INSERT INTO CUENTA_POR_PAGAR VALUES (NEW.id_cliente,ABS(cuenta_pagar_nuevo));
+        SET cuenta_pagar_nuevo = cuenta_pagar_existente - OLD.monto_anticipo;
+        
+        IF(cuenta_pagar_nuevo > 0) THEN 
+			INSERT INTO CUENTA_POR_PAGAR VALUES (NEW.id_cliente,ABS(cuenta_pagar_nuevo));
+		ELSE IF(cuenta_pagar_nuevo < 0) THEN
+				INSERT INTO CUENTA_POR_COBRAR VALUES (NEW.id_cliente,ABS(cuenta_pagar_nuevo));
 			END IF;
-        END IF;
-	ELSE
-		SET cuenta_cobrar_nuevo = cuenta_cobrar_existente + OLD.monto_anticipo;
-		INSERT INTO CUENTA_POR_COBRAR VALUES (NEW.id_cliente,ABS(cuenta_cobrar_nuevo));
+		END IF;
+	ELSE IF(cuenta_pagar_existente = 0 AND cuenta_cobrar_existente > 0) THEN
+			SET cuenta_cobrar_nuevo = cuenta_cobrar_existente + OLD.monto_anticipo;
+			IF(cuenta_cobrar_nuevo > 0)THEN
+				INSERT INTO CUENTA_POR_COBRAR VALUES (NEW.id_cliente,ABS(cuenta_cobrar_nuevo));
+			ELSE IF(cuenta_cobrar_nuevo < 0)THEN
+					INSERT INTO CUENTA_POR_PAGAR VALUES (NEW.id_cliente,ABS(cuenta_cobrar_nuevo));
+				END IF;
+			END IF;
+		-- si cxp y cxc estan en cero la modificacion se suma al cxc para despues actualizarse con el nuevo valor de anticipo
+		ELSE IF(cuenta_pagar_existente = 0 AND cuenta_cobrar_existente = 0) THEN 
+				SET cuenta_cobrar_nuevo = OLD.monto_anticipo;
+				INSERT INTO CUENTA_POR_COBRAR VALUES (NEW.id_cliente,ABS(cuenta_cobrar_nuevo));
+			END IF;
+		END IF;
 	END IF;
     
-    -- Actualizamos cuentas dependiendo de las existentes : Se inserta como nuevo
-    CALL UPDATE_CUENTAS_AFTER_ANTICIPO(NEW.fecha,NEW.id_cliente,NEW.id_empleado,NEW.monto_anticipo);
+    -- insertamos la modificación como nuevo: para actualizar cuentas por pagar y por cobrar
+    CALL UPDATE_CUENTAS_AFTER_ANTICIPO_CLIENTE(NEW.fecha,NEW.id_cliente,NEW.id_empleado,NEW.monto_anticipo);
     
 END;//
 DELIMITER ;
-DESCRIBE ANTICIPO_CLIENTE;
-
-DESCRIBE CUENTA_POR_PAGAR;
-
-INSERT INTO CUENTA_POR_COBRAR VALUES ('COXN20160915HOCRXXPAXA2016',90000);
-delete from ANTICIPO_CLIENTE where id_anticipo_c = 4;
-SELECT * FROM ANTICIPO_CLIENTE;
-SELECT * FROM CUENTA_POR_PAGAR;
-SELECT * FROM CUENTA_POR_COBRAR;
-delete from CUENTA_POR_PAGAR where id_persona = 'COXN20160915HOCRXXPAXA2016';
-delete from CUENTA_POR_COBRAR where id_persona = 'COXN20160915HOCRXXPAXA2016';
-
-SELECT * FROM ANTICIPO_CLIENTE;
