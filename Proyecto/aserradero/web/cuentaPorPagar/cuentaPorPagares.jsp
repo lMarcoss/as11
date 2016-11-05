@@ -49,8 +49,6 @@
                         <th>N°</th>
                         <th><%=tabla%></th>
                         <th>Monto </th>
-                        <th> </th>
-                        <th> </th>
                     </tr>
                     <%
                         int i=0;
@@ -59,8 +57,7 @@
                                 +"<td>"+(i+1)+"</td>"
                                 +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+cuentaPorPagar.getId_persona()+"\">"+cuentaPorPagar.getPersona()+"</a></td>"    
                                 +"<td>"+cuentaPorPagar.getMonto()+"</td>"
-                                
-                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/CuentaPorPagarController?action=eliminar&id_cliente="+cuentaPorPagar.getId_persona()+"';};\">Eliminar</a></td>"
+//                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/CuentaPorPagarController?action=eliminar&id_cliente="+cuentaPorPagar.getId_persona()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;
                         }

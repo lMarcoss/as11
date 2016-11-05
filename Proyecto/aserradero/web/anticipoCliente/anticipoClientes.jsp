@@ -33,8 +33,8 @@
                         <td>
                             <select name="nombre_campo" >
                             <option value="fecha">Fecha</option>
-                            <option value="id_cliente">Id cliente</option>
-                            <option value="id_empleado">Id empleado</option>
+                            <option value="cliente">Cliente</option>
+                            <option value="empleado">Empleado</option>
                             <option value="monto_anticipo">Monto anticipo</option>
                         </select>
                         </td>
@@ -51,11 +51,10 @@
                     <tr>
                         <th>N°</th>
                         <th>Fecha</th>
-                        <th>Id cliente</th>
-                        <th>Id empleado</th>
+                        <th>Cliente</th>
+                        <th>Empleado</th>
                         <th>Monto anticipo </th>
                         <th> </th>
-                        <!--<th> </th>-->
                     </tr>
                     <%
                         

@@ -30,10 +30,9 @@
                     <tr>
                         <td>
                             <select name="nombre_campo" >
-                            <option value="id_anticipo_p">Id anticipo</option>
                             <option value="fecha">Fecha</option>
-                            <option value="id_proveedor">Id proveedor</option>
-                            <option value="id_empleado">Id empleado</option>
+                            <option value="proveedor">Proveedor</option>
+                            <option value="empleado">Empleado</option>
                             <option value="monto_anticipo">Monto anticipo</option>
                         </select>
                         </td>
@@ -49,12 +48,10 @@
             <table class="table-condensed">
                     <tr>
                         <th>N°</th>
-                        <th>Id anticipo</th>
                         <th>Fecha</th>
-                        <th>Id proveedor</th>
-                        <th>Id empleado</th>
+                        <th>Proveedor</th>
+                        <th>Empleado</th>
                         <th>Monto anticipo </th>
-                        <th> </th>
                         <th> </th>
                     </tr>
                     <%
@@ -62,12 +59,12 @@
                         for (AnticipoProveedor anticipoProveedor : anticipoProveedores) {
                             out.print("<tr>"
                                 +"<td>"+(i+1)+"</td>"
-                                +"<td>"+anticipoProveedor.getId_anticipo_p()+"</td>"
                                 +"<td>"+anticipoProveedor.getFecha()+"</td>"
-                                +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+anticipoProveedor.getId_proveedor()+"\">"+anticipoProveedor.getId_proveedor()+"</a></td>"    
-                                +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+anticipoProveedor.getId_empleado()+"\">"+anticipoProveedor.getId_empleado()+"</a></td>"
+                                +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+anticipoProveedor.getId_proveedor()+"\">"+anticipoProveedor.getProveedor()+"</a></td>"    
+                                +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+anticipoProveedor.getId_empleado()+"\">"+anticipoProveedor.getEmpleado()+"</a></td>"
                                 +"<td>"+anticipoProveedor.getMonto_anticipo()+"</td>"
-                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/AnticipoProveedorController?action=eliminar&id_anticipo_p="+anticipoProveedor.getId_anticipo_p()+"';};\">Eliminar</a></td>"
+                                +"<td><a href=\"/aserradero/AnticipoProveedorController?action=modificar&id_anticipo_p="+anticipoProveedor.getId_anticipo_p()+"\">Modificar</a></td>"
+//                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/AnticipoProveedorController?action=eliminar&id_anticipo_p="+anticipoProveedor.getId_anticipo_p()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;
                         }

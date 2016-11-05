@@ -49,8 +49,6 @@
                         <th>N°</th>
                         <th><%=tabla%></th>
                         <th>Monto </th>
-                        <th></th>
-                        <th></th>
                     </tr>
                     <%
                         
@@ -60,7 +58,7 @@
                                 +"<td>"+(i+1)+"</td>"
                                 +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+cuentaPorCobrar.getId_persona().substring(0, 18)+"\">"+cuentaPorCobrar.getPersona()+"</a></td>"
                                 +"<td>"+cuentaPorCobrar.getMonto()+"</td>"
-                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/CuentaPorCobrarController?action=eliminar&id_proveedor="+cuentaPorCobrar.getId_persona().substring(0, 18)+"';};\">Eliminar</a></td>"
+//                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/CuentaPorCobrarController?action=eliminar&id_proveedor="+cuentaPorCobrar.getId_persona().substring(0, 18)+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;
                         }

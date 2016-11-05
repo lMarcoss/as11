@@ -17,6 +17,7 @@
     <head>
         <%@ include file="/TEMPLATE/head.jsp" %>
         <link rel="stylesheet" href="/aserradero/css/formulario.css">
+        <script type="text/javascript" src="/aserradero/js/fechaActual.js"></script>
         <title>Nuevo</title>
     </head>
     <body>
@@ -32,7 +33,7 @@
                         
                          <tr>
                             <td style="padding-left: 10px;"><label>Fecha:</label></td>
-                            <td style="padding-left: 10px;"><input type="date" name="fecha" required="" /></td>
+                            <td style="padding-left: 10px;"><input type="date" name="fecha" id="fecha" value="" required=""/></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>cliente:</label></td>

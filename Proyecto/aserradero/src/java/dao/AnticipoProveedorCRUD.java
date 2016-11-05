@@ -36,7 +36,7 @@ public class AnticipoProveedorCRUD extends Conexion implements OperacionesCRUD{
         List<AnticipoProveedor> anticipoProveedores;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM ANTICIPO_PROVEEDOR")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_ANTICIPO_PROVEEDOR")) {
                 anticipoProveedores = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -62,7 +62,7 @@ public class AnticipoProveedorCRUD extends Conexion implements OperacionesCRUD{
         AnticipoProveedor anticipoProveedorM = (AnticipoProveedor) objeto;
         AnticipoProveedor anticipoProveedor = null;
         this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM ANTICIPO_PROVEEDOR WHERE id_anticipo_p=?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_ANTICIPO_PROVEEDOR WHERE id_anticipo_p=?")) {
                 st.setInt(1, anticipoProveedorM.getId_anticipo_p());
             
                 try (ResultSet rs = st.executeQuery()) {
@@ -112,7 +112,7 @@ public class AnticipoProveedorCRUD extends Conexion implements OperacionesCRUD{
         List<AnticipoProveedor> anticipoProveedores;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM ANTICIPO_PROVEEDOR WHERE "+nombre_campo+" like ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_ANTICIPO_PROVEEDOR WHERE "+nombre_campo+" like ?")) {
                 st.setString(1, "%"+dato+"%");
                 anticipoProveedores = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
@@ -137,7 +137,9 @@ public class AnticipoProveedorCRUD extends Conexion implements OperacionesCRUD{
         anticipoProveedor.setId_anticipo_p(rs.getInt("id_anticipo_p"));
         anticipoProveedor.setFecha(rs.getDate("fecha"));
         anticipoProveedor.setId_proveedor(rs.getString("id_proveedor"));
+        anticipoProveedor.setProveedor(rs.getString("proveedor"));
         anticipoProveedor.setId_empleado(rs.getString("id_empleado"));
+        anticipoProveedor.setEmpleado(rs.getString("empleado"));
         anticipoProveedor.setMonto_anticipo(rs.getFloat("monto_anticipo"));
         
         return anticipoProveedor;
