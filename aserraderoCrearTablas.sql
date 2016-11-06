@@ -277,6 +277,16 @@ CREATE TABLE VEHICULO(
 	PRIMARY KEY(id_vehiculo),
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
+CREATE TABLE PRESTAMO(
+	id_prestamo			INT NOT NULL AUTO_INCREMENT,
+    fecha 				DATE,
+    id_persona			VARCHAR(26) NOT NULL, -- registramos un id de la tabla Persona agregando 8 letras del administrador para completar 26 caracteres
+    id_administrador	VARCHAR(18) NOT NULL,
+	monto				DECIMAL(10,2),
+    interes				INT, -- porcentaje de interes (0-100)
+	PRIMARY KEY(id_prestamo),
+    FOREIGN KEY (id_administrador) REFERENCES ADMINISTRADOR (id_administrador) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+
 -- Disparador para insertar un administrador como empleado su jefe será él mismo
 DELIMITER //
 CREATE TRIGGER EMPLEADO  AFTER INSERT ON ADMINISTRADOR
