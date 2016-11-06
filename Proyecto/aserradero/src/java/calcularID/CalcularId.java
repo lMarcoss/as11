@@ -6,8 +6,8 @@ package calcularID;
  * @author lmarcoss
  */
     
-// Clase para calcular Id empleado, Id cliente, e Id proveedor a través del Id persona e id jefe
-public class CalcularIdECP {
+// Clase para calcular Id empleado, Id cliente, e Id proveedor y Id del prestador para prestamos a través del Id persona e id jefe o idAdministrador para el caso de IdPrestador
+public class CalcularId {
     // Se concatena el id_persona + los 8 primeros caracteres del id_administrador
     public String CalcularId(String id_persona, String id_jefe) {
         String id;

@@ -51,7 +51,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 10px;"><label for="monto">Monto:</label></td>
+                            <td style="padding-left: 10px;"><label>Monto:</label></td>
                             <td style="padding-left: 10px;"><input type="number" step="0.01" min="0.01" max="99999999.99" name="monto" required="" /></td>
                         </tr>
                         <tr>

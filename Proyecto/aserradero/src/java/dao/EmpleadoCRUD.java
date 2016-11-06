@@ -1,6 +1,6 @@
 package dao;
 
-import calcularID.CalcularIdECP;
+import calcularID.CalcularId;
 import entidades.Empleado;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
@@ -153,8 +153,8 @@ public class EmpleadoCRUD extends Conexion implements OperacionesCRUD{
     public PreparedStatement cargarObject(PreparedStatement st, Object objeto) throws SQLException {
         //Sólo cargamos los datos que se insertan en la tabla EMPLEADO
         Empleado empleado = (Empleado) objeto;
-        CalcularIdECP calcularId = new CalcularIdECP();
-        st.setString(1,calcularId.CalcularId(empleado.getId_persona(),empleado.getId_jefe())); //calculamos el id con la clase CalcularIdECP
+        CalcularId calcularId = new CalcularId();
+        st.setString(1,calcularId.CalcularId(empleado.getId_persona(),empleado.getId_jefe())); //calculamos el id con la clase CalcularId
         st.setString(2,empleado.getId_persona());
         st.setString(3,empleado.getId_jefe());
         st.setString(4,empleado.getRoll());

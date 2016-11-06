@@ -70,7 +70,6 @@
                         <th>Telefono</th>
                     </tr>
                     <%
-//                        List <Persona> personas = (List<Persona>) request.getAttribute("personas");
                         int i=0;
                         for (Persona persona : personas) {
                             out.print("<tr>"

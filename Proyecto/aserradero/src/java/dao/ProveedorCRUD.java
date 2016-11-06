@@ -1,6 +1,6 @@
 package dao;
 
-import calcularID.CalcularIdECP;
+import calcularID.CalcularId;
 import entidades.Proveedor;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
@@ -60,38 +60,11 @@ public class ProveedorCRUD extends Conexion implements OperacionesCRUD{
 
     @Override
     public Object modificar(Object objeto) throws Exception {
-//        Proveedor proveedorM = (Proveedor) objeto;
-//        Proveedor proveedor = null;
-//        this.abrirConexion();
-//            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PROVEEDOR WHERE id_proveedor = ? AND roll = ?")) {
-//                st.setString(1, proveedorM.getId_proveedor());
-//                st.setString(2, proveedorM.getRoll());
-//                try (ResultSet rs = st.executeQuery()) {
-//                    while (rs.next()) {
-//                        proveedor = (Proveedor) extraerObject(rs);
-//                    }
-//                }
-//            }
-//        return proveedor;
         return null;
     }
 
     @Override
     public void actualizar(Object objeto) throws Exception {
-//        Proveedor proveedor = (Proveedor) objeto;
-//        try{
-//            this.abrirConexion();
-//            PreparedStatement st= this.conexion.prepareStatement("UPDATE PROVEEDOR SET estatus = ? WHERE id_proveedor = ? AND roll = ?");
-//            st.setString(1,proveedor.getEstatus());
-//            st.setString(2,proveedor.getId_proveedor());
-//            st.setString(3,proveedor.getRoll());
-//            st.executeUpdate();
-//        }catch(Exception e){
-//            System.out.println(e);
-//            throw e;
-//        }finally{
-//            this.cerrarConexion();
-//        }
     }
 
     @Override
@@ -149,8 +122,8 @@ public class ProveedorCRUD extends Conexion implements OperacionesCRUD{
     @Override
     public PreparedStatement cargarObject(PreparedStatement st, Object objeto) throws SQLException {
         Proveedor proveedor = (Proveedor) objeto;
-        CalcularIdECP calcularId = new CalcularIdECP();
-        st.setString(1,calcularId.CalcularId(proveedor.getId_persona(),proveedor.getId_jefe())); //calculamos el id con la clase CalcularIdECP
+        CalcularId calcularId = new CalcularId();
+        st.setString(1,calcularId.CalcularId(proveedor.getId_persona(),proveedor.getId_jefe())); //calculamos el id con la clase CalcularId
         st.setString(2,proveedor.getId_persona());
         st.setString(3,proveedor.getId_jefe());
         return st;
