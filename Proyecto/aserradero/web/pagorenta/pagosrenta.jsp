@@ -31,8 +31,8 @@
                         <td>
                             <select name="nombre_campo" >
                                 <option value="fecha">Fecha</option>
-                                <option value="nombre_persona">Nombre</option>
-                                <option value="id_empleado">Id de empleado</option>
+                                <option value="nombre_persona">Nombre persona</option>
+                                <option value="empleado">Empleado</option>
                                 <option value="monto">Monto</option>
                                 <option value="observacion">Observación</option>
                             </select>
@@ -49,8 +49,8 @@
                     <tr>
                         <th>N°</th>
                         <th>Fecha</th>
-                        <th>Nombre</th>
-                        <th>Id de empleado</th>
+                        <th>Nombre persona</th>
+                        <th>Empleado</th>
                         <th>Monto</th>
                         <th>Observación</th>
                     </tr>
@@ -61,7 +61,7 @@
                                 +"<td>"+(i+1)+"</td>"
                                 +"<td>"+pago_renta.getFecha()+"</td>"
                                 +"<td>"+pago_renta.getNombre_persona()+"</td>"
-                                +"<td>"+pago_renta.getId_empleado()+"</td>"
+                                +"<td>"+pago_renta.getEmpleado()+"</td>"
                                 +"<td>"+pago_renta.getMonto()+"</td>"
                                 +"<td>"+pago_renta.getObservacion()+"</td>"                                    
                                 +"<td><a href=\"/aserradero/PagoRentaController?action=modificar&id_pago_renta="+pago_renta.getId_pago_renta()+"\">Actualizar</a></td>"

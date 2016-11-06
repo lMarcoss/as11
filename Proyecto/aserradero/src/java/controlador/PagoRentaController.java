@@ -75,7 +75,6 @@ public class PagoRentaController extends HttpServlet {
             case "listar":
                 listarPagoRentas(request, response,"");
                 break;
-
             case "modificar":
                 pagorentaEC = new PagoRenta();
                 pagorentaEC.setId_pago_renta(request.getParameter("id_pago_renta"));

@@ -36,7 +36,7 @@ import java.util.List;
         List<OtroGasto> otrosgastos;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM OTRO_GASTO;")){
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_OTRO_GASTO")){
                 otrosgastos = new ArrayList<>();
                 try (ResultSet rs = st.executeQuery()){
                     while (rs.next()) {
@@ -63,7 +63,7 @@ import java.util.List;
         OtroGasto otrogastoM = (OtroGasto) objeto;
         OtroGasto otrogasto = null;
         this.abrirConexion();
-        try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM OTRO_GASTO WHERE id_gasto = ?")) {
+        try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_OTRO_GASTO WHERE id_gasto = ?")) {
             st.setString(1, otrogastoM.getId_gasto());
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
@@ -118,7 +118,7 @@ import java.util.List;
         List<OtroGasto> otrosgastos;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM OTRO_GASTO WHERE "+nombre_campo+" like ?")){
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_OTRO_GASTO WHERE "+nombre_campo+" like ?")){
                 st.setString(1, "%"+dato+"%");
                 otrosgastos = new ArrayList<>();
                 try (ResultSet rs = st.executeQuery()){
@@ -143,6 +143,7 @@ import java.util.List;
         otrogasto.setId_gasto(rs.getString("id_gasto"));
         otrogasto.setFecha(rs.getString("fecha"));
         otrogasto.setId_empleado(rs.getString("id_empleado"));
+        otrogasto.setEmpleado(rs.getString("empleado"));
         otrogasto.setNombre_gasto(rs.getString("nombre_gasto"));
         otrogasto.setMonto(Float.valueOf(rs.getString("monto")));
         otrogasto.setObservacion(rs.getString("observacion"));

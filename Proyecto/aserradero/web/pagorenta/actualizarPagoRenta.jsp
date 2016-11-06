@@ -4,8 +4,6 @@
     Author     : rcortes
 --%>
 
-<%@page import="entidades.Empleado"%>
-<%@page import="java.util.List"%>
 <%@page import="entidades.PagoRenta"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%PagoRenta pagorenta = (PagoRenta) request.getAttribute("pagorenta");%>
@@ -25,51 +23,33 @@
                 <h3>Actualizar datos</h3>
                 <fieldset id="user-details">
                     <table>
-                        <tr>
-                            <td style="padding-left: 10px;"><label for="id_pago_renta">Id pago de renta</label></td>
-                            <td style="padding-left: 10px;"><input type="text" name="id_pago_renta" value="<%= pagorenta.getId_pago_renta()%>"  readonly=""/></td>
-                        </tr>
+                        <input type="hidden" name="id_pago_renta" value="<%= pagorenta.getId_pago_renta()%>"  readonly="" required=""/>
                         <tr>
                             <td style="padding-left: 10px;"><label for="fecha">Fecha</label></td>
-                            <td style="padding-left: 10px;"><input type="date" name="fecha" value="<%=pagorenta.getFecha()%>" /></td> 
+                            <td style="padding-left: 10px;"><input type="date" name="fecha" value="<%=pagorenta.getFecha()%>" required=""/></td> 
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label for="nombre_persona">Nombre</label></td>
-                            <td style="padding-left: 10px;"><input type="text" name="nombre_persona" value="<%=pagorenta.getNombre_persona()%>"/></td>
+                            <td style="padding-left: 10px;"><input type="text" name="nombre_persona" value="<%=pagorenta.getNombre_persona()%>" maxlength="49" required=""/></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label for="id_empleado">Id empleado</label></td>
                             <td style="padding-left: 10px;">
-                                <select name="id_empleado" required="" title="Si no existe el empleado que busca, primero agreguelo en la lista de empleados">                                    
-                                    <%
-                                        List <Empleado> empleados = (List<Empleado>) request.getAttribute("empleados");
-                                        try{
-                                            for (Empleado empleado : empleados) {
-                                                if(pagorenta.getId_empleado().equals(empleado.getId_empleado())){
-                                                    out.print("<option selected=\"selected\" value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>");   
-                                                }else
-                                                {
-                                                    out.print("<option value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>");   
-                                                }
-                                        }
-                                        }catch(Exception e){
-                                            System.out.println(e);
-                                        }
-                                    %>
+                                <select name="id_empleado" required="" title="Si no existe el empleado que busca, primero agreguelo en la lista de empleados">
+                                    <option selected="" value='<%=pagorenta.getId_empleado()%>'><%=pagorenta.getEmpleado()%></option>
                                 </select>
                             </td>
                         </tr>                        
                         <tr>
                             <td style="padding-left: 10px;"><label for="monto">Monto</label></td>
-                            <td style="padding-left: 10px;"><input type="number" step="0.01" name="monto" value="<%=pagorenta.getMonto()%>" min="0.0" max="99999999.99"/></td>
+                            <td style="padding-left: 10px;"><input type="number" step="0.01" name="monto" value="<%=pagorenta.getMonto()%>" min="0.0" max="99999999.99" required=""/></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label for="observacion">Observacion</label></td>
-                            <td style="padding-left: 10px;"><input type="text" name="observacion" value="<%=pagorenta.getObservacion()%>"/></td>
+                            <td style="padding-left: 10px;"><input type="text" name="observacion" maxlength="249" value="<%=pagorenta.getObservacion()%>"/></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><a href="/aserradero/PagoRentaController?action=listar"><input type="button" value="Cancelar"/></a> </td>
-                            <!--<td><input type="submit" value="Registrar" class="submit"/> </td>-->
                             <td style="padding-left: 10px;"><input type="submit" value="Guardar"/></td>
                         </tr>
                     </table>

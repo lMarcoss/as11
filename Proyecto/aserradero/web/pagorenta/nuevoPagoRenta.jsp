@@ -7,7 +7,6 @@
 <%@page import="entidades.Empleado"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%String error = (String)request.getAttribute("error");%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -29,7 +28,7 @@
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label for="nombre_persona">Nombre</label></td>
-                            <td style="padding-left: 10px;"><input type="text" name="nombre_persona"/></td>
+                            <td style="padding-left: 10px;"><input type="text" name="nombre_persona" maxlength="49" required=""/></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label for="id_empleado">Empleado</label></td>
@@ -51,11 +50,11 @@
                         </tr>                        
                         <tr>
                             <td style="padding-left: 10px;"><label for="monto">Monto</label></td>
-                            <td style="padding-left: 10px;"><input type="number" step=".01" name="monto" /></td>
+                            <td style="padding-left: 10px;"><input type="number" step=".01" name="monto" min="0.01" max="99999999.99" required=""/></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label for="observacion">Observacion</label></td>
-                            <td style="padding-left: 10px;"><input type="text" name="observacion" /></td>
+                            <td style="padding-left: 10px;"><input type="text" name="observacion" maxlength="249"/></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><a href="/aserradero/PagoRentaController?action=listar"><input type="button" value="Cancelar"/></a> </td>

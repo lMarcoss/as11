@@ -4,9 +4,15 @@
     Author     : Marcos
 --%>
 
+<%@page import="entidades.Empleado"%>
+<%@page import="java.util.List"%>
 <%@page import="entidades.PagoEmpleado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%PagoEmpleado pagoEmpleado = (PagoEmpleado) request.getAttribute("pagoEmpleado");%>
+<%
+    
+    PagoEmpleado pagoEmpleado = (PagoEmpleado) request.getAttribute("pagoEmpleado");
+    List <Empleado> empleados = (List<Empleado>) request.getAttribute("empleados");
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,34 +30,38 @@
                 <fieldset id="user-details">
                     
                     <table>
-                        
-                        <tr>
-                            <td style="padding-left: 10px;"><label>Id pago empleado:</label></td>
-                            <td style="padding-left: 10px;">
-                                <input name="id_pago_empleado" value="<%=pagoEmpleado.getId_pago_empleado()%>" readonly=""/>
-                            </td>
-                        </tr>
+                        <input type="hidden" name="id_pago_empleado" value="<%=pagoEmpleado.getId_pago_empleado()%>" readonly="">
                         <tr>
                             <td style="padding-left: 10px;"><label>Fecha:</label></td>
                             <td style="padding-left: 10px;"><input type="date" name="fecha" value="<%=pagoEmpleado.getFecha()%>" required="" /></td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 10px;"><label>Id empleado:</label></td>
+                            <td style="padding-left: 10px;"><label>Empleado:</label></td>
                             <td style="padding-left: 10px;">
-                                <input name="id_empleado" value="<%=pagoEmpleado.getId_empleado()%>" readonly=""/>
+                                <select name="id_empleado">
+                                    <%
+                                        for(Empleado empleado: empleados){
+                                            if(pagoEmpleado.getId_empleado().equals(empleado.getId_empleado())){
+                                                out.print("<option selected=\"\" value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>");
+                                            }else{
+                                                out.print("<option value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>");
+                                            }
+                                        }
+                                    %>
+                                </select>
                             </td>
                         </tr>
                         
                         <tr>
                             <td style="padding-left: 10px;"><label>Monto:</label></td>
                             <td style="padding-left: 10px;">
-                                <input name="monto" type="number" value="<%=pagoEmpleado.getMonto()%>" step="any" required=""/>                             
+                                <input type="number" name="monto" value="<%=pagoEmpleado.getMonto()%>" step="0.01" min="0.01" max="99999999.99" required="">
                             </td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>Observacion:</label></td>
                             <td style="padding-left: 10px;">
-                                <input name="observacion" type="text" value="<%=pagoEmpleado.getObservacion()%>" step="any" required=""/>                             
+                                <input type="text" name="observacion" value="<%=pagoEmpleado.getObservacion()%>" maxlength="249">
                             </td>
                         </tr>
                         <tr>

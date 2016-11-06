@@ -53,8 +53,8 @@ public class PagoLuzController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         //Llegan url
         String action = request.getParameter("action");
-        PagoLuz pagoluzEC; //Enviar al CRUD
-        PagoLuzCRUD pagoluzCRUD;
+        PagoLuz pagoLuzEC; //Enviar al CRUD
+        PagoLuzCRUD pagoLuzCRUD;
         EmpleadoCRUD empleadoCRUD;
         switch(action){
             case "nuevo":
@@ -63,7 +63,7 @@ public class PagoLuzController extends HttpServlet {
                     List<Empleado> empleados;
                     empleados = (List<Empleado>)empleadoCRUD.listar();
                     request.setAttribute("empleados",empleados);
-                    RequestDispatcher view = request.getRequestDispatcher("pagoluz/nuevoPagoLuz.jsp");
+                    RequestDispatcher view = request.getRequestDispatcher("pagoLuz/nuevoPagoLuz.jsp");
                     view.forward(request,response);
                 } catch (Exception ex) {
                     listarPagosLuz(request, response, "error_nuevo");
@@ -74,12 +74,30 @@ public class PagoLuzController extends HttpServlet {
             case "listar":
                 listarPagosLuz(request, response,"");
                 break;
-            case "eliminar":
-                pagoluzEC = new PagoLuz();
-                pagoluzEC.setId_pago_luz(request.getParameter("id_pago_luz"));
-                pagoluzCRUD = new PagoLuzCRUD();
+            case "modificar":
+                pagoLuzEC = new PagoLuz();
+                pagoLuzEC.setId_pago_luz(request.getParameter("id_pago_luz"));
+                pagoLuzCRUD = new PagoLuzCRUD();
                 try {
-                    pagoluzCRUD.eliminar(pagoluzEC);
+                    empleadoCRUD = new EmpleadoCRUD();
+                    List<Empleado> empleados;
+                    empleados = (List<Empleado>)empleadoCRUD.listar();
+                    request.setAttribute("empleados",empleados);
+                    PagoLuz pagoLuz = (PagoLuz) pagoLuzCRUD.modificar(pagoLuzEC);
+                    request.setAttribute("pagoLuz",pagoLuz);
+                    RequestDispatcher view = request.getRequestDispatcher("pagoLuz/actualizarPagoLuz.jsp");
+                    view.forward(request,response);
+                } catch (Exception ex) {
+                    listarPagosLuz(request, response, "error_modificar");
+                    Logger.getLogger(PagoLuzController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case "eliminar":
+                pagoLuzEC = new PagoLuz();
+                pagoLuzEC.setId_pago_luz(request.getParameter("id_pago_luz"));
+                pagoLuzCRUD = new PagoLuzCRUD();
+                try {
+                    pagoLuzCRUD.eliminar(pagoLuzEC);
                     listarPagosLuz(request, response,"eliminado");
                 } catch (Exception ex) {
                     listarPagosLuz(request, response, "error_eliminar");
@@ -104,29 +122,41 @@ public class PagoLuzController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
-        PagoLuz pagoluz;
-        PagoLuzCRUD pagoluzCRUD;            
+        PagoLuz pagoLuz;
+        PagoLuzCRUD pagoLuzCRUD;            
         switch(action){
             case "nuevo":
-                  pagoluz = extraerPagoLuzForm(request);
-                  pagoluzCRUD = new PagoLuzCRUD();
+                  pagoLuz = extraerPagoLuzForm(request);
+                  pagoLuzCRUD = new PagoLuzCRUD();
                   try {
-                      pagoluzCRUD.registrar(pagoluz);
+                      pagoLuzCRUD.registrar(pagoLuz);
                       listarPagosLuz(request, response,"registrado");
                   } catch (Exception ex) {
                       listarPagosLuz(request, response,"error_registrar");
                       Logger.getLogger(PagoLuzController.class.getName()).log(Level.SEVERE, null, ex);
                   }
                   break;
+            case "actualizar":
+              pagoLuz = extraerPagoLuzForm(request);
+              pagoLuzCRUD = new PagoLuzCRUD();
+              try {
+                  pagoLuzCRUD.actualizar(pagoLuz);
+                  listarPagosLuz(request, response,"actualizado");
+              } catch (Exception ex) {
+                  listarPagosLuz(request, response, "error_actualizar");
+                  System.out.println(ex);
+                  Logger.getLogger(PagoRentaController.class.getName()).log(Level.SEVERE, null, ex);
+              }
+              break;
             case "buscar":
                 List <PagoLuz> pagosluz;
                 String nombre_campo = request.getParameter("nombre_campo");
                 String dato = request.getParameter("dato");
-                pagoluzCRUD = new PagoLuzCRUD();
+                pagoLuzCRUD = new PagoLuzCRUD();
                 try {
-                    pagosluz = (List<PagoLuz>)pagoluzCRUD.buscar(nombre_campo, dato);
+                    pagosluz = (List<PagoLuz>)pagoLuzCRUD.buscar(nombre_campo, dato);
                     request.setAttribute("pagosluz",pagosluz);
-                    RequestDispatcher view = request.getRequestDispatcher("pagoluz/pagosluz.jsp");
+                    RequestDispatcher view = request.getRequestDispatcher("pagoLuz/pagosluz.jsp");
                     view.forward(request,response);
                 } catch (Exception ex) {
                     listarPagosLuz(request, response, "error_buscar_campo");
@@ -149,14 +179,14 @@ public class PagoLuzController extends HttpServlet {
     //Mostrar lista de los pagos de luz
     private void listarPagosLuz(HttpServletRequest request, HttpServletResponse response,String mensaje){
       List<PagoLuz> pagosluz;
-      PagoLuzCRUD pagoluzcrud = new PagoLuzCRUD();
+      PagoLuzCRUD pagoLuzcrud = new PagoLuzCRUD();
       try {
-            pagosluz = (List<PagoLuz>)pagoluzcrud.listar();
+            pagosluz = (List<PagoLuz>)pagoLuzcrud.listar();
             //Enviamos las listas al jsp
             request.setAttribute("pagosluz",pagosluz);
             request.setAttribute("mensaje", mensaje);
             RequestDispatcher view;
-            view = request.getRequestDispatcher("pagoluz/pagosluz.jsp");
+            view = request.getRequestDispatcher("pagoLuz/pagosluz.jsp");
             view.forward(request,response);
         } catch (Exception ex) {
             System.out.println(ex);
@@ -165,12 +195,12 @@ public class PagoLuzController extends HttpServlet {
     }
     // Extraer datos del formulario
     private PagoLuz extraerPagoLuzForm(HttpServletRequest request) {
-        PagoLuz pagoluz = new PagoLuz();
-        pagoluz.setId_pago_luz(request.getParameter("id_pago_luz"));
-        pagoluz.setFecha(request.getParameter("fecha"));
-        pagoluz.setId_empleado(request.getParameter("id_empleado"));
-        pagoluz.setMonto(Float.valueOf(request.getParameter("monto")));
-        pagoluz.setObservacion(request.getParameter("observacion"));
-        return pagoluz;
+        PagoLuz pagoLuz = new PagoLuz();
+        pagoLuz.setId_pago_luz(request.getParameter("id_pago_luz"));
+        pagoLuz.setFecha(request.getParameter("fecha"));
+        pagoLuz.setId_empleado(request.getParameter("id_empleado"));
+        pagoLuz.setMonto(Float.valueOf(request.getParameter("monto")));
+        pagoLuz.setObservacion(request.getParameter("observacion"));
+        return pagoLuz;
     }
 }

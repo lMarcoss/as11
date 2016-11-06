@@ -31,7 +31,7 @@
                     <table>
                         <tr>
                             <td style="padding-left: 10px;"><label for="fecha">Fecha:</label></td>
-                            <td style="padding-left: 10px;"><input type="date" name="fecha" required="" placeholder="AAAA/MM/DD" value="<%=fecha%>"/></td>
+                            <td style="padding-left: 10px;"><input type="date" name="fecha" required="" value="<%=fecha%>"/></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label for="id_empleado">Empleado:</label></td>
@@ -52,11 +52,11 @@
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label for="monto">Monto:</label></td>
-                            <td style="padding-left: 10px;"><input type="number" step="0.01" name="monto" required="" /></td>
+                            <td style="padding-left: 10px;"><input type="number" step="0.01" min="0.01" max="99999999.99" name="monto" required="" /></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label for="observacion">Observación:</label></td>
-                            <td style="padding-left: 10px;"><input type="text" name="observacion" required="" /></td>
+                            <td style="padding-left: 10px;"><input type="text" name="observacion" maxlength="249"/></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><a href="/aserradero/PagoLuzController?action=listar"><input type="button" value="Cancelar"/></a> </td>

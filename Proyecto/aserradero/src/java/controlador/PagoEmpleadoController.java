@@ -61,9 +61,9 @@ public class PagoEmpleadoController extends HttpServlet {
         switch(action){
             case "nuevo":
                 try {
+                    // Enviamos la lista de empleados
                     EmpleadoCRUD empleadoCRUD= new EmpleadoCRUD();
-                    List<Empleado> empleados;
-                    empleados = (List<Empleado>)empleadoCRUD.listar();
+                    List<Empleado> empleados = (List<Empleado>)empleadoCRUD.listar();
                     request.setAttribute("empleados",empleados);
                     
                     RequestDispatcher view = request.getRequestDispatcher("pagoEmpleado/nuevoPagoEmpleado.jsp");
@@ -80,11 +80,17 @@ public class PagoEmpleadoController extends HttpServlet {
             case "modificar":
                 pagoEmpleadoEC = new PagoEmpleado();
                 pagoEmpleadoEC.setId_pago_empleado(Integer.valueOf(request.getParameter("id_pago_empleado")));
-                pagoEmpleadoEC.setId_empleado(String.valueOf(request.getParameter("id_empleado")));
                 pagoEmpleadoCRUD = new PagoEmpleadoCRUD();
                 try {
+                    //enviamos el pagoEmpleado a modificar
                     pagoEmpleado = (PagoEmpleado) pagoEmpleadoCRUD.modificar(pagoEmpleadoEC);
                     request.setAttribute("pagoEmpleado",pagoEmpleado);
+                    
+                    // Enviamos la lista de empleados
+                    EmpleadoCRUD empleadoCRUD= new EmpleadoCRUD();
+                    List<Empleado> empleados = (List<Empleado>)empleadoCRUD.listar();
+                    request.setAttribute("empleados",empleados);
+                    
                     RequestDispatcher view = request.getRequestDispatcher("pagoEmpleado/actualizarPagoEmpleado.jsp");
                     view.forward(request,response);
                 } catch (Exception ex) {

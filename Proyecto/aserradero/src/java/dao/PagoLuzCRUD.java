@@ -35,7 +35,7 @@ import java.util.List;
         List<PagoLuz> pagosluz;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PAGO_LUZ;")){
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_LUZ")){
                 pagosluz = new ArrayList<>();
                 try (ResultSet rs = st.executeQuery()){
                     while (rs.next()) {                        
@@ -61,7 +61,7 @@ import java.util.List;
         PagoLuz pagoluzM = (PagoLuz) objeto;
         PagoLuz pagoluz = null;
         this.abrirConexion();
-        try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PAGO_LUZ WHERE id_pago_luz = ?")) {
+        try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_LUZ WHERE id_pago_luz = ?")) {
             st.setString(1, pagoluzM.getId_pago_luz());
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
@@ -116,7 +116,7 @@ import java.util.List;
         List<PagoLuz> pagosluz;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PAGO_LUZ WHERE "+nombre_campo+" like ?")){
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_LUZ WHERE "+nombre_campo+" like ?")){
                 st.setString(1, "%"+dato+"%");
                 pagosluz = new ArrayList<>();
                 try (ResultSet rs = st.executeQuery()){
@@ -141,7 +141,8 @@ import java.util.List;
         pagoluz.setId_pago_luz(rs.getString("id_pago_luz"));
         pagoluz.setFecha(rs.getString("fecha"));
         pagoluz.setId_empleado(rs.getString("id_empleado"));
-        pagoluz.setMonto(Float.valueOf(rs.getString("monto")));
+        pagoluz.setEmpleado(rs.getString("empleado"));
+        pagoluz.setMonto(rs.getFloat("monto"));
         pagoluz.setObservacion(rs.getString("observacion"));
         return pagoluz;
     }

@@ -63,7 +63,7 @@
                                 +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+pagoEmpleado.getId_empleado()+"\">"+pagoEmpleado.getEmpleado()+"</a></td>"
                                 +"<td>"+pagoEmpleado.getMonto()+"</td>"
                                 +"<td>"+pagoEmpleado.getObservacion()+"</td>"
-                                +"<td><a href=\"/aserradero/PagoEmpleadoController?action=modificar&id_pago_empleado="+pagoEmpleado.getId_pago_empleado()+"&id_empleado="+pagoEmpleado.getId_empleado()+"\">Actualizar</a></td>"
+                                +"<td><a href=\"/aserradero/PagoEmpleadoController?action=modificar&id_pago_empleado="+pagoEmpleado.getId_pago_empleado()+"\">Actualizar</a></td>"
                                 + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/PagoEmpleadoController?action=eliminar&id_pago_empleado="+pagoEmpleado.getId_pago_empleado()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;

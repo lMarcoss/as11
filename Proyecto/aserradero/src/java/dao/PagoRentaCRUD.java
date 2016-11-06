@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package dao;
 
 import entidades.PagoRenta;
@@ -42,7 +36,7 @@ public class PagoRentaCRUD extends Conexion implements OperacionesCRUD{
         List<PagoRenta> pagorentas;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PAGO_RENTA;")){
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_RENTA;")){
                 pagorentas = new ArrayList<>();
                 try (ResultSet rs = st.executeQuery()){
                     while (rs.next()) {
@@ -69,7 +63,7 @@ public class PagoRentaCRUD extends Conexion implements OperacionesCRUD{
         PagoRenta pagorentaM = (PagoRenta) objeto;
         PagoRenta pagorenta = null;
         this.abrirConexion();
-        try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PAGO_RENTA WHERE id_pago_renta = ?")) {
+        try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_RENTA WHERE id_pago_renta = ?")) {
             st.setString(1, pagorentaM.getId_pago_renta());
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
@@ -124,7 +118,7 @@ public class PagoRentaCRUD extends Conexion implements OperacionesCRUD{
         List<PagoRenta> pagorentas;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PAGO_RENTA WHERE "+nombre_campo+" like ?")){
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_RENTA WHERE "+nombre_campo+" like ?")){
                 st.setString(1, "%"+dato+"%");
                 pagorentas = new ArrayList<>();
                 try (ResultSet rs = st.executeQuery()){
@@ -148,9 +142,11 @@ public class PagoRentaCRUD extends Conexion implements OperacionesCRUD{
         PagoRenta pagorenta = new PagoRenta();
         pagorenta.setId_pago_renta(rs.getString("id_pago_renta"));
         pagorenta.setFecha(rs.getString("fecha"));
-        pagorenta.setId_empleado(rs.getString("id_empleado"));
         pagorenta.setNombre_persona(rs.getString("nombre_persona"));
-        pagorenta.setMonto(Float.valueOf(rs.getString("monto")));
+        pagorenta.setId_empleado(rs.getString("id_empleado"));
+        pagorenta.setEmpleado(rs.getString("empleado"));
+        pagorenta.setId_jefe(rs.getString("id_jefe"));
+        pagorenta.setMonto(rs.getFloat("monto"));
         pagorenta.setObservacion(rs.getString("observacion"));
         return pagorenta;
     }

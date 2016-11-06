@@ -62,9 +62,8 @@ public class PagoEmpleadoCRUD extends Conexion implements OperacionesCRUD{
         PagoEmpleado pagoEmpleadoM = (PagoEmpleado) objeto;
         PagoEmpleado pagoEmpleado = null;
         this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PAGO_EMPLEADO WHERE id_pago_empleado = ? and id_empleado= ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_EMPLEADO WHERE id_pago_empleado = ?")) {
                 st.setInt(1, pagoEmpleadoM.getId_pago_empleado());
-                st.setString(2, pagoEmpleadoM.getId_empleado());
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
                         pagoEmpleado = (PagoEmpleado) extraerObject(rs);
@@ -79,11 +78,10 @@ public class PagoEmpleadoCRUD extends Conexion implements OperacionesCRUD{
         PagoEmpleado pagoEmpleado = (PagoEmpleado) objeto;
         try{
             this.abrirConexion();
-            PreparedStatement st= this.conexion.prepareStatement("UPDATE PAGO_EMPLEADO SET monto = ?,observacion= ? WHERE id_pago_empleado = ? and id_empleado = ?");
+            PreparedStatement st= this.conexion.prepareStatement("UPDATE PAGO_EMPLEADO SET monto = ?,observacion= ? WHERE id_pago_empleado = ?");
             st.setFloat(1,pagoEmpleado.getMonto());
             st.setString(2,pagoEmpleado.getObservacion());
             st.setInt(3,pagoEmpleado.getId_pago_empleado());
-            st.setString(4,pagoEmpleado.getId_empleado());
             st.executeUpdate();
         }catch(Exception e){
             System.out.println(e);

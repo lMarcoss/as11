@@ -24,9 +24,8 @@
                     <tr>
                       <td>
                         <select name="nombre_campo" >
-                          <option value="id_gasto">Id de gasto</option>
                           <option value="fecha">Fecha</option>
-                          <option value="id_empleado">Id de empleado</option>
+                          <option value="empleado">Empleado</option>
                           <option value="nombre_gasto">Nombre de gasto</option>
                           <option value="monto">Monto</option>
                           <option value="observacion">Observación</option>
@@ -57,7 +56,7 @@
                             out.print("<tr>"
                                 +"<td>"+(i+1)+"</td>"
                                 +"<td>"+otrogasto.getFecha()+"</td>"
-                                +"<td>"+otrogasto.getId_empleado()+"</td>"
+                                +"<td>"+otrogasto.getEmpleado()+"</td>"
                                 +"<td>"+otrogasto.getNombre_gasto()+"</td>"
                                 +"<td>"+otrogasto.getMonto()+"</td>"
                                 +"<td>"+otrogasto.getObservacion()+"</td>"
@@ -69,7 +68,7 @@
                     %>
             </table>
             <div>
-                <input type="button" value="Agregar gasto" onClick=" window.location.href='/aserradero/OtroGastoController?action=nuevo' ">
+                <input type="button" value="Registrar otro gasto" onClick=" window.location.href='/aserradero/OtroGastoController?action=nuevo' ">
             </div>
         </div><!-- Resultado Consulta-->
     </body>

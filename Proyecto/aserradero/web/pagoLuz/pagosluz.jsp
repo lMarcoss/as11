@@ -32,9 +32,9 @@
                         <td>
                           <select name="nombre_campo" >
                             <option value="fecha">Fecha</option>
-                            <option value="id_empleado">Id empleado</option>
+                            <option value="empleado">Empleado</option>
                             <option value="monto">Monto</option>
-                            <option value="observcion">Observación</option>
+                            <option value="observacion">Observación</option>
                           </select>
                         </td>
                         <td><input type="text" name="dato" placeholder="Escriba su búsqueda"></td>
@@ -50,7 +50,7 @@
                     <tr>
                         <th>N°</th>
                         <th>Fecha</th>
-                        <th>Id empleado</th>
+                        <th>Empleado</th>
                         <th>Monto</th>
                         <th>Observación</th>
                     </tr>
@@ -60,9 +60,10 @@
                             out.print("<tr>"
                                 +"<td>"+(i+1)+"</td>"
                                 +"<td>"+pagoluz.getFecha()+"</td>"
-                                +"<td>"+pagoluz.getId_empleado()+"</td>"
+                                +"<td>"+pagoluz.getEmpleado()+"</td>"
                                 +"<td>"+pagoluz.getMonto()+"</td>"
                                 +"<td>"+pagoluz.getObservacion()+"</td>"
+                                +"<td><a href=\"/aserradero/PagoLuzController?action=modificar&id_pago_luz="+pagoluz.getId_pago_luz()+"\">Actualizar</a></td>"
                                 + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/PagoLuzController?action=eliminar&id_pago_luz="+pagoluz.getId_pago_luz()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;
@@ -70,7 +71,7 @@
                     %>
             </table>
             <div>
-                <input type="button" value="Agregar pago" onClick=" window.location.href='/aserradero/PagoLuzController?action=nuevo' ">
+                <input type="button" value="Registrar pago luz" onClick=" window.location.href='/aserradero/PagoLuzController?action=nuevo' ">
             </div>
         </div><!-- Resultado Consulta-->
     </body>
