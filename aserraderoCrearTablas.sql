@@ -54,7 +54,7 @@ CREATE	TABLE PAGO_EMPLEADO(
 	id_empleado 	VARCHAR(26) NOT NULL,
 	monto 			DECIMAL(10,2),
 	observacion		VARCHAR(250),
-	PRIMARY KEY (id_pago_empleado,id_empleado),
+	PRIMARY KEY (id_pago_empleado),
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
 CREATE TABLE USUARIO(
@@ -717,3 +717,29 @@ SELECT CUENTA_POR_PAGAR.id_persona,
         monto
 	FROM CUENTA_POR_PAGAR,CLIENTE WHERE CUENTA_POR_PAGAR.id_persona = CLIENTE.id_cliente;
 SELECT * FROM CUENTA_POR_PAGAR_CLIENTE;
+
+INSERT INTO COSTO_MADERA (id_madera,monto_volumen) VALUES 
+("clase12",9.55),
+("clase10",8.45),
+("clase8",7.35),
+("clase6",6.45),
+("clase4",5.00),
+
+("tercera12",5.45),
+("tercera10",4.45),
+("tercera8",3.45),
+("tercera6",2.45),
+("tercera4",1.45),
+
+("cuarta12",4.95),
+("cuarta10",8.45),
+("cuarta8",9.45),
+("cuarta6",10.45),
+("cuarta4",15.45),
+
+("quinta12",25.45),
+("quinta10",35.45),
+("quinta8",45.45),
+("quinta6",45.45),
+("quinta4",75.45);
+
