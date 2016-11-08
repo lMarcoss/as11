@@ -71,9 +71,11 @@ public class VentaPaqueteController extends HttpServlet {
                     ventas = (List<Venta>)ventaCRUD.listarVentasPaquete();
                     request.setAttribute("ventas",ventas);
                     
-                    //enviamos el id de la venta
-                    Integer next_id_venta=ventaCRUD.SiguienteIDVenta();
-                    request.setAttribute("siguienteventa", next_id_venta);
+                    
+                    //Generamos el Id de venta con los milisegundos del sistema
+                    String id_venta = String.valueOf(System.currentTimeMillis());
+                    request.setAttribute("siguienteventa", id_venta);
+                    
                      //Enviamos la lista de clientes
                     ClienteCRUD clienteCRUD= new ClienteCRUD();
                     List<Cliente> clientes = (List<Cliente>)clienteCRUD.listar();
@@ -228,7 +230,7 @@ public class VentaPaqueteController extends HttpServlet {
     // Extraer datos del formulario
     private VentaPaquete extraerVentaPaqueteForm(HttpServletRequest request) {
         VentaPaquete ventaPaquete = new VentaPaquete();
-        ventaPaquete.setId_venta(Integer.valueOf(request.getParameter("id_venta")));
+        ventaPaquete.setId_venta(request.getParameter("id_venta"));
         ventaPaquete.setNumero_paquete(Integer.valueOf(request.getParameter("numero_paquete")));
         ventaPaquete.setId_madera(request.getParameter("id_madera"));
         ventaPaquete.setNum_piezas(Integer.valueOf(request.getParameter("num_piezas")));
@@ -239,7 +241,7 @@ public class VentaPaqueteController extends HttpServlet {
 
     private VentaPaquete extraerClavesVentaPaquete(HttpServletRequest request) {
         VentaPaquete ventaPaqueteEC = new VentaPaquete();
-        ventaPaqueteEC.setId_venta(Integer.valueOf(request.getParameter("id_venta")));
+        ventaPaqueteEC.setId_venta(request.getParameter("id_venta"));
         ventaPaqueteEC.setNumero_paquete(Integer.valueOf(request.getParameter("numero_paquete")));
         ventaPaqueteEC.setId_madera(request.getParameter("id_madera"));
         return ventaPaqueteEC;

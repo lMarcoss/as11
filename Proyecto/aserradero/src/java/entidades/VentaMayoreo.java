@@ -5,7 +5,7 @@ package entidades;
  * @author lmarcoss
  */
 public class VentaMayoreo {
-    private int id_venta;
+    private String id_venta;
     private String id_madera;
     private int num_piezas;
     private float volumen;
@@ -14,7 +14,7 @@ public class VentaMayoreo {
     public VentaMayoreo() {
     }
 
-    public VentaMayoreo(int id_venta, String id_madera, int num_piezas, float volumen, float monto) {
+    public VentaMayoreo(String id_venta, String id_madera, int num_piezas, float volumen, float monto) {
         this.id_venta = id_venta;
         this.id_madera = id_madera;
         this.num_piezas = num_piezas;
@@ -22,7 +22,7 @@ public class VentaMayoreo {
         this.monto = monto;
     }
 
-    public void setId_venta(int id_venta) {
+    public void setId_venta(String id_venta) {
         this.id_venta = id_venta;
     }
 
@@ -42,7 +42,7 @@ public class VentaMayoreo {
         this.monto = monto;
     }
 
-    public int getId_venta() {
+    public String getId_venta() {
         return id_venta;
     }
 

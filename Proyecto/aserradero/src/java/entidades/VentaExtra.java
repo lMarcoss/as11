@@ -5,7 +5,7 @@ package entidades;
  * @author lmarcoss
  */
 public class VentaExtra {
-    protected int id_venta;
+    protected String id_venta;
     protected String tipo;
     protected float monto;
     protected String observacion;
@@ -13,14 +13,14 @@ public class VentaExtra {
     public VentaExtra() {
     }
 
-    public VentaExtra(int id_venta, String tipo, float monto, String observacion) {
+    public VentaExtra(String id_venta, String tipo, float monto, String observacion) {
         this.id_venta = id_venta;
         this.tipo = tipo;
         this.monto = monto;
         this.observacion = observacion;
     }
 
-    public void setId_venta(int id_venta) {
+    public void setId_venta(String id_venta) {
         this.id_venta = id_venta;
     }
 
@@ -37,7 +37,7 @@ public class VentaExtra {
         this.observacion = observacion;
     }
 
-    public int getId_venta() {
+    public String getId_venta() {
         return id_venta;
     }
 

@@ -34,6 +34,7 @@
                 
                 <fieldset id="user-details">
                     <table>
+                        <!--<input type="hidden" name="id_venta" maxlength="29" required="">-->
                         <tr>
                             <td style="padding-left: 10px;"><label>Fecha:</label></td>
                             <td style="padding-left: 10px;"><input type="date" name="fecha" value="<%=fecha%>" required="" /></td>

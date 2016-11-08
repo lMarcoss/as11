@@ -70,9 +70,10 @@ public class VentaMayoreoController extends HttpServlet {
                     List<Venta> ventas;
                     ventas = (List<Venta>)ventaCRUD.listarVentasMayoreo();
                     request.setAttribute("ventas",ventas);
-                    //enviamos el id de la venta
-                    Integer next_id_venta=ventaCRUD.SiguienteIDVenta();
-                    request.setAttribute("siguienteventa", next_id_venta);
+                    
+                    //Generamos el Id de venta con los milisegundos del sistema
+                    String id_venta = String.valueOf(System.currentTimeMillis());
+                    request.setAttribute("siguienteventa", id_venta);
                     
                     //Enviamos la lista de clientes
                     ClienteCRUD clienteCRUD= new ClienteCRUD();
@@ -102,7 +103,7 @@ public class VentaMayoreoController extends HttpServlet {
                 break;
             case "modificar":
                 ventaMayoreoEC = new VentaMayoreo();
-                ventaMayoreoEC.setId_venta(Integer.valueOf(request.getParameter("id_venta")));
+                ventaMayoreoEC.setId_venta(request.getParameter("id_venta"));
                 ventaMayoreoEC.setId_madera(request.getParameter("id_madera"));
                 ventaMayoreoCRUD = new VentaMayoreoCRUD();
                 try {
@@ -124,7 +125,7 @@ public class VentaMayoreoController extends HttpServlet {
                 break;
             case "eliminar":
                 ventaMayoreoEC = new VentaMayoreo();
-                ventaMayoreoEC.setId_venta(Integer.valueOf(request.getParameter("id_venta")));
+                ventaMayoreoEC.setId_venta(request.getParameter("id_venta"));
                 ventaMayoreoEC.setId_madera(request.getParameter("id_madera"));
                 ventaMayoreoCRUD = new VentaMayoreoCRUD();
                 try {
@@ -229,7 +230,7 @@ public class VentaMayoreoController extends HttpServlet {
     // Extraer datos del formulario
     private VentaMayoreo extraerVentaMayoreoForm(HttpServletRequest request) {
         VentaMayoreo ventaMayoreo = new VentaMayoreo();
-        ventaMayoreo.setId_venta(Integer.valueOf(request.getParameter("id_venta")));
+        ventaMayoreo.setId_venta(request.getParameter("id_venta"));
         ventaMayoreo.setId_madera(request.getParameter("id_madera"));
         ventaMayoreo.setNum_piezas(Integer.valueOf(request.getParameter("num_piezas")));
         ventaMayoreo.setVolumen(Float.valueOf(request.getParameter("volumen")));

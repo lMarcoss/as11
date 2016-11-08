@@ -101,7 +101,7 @@ public class VentaController extends HttpServlet {
                 break;
             case "cobrar_venta":
                 ventaEC = new Venta();
-                ventaEC.setId_venta(Integer.valueOf(request.getParameter("id_venta")));
+                ventaEC.setId_venta(request.getParameter("id_venta"));
                 ventaCRUD = new VentaCRUD();
                 try {
                     venta = (Venta) ventaCRUD.modificar(ventaEC);
@@ -116,7 +116,7 @@ public class VentaController extends HttpServlet {
                 break;
             case "eliminar":
                 ventaEC = new Venta();
-                ventaEC.setId_venta(Integer.valueOf(request.getParameter("id_venta")));
+                ventaEC.setId_venta(request.getParameter("id_venta"));
                 ventaCRUD = new VentaCRUD();
                 try {
                     ventaCRUD.eliminar(ventaEC);
@@ -133,7 +133,7 @@ public class VentaController extends HttpServlet {
                 break;
             case "ver_ticket":
                 venta = new Venta();
-                venta.setId_venta(Integer.valueOf(request.getParameter("id_venta")));
+                venta.setId_venta(request.getParameter("id_venta"));
                 venta.setId_cliente(request.getParameter("id_cliente"));
                 venta.setTipo_venta(request.getParameter("tipo_venta"));
                 String tipo_ticket= request.getParameter("tipo_ticket");
@@ -273,7 +273,7 @@ public class VentaController extends HttpServlet {
     private Venta extraerVentaForm(HttpServletRequest request) {
         Venta venta = new Venta();
         venta.setFecha(Date.valueOf(request.getParameter("fecha")));
-        venta.setId_venta(Integer.valueOf(request.getParameter("id_venta")));
+        venta.setId_venta(request.getParameter("id_venta"));
         venta.setId_cliente(request.getParameter("id_cliente"));
         venta.setId_empleado(request.getParameter("id_empleado"));
         venta.setEstatus(request.getParameter("estatus"));
@@ -298,7 +298,7 @@ public class VentaController extends HttpServlet {
 
     private void cobrarVenta(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Venta venta = new Venta();
-        venta.setId_venta(Integer.valueOf(request.getParameter("id_venta")));
+        venta.setId_venta(request.getParameter("id_venta"));
         venta.setId_cliente(request.getParameter("id_cliente"));
         venta.setTipo_venta(request.getParameter("tipo_venta"));
         venta.setTipo_pago(request.getParameter("tipo_pago"));

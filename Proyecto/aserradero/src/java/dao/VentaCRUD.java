@@ -24,7 +24,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement(
-                    "INSERT INTO VENTA (fecha,id_cliente,id_empleado,estatus,tipo_venta) VALUES (?,?,?,?,?)");
+                    "INSERT INTO VENTA (id_venta,fecha,id_cliente,id_empleado,estatus,tipo_venta) VALUES (?,?,?,?,?,?)");
             st = cargarObject(st, venta);
             st.executeUpdate();
         }catch(Exception e){
@@ -67,7 +67,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         Venta venta = null;
         this.abrirConexion();
         try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VENTA WHERE id_venta = ? AND id_venta NOT IN (SELECT id_venta FROM VENTA WHERE estatus = 'Pagado' ORDER BY estatus,tipo_venta)")) {
-            st.setInt(1, ventaM.getId_venta());
+            st.setString(1, ventaM.getId_venta());
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     venta = (Venta) extraerObject(rs);
@@ -86,7 +86,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
             st.setString(1,venta.getId_cliente());
             st.setString(2,venta.getEstatus());
             st.setString(3,venta.getTipo_pago());
-            st.setInt(4,venta.getId_venta());
+            st.setString(4,venta.getId_venta());
             st.executeUpdate();
         }catch(Exception e){
             System.out.println(e);
@@ -103,7 +103,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
             try{
                 this.abrirConexion();
                 PreparedStatement st= this.conexion.prepareStatement("DELETE FROM VENTA WHERE id_venta = ?");
-                st.setInt(1,venta.getId_venta());
+                st.setString(1,venta.getId_venta());
                 st.executeUpdate();
             }catch(Exception e){
                 System.out.println(e);
@@ -119,7 +119,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         boolean pagado = false;
         this.abrirConexion();
         try (PreparedStatement st = this.conexion.prepareStatement("SELECT id_venta FROM VENTA WHERE id_venta = ? AND id_cliente = ? AND estatus = ?")) {
-            st.setInt(1, venta.id_venta);
+            st.setString(1, venta.id_venta);
             st.setString(2,venta.id_cliente );
             st.setString(3,"Pagado");
             try (ResultSet rs = st.executeQuery()) {
@@ -168,8 +168,8 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
     @Override
     public Object extraerObject(ResultSet rs) throws SQLException {
         Venta venta = new Venta();
+        venta.setId_venta(rs.getString("id_venta"));
         venta.setFecha(rs.getDate("fecha"));
-        venta.setId_venta(rs.getInt("id_venta"));
         venta.setId_cliente(rs.getString("id_cliente"));
         venta.setId_empleado(rs.getString("id_empleado"));
         venta.setEstatus(rs.getString("estatus"));
@@ -181,11 +181,12 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
     @Override
     public PreparedStatement cargarObject(PreparedStatement st, Object objeto) throws SQLException {
         Venta venta = (Venta) objeto;
-        st.setDate(1, venta.getFecha());
-        st.setString(2,venta.getId_cliente());
-        st.setString(3,venta.getId_empleado());
-        st.setString(4,venta.getEstatus());
-        st.setString(5,venta.getTipo_venta());
+        st.setString(1, venta.getId_venta());
+        st.setDate(2, venta.getFecha());
+        st.setString(3,venta.getId_cliente());
+        st.setString(4,venta.getId_empleado());
+        st.setString(5,venta.getEstatus());
+        st.setString(6,venta.getTipo_venta());
         return st;
     }
     
@@ -321,7 +322,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             try (PreparedStatement st = this.conexion.prepareStatement("SELECT PAGAR_VENTA_PAQUETE_ANTICIPADO (?,?)")) {
-                st.setInt(1,venta.getId_venta());
+                st.setString(1,venta.getId_venta());
                 st.setString(2,venta.getId_cliente());
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -341,7 +342,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             try (PreparedStatement st = this.conexion.prepareStatement("SELECT PAGAR_VENTA_MAYOREO_ANTICIPADO (?,?)")) {
-                st.setInt(1,venta.getId_venta());
+                st.setString(1,venta.getId_venta());
                 st.setString(2,venta.getId_cliente());
             }
         }catch(Exception e){
@@ -357,7 +358,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             try (PreparedStatement st = this.conexion.prepareStatement("SELECT PAGAR_VENTA_EXTRA (?,?)")) {
-                st.setInt(1,venta.getId_venta());
+                st.setString(1,venta.getId_venta());
                 st.setString(2,venta.getId_cliente());
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -379,7 +380,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             try (PreparedStatement st = this.conexion.prepareStatement("select * from VISTA_VENTAS_POR_MAYOREO WHERE id_venta = ?")) {
-                st.setInt(1, venta.getId_venta());
+                st.setString(1, venta.getId_venta());
                 listaMaderaVendidas = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -419,7 +420,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_CLIENTE_TICKET WHERE id_venta = ? AND id_cliente = ? AND tipo_venta = ?")) {
-                st.setInt(1, venta.getId_venta());
+                st.setString(1, venta.getId_venta());
                 st.setString(2, venta.getId_cliente());
                 st.setString(3, venta.getTipo_venta());
                 try (ResultSet rs = st.executeQuery()) {
@@ -462,7 +463,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             try (PreparedStatement st = this.conexion.prepareStatement("select SUM(costo_total) as monto from VISTA_VENTAS_POR_MAYOREO WHERE id_venta = ? GROUP BY id_venta")) {
-                st.setInt(1, venta.getId_venta());
+                st.setString(1, venta.getId_venta());
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
                         monto = rs.getFloat("monto");
@@ -492,7 +493,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement
                         ("SELECT  id_madera,grueso,ancho,largo, volumen_unitario,num_piezas,costo_volumen,volumen_total,costo_total FROM VISTA_VENTAS_POR_PAQUETE WHERE id_venta = ? AND numero_paquete = ?");
-            st.setInt(1, venta.getId_venta());
+            st.setString(1, venta.getId_venta());
             st.setInt(2, numero_paquete);
             List<Madera> listaMaderaVendida = new ArrayList();
             ResultSet rs = st.executeQuery();
@@ -512,7 +513,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             try (PreparedStatement st = this.conexion.prepareStatement("SELECT numero_paquete,SUM(costo_total) AS monto_total_paquete FROM VISTA_VENTAS_POR_PAQUETE  WHERE id_venta = ? GROUP BY numero_paquete ORDER BY numero_paquete")) {
-                st.setInt(1, venta.getId_venta());
+                st.setString(1, venta.getId_venta());
                 listaPaqueteMaderaVendida = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -542,7 +543,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             try (PreparedStatement st = this.conexion.prepareStatement("SELECT id_venta,SUM(costo_total) AS monto_total FROM VISTA_VENTAS_POR_PAQUETE  WHERE id_venta = ? GROUP BY id_venta")) {
-                st.setInt(1, venta.getId_venta());
+                st.setString(1, venta.getId_venta());
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
                         monto = rs.getFloat("monto_total");
@@ -566,7 +567,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             try (PreparedStatement st = this.conexion.prepareStatement("SELECT tipo,observacion,monto FROM VISTA_VENTAS_EXTRA WHERE id_venta= ?")) {
-                st.setInt(1, venta.getId_venta());
+                st.setString(1, venta.getId_venta());
                 listaDatosVentaE = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -600,7 +601,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             try (PreparedStatement st = this.conexion.prepareStatement("SELECT SUM(monto) AS monto_total FROM VISTA_VENTAS_EXTRA WHERE id_venta= ? GROUP BY id_venta;")) {
-                st.setInt(1, venta.getId_venta());
+                st.setString(1, venta.getId_venta());
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
                         monto = rs.getFloat("monto_total");

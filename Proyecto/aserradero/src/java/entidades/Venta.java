@@ -8,7 +8,7 @@ import java.sql.Date;
  */
 public class Venta {
     public Date fecha;
-    public int id_venta;
+    public String id_venta;
     public String id_cliente;
     public String id_empleado;
     public String estatus;
@@ -18,7 +18,7 @@ public class Venta {
     public Venta() {
     }
 
-    public Venta(Date fecha, int id_venta, String id_cliente, String id_empleado, String estatus, String tipo_venta, String tipo_pago) {
+    public Venta(Date fecha, String id_venta, String id_cliente, String id_empleado, String estatus, String tipo_venta, String tipo_pago) {
         this.fecha = fecha;
         this.id_venta = id_venta;
         this.id_cliente = id_cliente;
@@ -33,7 +33,7 @@ public class Venta {
         this.fecha = fecha;
     }
 
-    public void setId_venta(int id_venta) {
+    public void setId_venta(String id_venta) {
         this.id_venta = id_venta;
     }
 
@@ -61,7 +61,7 @@ public class Venta {
         return fecha;
     }
 
-    public int getId_venta() {
+    public String getId_venta() {
         return id_venta;
     }
 

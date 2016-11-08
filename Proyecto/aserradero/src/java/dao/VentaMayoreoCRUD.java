@@ -63,7 +63,7 @@ public class VentaMayoreoCRUD extends Conexion implements OperacionesCRUD{
         VentaMayoreo ventaMayoreo = null;
         this.abrirConexion();
             try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VENTA_MAYOREO WHERE id_venta = ? AND id_madera = ? AND (id_venta NOT IN (SELECT id_venta FROM VENTA WHERE estatus = 'Pagado') OR length(?) = 18)" )) {
-                st.setInt(1, ventaMayoreoM.getId_venta());
+                st.setString(1, ventaMayoreoM.getId_venta());
                 st.setString(2, ventaMayoreoM.getId_madera());
                 st.setString(3, "123456789123456789"); // Solamente los administradores tienen derecho a modificar  
                 try (ResultSet rs = st.executeQuery()) {
@@ -84,7 +84,7 @@ public class VentaMayoreoCRUD extends Conexion implements OperacionesCRUD{
             st.setInt(1,ventaMayoreo.getNum_piezas());
             st.setFloat(2,ventaMayoreo.getVolumen());
             st.setFloat(3,ventaMayoreo.getMonto());
-            st.setInt(4,ventaMayoreo.getId_venta());
+            st.setString(4,ventaMayoreo.getId_venta());
             st.setString(5,ventaMayoreo.getId_madera());
             st.executeUpdate();
         }catch(Exception e){
@@ -102,7 +102,7 @@ public class VentaMayoreoCRUD extends Conexion implements OperacionesCRUD{
             try{
                 this.abrirConexion();
                 PreparedStatement st= this.conexion.prepareStatement("DELETE FROM VENTA_MAYOREO WHERE id_venta = ? AND id_madera = ?");
-                st.setInt(1,ventaMayoreo.getId_venta());
+                st.setString(1,ventaMayoreo.getId_venta());
                 st.setString(2,ventaMayoreo.getId_madera());
                 st.executeUpdate();
             }catch(Exception e){
@@ -114,12 +114,12 @@ public class VentaMayoreoCRUD extends Conexion implements OperacionesCRUD{
         }
         
     }
-    private boolean ventaPagado(int id_venta) throws Exception{
+    private boolean ventaPagado(String id_venta) throws Exception{
         boolean pagado = false;
         this.abrirConexion();
         try (PreparedStatement st = this.conexion.prepareStatement("SELECT id_venta FROM VENTA WHERE estatus = ? AND id_venta = ?")) {
             st.setString(1, "Pagado");
-            st.setInt(2, id_venta);
+            st.setString(2, id_venta);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     pagado = true;
@@ -156,7 +156,7 @@ public class VentaMayoreoCRUD extends Conexion implements OperacionesCRUD{
     @Override
     public Object extraerObject(ResultSet rs) throws SQLException {
         VentaMayoreo ventaMayoreo = new VentaMayoreo();
-        ventaMayoreo.setId_venta(rs.getInt("id_venta"));
+        ventaMayoreo.setId_venta(rs.getString("id_venta"));
         ventaMayoreo.setId_madera(rs.getString("id_madera"));
         ventaMayoreo.setNum_piezas(rs.getInt("num_piezas"));
         ventaMayoreo.setVolumen(rs.getFloat("volumen"));
@@ -167,7 +167,7 @@ public class VentaMayoreoCRUD extends Conexion implements OperacionesCRUD{
     @Override
     public PreparedStatement cargarObject(PreparedStatement st, Object objeto) throws SQLException {
         VentaMayoreo ventaMayoreo = (VentaMayoreo) objeto;
-        st.setInt(1, ventaMayoreo.getId_venta());
+        st.setString(1, ventaMayoreo.getId_venta());
         st.setString(2,ventaMayoreo.getId_madera());
         st.setFloat(3,ventaMayoreo.getNum_piezas());
         st.setFloat(4,ventaMayoreo.getVolumen());

@@ -1,16 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package controlador;
 
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonWriter;
 import entidades.VentaExtra;
 import entidades.VentaMayoreo;
 import entidades.VentaPaquete;
@@ -94,10 +87,8 @@ public class VentasAjaxController extends HttpServlet {
         response.setHeader("Access-Control-Max-Age", "86400");
         processRequest(request, response);
         request.setCharacterEncoding("UTF-8");
-        VentaMayoreo VM= new VentaMayoreo();
-        Integer id_venta=Integer.valueOf(request.getParameter("id_venta"));
+        String id_venta=request.getParameter("id_venta");
         String accion=request.getParameter("accion");
-        Gson json=new Gson();
         JsonArray jArray = new JsonArray();
         JsonObject jsonreturn =new JsonObject();        
         PrintWriter out = response.getWriter();
@@ -131,7 +122,7 @@ public class VentasAjaxController extends HttpServlet {
                     out.print(jsonreturn);
                     response.getWriter().print(jArray);
                     sesion_ajax.setAttribute("detalle_venta_extra", VentaExt);
-                } catch (Exception e) {
+                } catch (IOException e) {
                     jsonreturn.addProperty("success", false);                    
                     System.out.println(e);
                 }

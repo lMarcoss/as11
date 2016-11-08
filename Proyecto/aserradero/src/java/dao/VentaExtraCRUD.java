@@ -63,7 +63,7 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
         VentaExtra ventaExtra = null;
         this.abrirConexion();
             try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VENTA_EXTRA WHERE id_venta = ? AND tipo = ? AND (id_venta NOT IN (SELECT id_venta FROM VENTA WHERE estatus = 'Pagado') OR length(?) = 18)")) {
-                st.setInt(1, ventaExtraM.getId_venta());
+                st.setString(1, ventaExtraM.getId_venta());
                 st.setString(2, ventaExtraM.getTipo());
                 st.setString(3, "123456789123456789"); // Solamente los administradores tienen derecho a modificar  
                 try (ResultSet rs = st.executeQuery()) {
@@ -84,7 +84,7 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
                     "UPDATE VENTA_EXTRA SET monto = ?, observacion = ? WHERE id_venta = ? AND tipo = ?");
             st.setFloat(1,ventaExtra.getMonto());
             st.setString(2,ventaExtra.getObservacion());
-            st.setInt(3,ventaExtra.getId_venta());
+            st.setString(3,ventaExtra.getId_venta());
             st.setString(4,ventaExtra.getTipo());
             st.executeUpdate();
         }catch(Exception e){
@@ -102,7 +102,7 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
             try{
                 this.abrirConexion();
                 PreparedStatement st= this.conexion.prepareStatement("DELETE FROM VENTA_EXTRA WHERE id_venta = ? AND tipo = ?");
-                st.setInt(1,ventaExtra.getId_venta());
+                st.setString(1,ventaExtra.getId_venta());
                 st.setString(2,ventaExtra.getTipo());
                 st.executeUpdate();
             }catch(Exception e){
@@ -115,12 +115,12 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
         
     }
     // consultamos si la venta está pagada
-    private boolean ventaPagado(int id_venta) throws Exception{
+    private boolean ventaPagado(String id_venta) throws Exception{
         boolean pagado = false;
         this.abrirConexion();
         try (PreparedStatement st = this.conexion.prepareStatement("SELECT id_venta FROM VENTA WHERE estatus = ? AND id_venta = ?")) {
             st.setString(1, "Pagado");
-            st.setInt(2, id_venta);
+            st.setString(2, id_venta);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     pagado = true;
@@ -157,7 +157,7 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
     @Override
     public Object extraerObject(ResultSet rs) throws SQLException {
         VentaExtra ventaExtra = new VentaExtra();
-        ventaExtra.setId_venta(rs.getInt("id_venta"));
+        ventaExtra.setId_venta(rs.getString("id_venta"));
         ventaExtra.setTipo(rs.getString("tipo"));
         ventaExtra.setMonto(rs.getFloat("monto"));
         ventaExtra.setObservacion(rs.getString("observacion"));
@@ -167,7 +167,7 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
     @Override
     public PreparedStatement cargarObject(PreparedStatement st, Object objeto) throws SQLException {
         VentaExtra ventaExtra = (VentaExtra) objeto;
-        st.setInt(1,ventaExtra.getId_venta());
+        st.setString(1,ventaExtra.getId_venta());
         st.setString(2,ventaExtra.getTipo());
         st.setFloat(3,ventaExtra.getMonto());
         st.setString(4,ventaExtra.getObservacion());

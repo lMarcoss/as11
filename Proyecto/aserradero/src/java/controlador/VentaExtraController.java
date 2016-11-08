@@ -68,9 +68,10 @@ public class VentaExtraController extends HttpServlet {
                     ventas = (List<Venta>)ventaCRUD.listarVentasExtras();
                     request.setAttribute("ventas",ventas);
                     
-                    //enviamos el id de la venta
-                    Integer next_id_venta=ventaCRUD.SiguienteIDVenta();
-                    request.setAttribute("siguienteventa", next_id_venta);
+                    //Generamos el Id de venta con los milisegundos del sistema
+                    String id_venta = String.valueOf(System.currentTimeMillis());
+                    request.setAttribute("siguienteventa", id_venta);
+                    
                      //Enviamos la lista de clientes
                     ClienteCRUD clienteCRUD= new ClienteCRUD();
                     List<Cliente> clientes = (List<Cliente>)clienteCRUD.listar();
@@ -93,7 +94,7 @@ public class VentaExtraController extends HttpServlet {
                 break;
             case "modificar":
                 ventaExtraEC = new VentaExtra();
-                ventaExtraEC.setId_venta(Integer.valueOf(request.getParameter("id_venta")));
+                ventaExtraEC.setId_venta(request.getParameter("id_venta"));
                 ventaExtraEC.setTipo(request.getParameter("tipo"));
                 ventaExtraCRUD = new VentaExtraCRUD();
                 try {
@@ -109,7 +110,7 @@ public class VentaExtraController extends HttpServlet {
                 break;
             case "eliminar":
                 ventaExtraEC = new VentaExtra();
-                ventaExtraEC.setId_venta(Integer.valueOf(request.getParameter("id_venta")));
+                ventaExtraEC.setId_venta(request.getParameter("id_venta"));
                 ventaExtraEC.setTipo(request.getParameter("tipo"));
                 ventaExtraCRUD = new VentaExtraCRUD();
                 try {
@@ -215,7 +216,7 @@ public class VentaExtraController extends HttpServlet {
     // Extraer datos del formulario
     private VentaExtra extraerVentaExtraForm(HttpServletRequest request) {
         VentaExtra ventaExtra = new VentaExtra();
-        ventaExtra.setId_venta(Integer.valueOf(request.getParameter("id_venta")));
+        ventaExtra.setId_venta(request.getParameter("id_venta"));
         ventaExtra.setTipo(request.getParameter("tipo"));
         ventaExtra.setMonto(Float.valueOf(request.getParameter("monto")));
         ventaExtra.setObservacion(request.getParameter("observacion"));

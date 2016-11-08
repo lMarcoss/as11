@@ -6,7 +6,7 @@ package entidades;
  */
 public class VentaPaquete {
     
-    private int id_venta;
+    private String id_venta;
     private int numero_paquete;
     private String id_madera;
     private int num_piezas;
@@ -16,7 +16,7 @@ public class VentaPaquete {
     public VentaPaquete() {
     }
 
-    public VentaPaquete(int id_venta, int numero_paquete, String id_madera, int num_piezas, float volumen, float monto) {
+    public VentaPaquete(String id_venta, int numero_paquete, String id_madera, int num_piezas, float volumen, float monto) {
         this.id_venta = id_venta;
         this.numero_paquete = numero_paquete;
         this.id_madera = id_madera;
@@ -25,7 +25,7 @@ public class VentaPaquete {
         this.monto = monto;
     }
 
-    public void setId_venta(int id_venta) {
+    public void setId_venta(String id_venta) {
         this.id_venta = id_venta;
     }
 
@@ -49,7 +49,7 @@ public class VentaPaquete {
         this.monto = monto;
     }
 
-    public int getId_venta() {
+    public String getId_venta() {
         return id_venta;
     }
 

@@ -44,7 +44,7 @@
                     <tr>
                         <th>N°</th>
                         <th>Fechas</th>
-                        <th>Id empleado</th>
+                        <th>Empleado</th>
                         <th>Nombre de gasto</th>
                         <th>Monto</th>
                         <th>observación</th>
