@@ -70,6 +70,9 @@ public class VentaMayoreoController extends HttpServlet {
                     List<Venta> ventas;
                     ventas = (List<Venta>)ventaCRUD.listarVentasMayoreo();
                     request.setAttribute("ventas",ventas);
+                    //enviamos el id de la venta
+                    Integer next_id_venta=ventaCRUD.SiguienteIDVenta();
+                    request.setAttribute("siguienteventa", next_id_venta);
                     
                     //Enviamos la lista de clientes
                     ClienteCRUD clienteCRUD= new ClienteCRUD();

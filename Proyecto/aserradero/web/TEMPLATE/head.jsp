@@ -6,7 +6,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+<meta name="keywords" content="" />
 
 <!-- Bootstrap  -->
 <link rel="stylesheet" href="/aserradero/css/menu/bootstrap.css">
@@ -30,3 +30,4 @@
 <!-- Fin de Scripts para creación de tabla con jquery-->
 <script src="/aserradero/js/libs/ajax_venta_mayoreo.js"></script>
 <script src="/aserradero/js/libs/ajax_venta_extra.js"></script>
+<script src="/aserradero/js/libs/ajax_venta_paquete.js"></script>

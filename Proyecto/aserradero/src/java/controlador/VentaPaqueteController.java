@@ -1,8 +1,12 @@
 package controlador;
 
+import dao.ClienteCRUD;
+import dao.EmpleadoCRUD;
 import dao.MaderaClasificacionCRUD;
 import dao.VentaCRUD;
 import dao.VentaPaqueteCRUD;
+import entidades.Cliente;
+import entidades.Empleado;
 import entidades.Venta;
 import entidades.VentaPaquete;
 import entidadesVirtuales.CostoMaderaClasificacion;
@@ -66,6 +70,19 @@ public class VentaPaqueteController extends HttpServlet {
                     List<Venta> ventas;
                     ventas = (List<Venta>)ventaCRUD.listarVentasPaquete();
                     request.setAttribute("ventas",ventas);
+                    
+                    //enviamos el id de la venta
+                    Integer next_id_venta=ventaCRUD.SiguienteIDVenta();
+                    request.setAttribute("siguienteventa", next_id_venta);
+                     //Enviamos la lista de clientes
+                    ClienteCRUD clienteCRUD= new ClienteCRUD();
+                    List<Cliente> clientes = (List<Cliente>)clienteCRUD.listar();
+                    request.setAttribute("clientes",clientes);
+                    
+                    //Enviamos la lista de empleados
+                    EmpleadoCRUD empleadoCRUD= new EmpleadoCRUD();
+                    List<Empleado> empleados = (List<Empleado>)empleadoCRUD.listarEmpleadoPorRoll("Empleado");
+                    request.setAttribute("empleados",empleados);
                     
                     //enviamos lista de maderaClasificacion al jsp
                     MaderaClasificacionCRUD maderaClasificacionCRUD= new MaderaClasificacionCRUD();

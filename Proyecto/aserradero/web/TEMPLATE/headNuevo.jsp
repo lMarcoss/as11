@@ -5,7 +5,7 @@
 --%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+<meta name="keywords" content="" />
 
 <script src="/aserradero/js/id_persona.js"></script>
 

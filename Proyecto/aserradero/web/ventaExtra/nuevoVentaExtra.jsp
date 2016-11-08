@@ -20,7 +20,7 @@
     List <Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
     List <Empleado> empleados = (List<Empleado>) request.getAttribute("empleados");
     List <Venta> ventas = (List<Venta>) request.getAttribute("ventas");
-
+    String id_nVenta = String.valueOf(request.getAttribute("siguienteventa"));
     HttpSession sesion_ajax = request.getSession(true);
     sesion_ajax.setAttribute("detalle_venta_extra", null);
 %>
@@ -56,7 +56,7 @@
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="control-label">Id venta:</label>
-                                        <input class="form-control" type="text" name="id_venta" id="id_venta" required="" title="escribe un identificador para la venta"/>
+                                        <input class="form-control" type="text" value="<%=id_nVenta%>" name="id_venta" id="id_venta" required="" title="escribe un identificador para la venta"/>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="control-label">Cliente</label>

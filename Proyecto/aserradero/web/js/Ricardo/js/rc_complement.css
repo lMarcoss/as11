@@ -3,7 +3,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
-/* 
+/*
     Created on : 4/10/2016, 12:59:57 AM
     Author     : rcortes
 */
@@ -11,11 +11,11 @@ and open the template in the editor.
     width: 95%;
     margin: 0 auto;
 }
-.lado_derecho{               
+.lado_derecho{
     width: 50%;
     float: left;
     padding-right: 45px;
-    padding-left: 15px;    
+    padding-left: 15px;
 }
 .lado_izquierdo{
     position: relative;
@@ -23,7 +23,7 @@ and open the template in the editor.
     width: 50%;
     padding-right: 15px;
     padding-left: 45px;
-    float: right;    
+    float: right;
 }
 .form-busc{
     margin: 0 auto;
@@ -48,10 +48,14 @@ and open the template in the editor.
           transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 .margen-boton{
-    margin-bottom: 3px;   
+    margin-bottom: 3px;
 }
 .bordebajo{
- border-bottom: 1px double #ddd;   
+ border-bottom: 1px double #ddd;
+ margin-bottom: 5px;
+}
+.centrar-btn-vp{
+  margin-top: 25px;
 }
 .centrar-btn{
     margin-top:35px;

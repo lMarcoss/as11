@@ -6,11 +6,13 @@ import dao.EmpleadoCRUD;
 import dao.VentaCRUD;
 import dao.VentaExtraCRUD;
 import dao.VentaMayoreoCRUD;
+import dao.VentaPaqueteCRUD;
 import entidades.Cliente;
 import entidades.Empleado;
 import entidades.Venta;
 import entidades.VentaExtra;
 import entidades.VentaMayoreo;
+import entidades.VentaPaquete;
 import ticketVenta.Madera;
 import ticketVenta.Paquete;
 import ticketVenta.DatosVentaExtra;
@@ -189,7 +191,7 @@ public class VentaController extends HttpServlet {
                             break;
                         case "extra":
                             sesion_ajax = request.getSession(true);
-                            ArrayList<VentaExtra> VentaExt = (ArrayList<VentaExtra>) sesion_ajax.getAttribute("detalle_venta_mayoreo");                            
+                            ArrayList<VentaExtra> VentaExt = (ArrayList<VentaExtra>) sesion_ajax.getAttribute("detalle_venta_extra");                            
                             VentaExtraCRUD VentaExtraCrud;
                             VentaExtraCrud = new VentaExtraCRUD();
                             for(VentaExtra a:VentaExt){
@@ -197,7 +199,13 @@ public class VentaController extends HttpServlet {
                             }
                             break;
                         case "paquete":
-                            
+                            sesion_ajax = request.getSession(true);
+                            ArrayList<VentaPaquete> VentaPaq = (ArrayList<VentaPaquete>) sesion_ajax.getAttribute("detalle_venta_paquete");
+                            VentaPaqueteCRUD VentaPaqueteCrud;
+                            VentaPaqueteCrud = new VentaPaqueteCRUD();
+                            for(VentaPaquete a:VentaPaq){
+                                VentaPaqueteCrud.registrar(a);
+                            }
                             break;
                         default:break;
                     }
