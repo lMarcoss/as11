@@ -153,8 +153,8 @@ CREATE TABLE CLIENTE(
 
 
 CREATE TABLE VENTA(
+	id_venta 	VARCHAR(30),
 	fecha 		DATE,
-	id_venta 	INT NOT NULL AUTO_INCREMENT,
 	id_cliente 	CHAR(26) NOT NULL,
 	id_empleado CHAR(26),
 	estatus 	ENUM('Pagado','Sin pagar'),
@@ -165,7 +165,7 @@ CREATE TABLE VENTA(
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 CREATE TABLE VENTA_MAYOREO(
-	id_venta 	INT NOT NULL,
+	id_venta 	VARCHAR(30),
 	id_madera 	VARCHAR(20),
 	num_piezas	INT,
 	volumen 	DECIMAL(8,3),
@@ -175,7 +175,7 @@ CREATE TABLE VENTA_MAYOREO(
 	FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera))ENGINE=InnoDB;
 
 CREATE TABLE VENTA_PAQUETE(
-	id_venta 		INT NOT NULL,
+	id_venta 		VARCHAR(30),
 	numero_paquete	INT,
 	id_madera 		VARCHAR(20),
 	num_piezas		INT,
@@ -186,7 +186,7 @@ CREATE TABLE VENTA_PAQUETE(
 	FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera))ENGINE=InnoDB;
 
 CREATE TABLE VENTA_EXTRA(
-	id_venta 		INT NOT NULL,
+	id_venta 		VARCHAR(30),
 	tipo 			VARCHAR(50),
 	monto			DECIMAL(10,2),
 	observacion		VARCHAR(100),

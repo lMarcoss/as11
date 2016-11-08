@@ -87,18 +87,3 @@ SELECT VENTA.id_venta,VENTA.fecha,VENTA.tipo_venta,CLIENTE.id_jefe,CLIENTE.id_cl
             PERSONA.localidad = LOCALIDAD.nombre_localidad AND
             LOCALIDAD.nombre_municipio = MUNICIPIO.nombre_municipio;
 SELECT * FROM VISTA_CLIENTE_TICKET;
-
--- vista para reporte de compras
-CREATE VIEW COMPRA_REPORTE AS
-SELECT fecha,id_compra,num_piezas,id_proveedor,(SELECT concat(nombre,' ',apellido_paterno, ' ',apellido_materno) from PERSONA where SUBSTRING(COMPRA.id_proveedor,1,18)= PERSONA.id_persona )as nombre_proveedor,
-id_chofer,(SELECT concat(nombre,' ',apellido_paterno, ' ',apellido_materno) from PERSONA where SUBSTRING(COMPRA.id_chofer,1,18)=PERSONA.id_persona)as nombre_chofer,
-id_empleado,(SELECT concat(nombre,' ',apellido_paterno, ' ',apellido_materno) from PERSONA where SUBSTRING(COMPRA.id_empleado,1,18)=PERSONA.id_persona)as nombre_empleado,
-(SELECT sum(volumen) from DETALLE_COMPRA WHERE COMPRA.id_compra = DETALLE_COMPRA.id_compra AND clasificacion = 'Primario') AS vol_primario, 
-(SELECT volumen from DETALLE_COMPRA WHERE COMPRA.id_compra = DETALLE_COMPRA.id_compra AND clasificacion = 'Secundario') AS vol_secundario,
-                                    (SELECT sum(volumen) from DETALLE_COMPRA WHERE COMPRA.id_compra = DETALLE_COMPRA.id_compra AND clasificacion = 'Terciario')AS vol_terciario,(select sum(monto) from DETALLE_COMPRA where COMPRA.id_compra=DETALLE_COMPRA.id_compra) as monto_total
-                                    from COMPRA;
-
-USE aserradero;
-
-SELECT * FROM COMPRA_REPORTE;
-

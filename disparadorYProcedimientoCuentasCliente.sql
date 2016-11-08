@@ -1,3 +1,4 @@
+use aserradero;
 -- Disparador para insertar datos en la tabla cuentas por pagar cada que se hace un anticipoCliente
 -- verifica si hay se tiene cuenta pro cobrar con el cliente para restarle y si no, entonces inserta en cuentas por pagar
 DROP TRIGGER IF EXISTS UPDATE_CUENTAS_AFTER_ANTICIPO_CLIENTE;
