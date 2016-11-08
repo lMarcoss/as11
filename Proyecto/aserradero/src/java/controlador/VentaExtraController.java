@@ -1,7 +1,11 @@
 package controlador;
 
+import dao.ClienteCRUD;
+import dao.EmpleadoCRUD;
 import dao.VentaCRUD;
 import dao.VentaExtraCRUD;
+import entidades.Cliente;
+import entidades.Empleado;
 import entidades.Venta;
 import entidades.VentaExtra;
 import java.io.IOException;
@@ -63,6 +67,19 @@ public class VentaExtraController extends HttpServlet {
                     List<Venta> ventas;
                     ventas = (List<Venta>)ventaCRUD.listarVentasExtras();
                     request.setAttribute("ventas",ventas);
+                    
+                    //enviamos el id de la venta
+                    Integer next_id_venta=ventaCRUD.SiguienteIDVenta();
+                    request.setAttribute("siguienteventa", next_id_venta);
+                     //Enviamos la lista de clientes
+                    ClienteCRUD clienteCRUD= new ClienteCRUD();
+                    List<Cliente> clientes = (List<Cliente>)clienteCRUD.listar();
+                    request.setAttribute("clientes",clientes);
+                    
+                    //Enviamos la lista de empleados
+                    EmpleadoCRUD empleadoCRUD= new EmpleadoCRUD();
+                    List<Empleado> empleados = (List<Empleado>)empleadoCRUD.listarEmpleadoPorRoll("Empleado");
+                    request.setAttribute("empleados",empleados);
                     RequestDispatcher view = request.getRequestDispatcher("ventaExtra/nuevoVentaExtra.jsp");
                     view.forward(request,response);
                 } catch (Exception ex) {

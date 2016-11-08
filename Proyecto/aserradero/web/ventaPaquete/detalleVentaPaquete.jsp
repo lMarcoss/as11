@@ -1,20 +1,21 @@
 <%-- 
-    Document   : detalleNuevaVentaExtra
-    Created on : 15/10/2016, 06:38:04 PM
+    Document   : detalleVentaPaquete
+    Created on : 7/11/2016, 05:24:31 PM
     Author     : rcortes
 --%>
 
-<%@page import="entidades.VentaMayoreo"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="entidades.VentaPaquete"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-    <%
+<%
         HttpSession sesion_ajax = request.getSession(true);
-        ArrayList<VentaMayoreo> VentaMay = (ArrayList<VentaMayoreo>) sesion_ajax.getAttribute("detalle_venta_mayoreo");
-        if((sesion_ajax.getAttribute("detalle_venta_mayoreo"))!=null){
+        ArrayList<VentaPaquete> VentaMay = (ArrayList<VentaPaquete>) sesion_ajax.getAttribute("detalle_venta_paquete");
+        if((sesion_ajax.getAttribute("detalle_venta_paquete"))!=null){
             if(VentaMay.size()>0){//Si la cantida de productos agregados es mayor a cero
                 out.print("<table class='table'>");
                 out.print("<thead>");
                 out.print("<tr>");
+                out.print("<th>Número paquete</th>");
                 out.print("<th>Madera</th>");
                 out.print("<th>Número de piezas</th>");
                 out.print("<th>Volumen</th>");
@@ -23,8 +24,9 @@
                 out.print("</tr>");
                 out.print("</thead>");
                 out.print("<tbody>");//Inicia el cuerpo de la tabla    
-                for(VentaMayoreo a:VentaMay){
+                for(VentaPaquete a:VentaMay){
                     out.print("<tr>");
+                    out.print("<td>"+a.getNumero_paquete()+"</td>");
                     out.print("<td>"+a.getId_madera()+"</td>");
                     out.print("<td>"+a.getNum_piezas()+"</td>");                
                     out.print("<td>"+a.getVolumen()+"</td>");

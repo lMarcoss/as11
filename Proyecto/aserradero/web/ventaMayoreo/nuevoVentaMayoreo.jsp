@@ -20,16 +20,19 @@
     List <Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
     List <Empleado> empleados = (List<Empleado>) request.getAttribute("empleados");
     List <Venta> ventas = (List<Venta>) request.getAttribute("ventas");
+    String id_nVenta = String.valueOf(request.getAttribute("siguienteventa"));
     List <CostoMaderaClasificacion> costoMaderaClasificaciones = (List<CostoMaderaClasificacion>) request.getAttribute("costoMaderaClasificaciones");
+    
 %>
 <%
     HttpSession sesion_ajax = request.getSession(true);
-    sesion_ajax.setAttribute("detalle", null);
+    sesion_ajax.setAttribute("detalle_venta_mayoreo", null);
 %>
 <!DOCTYPE html>
 <html>
     <head>
         <%@ include file="/TEMPLATE/headNuevo.jsp" %>
+        <%@ include file="/TEMPLATE/head.jsp" %>
         <title>Nuevo</title>
     </head>
     <body>
@@ -49,24 +52,28 @@
                       </div>
                       <div class="panel-body" id="PanelPrincipal">
                             <div class="col-lg-12">
-                                <form action="/aserradero/VentaController?action=nuevo" method="post" id="formregistro">
-                                    <div class="form-group col-md-4"><!-- agrupar inputs -->
+                                <form action="/aserradero/VentaController?action=nuevo" method="post" id="formregistro"><!-- Formulario de venta -->
+                                    <div class="form-group col-md-2"><!-- agrupar inputs -->
                                         <input name="tipo_venta" value="mayoreo" type="hidden"/>
                                         <label class="control-label">Fecha:</label>
                                         <input class="form-control" type="date" name="fecha" value="<%=fecha%>" required="" />
-                                        <label class="control-label">Id venta:</label>
-                                        <input class="form-control" type="text" name="id_venta" id="id_venta" required="" title="escribe un identificador para la venta"/>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="col-md-2 form-group">
+                                        <label class="control-label">Id venta:</label>
+                                        <input class="form-control" type="text" value="<%=id_nVenta%>" name="id_venta" id="id_venta" required="" title="escribe un identificador para la venta"/>
+                                    </div>
+                                    <div class="form-group col-md-2">
                                         <label class="control-label">Cliente</label>
                                         <select class="form-control" name="id_cliente" required="">
                                             <option></option>
-                                            <%                                                
+                                            <%
                                                 for (Cliente cliente : clientes) {
                                                     out.print("<option value='"+cliente.getId_cliente()+"'>"+cliente.getCliente()+"</option>");
-                                                }                                    
+                                                }
                                             %>
                                         </select>
+                                    </div>
+                                    <div class="col-md-2 form-group">
                                         <label class="control-label">Empleado:</label>
                                         <select class="form-control" name="id_empleado" required="">
                                         <option></option>
@@ -77,16 +84,16 @@
                                         %>
                                       </select>
                                     </div>
-                                      <div class="form-group col-md-4">
+                                    <div class="form-group col-md-2">
                                         <label class="control-label">Estatus:</label>
                                         <input  name="estatus" value="Sin pagar" id="estatus" class="form-control" required="" readonly=""/>
-                                      </div>
-                                     <div class="form-group pull-right col-md-4"><!-- agrupar inputs -->
+                                    </div>
+                                     <div class="form-group pull-right col-md-2"><!-- agrupar inputs -->
                                         <input type="hidden" value="Mayoreo" name="tipo_venta" />
-                                        <input type="submit" class="btn btn-success" value="Guardar"/>
-                                        <a href="/aserradero/VentaController?action=listar"><input class="btn btn-warning" type="button" value="Cancelar"/></a>
+                                        <input type="submit" class="btn btn-block btn-success margen-boton" value="Guardar venta"/>
+                                        <a href="/aserradero/VentaController?action=listar"><input class="btn btn-block btn-warning" type="submit" value="Cancelar"/></a>
                                     </div><!-- Fin div group -->
-                                </form>
+                                </form><!-- Formulario de venta -->
                                 <div class="col-lg-12">
                                     <div class="form-group col-md-3">
                                         <label class="control-label">Madera:</label>
@@ -103,7 +110,11 @@
                                             <option></option>
                                             <%
                                                 for (CostoMaderaClasificacion costoMaderaClasificacion : costoMaderaClasificaciones) {
+<<<<<<< HEAD
                                                     out.print("<option value='"+costoMaderaClasificacion.getMonto_volumen()+"'>"+costoMaderaClasificacion.getMonto_volumen()+"</option>");
+=======
+                                                    out.print("<option value='"+costoMaderaClasificacion.getVolumen()+"'>"+costoMaderaClasificacion.getVolumen()+"</option>");
+>>>>>>> 91cc7d40de4e2b987ede3bbd3960e896ae948607
                                                 }
                                             %>
                                         </select>
@@ -112,24 +123,24 @@
                                         <label class="control-label" >Costo volumen</label>
                                         <select name="costo_volumen" class="form-control" id="costo_volumen" readonly="" disabled="">
                                             <option></option>
-                                          <%
-                                              for (CostoMaderaClasificacion costoMaderaClasificacion : costoMaderaClasificaciones) {
-                                                  out.print("<option value='"+costoMaderaClasificacion.getMonto_volumen()+"'>"+costoMaderaClasificacion.getMonto_volumen()+"</option>");
-                                              }
-                                          %>
+                                            <%
+                                                for (CostoMaderaClasificacion costoMaderaClasificacion : costoMaderaClasificaciones) {
+                                                    out.print("<option value='"+costoMaderaClasificacion.getMonto_volumen()+"'>"+costoMaderaClasificacion.getMonto_volumen()+"</option>");
+                                                }
+                                            %>
                                         </select>
                                         <label class="control-label" >Número de piezas:</label>
                                         <input type="number" class="form-control" name="num_piezas" id="num_piezas" min="1" max="999" required="" title="Escribe la cantidad de piezas" onblur="calcularVolumenTotal()"/>
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label class="control-label" >Volumen:</label>
-                                        <input type="number" class="form-control" name="volumen" id="volumen" step="0.001" min="0.001" max="99999.999" required="" readonly=""/>
+                                        <input class="form-control" type="number" name="volumen" id="volumen" step="0.001" min="0.001" max="99999.999" required="" readonly="" disabled=""/>
                                         <label class="control-label" >Monto:</label>
                                         <input type="number" name="monto" class="form-control" id="monto" step="0.01" min="0.01" max="99999999.99"  required="" readonly=""/>
                                     </div>
                                     <div class="col-md-3">
                                         <br><br><br>
-                                        <input id="agregar_venta_detalle" type="button" class="btn btn-info col-md-9" value="Agregar producto"/>
+                                        <input id="agregar_venta_mayoreo" type="button" class="btn btn-info col-md-9" value="Agregar producto"/>
                                     </div>
                                 </div>
                             </div>
