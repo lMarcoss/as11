@@ -146,7 +146,7 @@
                                     <input type="number" class="form-control" name="monto" id="monto" step="0.01" min="0.01" max="99999999.99"  required="" readonly=""/>
                                 </div>
                                 <div class="col-md-8 pull-right">
-                                    <input type="button" value="Guardar" id="agregar_venta_paquete" class="btn btn-primary centrar-btn-vp"/>
+                                    <input type="button" value="Agregar" id="agregar_venta_paquete" class="btn btn-primary centrar-btn-vp"/>
                                 </div>                                
                             </div><!-- a -->
                         </div><!-- Fin de panel venta -->

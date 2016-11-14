@@ -203,7 +203,7 @@ public class VentasAjaxController extends HttpServlet {
                     boolean bandera=false;
                     if(VentaPaq.size()>0){
                         for(VentaPaquete a:VentaPaq){
-                            if(a.getId_madera().equals(Madera)){
+                            if(a.getId_madera().equals(Madera) && (a.getNumero_paquete()==numero_paquete)){
                                 a.setNum_piezas(a.getNum_piezas()+num_piezas);
                                 a.setMonto(a.getMonto()+Monto);
                                 a.setVolumen(a.getVolumen()+volumen);
