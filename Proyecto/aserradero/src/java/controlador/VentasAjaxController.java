@@ -1,7 +1,6 @@
 package controlador;
 
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import entidades.VentaExtra;
@@ -36,16 +35,6 @@ public class VentasAjaxController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet VentasAjaxController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet VentasAjaxController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
         }
     }
 
@@ -172,11 +161,11 @@ public class VentasAjaxController extends HttpServlet {
                     response.getWriter().print(jArray);
                     out.print(jArray.toString());                    
                     sesion_ajax.setAttribute("detalle_venta_mayoreo", VentaMay);
-                } catch (Exception e) {
+                } catch (IOException e) {
                     jsonreturn.addProperty("success", false);
                     System.out.println(e);
                 }
-            break;    
+            break;        
             case "del_venta_mayoreo":
                 Madera=request.getParameter("id_madera");
                 ArrayList<VentaMayoreo> VentaMay = sesion_ajax.getAttribute("detalle_venta_mayoreo") == null ? new ArrayList<>() : (ArrayList) sesion_ajax.getAttribute("detalle_venta_mayoreo");
@@ -221,7 +210,7 @@ public class VentasAjaxController extends HttpServlet {
                     response.getWriter().print(jArray);
                     out.print(jArray.toString());                    
                     sesion_ajax.setAttribute("detalle_venta_paquete", VentaPaq);
-                } catch (Exception e) {
+                } catch (IOException e) {
                     jsonreturn.addProperty("success", false);
                     System.out.println(e);
                 }
