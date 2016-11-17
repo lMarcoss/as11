@@ -1,4 +1,10 @@
-package entidades;
+/*
+ * Entidad creada para consultar datos generales de cada tipo de venta
+ * VENTA_EXTRA
+ * VENTA_MAYOREO
+ * VENTA_PAQUETE
+ */
+package entidadesVirtuales;
 
 import java.sql.Date;
 
@@ -6,52 +12,43 @@ import java.sql.Date;
  *
  * @author lmarcoss
  */
-public class VentaExtra {
-    private Date fecha;
+public class VentaGeneral {
+    // atributos generales de las ventas
     private String id_venta;
+    private Date fecha;
     private String id_cliente;
     private String cliente;
-    private String direccion_cliente;
     private String id_empleado;
     private String empleado;
     private String id_jefe;
     private String estatus;
-    private String tipo;
-    private float monto;
-    private String observacion;
+    private String tipo_venta;
+    private String tipo_pago;
+    private float monto; // Es el único atributo que se extrae de los tipos de ventas
 
-    public VentaExtra() {
+    public VentaGeneral() {
     }
 
-    public VentaExtra(String id_venta, String tipo, float monto, String observacion) {
+    public VentaGeneral(String id_venta, Date fecha, String id_cliente, String cliente, String id_empleado, String empleado, String id_jefe, String estatus, String tipo_venta, String tipo_pago, float monto) {
         this.id_venta = id_venta;
-        this.tipo = tipo;
-        this.monto = monto;
-        this.observacion = observacion;
-    }
-
-    public VentaExtra(Date fecha, String id_venta, String id_cliente, String cliente, String direccion_cliente, String id_empleado, String empleado, String id_jefe, String estatus, String tipo, float monto, String observacion) {
         this.fecha = fecha;
-        this.id_venta = id_venta;
         this.id_cliente = id_cliente;
         this.cliente = cliente;
-        this.direccion_cliente = direccion_cliente;
         this.id_empleado = id_empleado;
         this.empleado = empleado;
         this.id_jefe = id_jefe;
         this.estatus = estatus;
-        this.tipo = tipo;
+        this.tipo_venta = tipo_venta;
+        this.tipo_pago = tipo_pago;
         this.monto = monto;
-        this.observacion = observacion;
-    }
-    
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
     }
 
     public void setId_venta(String id_venta) {
         this.id_venta = id_venta;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public void setId_cliente(String id_cliente) {
@@ -60,10 +57,6 @@ public class VentaExtra {
 
     public void setCliente(String cliente) {
         this.cliente = cliente;
-    }
-
-    public void setDireccion_cliente(String direccion_cliente) {
-        this.direccion_cliente = direccion_cliente;
     }
 
     public void setId_empleado(String id_empleado) {
@@ -82,24 +75,24 @@ public class VentaExtra {
         this.estatus = estatus;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipo_venta(String tipo_venta) {
+        this.tipo_venta = tipo_venta;
+    }
+
+    public void setTipo_pago(String tipo_pago) {
+        this.tipo_pago = tipo_pago;
     }
 
     public void setMonto(float monto) {
         this.monto = monto;
     }
 
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
+    public String getId_venta() {
+        return id_venta;
     }
 
     public Date getFecha() {
         return fecha;
-    }
-
-    public String getId_venta() {
-        return id_venta;
     }
 
     public String getId_cliente() {
@@ -108,10 +101,6 @@ public class VentaExtra {
 
     public String getCliente() {
         return cliente;
-    }
-
-    public String getDireccion_cliente() {
-        return direccion_cliente;
     }
 
     public String getId_empleado() {
@@ -130,17 +119,16 @@ public class VentaExtra {
         return estatus;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getTipo_venta() {
+        return tipo_venta;
+    }
+
+    public String getTipo_pago() {
+        return tipo_pago;
     }
 
     public float getMonto() {
         return monto;
     }
-
-    public String getObservacion() {
-        return observacion;
-    }
-
     
 }

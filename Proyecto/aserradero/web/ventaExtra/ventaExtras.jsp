@@ -4,12 +4,11 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.Vehiculo"%>
-<%@page import="entidades.VentaExtra"%>
+<%@page import="entidadesVirtuales.VentaGeneral"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    List <VentaExtra> ventaExtras = (List<VentaExtra>) request.getAttribute("ventaExtras");
+    List <VentaGeneral> ventaExtras = (List<VentaGeneral>) request.getAttribute("ventaExtras");
     String mensaje = (String)request.getAttribute("mensaje");
 %>
 <!DOCTYPE html>
@@ -30,7 +29,10 @@
                     <tr>
                         <td>
                             <select name="nombre_campo" >
-                            <option value="id_venta">Id venta</option>
+                            <option value="fecha">Fecha</option>
+                            <option value="cliente">Cliente</option>
+                            <option value="empleado">Empleado</option>
+                            <option value="estatus">Estatus</option>
                             <option value="tipo">Tipo</option>
                             <option value="monto">Monto</option>
                             <option value="observacion">Observacion</option>
@@ -48,24 +50,29 @@
             <table class="table-condensed">
                 <tr>
                     <th>N°</th>
-                    <th>Id venta</th>
-                    <th>Tipo</th>
+                    <th>Fecha</th>
+                    <th>Cliente</th>
+                    <th>Empleado</th>
+                    <th>Estatus</th>
+                    <th>Tipo pago</th>
                     <th>Monto</th>
-                    <th>Observacion</th>
                     <th></th>
                     <th></th>
                 </tr>
                 <%
                     int i=0;
-                    for (VentaExtra ventaExtra : ventaExtras) {
+                    for (VentaGeneral venta : ventaExtras) {
                         out.print("<tr>"
                             +"<td>"+(i+1)+"</td>"
-                            +"<td><a href=\"/aserradero/VentaController?action=buscar_venta&id_venta="+ventaExtra.getId_venta()+"\">"+ventaExtra.getId_venta()+"</a></td>"
-                            +"<td>"+ventaExtra.getTipo()+"</td>"
-                            +"<td>"+ventaExtra.getMonto()+"</td>"
-                            +"<td>"+ventaExtra.getObservacion()+"</td>"
-                            +"<td><a href=\"/aserradero/VentaExtraController?action=modificar&id_venta="+ventaExtra.getId_venta()+"&tipo="+ventaExtra.getTipo()+"\">Actualizar</a></td>"
-                            + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/VentaExtraController?action=eliminar&id_venta="+ventaExtra.getId_venta()+"&tipo="+ventaExtra.getTipo()+"';};\">Eliminar</a></td>"
+                            +"<td>"+venta.getFecha()+"</td>"
+                            +"<td>"+venta.getCliente()+"</td>"
+                            +"<td>"+venta.getEmpleado()+"</td>"
+                            +"<td>"+venta.getEstatus()+"</td>"
+                            +"<td>"+venta.getTipo_pago()+"</td>"
+                            +"<td>"+venta.getMonto()+"</td>"
+                            +"<td><a href=\"/aserradero/VentaExtraController?action=detalle&id_venta="+venta.getId_venta()+"\">Ver detalles</a></td>"
+                            +"<td><a href=\"/aserradero/VentaExtraController?action=modificar&id_venta="+venta.getId_venta()+"&tipo_venta="+venta.getTipo_venta()+"\">Actualizar</a></td>"
+                            + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/VentaExtraController?action=eliminar&id_venta="+venta.getId_venta()+"&tipo_venta="+venta.getTipo_venta()+"';};\">Eliminar</a></td>"
                         + "</tr>" );
                         i++;
                     }
