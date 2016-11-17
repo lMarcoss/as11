@@ -2,18 +2,17 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-            <file>file:/home/rcortes/NetBeansProjects/Ricardo/aserradero/Proyecto/aserradero/web/ventaExtra/nuevoVentaExtra.jsp</file>
-            <file>file:/home/rcortes/NetBeansProjects/Ricardo/aserradero/Proyecto/aserradero/web/ventaPaquete/nuevoVentaPaquete.jsp</file>
-            <file>file:/home/rcortes/NetBeansProjects/Ricardo/aserradero/Proyecto/aserradero/src/java/controlador/VentaPaqueteController.java</file>
-            <file>file:/home/rcortes/NetBeansProjects/Ricardo/aserradero/Proyecto/aserradero/src/java/controlador/VentasAjaxController.java</file>
-            <file>file:/home/rcortes/NetBeansProjects/Ricardo/aserradero/Proyecto/aserradero/src/java/controlador/VentaController.java</file>
-            <file>file:/home/rcortes/NetBeansProjects/Ricardo/aserradero/Proyecto/aserradero/src/java/controlador/VentaMayoreoController.java</file>
-            <file>file:/home/rcortes/NetBeansProjects/Ricardo/aserradero/Proyecto/aserradero/src/java/controlador/VentaExtraController.java</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/web/TEMPLATE/head.jsp</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/src/java/controlador/VentaExtraController.java</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/web/ventaExtra/ventaExtras.jsp</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/src/java/entidades/VentaExtra.java</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/web/ventaExtra/mostrarDetalleVE.jsp</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/src/java/entidades/Venta.java</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/src/java/dao/VentaExtraCRUD.java</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/web/ventaExtra/actualizarVentaExtra.jsp</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/web/TEMPLATE/menu.jsp</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/web/TEMPLATE/headNuevo.jsp</file>
         </group>
->>>>>>> 91cc7d40de4e2b987ede3bbd3960e896ae948607
     </open-files>
 </project-private>

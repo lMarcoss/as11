@@ -3,9 +3,6 @@
 
 use aserradero;
 
-
-
-
 -- Vista para reportes y ticket de ventas por paquete
 CREATE VIEW VISTA_VENTAS_POR_PAQUETE AS
 SELECT 
@@ -42,7 +39,7 @@ SELECT fecha,
         (select id_jefe from CLIENTE where id_cliente = VENTA.id_cliente) as id_jefe,
 		(SELECT direccion FROM PERSONA WHERE id_persona = SUBSTRING(id_cliente,1,18)) as direccion_cliente,
 		id_empleado, 
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(id_empleado,1,18)) as empleado,	
+        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE id_persona = SUBSTRING(id_empleado,1,18)) as empleado,
 		estatus,
         COSTO_MADERA.id_madera as id_madera,
         grueso,
@@ -62,10 +59,12 @@ WHERE VENTA.id_venta = VENTA_MAYOREO.id_venta AND
 CREATE VIEW VISTA_VENTAS_EXTRA AS
 SELECT fecha,
 		VENTA.id_venta,
-        id_cliente,(select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = id_cliente) as cliente,
-        (SELECT direccion FROM PERSONA WHERE id_persona = id_cliente) as direccion_cliente,
+        id_cliente,
+        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(VENTA.id_cliente,1,18)) as cliente,
+        (SELECT direccion FROM PERSONA WHERE id_persona = SUBSTRING(VENTA.id_cliente,1,18)) as direccion_cliente,
         id_empleado,
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = id_empleado) as empleado,
+        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(VENTA.id_empleado,1,18)) as empleado,
+        (SELECT id_jefe FROM EMPLEADO WHERE id_empleado = VENTA.id_empleado) AS id_jefe,
         estatus,
         tipo,
         monto,
@@ -87,3 +86,5 @@ SELECT VENTA.id_venta,VENTA.fecha,VENTA.tipo_venta,CLIENTE.id_jefe,CLIENTE.id_cl
             PERSONA.localidad = LOCALIDAD.nombre_localidad AND
             LOCALIDAD.nombre_municipio = MUNICIPIO.nombre_municipio;
 SELECT * FROM VISTA_CLIENTE_TICKET;
+USE aserradero;
+SELECT * FROM USUARIO;

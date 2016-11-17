@@ -1,6 +1,7 @@
 package dao;
 
 import entidades.VentaExtra;
+import entidadesVirtuales.VentaGeneral;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,19 +34,20 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
 
     @Override
     public <T> List listar() throws Exception {
-        List<VentaExtra> ventaExtras;
+        // Se consultan datos generales de las ventas extra
+        List<VentaGeneral> ventas;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VENTA_EXTRA")) {
-                ventaExtras = new ArrayList();
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_VENTA_EXTRA")) {
+                ventas = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
-                        VentaExtra ventaExtra = (VentaExtra) extraerObject(rs);
-                        ventaExtras.add(ventaExtra);
+                        VentaGeneral venta = (VentaGeneral) extraerVentaG(rs);
+                        ventas.add(venta);
                     }
                 }
             }catch(Exception e){
-                ventaExtras = null;
+                ventas = null;
                 System.out.println(e);
             }
         }catch(Exception e){
@@ -54,7 +56,58 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
         }finally{
             this.cerrarConexion();
         } 
-        return ventaExtras;
+        return ventas;
+    }
+    
+    private VentaGeneral extraerVentaG(ResultSet rs) throws SQLException {
+        VentaGeneral venta = new VentaGeneral();
+        venta.setId_venta(rs.getString("id_venta"));
+        venta.setFecha(rs.getDate("fecha"));
+        venta.setId_cliente(rs.getString("id_cliente"));
+        venta.setCliente(rs.getString("cliente"));
+        venta.setId_empleado(rs.getString("id_empleado"));
+        venta.setEmpleado(rs.getString("empleado"));
+        venta.setId_jefe(rs.getString("id_jefe"));
+        venta.setEstatus(rs.getString("estatus"));
+        venta.setTipo_venta(rs.getString("tipo_venta"));
+        venta.setTipo_pago(rs.getString("tipo_pago"));
+        venta.setMonto(rs.getFloat("monto"));
+        return venta;
+    }
+    
+    public <VentaExtra> List listarDetalleVE(String id_venta) throws Exception {
+        // Se consulta el detalle de una venta extra
+        List<VentaExtra> detalles;
+        try{
+            this.abrirConexion();
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VENTA_EXTRA WHERE id_venta = ?")) {
+                st.setString(1,id_venta);
+                detalles = new ArrayList();
+                try (ResultSet rs = st.executeQuery()) {
+                    while (rs.next()) {
+                        VentaExtra venta = (VentaExtra) extraerDetalleVE(rs);
+                        detalles.add(venta);
+                    }
+                }
+            }catch(Exception e){
+                detalles = null;
+            }
+        }catch(Exception e){
+            System.out.println(e);
+            throw e;
+        }finally{
+            this.cerrarConexion();
+        } 
+        return detalles;
+    }
+    
+    private Object extraerDetalleVE(ResultSet rs) throws SQLException {
+        VentaExtra ventaExtra = new VentaExtra();
+        ventaExtra.setId_venta(rs.getString("id_venta"));
+        ventaExtra.setTipo(rs.getString("tipo"));
+        ventaExtra.setMonto(rs.getFloat("monto"));
+        ventaExtra.setObservacion(rs.getString("observacion"));
+        return ventaExtra;
     }
 
     @Override
@@ -62,7 +115,7 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
         VentaExtra ventaExtraM = (VentaExtra) objeto;
         VentaExtra ventaExtra = null;
         this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VENTA_EXTRA WHERE id_venta = ? AND tipo = ? AND (id_venta NOT IN (SELECT id_venta FROM VENTA WHERE estatus = 'Pagado') OR length(?) = 18)")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VENTA_EXTRA_Y_DETALLE WHERE id_venta = ? AND tipo = ? AND (id_venta NOT IN (SELECT id_venta FROM VENTA WHERE estatus = 'Pagado') OR length(?) = 18)")) {
                 st.setString(1, ventaExtraM.getId_venta());
                 st.setString(2, ventaExtraM.getTipo());
                 st.setString(3, "123456789123456789"); // Solamente los administradores tienen derecho a modificar  
@@ -135,7 +188,7 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
         List<VentaExtra> ventaExtras;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VENTA_EXTRA WHERE "+nombre_campo+" like ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_VENTA_EXTRA WHERE "+nombre_campo+" like ?")) {
                 st.setString(1, "%"+dato+"%");
                 ventaExtras = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
@@ -157,7 +210,13 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
     @Override
     public Object extraerObject(ResultSet rs) throws SQLException {
         VentaExtra ventaExtra = new VentaExtra();
+        ventaExtra.setFecha(rs.getDate("fecha"));
         ventaExtra.setId_venta(rs.getString("id_venta"));
+        ventaExtra.setId_cliente(rs.getString("id_cliente"));
+        ventaExtra.setCliente(rs.getString("cliente"));
+        ventaExtra.setId_empleado(rs.getString("id_empleado"));
+        ventaExtra.setEmpleado(rs.getString("empleado"));
+        ventaExtra.setEstatus(rs.getString("estatus"));
         ventaExtra.setTipo(rs.getString("tipo"));
         ventaExtra.setMonto(rs.getFloat("monto"));
         ventaExtra.setObservacion(rs.getString("observacion"));
@@ -173,4 +232,6 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
         st.setString(4,ventaExtra.getObservacion());
         return st;
     }
+    
+    
 }
