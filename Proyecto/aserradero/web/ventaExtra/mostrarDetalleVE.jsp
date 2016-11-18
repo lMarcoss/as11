@@ -25,6 +25,7 @@
         
         <!-- ************************* Resultado Consulta-->
         <div>
+            <h3>Detalles de la venta</h3>
             <table class="table-condensed">
                 <tr>
                     <th>N°</th>

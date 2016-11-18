@@ -87,7 +87,7 @@
                                      <div class="form-group pull-right col-md-2"><!-- agrupar inputs -->
                                         <input type="hidden" value="Mayoreo" name="tipo_venta" />
                                         <input type="submit" class="btn btn-block btn-success margen-boton" value="Guardar venta"/>
-                                        <a href="/aserradero/VentaController?action=listar"><input class="btn btn-block btn-warning" type="submit" value="Cancelar"/></a>
+                                        <a href="/aserradero/VentaExtraController?action=listar"><input class="btn btn-block btn-warning" type="button" value="Cancelar"/></a>
                                     </div><!-- Fin div group -->
                                 </form><!-- Formulario de venta -->
                             </div>
