@@ -124,20 +124,7 @@ public class VentaExtraController extends HttpServlet {
                 break;
             case "detalle":
                 String id_venta = request.getParameter("id_venta");
-                List<VentaExtra> detalles;
-                VentaExtraCRUD ventaExtraCrud = new VentaExtraCRUD();
-                try {
-                    detalles = (List<VentaExtra>)ventaExtraCrud.listarDetalleVE(id_venta);
-                    //Enviamos los detalles de la venta
-                    request.setAttribute("detalles",detalles);
-                    //enviamos mensaje al jsp
-                    request.setAttribute("mensaje","detalles");
-                    RequestDispatcher view = request.getRequestDispatcher("ventaExtra/mostrarDetalleVE.jsp");
-                    view.forward(request,response);
-                } catch (Exception ex) {
-                    System.out.println(ex);
-                    Logger.getLogger(VentaExtraController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                listarDetalleVenta(id_venta,request,response);
                 break;
         }
     }
@@ -177,7 +164,7 @@ public class VentaExtraController extends HttpServlet {
                 ventaExtraCRUD = new VentaExtraCRUD();
                 try {
                     ventaExtraCRUD.actualizar(ventaExtra);
-                    listarVentaExtras(request, response,"actualizado");
+                    listarDetalleVenta(ventaExtra.getId_venta(), request, response);
                 } catch (Exception ex) {
                     listarVentaExtras(request, response, "error_actualizar");
                     System.out.println(ex);
@@ -238,6 +225,23 @@ public class VentaExtraController extends HttpServlet {
         ventaExtra.setMonto(Float.valueOf(request.getParameter("monto")));
         ventaExtra.setObservacion(request.getParameter("observacion"));
         return ventaExtra;
+    }
+
+    private void listarDetalleVenta(String id_venta, HttpServletRequest request, HttpServletResponse response) {
+        List<VentaExtra> detalles;
+        VentaExtraCRUD ventaExtraCrud = new VentaExtraCRUD();
+        try {
+            detalles = (List<VentaExtra>)ventaExtraCrud.listarDetalleVE(id_venta);
+            //Enviamos los detalles de la venta
+            request.setAttribute("detalles",detalles);
+            //enviamos mensaje al jsp
+            request.setAttribute("mensaje","detalles");
+            RequestDispatcher view = request.getRequestDispatcher("ventaExtra/mostrarDetalleVE.jsp");
+            view.forward(request,response);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            Logger.getLogger(VentaExtraController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

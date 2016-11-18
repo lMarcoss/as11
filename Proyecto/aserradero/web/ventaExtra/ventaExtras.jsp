@@ -71,7 +71,6 @@
                             +"<td>"+venta.getTipo_pago()+"</td>"
                             +"<td>"+venta.getMonto()+"</td>"
                             +"<td><a href=\"/aserradero/VentaExtraController?action=detalle&id_venta="+venta.getId_venta()+"\">Ver detalles</a></td>"
-                            +"<td><a href=\"/aserradero/VentaExtraController?action=modificar&id_venta="+venta.getId_venta()+"&tipo_venta="+venta.getTipo_venta()+"\">Actualizar</a></td>"
                             + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/VentaExtraController?action=eliminar&id_venta="+venta.getId_venta()+"&tipo_venta="+venta.getTipo_venta()+"';};\">Eliminar</a></td>"
                         + "</tr>" );
                         i++;

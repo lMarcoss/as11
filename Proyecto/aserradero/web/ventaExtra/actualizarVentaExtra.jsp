@@ -12,6 +12,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%@ include file="/TEMPLATE/head.jsp" %>
         <%@ include file="/TEMPLATE/headNuevo.jsp" %>
         <title>Actualizar</title>
     </head>
@@ -42,7 +43,6 @@
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><a href="/aserradero/VentaExtraController?action=listar"><input type="button" value="Cancelar"/></a> </td>
-                            <!--<td><input type="submit" value="Registrar" class="submit"/> </td>-->
                             <td style="padding-left: 10px;"><input type="submit" value="Guardar"/></td>
                         </tr>
                     </table>

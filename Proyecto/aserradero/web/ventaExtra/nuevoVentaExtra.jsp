@@ -56,7 +56,7 @@
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="control-label">Id venta:</label>
-                                        <input class="form-control" type="text" value="<%=id_nVenta%>" name="id_venta" id="id_venta" required="" title="escribe un identificador para la venta"/>
+                                        <input class="form-control" type="text" value="<%=id_nVenta%>" name="id_venta" id="id_venta" required="">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="control-label">Cliente</label>
@@ -85,7 +85,6 @@
                                         <input  name="estatus" value="Sin pagar" id="estatus" class="form-control" required="" readonly=""/>
                                     </div>
                                      <div class="form-group pull-right col-md-2"><!-- agrupar inputs -->
-                                        <input type="hidden" value="Mayoreo" name="tipo_venta" />
                                         <input type="submit" class="btn btn-block btn-success margen-boton" value="Guardar venta"/>
                                         <a href="/aserradero/VentaExtraController?action=listar"><input class="btn btn-block btn-warning" type="button" value="Cancelar"/></a>
                                     </div><!-- Fin div group -->
