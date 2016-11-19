@@ -12,10 +12,10 @@ function obtenerFechaActual(){
     if(mes < 10){
         mes = "0" +mes;
     }
-    var hoy = dia + "-" +  + "-" + fecha.getFullYear();
-    document.getElementById('fecha').value = dia + "-" + (fecha.getMonth() +1) + "-" + fecha.getFullYear();
+    var hoy = dia + "-" + mes + "-" + fecha.getFullYear();
+    document.getElementById('fecha').value = dia + "-" + mes + "-" + fecha.getFullYear();
     alert("Hoy es:" + hoy);
 }
 window.onload = function() {
     obtenerFechaActual();
-};
+};  

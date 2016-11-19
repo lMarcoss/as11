@@ -26,7 +26,7 @@
         <!-- ******************* Formulario de registro-->
         <div>
             <form action="/aserradero/EmpleadoController?action=nuevo" method="post" id="formregistro">
-                <h3>Agregar empelado</h3>
+                <h3>Registrar empleado</h3>
                 <fieldset id="user-details">
                     <table>
                         <tr>

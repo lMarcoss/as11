@@ -87,6 +87,7 @@
                 <ul class="children">
                     <li class="reporte_compra"><a href="/aserradero/PrestamoController?action=listar">Registro</a></li>
                     <li class="reporte_compra"><a href="/aserradero/PagoInteresController?action=listar">Pago interés</a></li>
+                    <li class="reporte_compra"><a href="/aserradero/PagoPrestamoController?action=listar">Pago préstamo</a></li>
                 </ul>
             </li>
             <li class="submenu" id="reportes">
