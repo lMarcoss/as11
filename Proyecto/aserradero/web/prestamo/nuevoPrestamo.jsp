@@ -15,7 +15,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%@ include file="/TEMPLATE/head.jsp"%>
         <%@ include file="/TEMPLATE/headNuevo.jsp"%>
+        <script src="/aserradero/js/fechaActual.js"></script>
         <title>Nuevo</title>
     </head>
     <body>
