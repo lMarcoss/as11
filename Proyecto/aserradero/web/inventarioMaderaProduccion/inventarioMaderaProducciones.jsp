@@ -47,7 +47,9 @@
                     <tr>
                         <th>N°</th>
                         <th>Id madera</th>
-                        <th>Piezas </th>
+                        <th>Piezas</th>
+                        <th>Volumen total</th>
+                        <th>Monto total</th>
                         <th> </th>
                         <th> </th>
                     </tr>
@@ -59,7 +61,8 @@
                                 +"<td>"+(i+1)+"</td>"
                                 +"<td><a href=\"/aserradero/MaderaClasificacionController?action=buscar_maderaClasificacion&id_madera="+inventarioMaderaProduccion.getId_madera()+"\">"+inventarioMaderaProduccion.getId_madera()+"</a></td>"
                                 +"<td>"+inventarioMaderaProduccion.getNum_piezas()+"</td>"
-                                
+                                +"<td>"+inventarioMaderaProduccion.getVolumen_total()+"</td>"
+                                +"<td>"+inventarioMaderaProduccion.getMonto_total()+"</td>"
                                 + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/InventarioMaderaProduccionController?action=eliminar&id_madera="+inventarioMaderaProduccion.getId_madera()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;

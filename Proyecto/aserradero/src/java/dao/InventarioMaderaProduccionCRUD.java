@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
 import entidades.InventarioMaderaProduccion;
@@ -39,7 +34,7 @@ public class InventarioMaderaProduccionCRUD extends Conexion implements Operacio
         List<InventarioMaderaProduccion> inventarioMaderaProducciones;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM INVENTARIO_MADERA_PRODUCCION")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_INVENTARIO_PRODUCION")) {
                 inventarioMaderaProducciones = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -103,8 +98,11 @@ public class InventarioMaderaProduccionCRUD extends Conexion implements Operacio
     @Override
     public Object extraerObject(ResultSet rs) throws SQLException {
         InventarioMaderaProduccion inventarioMaderaProduccion = new InventarioMaderaProduccion();
+        inventarioMaderaProduccion.setId_administrador(rs.getString("id_administrador"));
         inventarioMaderaProduccion.setId_madera(rs.getString("id_madera"));
         inventarioMaderaProduccion.setNum_piezas(rs.getInt("num_piezas"));
+        inventarioMaderaProduccion.setVolumen_total(rs.getInt("volumen_total"));
+        inventarioMaderaProduccion.setMonto_total(rs.getInt("monto_total"));
         return inventarioMaderaProduccion;
     }
 

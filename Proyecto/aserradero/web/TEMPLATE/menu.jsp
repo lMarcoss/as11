@@ -42,6 +42,7 @@
                     <li id="produccion_madera"><a href="/aserradero/ProduccionMaderaController?action=listar">Registro</a></li>
                     <li id="clasificacion_madera"><a href="/aserradero/MaderaClasificacionController?action=listar">Clasificación</a></li>
                     <li id="inventario_produccion"><a href="/aserradero/InventarioMaderaProduccionController?action=listar">Inventario</a></li>
+                    <li id="costo_madera_produccion"><a href="/aserradero/CostoMaderaController?action=listar">Costo Madera</a></li>
                 </ul>
             </li>
             <li class="submenu" id="ventas">
@@ -51,7 +52,6 @@
                     <li id="ventas_extras"><a href="/aserradero/VentaExtraController?action=listar">Ventas extras</a></li>
                     <li id="ventas_mayoreo"><a href="/aserradero/VentaMayoreoController?action=listar">Ventas Mayoreo</a></li>
                     <li id="ventas_por_paquete"><a href="/aserradero/VentaPaqueteController?action=listar">Ventas por paquete</a></li>
-                    <li id="costo_madera_produccion"><a href="/aserradero/CostoMaderaController?action=listar">Costo Madera</a></li>
                 </ul>
             </li>
             <li class="submenu" id="anticipos">
@@ -91,9 +91,11 @@
                 </ul>
             </li>
             <li class="submenu" id="reportes">
-                <a href="#">Reportes</a>
+                <a href="#">Cuentas</a>
                 <ul class="children">
-                    <li class="reporte_compra"><a href="/aserradero/CompraController?action=ver_reporte">Reporte compra</a></li>
+                    <!--<li class="reporte_compra"><a href="/aserradero/CompraController?action=ver_reporte">Reporte compra</a></li>-->
+                    <li class="reporte_compra"><a href="/aserradero/BalanceCuentaController?action=listar">Cuenta inicial</a></li>
+                    <li class="reporte_compra"><a href="/aserradero/BalanceCuentaController?action=listar">Balance cuenta</a></li>
                 </ul>
             </li>
             <!--<li class="cta"><a href="/aserradero/Iniciar?action=cerrar_sesion">Salir</a></li>-->
