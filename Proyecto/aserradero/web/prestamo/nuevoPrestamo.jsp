@@ -16,7 +16,7 @@
 <html>
     <head>
         <%@ include file="/TEMPLATE/head.jsp"%>
-        <%@ include file="/TEMPLATE/headNuevo.jsp"%>
+        <link rel="stylesheet" href="/aserradero/css/formulario.css">
         <title>Nuevo</title>
     </head>
     <body>

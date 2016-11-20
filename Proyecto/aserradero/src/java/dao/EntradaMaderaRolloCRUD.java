@@ -1,11 +1,11 @@
 package dao;
 
 import entidades.EntradaMaderaRollo;
-import entidadesVirtuales.ReporteCompra;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class EntradaMaderaRolloCRUD  extends Conexion implements OperacionesCRUD
         try {
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement(""
-                    + "INSERT INTO ENTRADA_MADERA_ROLLO (fecha,id_proveedor,id_chofer,id_empleado,num_piezas,volumen_primario,costo_primario,volumen_secundario,costo_secundario,volumen_terciario,costo_terciario) values(?,?,?,?,?,?,null,?,null,?,null)");
+                    + "INSERT INTO ENTRADA_MADERA_ROLLO (fecha,id_proveedor,id_chofer,id_empleado,num_piezas,volumen_primario,costo_primario,volumen_secundario,costo_secundario,volumen_terciario,costo_terciario,id_pago ) values(?,?,?,?,?,?,null,?,null,?,null,?)");
             st = cargarObject(st, entrada);
             st.executeUpdate();
         }catch(Exception e){
@@ -139,6 +139,8 @@ public class EntradaMaderaRolloCRUD  extends Conexion implements OperacionesCRUD
 
     @Override
     public Object extraerObject(ResultSet rs) throws SQLException {
+        DecimalFormat decimalesMonto = new DecimalFormat("0.00");
+        DecimalFormat decimalesVolumen = new DecimalFormat("0.000");
         EntradaMaderaRollo entrada = new EntradaMaderaRollo();
         entrada.setId_entrada(rs.getInt("id_entrada"));
         entrada.setFecha(rs.getDate("fecha"));
@@ -156,8 +158,9 @@ public class EntradaMaderaRolloCRUD  extends Conexion implements OperacionesCRUD
         entrada.setCosto_secundario(rs.getFloat("costo_secundario"));
         entrada.setVolumen_terciario(rs.getFloat("volumen_terciario"));
         entrada.setCosto_terciario(rs.getFloat("costo_terciario"));
-        entrada.setVolumen_total(rs.getFloat("volumen_total"));
-        entrada.setMonto_total(rs.getFloat("monto_total"));
+        entrada.setVolumen_total(decimalesVolumen.format(rs.getFloat("volumen_total")));
+        entrada.setMonto_total(decimalesMonto.format(rs.getFloat("monto_total")));
+        entrada.setId_pago(rs.getInt("id_pago"));
         return entrada;
     }
 
@@ -172,96 +175,7 @@ public class EntradaMaderaRolloCRUD  extends Conexion implements OperacionesCRUD
         st.setFloat(6, entrada.getVolumen_primario());
         st.setFloat(7, entrada.getVolumen_secundario());
         st.setFloat(8, entrada.getVolumen_terciario());
+        st.setInt(9, 0);
         return st;
-    }
-
-    public List<EntradaMaderaRollo> listarComprasNoPagadas() throws Exception {
-        List<EntradaMaderaRollo> entradas;
-        try {
-            this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM ENTRADA_MADERA_ROLLO WHERE id_entrada NOT IN (SELECT id_entrada FROM PAGO_ENTRADA_MADERA_ROLLO WHERE pago = ? OR pago = ?)")){
-                st.setString(1, "Anticipado");
-                st.setString(2, "Normal");
-                entradas = new ArrayList<>();
-                try (ResultSet rs = st.executeQuery()){
-                    while (rs.next()) {
-                        EntradaMaderaRollo entrada = (EntradaMaderaRollo) extraerObject(rs);
-                        entradas.add(entrada);
-                    }
-                } catch (Exception e) {
-                }
-            } catch (Exception e) {
-                entradas = null;
-                System.out.println(e);
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-            throw e;
-        }finally{
-            cerrarConexion();
-        }
-        return entradas;
-    }
-    public <T> List listarDatosReporteCompra() throws Exception {
-        List<ReporteCompra> datosReporteCompras;
-        try{
-            this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("select *from ENTRADA_MADERA_ROLLO_REPORTE;")) {
-                datosReporteCompras = new ArrayList();
-                try (ResultSet rs = st.executeQuery()) {
-                    while (rs.next()) {
-                        ReporteCompra datosReporteCompra = (ReporteCompra) extraerDatosReporteCompra(rs);
-                        datosReporteCompras.add(datosReporteCompra);
-                    }
-                }
-            }catch(Exception e){
-                datosReporteCompras = null;
-                System.out.println(e);
-            }
-        }catch(Exception e){
-            System.out.println(e);
-            throw e;
-        }finally{
-            this.cerrarConexion();
-        }
-        return datosReporteCompras;
-    }
-    private ReporteCompra extraerDatosReporteCompra(ResultSet rs)throws Exception{
-        float v1,v2,v3;
-        ReporteCompra datosReporteCompra = new ReporteCompra();
-//        datosReporteCompra.setId_entrada(rs.getString("id_entrada"));        
-        datosReporteCompra.setFecha(rs.getString("fecha"));
-        datosReporteCompra.setNum_piezas(Float.valueOf(rs.getString("num_piezas")));
-        datosReporteCompra.setId_empleado(rs.getString("id_empleado"));        
-        datosReporteCompra.setId_chofer(rs.getString("id_chofer"));        
-        datosReporteCompra.setId_proveedor(rs.getString("id_proveedor"));
-        datosReporteCompra.setNombre_chofer(rs.getString("nombre_chofer"));
-        datosReporteCompra.setNombre_empleado(rs.getString("nombre_empleado"));
-        datosReporteCompra.setNombre_proveedor(rs.getString("nombre_proveedor"));
-        //comprobamos cuales resultados sean null, para después convertirlos en flotantes
-        if(rs.getString("vol_primario")== null)
-            v1=0;
-        else
-            v1=(Float.valueOf(rs.getString("vol_primario")));
-        if (rs.getString("vol_secundario")==null)
-            v2=0;
-        else
-            v2=(Float.valueOf(rs.getString("vol_secundario")));
-        if(rs.getString("vol_terciario")==null)
-            v3=0;
-        else
-            v3=(Float.valueOf(rs.getString("vol_terciario")));
-        //
-        if(rs.getString("monto_total")==null)
-            datosReporteCompra.setMonto_total(0);        
-        else
-            datosReporteCompra.setMonto_total(Float.valueOf(rs.getString("monto_total")));
-        
-        datosReporteCompra.setVol_primario(v1);
-        datosReporteCompra.setVol_secundario(v2);
-        datosReporteCompra.setVol_terciario(v3);
-        
-        datosReporteCompra.setVolumen_total(v1+v2+v3);
-        return datosReporteCompra;
     }
 }

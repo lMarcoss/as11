@@ -1,24 +1,26 @@
 package entidades;
 
+import java.sql.Date;
+
 /**
  *
  * @author Ricardo Cortés Cruz ->> ricardo.crts.crz@gmail.com
  */
+public class OtroGasto {
 
-public class OtroGasto{
-    private String id_gasto;    
-    private String fecha;
+    private int id_gasto;
+    private Date fecha;
     private String id_empleado;
     private String empleado;
     private String nombre_gasto;
     private float monto;
     private String observacion;
 
-    public OtroGasto(){
+    public OtroGasto() {
 
-    }    
+    }
 
-    public OtroGasto(String id_gasto, String fecha, String id_empleado, String empleado, String nombre_gasto, float monto, String observacion) {
+    public OtroGasto(int id_gasto, Date fecha, String id_empleado, String empleado, String nombre_gasto, float monto, String observacion) {
         this.id_gasto = id_gasto;
         this.fecha = fecha;
         this.id_empleado = id_empleado;
@@ -28,11 +30,11 @@ public class OtroGasto{
         this.observacion = observacion;
     }
 
-    public void setId_gasto(String id_gasto) {
+    public void setId_gasto(int id_gasto) {
         this.id_gasto = id_gasto;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -56,11 +58,11 @@ public class OtroGasto{
         this.observacion = observacion;
     }
 
-    public String getId_gasto() {
+    public int getId_gasto() {
         return id_gasto;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
@@ -83,5 +85,5 @@ public class OtroGasto{
     public String getObservacion() {
         return observacion;
     }
-   
- }
+
+}

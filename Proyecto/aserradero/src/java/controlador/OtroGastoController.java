@@ -1,4 +1,3 @@
-
 package controlador;
 
 import dao.EmpleadoCRUD;
@@ -7,6 +6,7 @@ import entidades.Empleado;
 import entidades.OtroGasto;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,63 +51,63 @@ public class OtroGastoController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-              response.setContentType("text/html;charset=UTF-8");
-              request.setCharacterEncoding("UTF-8");
-              //Llegan url
-              String action = request.getParameter("action");
-              OtroGasto otrogastoEC; //Enviar al CRUD
-              OtroGasto otrogasto; //Respuesta del CRUD
-              OtroGastoCRUD otrogastoCRUD;
-              EmpleadoCRUD empleadoCRUD;
-              switch(action){
-                  case "nuevo":
-                    try{
-                        empleadoCRUD = new EmpleadoCRUD();
-                        List<Empleado> empleados;
-                        empleados = (List<Empleado>)empleadoCRUD.listar();
-                        request.setAttribute("empleados",empleados);
-                        RequestDispatcher view = request.getRequestDispatcher("otrogasto/nuevoOtroGasto.jsp");
-                        view.forward(request,response);
-                    } catch (Exception ex) {
-                        listarOtrosGastos(request, response,"error_nuevo");
-                        System.out.println(ex);
-                        Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        //Llegan url
+        String action = request.getParameter("action");
+        OtroGasto otrogastoEC; //Enviar al CRUD
+        OtroGasto otrogasto; //Respuesta del CRUD
+        OtroGastoCRUD otrogastoCRUD;
+        EmpleadoCRUD empleadoCRUD;
+        switch (action) {
+            case "nuevo":
+                try {
+                    empleadoCRUD = new EmpleadoCRUD();
+                    List<Empleado> empleados;
+                    empleados = (List<Empleado>) empleadoCRUD.listar();
+                    request.setAttribute("empleados", empleados);
+                    RequestDispatcher view = request.getRequestDispatcher("otrogasto/nuevoOtroGasto.jsp");
+                    view.forward(request, response);
+                } catch (Exception ex) {
+                    listarOtrosGastos(request, response, "error_nuevo");
+                    System.out.println(ex);
+                    Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 break;
-                  case "listar":
-                      listarOtrosGastos(request, response,"Lista de Otros gastos");
-                      break;
-                  case "modificar":
-                      otrogastoEC = new OtroGasto();
-                      otrogastoEC.setId_gasto(request.getParameter("id_gasto"));
-                      otrogastoCRUD = new OtroGastoCRUD();
-                      try {
-                        empleadoCRUD = new EmpleadoCRUD();
-                        List<Empleado> empleados;
-                        empleados = (List<Empleado>)empleadoCRUD.listar();
-                        otrogasto = (OtroGasto) otrogastoCRUD.modificar(otrogastoEC);
-                        request.setAttribute("otrogasto",otrogasto);
-                        request.setAttribute("empleados",empleados);
-                        RequestDispatcher view = request.getRequestDispatcher("otrogasto/actualizarOtroGasto.jsp");
-                        view.forward(request,response);
-                      } catch (Exception ex) {
-                        listarOtrosGastos(request, response, "error_modificar");
-                        Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
-                      }
-                      break;
-                  case "eliminar":
-                      otrogastoEC = new OtroGasto();
-                      otrogastoEC.setId_gasto(request.getParameter("id_gasto"));
-                      otrogastoCRUD = new OtroGastoCRUD();
-                      try {
-                          otrogastoCRUD.eliminar(otrogastoEC);
-                          listarOtrosGastos(request, response,"eliminado");
-                      } catch (Exception ex) {
-                          listarOtrosGastos(request, response, "error_eliminar");
-                          Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
-                      }
-                      break;
-              }
+            case "listar":
+                listarOtrosGastos(request, response, "Lista de Otros gastos");
+                break;
+            case "modificar":
+                otrogastoEC = new OtroGasto();
+                otrogastoEC.setId_gasto(Integer.valueOf(request.getParameter("id_gasto")));
+                otrogastoCRUD = new OtroGastoCRUD();
+                try {
+                    empleadoCRUD = new EmpleadoCRUD();
+                    List<Empleado> empleados;
+                    empleados = (List<Empleado>) empleadoCRUD.listar();
+                    otrogasto = (OtroGasto) otrogastoCRUD.modificar(otrogastoEC);
+                    request.setAttribute("otrogasto", otrogasto);
+                    request.setAttribute("empleados", empleados);
+                    RequestDispatcher view = request.getRequestDispatcher("otrogasto/actualizarOtroGasto.jsp");
+                    view.forward(request, response);
+                } catch (Exception ex) {
+                    listarOtrosGastos(request, response, "error_modificar");
+                    Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case "eliminar":
+                otrogastoEC = new OtroGasto();
+                otrogastoEC.setId_gasto(Integer.valueOf(request.getParameter("id_gasto")));
+                otrogastoCRUD = new OtroGastoCRUD();
+                try {
+                    otrogastoCRUD.eliminar(otrogastoEC);
+                    listarOtrosGastos(request, response, "eliminado");
+                } catch (Exception ex) {
+                    listarOtrosGastos(request, response, "error_eliminar");
+                    Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+        }
     }
 
     /**
@@ -121,51 +121,51 @@ public class OtroGastoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-              //Llegan formularios de tipo post
-              response.setContentType("text/html;charset=UTF-8");
-              request.setCharacterEncoding("UTF-8");
-              String action = request.getParameter("action");
-              OtroGasto otrogasto;
-              OtroGastoCRUD otrogastoCRUD;
-              switch(action){
-                  case "nuevo":
-                      otrogasto = extraerMunicipioForm(request);
-                      otrogastoCRUD = new OtroGastoCRUD();
-                      try {
-                          otrogastoCRUD.registrar(otrogasto);
-                          listarOtrosGastos(request, response,"registrado");
-                      } catch (Exception ex) {
-                          listarOtrosGastos(request, response, "error_registrar");
-                          Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
-                      }
-                      break;
-                  case "actualizar":
-                      otrogasto = extraerMunicipioForm(request);
-                      otrogastoCRUD = new OtroGastoCRUD();
-                      try {
-                          otrogastoCRUD.actualizar(otrogasto);
-                          listarOtrosGastos(request, response,"actualizado");
-                      } catch (Exception ex) {
-                          listarOtrosGastos(request, response, "error_actualizar");
-                          Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
-                      }
-                      break;
-                  case "buscar":
-                      List <OtroGasto> otrosgastos;
-                      String nombre_campo = request.getParameter("nombre_campo");
-                      String dato = request.getParameter("dato");
-                      otrogastoCRUD = new OtroGastoCRUD();
-                      try {
-                          otrosgastos = (List<OtroGasto>)otrogastoCRUD.buscar(nombre_campo, dato);
-                          request.setAttribute("otrosgastos",otrosgastos);
-                          RequestDispatcher view = request.getRequestDispatcher("otrogasto/otrosgastos.jsp");
-                          view.forward(request,response);
-                      } catch (Exception ex) {
-                          listarOtrosGastos(request, response, "error_buscar_campo");
-                          Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
-                      }
-                      break;
-              }
+        //Llegan formularios de tipo post
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
+        OtroGasto otrogasto;
+        OtroGastoCRUD otrogastoCRUD;
+        switch (action) {
+            case "nuevo":
+                otrogasto = extraerMunicipioForm(request);
+                otrogastoCRUD = new OtroGastoCRUD();
+                try {
+                    otrogastoCRUD.registrar(otrogasto);
+                    listarOtrosGastos(request, response, "registrado");
+                } catch (Exception ex) {
+                    listarOtrosGastos(request, response, "error_registrar");
+                    Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case "actualizar":
+                otrogasto = extraerMunicipioForm(request);
+                otrogastoCRUD = new OtroGastoCRUD();
+                try {
+                    otrogastoCRUD.actualizar(otrogasto);
+                    listarOtrosGastos(request, response, "actualizado");
+                } catch (Exception ex) {
+                    listarOtrosGastos(request, response, "error_actualizar");
+                    Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case "buscar":
+                List<OtroGasto> otrosgastos;
+                String nombre_campo = request.getParameter("nombre_campo");
+                String dato = request.getParameter("dato");
+                otrogastoCRUD = new OtroGastoCRUD();
+                try {
+                    otrosgastos = (List<OtroGasto>) otrogastoCRUD.buscar(nombre_campo, dato);
+                    request.setAttribute("otrosgastos", otrosgastos);
+                    RequestDispatcher view = request.getRequestDispatcher("otrogasto/otrosgastos.jsp");
+                    view.forward(request, response);
+                } catch (Exception ex) {
+                    listarOtrosGastos(request, response, "error_buscar_campo");
+                    Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+        }
     }
 
     /**
@@ -178,18 +178,19 @@ public class OtroGastoController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
     //Mostrar lista de otrosgastos
+
     private void listarOtrosGastos(HttpServletRequest request, HttpServletResponse response, String mensaje) {
         List<OtroGasto> otrosgastos;
         OtroGastoCRUD otrogastocrud = new OtroGastoCRUD();
         try {
-            otrosgastos = (List<OtroGasto>)otrogastocrud.listar();
+            otrosgastos = (List<OtroGasto>) otrogastocrud.listar();
             //Enviamos las listas al jsp
-            request.setAttribute("otrosgastos",otrosgastos);
+            request.setAttribute("otrosgastos", otrosgastos);
             //enviar mensaje
-            request.setAttribute("mensaje",mensaje);
+            request.setAttribute("mensaje", mensaje);
             RequestDispatcher view;
             view = request.getRequestDispatcher("otrogasto/otrosgastos.jsp");
-            view.forward(request,response);
+            view.forward(request, response);
         } catch (Exception ex) {
             System.out.println(ex);
             Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -199,8 +200,8 @@ public class OtroGastoController extends HttpServlet {
     // Extraer datos del formulario
     private OtroGasto extraerMunicipioForm(HttpServletRequest request) {
         OtroGasto otrogasto = new OtroGasto();
-        otrogasto.setId_gasto(request.getParameter("id_gasto"));
-        otrogasto.setFecha(request.getParameter("fecha"));
+        otrogasto.setId_gasto(Integer.valueOf(request.getParameter("id_gasto")));
+        otrogasto.setFecha(Date.valueOf(request.getParameter("fecha")));
         otrogasto.setId_empleado(request.getParameter("id_empleado"));
         otrogasto.setNombre_gasto(request.getParameter("nombre_gasto"));
         otrogasto.setMonto(Float.valueOf(request.getParameter("monto")));

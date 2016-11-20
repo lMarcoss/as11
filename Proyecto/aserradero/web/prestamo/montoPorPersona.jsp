@@ -1,6 +1,6 @@
 <%-- 
-    Document   : prestamos
-    Created on : 06-nov-2016, 0:57:20
+    Document   : detallesPrestamo
+    Created on : 19-nov-2016, 15:18:29
     Author     : lmarcoss
 --%>
 
@@ -32,15 +32,14 @@
         
         <!-- ************************** opción de búsqueda-->
         <div>
-            <form method="POST" action="/aserradero/PrestamoController?action=buscar">
+            <form method="POST" action="/aserradero/PrestamoController?action=buscar_interes_total">
                 <table class="table-condensed">
                     <tr>
                         <td>
                             <select name="nombre_campo" >
-                            <option value="fecha">Fecha</option>
                             <option value="persona">Persona</option>
-                            <option value="monto">Monto</option>
-                            <option value="interes">% de interés</option>
+                            <option value="monto_total">Monto</option>
+                            <option value="interes_total">Interés</option>
                         </select>
                         </td>
                         <td><input type="text" name="dato" placeholder="Escriba su búsqueda"></td>
@@ -55,11 +54,9 @@
             <table class="table-condensed">
                     <tr>
                         <th>N°</th>
-                        <th>Fecha</th>
                         <th>Persona</th>
-                        <th>Monto</th>
-                        <th>% de interés</th>
-                        <th>Interés mensual</th>
+                        <th>Monto total</th>
+                        <th>Interes mensual total</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -68,14 +65,9 @@
                         for (Prestamo prestamo : prestamos) {
                             out.print("<tr>"
                                 +"<td>"+(i+1)+"</td>"
-                                +"<td>"+prestamo.getFecha()+"</td>"
                                 +"<td>"+prestamo.getPersona()+"</td>"
                                 +"<td>"+prestamo.getMonto()+"</td>"
-                                +"<td>"+prestamo.getInteres()+"%"+"</td>"
                                 +"<td>"+prestamo.getInteres_mesual()+"</td>"
-                                +"<td><a href=\"/aserradero/PrestamoController?action=modificar&id_prestamo="+prestamo.getId_prestamo()+"\">Actualizar</a></td>"
-                                +"<td><a href=\"/aserradero/PrestamoController?action=modificar&id_prestamo="+prestamo.getId_prestamo()+"\">Pagar prestamo</a></td>"
-                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/PrestamoController?action=eliminar&id_prestamo="+prestamo.getId_prestamo()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;
                         }
@@ -87,3 +79,4 @@
         </div><!-- Resultado Consulta-->
     </body>
 </html>
+    

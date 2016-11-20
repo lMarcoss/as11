@@ -64,7 +64,7 @@ import java.util.List;
         OtroGasto otrogasto = null;
         this.abrirConexion();
         try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_OTRO_GASTO WHERE id_gasto = ?")) {
-            st.setString(1, otrogastoM.getId_gasto());
+            st.setInt(1, otrogastoM.getId_gasto());
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     otrogasto = (OtroGasto) extraerObject(rs);
@@ -82,12 +82,12 @@ import java.util.List;
         try {
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement("UPDATE OTRO_GASTO SET fecha = ?,id_empleado = ?, nombre_gasto = ?, monto = ?, observacion = ? where id_gasto=?");
-            st.setString(1, otrogasto.getFecha());
+            st.setDate(1, otrogasto.getFecha());
             st.setString(2, otrogasto.getId_empleado());
             st.setString(3, otrogasto.getNombre_gasto());
-            st.setString(4, String.valueOf(otrogasto.getMonto()));
+            st.setFloat(4, otrogasto.getMonto());
             st.setString(5, otrogasto.getObservacion());
-            st.setString(6, otrogasto.getId_gasto());
+            st.setInt(6, otrogasto.getId_gasto());
             st.executeUpdate();
         }catch(Exception e){
             System.out.println(e);
@@ -103,7 +103,7 @@ import java.util.List;
         try {
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement("DELETE FROM OTRO_GASTO WHERE id_gasto = ?");
-            st.setString(1, otrogasto.getId_gasto());
+            st.setInt(1, otrogasto.getId_gasto());
             st.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
@@ -140,12 +140,12 @@ import java.util.List;
     @Override
     public Object extraerObject(ResultSet rs) throws SQLException {
         OtroGasto otrogasto = new OtroGasto();
-        otrogasto.setId_gasto(rs.getString("id_gasto"));
-        otrogasto.setFecha(rs.getString("fecha"));
+        otrogasto.setId_gasto(rs.getInt("id_gasto"));
+        otrogasto.setFecha(rs.getDate("fecha"));
         otrogasto.setId_empleado(rs.getString("id_empleado"));
         otrogasto.setEmpleado(rs.getString("empleado"));
         otrogasto.setNombre_gasto(rs.getString("nombre_gasto"));
-        otrogasto.setMonto(Float.valueOf(rs.getString("monto")));
+        otrogasto.setMonto(rs.getFloat("monto"));
         otrogasto.setObservacion(rs.getString("observacion"));
         return otrogasto;
     }
@@ -153,7 +153,7 @@ import java.util.List;
     @Override
     public PreparedStatement cargarObject(PreparedStatement st, Object objeto) throws SQLException {
         OtroGasto otrogasto = (OtroGasto) objeto;
-        st.setString(1, otrogasto.getFecha());
+        st.setDate(1, otrogasto.getFecha());
         st.setString(2, otrogasto.getId_empleado());
         st.setString(3, otrogasto.getNombre_gasto());
         st.setFloat(4,otrogasto.getMonto());

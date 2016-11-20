@@ -3,6 +3,9 @@
     Created on : 30-sep-2016, 1:42:10
     Author     : lmarcoss
 --%>
+<head>
+    <%@ include file="/TEMPLATE/head.jsp" %>
+</head>
 <header>
     <nav>
         <ul class="nav1">
@@ -34,15 +37,16 @@
                     <!--<li class="pagos_copra"><a href="/aserradero/PagoCompraController?action=listar">Pagos compra</a></li>-->
                     <li class="inventario_madera_entrada"><a href="/aserradero/InventarioMaderaEntradaController?action=listar">Inventario</a></li>
                     <li class="costo_madera_entrada"><a href="/aserradero/ClasificacionMaderaEntradaController?action=listar">Clasficación</a></li>
+                    <li class="costo_madera_entrada"><a href="/aserradero/PagoCompraController?action=listar">Pagos compra</a></li>
                 </ul>
             </li>
             <li class="submenu" id="produccion">
                 <a href="#">Madera aserrada</a>
                 <ul class="children">
-                    <li id="produccion_madera"><a href="/aserradero/ProduccionMaderaController?action=listar">Registro</a></li>
-                    <li id="clasificacion_madera"><a href="/aserradero/MaderaClasificacionController?action=listar">Clasificación</a></li>
+                    <li id="produccion_madera"><a href="/aserradero/ProduccionMaderaController?action=listar">Entrada</a></li>
                     <li id="inventario_produccion"><a href="/aserradero/InventarioMaderaProduccionController?action=listar">Inventario</a></li>
-                    <li id="costo_madera_produccion"><a href="/aserradero/CostoMaderaController?action=listar">Costo Madera</a></li>
+                    <li id="clasificacion_madera"><a href="/aserradero/MaderaClasificacionController?action=listar">Clasificación</a></li>
+                    <li id="costo_madera_produccion"><a href="/aserradero/CostoMaderaController?action=listar">Costo clasificación</a></li>
                 </ul>
             </li>
             <li class="submenu" id="ventas">
@@ -83,10 +87,10 @@
                 </ul>
             </li>
             <li class="submenu" id="reportes">
-                <a href="#">Prestamo</a>
+                <a href="#">Préstamo</a>
                 <ul class="children">
-                    <li class="reporte_compra"><a href="/aserradero/PrestamoController?action=listar">Registro</a></li>
-                    <li class="reporte_compra"><a href="/aserradero/PagoInteresController?action=listar">Pago interés</a></li>
+                    <li class="reporte_compra"><a href="/aserradero/PrestamoController?action=listar">Detalles</a></li>
+                    <li class="reporte_compra"><a href="/aserradero/PrestamoController?action=listar_total">Préstamo por persona</a></li>
                     <li class="reporte_compra"><a href="/aserradero/PagoPrestamoController?action=listar">Pago préstamo</a></li>
                 </ul>
             </li>

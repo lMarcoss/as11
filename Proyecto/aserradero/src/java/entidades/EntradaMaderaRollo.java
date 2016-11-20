@@ -25,13 +25,14 @@ import java.sql.Date;
     private float costo_secundario;
     private float volumen_terciario;
     private float costo_terciario;
-    private float volumen_total;
-    private float monto_total;
+    private String volumen_total;
+    private String monto_total;
+    private int id_pago;
 
     public EntradaMaderaRollo() {
     }
 
-    public EntradaMaderaRollo(int id_entrada, Date fecha, String id_proveedor, String proveedor, String id_chofer, String chofer, String id_empleado, String empleado, String id_jefe, int num_piezas, float volumen_primario, float costo_primario, float volumen_secundario, float costo_secundario, float volumen_terciario, float costo_terciario, float volumen_total, float monto_total) {
+    public EntradaMaderaRollo(int id_entrada, Date fecha, String id_proveedor, String proveedor, String id_chofer, String chofer, String id_empleado, String empleado, String id_jefe, int num_piezas, float volumen_primario, float costo_primario, float volumen_secundario, float costo_secundario, float volumen_terciario, float costo_terciario, String volumen_total, String monto_total, int id_pago) {
         this.id_entrada = id_entrada;
         this.fecha = fecha;
         this.id_proveedor = id_proveedor;
@@ -50,6 +51,7 @@ import java.sql.Date;
         this.costo_terciario = costo_terciario;
         this.volumen_total = volumen_total;
         this.monto_total = monto_total;
+        this.id_pago = id_pago;
     }
 
     public void setId_entrada(int id_entrada) {
@@ -116,12 +118,16 @@ import java.sql.Date;
         this.costo_terciario = costo_terciario;
     }
 
-    public void setVolumen_total(float volumen_total) {
+    public void setVolumen_total(String volumen_total) {
         this.volumen_total = volumen_total;
     }
 
-    public void setMonto_total(float monto_total) {
+    public void setMonto_total(String monto_total) {
         this.monto_total = monto_total;
+    }
+
+    public void setId_pago(int pago) {
+        this.id_pago = id_pago;
     }
 
     public int getId_entrada() {
@@ -188,13 +194,16 @@ import java.sql.Date;
         return costo_terciario;
     }
 
-    public float getVolumen_total() {
+    public String getVolumen_total() {
         return volumen_total;
     }
 
-    public float getMonto_total() {
+    public String getMonto_total() {
         return monto_total;
     }
 
+    public int getId_pago() {
+        return id_pago;
+    }
     
  }

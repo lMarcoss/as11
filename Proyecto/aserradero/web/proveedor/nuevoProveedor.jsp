@@ -11,7 +11,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="/TEMPLATE/headNuevo.jsp" %>
+        <%@ include file="/TEMPLATE/head.jsp" %>
+        <link rel="stylesheet" href="/aserradero/css/formulario.css">
         <title>Nuevo</title>
     </head>
     <body>

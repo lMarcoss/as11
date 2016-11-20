@@ -11,3 +11,14 @@ SELECT
     interes,
     (monto * (interes/100)) AS interes_mensual
 FROM PRESTAMO;
+
+CREATE VIEW PRESTAMO_TOTAL_PERSONA AS
+SELECT 
+	id_administrador,
+	id_persona,
+    persona,
+    SUM(monto) as monto_total,
+    SUM(interes_mensual) as interes_total
+FROM VISTA_PRESTAMO
+GROUP BY id_administrador, id_persona, persona;
+

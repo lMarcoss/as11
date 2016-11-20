@@ -73,7 +73,7 @@
                     %>
             </table>
             <div>
-                <input type="button" value="Agregar producción" onClick=" window.location.href='/aserradero/ProduccionMaderaController?action=nuevo' ">
+                <input type="button" value="Agregar entrada" onClick=" window.location.href='/aserradero/ProduccionMaderaController?action=nuevo' ">
             </div>
         </div><!-- Resultado Consulta-->
     </body>

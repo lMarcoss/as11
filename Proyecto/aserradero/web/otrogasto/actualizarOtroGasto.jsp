@@ -5,7 +5,9 @@
 --%>
 <%@page import="entidades.OtroGasto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%OtroGasto otrogasto = (OtroGasto) request.getAttribute("otrogasto");%>
+<%
+    OtroGasto otrogasto = (OtroGasto) request.getAttribute("otrogasto");
+%>
 <!DOCTYPE html>
 <html>
     <head>

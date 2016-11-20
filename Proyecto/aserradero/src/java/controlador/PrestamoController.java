@@ -80,8 +80,11 @@ public class PrestamoController extends HttpServlet {
                     Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
-            case "listar":
+            case "listar": // se muestran los préstamos por fecha e interes
                 listarPrestamos(request, response,"");
+                break;
+            case "listar_total": // se muestra el total de prestamo por persona
+                listarPrestamoPorPersona(request, response,"");
                 break;
             case "modificar":
                 prestamoEC = new Prestamo();
@@ -141,8 +144,12 @@ public class PrestamoController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
         String action = request.getParameter("action");
+        // variables
         Prestamo prestamo;
         PrestamoCRUD prestamoCRUD;
+        //variables de búsqueda
+        String nombre_campo;
+        String dato;
         switch(action){
             case "nuevo":
                 prestamo = extraerPrestamoForm(request);
@@ -168,8 +175,8 @@ public class PrestamoController extends HttpServlet {
                 break;
             case "buscar":
                 List <Prestamo> prestamos;
-                String nombre_campo = request.getParameter("nombre_campo");
-                String dato = request.getParameter("dato");
+                nombre_campo = request.getParameter("nombre_campo");
+                dato = request.getParameter("dato");
                 prestamoCRUD = new PrestamoCRUD();
                 try {
                     prestamos = (List<Prestamo>)prestamoCRUD.buscar(nombre_campo, dato);
@@ -180,6 +187,9 @@ public class PrestamoController extends HttpServlet {
                     listarPrestamos(request, response, "error_buscar_campo");
                     Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                break;
+            case "buscar_interes_total":
+                buscarMontoPPersona(request, response,"buscar_interes_total");
                 break;
         }
     }
@@ -236,6 +246,40 @@ public class PrestamoController extends HttpServlet {
         prestamo.setMonto(Float.valueOf(request.getParameter("monto")));
         prestamo.setInteres(Integer.valueOf(request.getParameter("interes")));
         return prestamo;
+    }
+
+    private void listarPrestamoPorPersona(HttpServletRequest request, HttpServletResponse response, String mensaje) {
+        List<Prestamo> prestamos;
+        PrestamoCRUD prestamoCrud = new PrestamoCRUD();
+        try {
+            prestamos = (List<Prestamo>)prestamoCrud.listarPrestamoPorPersona();
+            //Enviamos las listas al jsp
+            request.setAttribute("prestamos",prestamos);
+            //Enviar mensaje
+            request.setAttribute("mensaje",mensaje);
+         
+            RequestDispatcher view = request.getRequestDispatcher("prestamo/montoPorPersona.jsp");
+            view.forward(request,response);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void buscarMontoPPersona(HttpServletRequest request, HttpServletResponse response, String buscar_interes_total) {
+        List <Prestamo> prestamos;
+        String nombre_campo = request.getParameter("nombre_campo");
+        String dato = request.getParameter("dato");
+        PrestamoCRUD prestamoCRUD = new PrestamoCRUD();
+        try {
+            prestamos = (List<Prestamo>)prestamoCRUD.buscarMontoPorPersona(nombre_campo, dato);
+            request.setAttribute("prestamos",prestamos);
+            RequestDispatcher view = request.getRequestDispatcher("prestamo/montoPorPersona.jsp");
+            view.forward(request,response);
+        } catch (Exception ex) {
+            listarPrestamos(request, response, "error_buscar_campo");
+            Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

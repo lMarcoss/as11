@@ -43,7 +43,7 @@
             <table class="table-condensed">
                     <tr>
                         <th>N°</th>
-                        <th>Fechas</th>
+                        <th>Fecha</th>
                         <th>Empleado</th>
                         <th>Nombre de gasto</th>
                         <th>Monto</th>

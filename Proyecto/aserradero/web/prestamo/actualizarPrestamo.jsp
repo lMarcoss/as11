@@ -17,7 +17,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="/TEMPLATE/headNuevo.jsp"%>
+        <%@ include file="/TEMPLATE/head.jsp"%>
+        <link rel="stylesheet" href="/aserradero/css/formulario.css">
         <title>Actualizar</title>
     </head>
     <body>
@@ -74,7 +75,7 @@
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>% de interés mensual:</label></td>
-                            <td style="padding-left: 10px;"><input type="number" name="interes" value="<%=prestamo.getInteres()%>" step="1" min="1" max="100"  required=""><label>%</label></td>
+                            <td style="padding-left: 10px;"><input type="number" name="interes" value="<%=prestamo.getInteres()%>" step="1" min="1" max="100"  required=""></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><a href="/aserradero/PrestamoController?action=listar"><input type="button" value="Cancelar"/></a> </td>

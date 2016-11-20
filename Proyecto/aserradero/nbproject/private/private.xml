@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/li-906/NetBeansProjects/Proyecto/aserradero/Proyecto/aserradero/web/ventaExtra/detalleVentaExtra.jsp</file>
-            <file>file:/home/li-906/NetBeansProjects/Proyecto/aserradero/Proyecto/aserradero/web/ventaExtra/mostrarDetalleVE.jsp</file>
-            <file>file:/home/li-906/NetBeansProjects/Proyecto/aserradero/Proyecto/aserradero/src/java/controlador/VentaExtraController.java</file>
-            <file>file:/home/li-906/NetBeansProjects/Proyecto/aserradero/Proyecto/aserradero/web/ventaExtra/nuevoVentaExtra.jsp</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/src/java/dao/ProveedorCRUD.java</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/src/java/dao/PagoCompraCRUD.java</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/src/java/controlador/PagoCompraController.java</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/src/java/dao/OtroGastoCRUD.java</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/src/java/entidades/OtroGasto.java</file>
+            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/src/java/controlador/OtroGastoController.java</file>
         </group>
     </open-files>
 </project-private>

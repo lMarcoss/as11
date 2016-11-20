@@ -94,7 +94,7 @@
                             <td style="padding-left: 10px;"><input type="number" name="volumen_terciario" id="volumen" value="<%=entrada.getVolumen_terciario()%>" step=".001" min="0.000" max="9999999.999"  required="" onblur="calcularMontoTotal()"/></td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 10px;"><a href="/aserradero/EntradaMaderaRolloController?action=listar"><input type="button" value="Cancelar"/></a> </td>
+                            <td style="padding-left: 10px;"><a href="/aserradero/EntradaMaderaRolloController?action=listar_entrada"><input type="button" value="Cancelar"/></a> </td>
                             <!--<td><input type="submit" value="Registrar" class="submit"/> </td>-->
                             <td style="padding-left: 10px;"><input type="submit" value="Guardar"/></td>
                         </tr>
