@@ -2,10 +2,10 @@ package dao;
 
 import entidades.EntradaMaderaRollo;
 import interfaces.OperacionesCRUD;
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,9 +84,9 @@ public class EntradaMaderaRolloCRUD  extends Conexion implements OperacionesCRUD
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement("UPDATE ENTRADA_MADERA_ROLLO SET num_piezas = ?, volumen_primario = ?, volumen_secundario = ?, volumen_terciario = ? WHERE id_entrada = ?");
             st.setInt(1, entrada.getNum_piezas());
-            st.setFloat(2, entrada.getVolumen_primario());
-            st.setFloat(3, entrada.getVolumen_secundario());
-            st.setFloat(4, entrada.getVolumen_terciario());
+            st.setBigDecimal(2, entrada.getVolumen_primario());
+            st.setBigDecimal(3, entrada.getVolumen_secundario());
+            st.setBigDecimal(4, entrada.getVolumen_terciario());
             st.setInt(5, entrada.getId_entrada());
             st.executeUpdate();
         }catch(Exception e){
@@ -139,8 +139,8 @@ public class EntradaMaderaRolloCRUD  extends Conexion implements OperacionesCRUD
 
     @Override
     public Object extraerObject(ResultSet rs) throws SQLException {
-        DecimalFormat decimalesMonto = new DecimalFormat("0.00");
-        DecimalFormat decimalesVolumen = new DecimalFormat("0.000");
+        int dMonto = 2;     // cantidad de Decimales para el Costo
+        int dVolumen = 3;   // cantidad de decimaes para el volumen
         EntradaMaderaRollo entrada = new EntradaMaderaRollo();
         entrada.setId_entrada(rs.getInt("id_entrada"));
         entrada.setFecha(rs.getDate("fecha"));
@@ -152,15 +152,20 @@ public class EntradaMaderaRolloCRUD  extends Conexion implements OperacionesCRUD
         entrada.setEmpleado(rs.getString("empleado"));
         entrada.setId_jefe(rs.getString("id_jefe"));
         entrada.setNum_piezas(rs.getInt("num_piezas"));
-        entrada.setVolumen_primario(rs.getFloat("volumen_primario"));
-        entrada.setCosto_primario(rs.getFloat("costo_primario"));
-        entrada.setVolumen_secundario(rs.getFloat("volumen_secundario"));
-        entrada.setCosto_secundario(rs.getFloat("costo_secundario"));
-        entrada.setVolumen_terciario(rs.getFloat("volumen_terciario"));
-        entrada.setCosto_terciario(rs.getFloat("costo_terciario"));
-        entrada.setVolumen_total(decimalesVolumen.format(rs.getFloat("volumen_total")));
-        entrada.setMonto_total(decimalesMonto.format(rs.getFloat("monto_total")));
+        entrada.setVolumen_primario(rs.getBigDecimal("volumen_primario"));
+        entrada.setCosto_primario(rs.getBigDecimal("costo_primario"));
+        entrada.setVolumen_secundario(rs.getBigDecimal("volumen_secundario"));
+        entrada.setCosto_secundario(rs.getBigDecimal("costo_secundario"));
+        entrada.setVolumen_terciario(rs.getBigDecimal("volumen_terciario"));
+        entrada.setCosto_terciario(rs.getBigDecimal("costo_terciario"));
+        BigDecimal VolumenTotal = rs.getBigDecimal("volumen_total");
+        BigDecimal montoTotal = rs.getBigDecimal("monto_total");
+        VolumenTotal = VolumenTotal.setScale(dVolumen, BigDecimal.ROUND_DOWN);
+        montoTotal = montoTotal.setScale(dMonto, BigDecimal.ROUND_DOWN);
+        entrada.setVolumen_total(VolumenTotal);
+        entrada.setMonto_total(montoTotal);
         entrada.setId_pago(rs.getInt("id_pago"));
+        
         return entrada;
     }
 
@@ -172,9 +177,9 @@ public class EntradaMaderaRolloCRUD  extends Conexion implements OperacionesCRUD
         st.setString(3, entrada.getId_chofer());        
         st.setString(4, entrada.getId_empleado());
         st.setInt(5, entrada.getNum_piezas());
-        st.setFloat(6, entrada.getVolumen_primario());
-        st.setFloat(7, entrada.getVolumen_secundario());
-        st.setFloat(8, entrada.getVolumen_terciario());
+        st.setBigDecimal(6, entrada.getVolumen_primario());
+        st.setBigDecimal(7, entrada.getVolumen_secundario());
+        st.setBigDecimal(8, entrada.getVolumen_terciario());
         st.setInt(9, 0);
         return st;
     }

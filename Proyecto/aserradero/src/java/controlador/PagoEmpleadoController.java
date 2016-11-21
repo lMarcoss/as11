@@ -6,6 +6,7 @@ import entidades.Empleado;
 import entidades.PagoEmpleado;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -208,7 +209,7 @@ public class PagoEmpleadoController extends HttpServlet {
         pagoEmpleado.setId_pago_empleado(Integer.valueOf(request.getParameter("id_pago_empleado")));
         pagoEmpleado.setFecha(Date.valueOf(request.getParameter("fecha")));
         pagoEmpleado.setId_empleado(request.getParameter("id_empleado"));
-        pagoEmpleado.setMonto(Float.valueOf(request.getParameter("monto")));
+        pagoEmpleado.setMonto(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto")))));
         pagoEmpleado.setObservacion(request.getParameter("observacion"));
         return pagoEmpleado;
     }

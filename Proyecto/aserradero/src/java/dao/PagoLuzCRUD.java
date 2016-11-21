@@ -142,7 +142,7 @@ import java.util.List;
         pagoluz.setFecha(rs.getString("fecha"));
         pagoluz.setId_empleado(rs.getString("id_empleado"));
         pagoluz.setEmpleado(rs.getString("empleado"));
-        pagoluz.setMonto(rs.getFloat("monto"));
+        pagoluz.setMonto(rs.getBigDecimal("monto"));
         pagoluz.setObservacion(rs.getString("observacion"));
         return pagoluz;
     }

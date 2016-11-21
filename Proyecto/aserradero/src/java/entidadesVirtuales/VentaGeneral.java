@@ -6,6 +6,7 @@
  */
 package entidadesVirtuales;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -24,12 +25,12 @@ public class VentaGeneral {
     private String estatus;
     private String tipo_venta;
     private String tipo_pago;
-    private float monto; // Es el único atributo que se extrae de los tipos de ventas
+    private BigDecimal monto; // Es el único atributo que se extrae de los tipos de ventas
 
     public VentaGeneral() {
     }
 
-    public VentaGeneral(String id_venta, Date fecha, String id_cliente, String cliente, String id_empleado, String empleado, String id_jefe, String estatus, String tipo_venta, String tipo_pago, float monto) {
+    public VentaGeneral(String id_venta, Date fecha, String id_cliente, String cliente, String id_empleado, String empleado, String id_jefe, String estatus, String tipo_venta, String tipo_pago, BigDecimal monto) {
         this.id_venta = id_venta;
         this.fecha = fecha;
         this.id_cliente = id_cliente;
@@ -83,7 +84,7 @@ public class VentaGeneral {
         this.tipo_pago = tipo_pago;
     }
 
-    public void setMonto(float monto) {
+    public void setMonto(BigDecimal monto) {
         this.monto = monto;
     }
 
@@ -127,7 +128,7 @@ public class VentaGeneral {
         return tipo_pago;
     }
 
-    public float getMonto() {
+    public BigDecimal getMonto() {
         return monto;
     }
     

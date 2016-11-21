@@ -81,7 +81,7 @@ public class ClasificacionMaderaEntradaCRUD extends Conexion implements Operacio
         try {
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement("UPDATE COSTO_MADERA_ENTRADA SET costo = ? where clasificacion=?");            
-            st.setFloat(1, costoMaderaEntrada.getCosto());
+            st.setBigDecimal(1, costoMaderaEntrada.getCosto());
             st.setString(2, costoMaderaEntrada.getClasificacion());
             st.executeUpdate();
         }catch(Exception e){
@@ -136,7 +136,7 @@ public class ClasificacionMaderaEntradaCRUD extends Conexion implements Operacio
     public Object extraerObject(ResultSet rs) throws SQLException {
         ClasificacionMaderaEntrada costoMaderaEntrada = new ClasificacionMaderaEntrada();
         costoMaderaEntrada.setClasificacion(rs.getString("clasificacion"));
-        costoMaderaEntrada.setCosto(Float.valueOf(rs.getString("costo")));
+        costoMaderaEntrada.setCosto(rs.getBigDecimal("costo"));
         return costoMaderaEntrada;
     }
 

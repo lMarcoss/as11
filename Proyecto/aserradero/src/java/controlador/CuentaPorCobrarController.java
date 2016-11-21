@@ -5,6 +5,7 @@ import dao.CuentaPorCobrarCRUD;
 import entidades.CuentaPorCobrar;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -188,7 +189,7 @@ public class CuentaPorCobrarController extends HttpServlet {
     private CuentaPorCobrar extraerCuentaPorCobrarForm(HttpServletRequest request) {
         CuentaPorCobrar cuentaPorCobrar = new CuentaPorCobrar();
         cuentaPorCobrar.setId_persona(request.getParameter("id_proveedor"));
-        cuentaPorCobrar.setMonto(Float.valueOf(request.getParameter("monto")));
+        cuentaPorCobrar.setMonto(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto")))));
         return cuentaPorCobrar;
     }
 

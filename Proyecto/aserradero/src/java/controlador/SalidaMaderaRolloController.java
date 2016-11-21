@@ -6,6 +6,7 @@ import entidades.Empleado;
 import entidades.SalidaMaderaRollo;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -191,7 +192,7 @@ public class SalidaMaderaRolloController extends HttpServlet {
         salida.setFecha(Date.valueOf(request.getParameter("fecha")));
         salida.setId_empleado(request.getParameter("id_empleado"));
         salida.setNum_piezas(Integer.valueOf(request.getParameter("num_piezas")));
-        salida.setVolumen_total(Float.valueOf(request.getParameter("volumen_total")));
+        salida.setVolumen_total(BigDecimal.valueOf((Double.valueOf(request.getParameter("volumen_total")))));
         return salida;
     }
 

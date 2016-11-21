@@ -5,10 +5,10 @@
 --%>
 
 <%@page import="java.util.List"%>
-<%@page import="entidadesVirtuales.MontoPagoCompra"%>
+<%@page import="entidadesVirtuales.VistaMontoPagoCompra"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    List <MontoPagoCompra> listaMontoPagoCompra = (List<MontoPagoCompra>) request.getAttribute("listaMontoPagoCompra");
+    List <VistaMontoPagoCompra> listaMontoPagoCompra = (List<VistaMontoPagoCompra>) request.getAttribute("listaMontoPagoCompra");
 %>
 <!DOCTYPE html>
 <html>
@@ -16,7 +16,7 @@
         <%@ include file="/TEMPLATE/headNuevo.jsp" %>
         <script src="/aserradero/js/selectorMontoPorPagar.js"></script>
         
-        <title>Nuevo pago compra</title>
+        <title>Nuevo pago</title>
     </head>
     <body>
         <!--menu-->
@@ -25,7 +25,7 @@
         <!-- ******************* Formulario de registro-->
         <div>
             <form action="/aserradero/PagoCompraController?action=insertar" method="post" id="formregistro">
-                <h3>Agregar pago</h3>
+                <h3>Registrar pago</h3>
                 <fieldset id="user-details">
                     <table>                        
                         <tr>
@@ -41,7 +41,7 @@
                                 <select name="id_proveedor" id="id_proveedor" required="" title="Seleccione un proveedor" onblur="seleccionarMontoPorPagar()">
                                     <option></option>
                                     <%
-                                        for(MontoPagoCompra pago: listaMontoPagoCompra){
+                                        for(VistaMontoPagoCompra pago: listaMontoPagoCompra){
                                             out.print("<option value='"+pago.getId_proveedor()+"'>"+pago.getProveedor()+"</option>");
                                         }
                                     %>
@@ -49,13 +49,26 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 10px;"><label>Cuenta pendiente:</label></td>
+                            <td style="padding-left: 10px;"><label>Monto compra por pagar:</label></td>
                             <td style="padding-left: 10px;">
                                 <select name="cuenta_pendiente" id="cuenta_pendiente" required="" disabled="">
                                     <option></option>
                                     <%
-                                        for(MontoPagoCompra pago: listaMontoPagoCompra){
+                                        for(VistaMontoPagoCompra pago: listaMontoPagoCompra){
                                             out.print("<option value='"+pago.getMonto_por_pagar()+"'>"+pago.getMonto_por_pagar()+"</option>");
+                                        }
+                                    %>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 10px;"><label>Cuenta por cobrar (anticipo):</label></td>
+                            <td style="padding-left: 10px;">
+                                <select name="cuenta_por_cobrar" id="cuenta_por_cobrar" required="" disabled="">
+                                    <option></option>
+                                    <%
+                                        for(VistaMontoPagoCompra pago: listaMontoPagoCompra){
+                                            out.print("<option value='"+pago.getCuenta_por_cobrar()+"'>"+pago.getCuenta_por_cobrar()+"</option>");
                                         }
                                     %>
                                 </select>

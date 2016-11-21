@@ -4,6 +4,7 @@ import dao.MaderaClasificacionCRUD;
 import entidades.MaderaClasificacion;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -204,10 +205,10 @@ public class MaderaClasificacionController extends HttpServlet {
     private MaderaClasificacion extraerMaderaClasificacionForm(HttpServletRequest request) {
         MaderaClasificacion maderaClasificacion = new MaderaClasificacion();
         maderaClasificacion.setId_madera(request.getParameter("id_madera"));
-        maderaClasificacion.setGrueso(Float.valueOf(request.getParameter("grueso")));
-        maderaClasificacion.setAncho(Float.valueOf(request.getParameter("ancho")));
-        maderaClasificacion.setLargo(Float.valueOf(request.getParameter("largo")));
-        maderaClasificacion.setVolumen(Float.valueOf(request.getParameter("volumen")));
+        maderaClasificacion.setGrueso(BigDecimal.valueOf((Double.valueOf(request.getParameter("grueso")))));
+        maderaClasificacion.setAncho(BigDecimal.valueOf((Double.valueOf(request.getParameter("ancho")))));
+        maderaClasificacion.setLargo(BigDecimal.valueOf((Double.valueOf(request.getParameter("largo")))));
+        maderaClasificacion.setVolumen(BigDecimal.valueOf((Double.valueOf(request.getParameter("volumen")))));
         return maderaClasificacion;
     }
 

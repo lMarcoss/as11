@@ -1,5 +1,7 @@
 package entidades;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author lmarcoss
@@ -7,12 +9,12 @@ package entidades;
 public class CuentaPorPagar {
     private String id_persona; // puede ser id_cliente o id_proveedor
     private String persona; //puede ser cliente o proveedor
-    private float monto;
+    private BigDecimal monto;
 
     public CuentaPorPagar() {
     }
 
-    public CuentaPorPagar(String id_persona, String persona, float monto) {
+    public CuentaPorPagar(String id_persona, String persona, BigDecimal monto) {
         this.id_persona = id_persona;
         this.persona = persona;
         this.monto = monto;
@@ -26,7 +28,7 @@ public class CuentaPorPagar {
         this.persona = persona;
     }
 
-    public void setMonto(float monto) {
+    public void setMonto(BigDecimal monto) {
         this.monto = monto;
     }
 
@@ -38,7 +40,7 @@ public class CuentaPorPagar {
         return persona;
     }
 
-    public float getMonto() {
+    public BigDecimal getMonto() {
         return monto;
     }
 

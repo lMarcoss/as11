@@ -86,7 +86,7 @@ public class SalidaMaderaRolloCRUD extends Conexion implements OperacionesCRUD{
             st.setDate(1, salida.getFecha());
             st.setString(2, salida.getId_empleado());
             st.setInt(3, salida.getNum_piezas());
-            st.setFloat(4, salida.getVolumen_total());
+            st.setBigDecimal(4, salida.getVolumen_total());
             st.setFloat(5, salida.getId_salida());
             st.executeUpdate();
         }catch(Exception e){
@@ -140,7 +140,7 @@ public class SalidaMaderaRolloCRUD extends Conexion implements OperacionesCRUD{
         salida.setEmpleado(rs.getString("empleado"));
         salida.setId_jefe(rs.getString("id_jefe"));
         salida.setNum_piezas(rs.getInt("num_piezas"));
-        salida.setVolumen_total(rs.getFloat("volumen_total"));
+        salida.setVolumen_total(rs.getBigDecimal("volumen_total"));
         return salida;
     }
 
@@ -150,7 +150,7 @@ public class SalidaMaderaRolloCRUD extends Conexion implements OperacionesCRUD{
         st.setDate(1, salida.getFecha());
         st.setString(2, salida.getId_empleado());        
         st.setInt(3, salida.getNum_piezas());
-        st.setFloat(4, salida.getVolumen_total());
+        st.setBigDecimal(4, salida.getVolumen_total());
         return st;
     }
     

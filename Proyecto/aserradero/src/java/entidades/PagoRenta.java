@@ -1,5 +1,7 @@
 package entidades;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Ricardo Cortés Cruz ->> ricardo.crts.crz@gmail.com
@@ -13,14 +15,14 @@ public class PagoRenta{
     private String id_empleado;
     private String empleado;
     private String id_jefe;
-    private float monto;
+    private BigDecimal monto;
     private String observacion;
 
    public PagoRenta(){
 
    }
 
-    public PagoRenta(String id_pago_renta, String fecha, String nombre_persona, String id_empleado, String empleado, String id_jefe, float monto, String observacion) {
+    public PagoRenta(String id_pago_renta, String fecha, String nombre_persona, String id_empleado, String empleado, String id_jefe, BigDecimal monto, String observacion) {
         this.id_pago_renta = id_pago_renta;
         this.fecha = fecha;
         this.nombre_persona = nombre_persona;
@@ -55,7 +57,7 @@ public class PagoRenta{
         this.id_jefe = id_jefe;
     }
 
-    public void setMonto(float monto) {
+    public void setMonto(BigDecimal monto) {
         this.monto = monto;
     }
 
@@ -87,7 +89,7 @@ public class PagoRenta{
         return id_jefe;
     }
 
-    public float getMonto() {
+    public BigDecimal getMonto() {
         return monto;
     }
 

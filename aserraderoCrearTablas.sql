@@ -94,12 +94,12 @@ CREATE TABLE ENTRADA_MADERA_ROLLO( -- entrada_madera
     id_chofer			CHAR(26) NOT NULL,
 	id_empleado 		CHAR(26) NOT NULL,
 	num_piezas			INT,
-    volumen_primario	DECIMAL(10,3),	-- cantidad de volumen primaria
-    costo_primario		DECIMAL(10,2),	-- costo volumen primario
-    volumen_secundario	DECIMAL(10,3),	-- cantidad de volumen primaria
-    costo_secundario	DECIMAL(10,2),	-- cantidad de volumen primaria
-    volumen_terciario	DECIMAL(10,3),
-    costo_terciario		DECIMAL(10,2),	-- cantidad de volumen primaria
+    volumen_primario	DECIMAL(11,3),	-- cantidad de volumen primaria
+    costo_primario		DECIMAL(11,2),	-- costo volumen primario
+    volumen_secundario	DECIMAL(11,3),	-- cantidad de volumen primaria
+    costo_secundario	DECIMAL(11,2),	-- cantidad de volumen primaria
+    volumen_terciario	DECIMAL(11,3),
+    costo_terciario		DECIMAL(11,2),	-- cantidad de volumen primaria
     id_pago				INT(9) default 0, -- 0 para entradas no pagadas
 	PRIMARY KEY (id_entrada),
     FOREIGN KEY (id_proveedor) REFERENCES PROVEEDOR (id_proveedor) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -238,7 +238,7 @@ CREATE TABLE ANTICIPO_CLIENTE(
 	fecha 			DATE,
 	id_cliente 		CHAR(26) NOT NULL,
 	id_empleado 	VARCHAR(26) NOT NULL,
-	monto_anticipo	DECIMAL(10,2),
+	monto_anticipo	DECIMAL(11,2),
 	PRIMARY KEY(id_anticipo_c),
 	FOREIGN KEY (id_cliente) REFERENCES CLIENTE (id_cliente),
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
@@ -248,7 +248,7 @@ CREATE TABLE ANTICIPO_PROVEEDOR(
 	fecha 			DATE,
 	id_proveedor	CHAR(26) NOT NULL,
 	id_empleado 	VARCHAR(26) NOT NULL,
-	monto_anticipo	DECIMAL(10,2),
+	monto_anticipo	DECIMAL(11,2),
 	PRIMARY KEY(id_anticipo_p),
 	FOREIGN KEY (id_proveedor) REFERENCES PROVEEDOR (id_proveedor),
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
@@ -256,12 +256,12 @@ CREATE TABLE ANTICIPO_PROVEEDOR(
 
 CREATE TABLE CUENTA_POR_PAGAR(
 	id_persona 	CHAR(26) NOT NULL, -- puede ser id_proveedor o id_cliente
-	monto		DECIMAL(10,2),
+	monto		DECIMAL(15,2),
 	PRIMARY KEY(id_persona))ENGINE=InnoDB;
 
 CREATE TABLE CUENTA_POR_COBRAR(
 	id_persona 	CHAR(26) NOT NULL, -- puede ser id_cliente o id_proveedor
-	monto		DECIMAL(10,2),
+	monto		DECIMAL(15,2),
 	PRIMARY KEY(id_persona))ENGINE=InnoDB;
 
 
@@ -428,9 +428,10 @@ SELECT COSTO_MADERA.id_madera AS id_madera, grueso, ancho, largo,volumen, monto_
 	FROM MADERA_CLASIFICACION
 	INNER JOIN COSTO_MADERA WHERE MADERA_CLASIFICACION.id_madera = COSTO_MADERA.id_madera;
 
+DROP TRIGGER IF EXISTS AGREGAR_INVENTARIO_PRODUCCION;
 -- Disparador para insertar inventario de madera producida cada que se inserta una producción
 DELIMITER //
-CREATE TRIGGER AGREGAR_INVENTARIO_PRODUCCION  AFTER INSERT ON PRODUCCION_MADERA
+CREATE TRIGGER AGREGAR_INVENTARIO_PRODUCCION AFTER INSERT ON PRODUCCION_MADERA
 FOR EACH ROW
 BEGIN
 	-- consultamos el administrador
@@ -447,7 +448,6 @@ END;//
 DELIMITER ;
 
 DROP TRIGGER IF EXISTS ACTUALIZAR_INVENTARIO_PRODUCCION;
-
 -- Disparador para actualizar inventario de madera producida cada que actualiza producción_madera
 DELIMITER //
 CREATE TRIGGER ACTUALIZAR_INVENTARIO_PRODUCCION  BEFORE UPDATE ON PRODUCCION_MADERA
@@ -457,7 +457,7 @@ BEGIN
 	DECLARE _id_administrador VARCHAR(18);	
     SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado;
     
-    -- aeguramos que existe el inventario
+    -- aseguramos que existe el inventario
     IF EXISTS (SELECT id_administrador FROM INVENTARIO_MADERA_PRODUCCION WHERE id_administrador = _id_administrador AND id_madera = new.id_madera) THEN
 		-- Restamos los valores antiguos en inventario madera producción
 		UPDATE INVENTARIO_MADERA_PRODUCCION

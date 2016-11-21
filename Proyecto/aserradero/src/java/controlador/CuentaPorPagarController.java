@@ -4,6 +4,7 @@ import dao.CuentaPorPagarCRUD;
 import entidades.CuentaPorPagar;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -180,7 +181,7 @@ public class CuentaPorPagarController extends HttpServlet {
     private CuentaPorPagar extraerCuentaPorPagarForm(HttpServletRequest request) {
         CuentaPorPagar cuentaPorPagar = new CuentaPorPagar();
         cuentaPorPagar.setId_persona(request.getParameter("id_cliente"));
-        cuentaPorPagar.setMonto(Float.valueOf(request.getParameter("monto")));
+        cuentaPorPagar.setMonto(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto")))));
         return cuentaPorPagar;
     }
 

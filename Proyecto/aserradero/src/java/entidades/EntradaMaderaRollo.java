@@ -1,5 +1,6 @@
 package entidades;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -19,20 +20,20 @@ import java.sql.Date;
     private String empleado;
     private String id_jefe;
     private int num_piezas;    
-    private float volumen_primario;
-    private float costo_primario;
-    private float volumen_secundario;
-    private float costo_secundario;
-    private float volumen_terciario;
-    private float costo_terciario;
-    private String volumen_total;
-    private String monto_total;
+    private BigDecimal volumen_primario;
+    private BigDecimal costo_primario;
+    private BigDecimal volumen_secundario;
+    private BigDecimal costo_secundario;
+    private BigDecimal volumen_terciario;
+    private BigDecimal costo_terciario;
+    private BigDecimal volumen_total;
+    private BigDecimal monto_total;
     private int id_pago;
 
     public EntradaMaderaRollo() {
     }
 
-    public EntradaMaderaRollo(int id_entrada, Date fecha, String id_proveedor, String proveedor, String id_chofer, String chofer, String id_empleado, String empleado, String id_jefe, int num_piezas, float volumen_primario, float costo_primario, float volumen_secundario, float costo_secundario, float volumen_terciario, float costo_terciario, String volumen_total, String monto_total, int id_pago) {
+    public EntradaMaderaRollo(int id_entrada, Date fecha, String id_proveedor, String proveedor, String id_chofer, String chofer, String id_empleado, String empleado, String id_jefe, int num_piezas, BigDecimal volumen_primario, BigDecimal costo_primario, BigDecimal volumen_secundario, BigDecimal costo_secundario, BigDecimal volumen_terciario, BigDecimal costo_terciario, BigDecimal volumen_total, BigDecimal monto_total, int id_pago) {
         this.id_entrada = id_entrada;
         this.fecha = fecha;
         this.id_proveedor = id_proveedor;
@@ -94,39 +95,39 @@ import java.sql.Date;
         this.num_piezas = num_piezas;
     }
 
-    public void setVolumen_primario(float volumen_primario) {
+    public void setVolumen_primario(BigDecimal volumen_primario) {
         this.volumen_primario = volumen_primario;
     }
 
-    public void setCosto_primario(float costo_primario) {
+    public void setCosto_primario(BigDecimal costo_primario) {
         this.costo_primario = costo_primario;
     }
 
-    public void setVolumen_secundario(float volumen_secundario) {
+    public void setVolumen_secundario(BigDecimal volumen_secundario) {
         this.volumen_secundario = volumen_secundario;
     }
 
-    public void setCosto_secundario(float costo_secundario) {
+    public void setCosto_secundario(BigDecimal costo_secundario) {
         this.costo_secundario = costo_secundario;
     }
 
-    public void setVolumen_terciario(float volumen_terciario) {
+    public void setVolumen_terciario(BigDecimal volumen_terciario) {
         this.volumen_terciario = volumen_terciario;
     }
 
-    public void setCosto_terciario(float costo_terciario) {
+    public void setCosto_terciario(BigDecimal costo_terciario) {
         this.costo_terciario = costo_terciario;
     }
 
-    public void setVolumen_total(String volumen_total) {
+    public void setVolumen_total(BigDecimal volumen_total) {
         this.volumen_total = volumen_total;
     }
 
-    public void setMonto_total(String monto_total) {
+    public void setMonto_total(BigDecimal monto_total) {
         this.monto_total = monto_total;
     }
 
-    public void setId_pago(int pago) {
+    public void setId_pago(int id_pago) {
         this.id_pago = id_pago;
     }
 
@@ -170,35 +171,35 @@ import java.sql.Date;
         return num_piezas;
     }
 
-    public float getVolumen_primario() {
+    public BigDecimal getVolumen_primario() {
         return volumen_primario;
     }
 
-    public float getCosto_primario() {
+    public BigDecimal getCosto_primario() {
         return costo_primario;
     }
 
-    public float getVolumen_secundario() {
+    public BigDecimal getVolumen_secundario() {
         return volumen_secundario;
     }
 
-    public float getCosto_secundario() {
+    public BigDecimal getCosto_secundario() {
         return costo_secundario;
     }
 
-    public float getVolumen_terciario() {
+    public BigDecimal getVolumen_terciario() {
         return volumen_terciario;
     }
 
-    public float getCosto_terciario() {
+    public BigDecimal getCosto_terciario() {
         return costo_terciario;
     }
 
-    public String getVolumen_total() {
+    public BigDecimal getVolumen_total() {
         return volumen_total;
     }
 
-    public String getMonto_total() {
+    public BigDecimal getMonto_total() {
         return monto_total;
     }
 

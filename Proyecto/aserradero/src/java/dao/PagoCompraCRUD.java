@@ -1,7 +1,7 @@
 package dao;
 
 import entidades.PagoCompra;
-import entidadesVirtuales.MontoPagoCompra;
+import entidadesVirtuales.VistaMontoPagoCompra;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +21,7 @@ public class PagoCompraCRUD extends Conexion implements OperacionesCRUD {
         try {
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement(""
-                    + "INSERT INTO PAGO_COMPRA (fecha, id_proveedor, monto_pago, monto_por_pagar) values ( ?, ?, ?, ?)");
+                    + "INSERT INTO PAGO_COMPRA (fecha, id_proveedor, monto_pago, monto_por_pagar) values ( ?, ?, ?, ?)");                             
             st = cargarObject(st, pagoCompra);
             st.executeUpdate();
         } catch (Exception e) {
@@ -37,8 +37,8 @@ public class PagoCompraCRUD extends Conexion implements OperacionesCRUD {
         PagoCompra pagoCompra = (PagoCompra) objeto;
         st.setDate(1, pagoCompra.getFecha());
         st.setString(2, pagoCompra.getId_proveedor());
-        st.setFloat(3, pagoCompra.getMonto_pago());
-        st.setFloat(4, pagoCompra.getMonto_por_pagar());
+        st.setBigDecimal(3, pagoCompra.getMonto_pago());
+        st.setBigDecimal(4, pagoCompra.getMonto_por_pagar());
         return st;
     }
 
@@ -77,8 +77,8 @@ public class PagoCompraCRUD extends Conexion implements OperacionesCRUD {
         pagoCompra.setId_proveedor(rs.getString("id_proveedor"));
         pagoCompra.setProveedor(rs.getString("proveedor"));
         pagoCompra.setId_administrador(rs.getString("id_administrador"));
-        pagoCompra.setMonto_pago(rs.getFloat("monto_pago"));
-        pagoCompra.setMonto_por_pagar(rs.getFloat("monto_por_pagar"));
+        pagoCompra.setMonto_pago(rs.getBigDecimal("monto_pago"));
+        pagoCompra.setMonto_por_pagar(rs.getBigDecimal("monto_por_pagar"));
         return pagoCompra;
     }
 
@@ -108,8 +108,8 @@ public class PagoCompraCRUD extends Conexion implements OperacionesCRUD {
             PreparedStatement st = this.conexion.prepareStatement("UPDATE PAGO_COMPRA SET fecha = ?, id_proveedor= ?, monto_pago = ?, monto_por_pagar = ? where id_pago = ?");
             st.setDate(1, pagoCompra.getFecha());
             st.setString(2, pagoCompra.getId_proveedor());
-            st.setFloat(3, pagoCompra.getMonto_pago());
-            st.setFloat(4, pagoCompra.getMonto_por_pagar());
+            st.setBigDecimal(3, pagoCompra.getMonto_pago());
+            st.setBigDecimal(4, pagoCompra.getMonto_por_pagar());
             st.setInt(5, pagoCompra.getId_pago());
             st.executeUpdate();
         } catch (Exception e) {
@@ -161,7 +161,7 @@ public class PagoCompraCRUD extends Conexion implements OperacionesCRUD {
     }
 
     public <T> List listarMontoPagoCompra(String administrador) throws Exception {
-        List<MontoPagoCompra> listaMontoPagoCompra;
+        List<VistaMontoPagoCompra> listaMontoPagoCompra;
         try {
             this.abrirConexion();
             try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_MONTO_PAGO_COMPRA WHERE id_administrador = ? AND monto_por_pagar > 0")) {
@@ -169,7 +169,7 @@ public class PagoCompraCRUD extends Conexion implements OperacionesCRUD {
                 listaMontoPagoCompra = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
-                        MontoPagoCompra montoPagoCompra = (MontoPagoCompra) extraerMontoPagoCompra(rs);
+                        VistaMontoPagoCompra montoPagoCompra = (VistaMontoPagoCompra) extraerMontoPagoCompra(rs);
                         listaMontoPagoCompra.add(montoPagoCompra);
                     }
                 }
@@ -186,11 +186,12 @@ public class PagoCompraCRUD extends Conexion implements OperacionesCRUD {
         return listaMontoPagoCompra;
     }
 
-    private MontoPagoCompra extraerMontoPagoCompra(ResultSet rs) throws SQLException {
-        MontoPagoCompra monto = new MontoPagoCompra();
+    private VistaMontoPagoCompra extraerMontoPagoCompra(ResultSet rs) throws SQLException {
+        VistaMontoPagoCompra monto = new VistaMontoPagoCompra();
         monto.setId_proveedor(rs.getString("id_proveedor"));
         monto.setProveedor(rs.getString("proveedor"));
-        monto.setMonto_por_pagar(rs.getFloat("monto_por_pagar"));
+        monto.setMonto_por_pagar(rs.getBigDecimal("monto_por_pagar"));
+        monto.setCuenta_por_cobrar(rs.getBigDecimal("cuenta_por_cobrar"));
         monto.setId_administrador(rs.getString("id_administrador"));
         return monto;
     }

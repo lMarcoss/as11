@@ -1,5 +1,6 @@
 package entidades;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -13,12 +14,12 @@ public class AnticipoCliente {
     private String cliente;
     private String id_empleado;
     private String empleado;
-    private float monto_anticipo;
+    private BigDecimal monto_anticipo;
 
     public AnticipoCliente() {
     }
 
-    public AnticipoCliente(int id_anticipo_c, Date fecha, String id_cliente, String cliente, String id_empleado, String empleado, float monto_anticipo) {
+    public AnticipoCliente(int id_anticipo_c, Date fecha, String id_cliente, String cliente, String id_empleado, String empleado, BigDecimal monto_anticipo) {
         this.id_anticipo_c = id_anticipo_c;
         this.fecha = fecha;
         this.id_cliente = id_cliente;
@@ -52,7 +53,7 @@ public class AnticipoCliente {
         this.empleado = empleado;
     }
 
-    public void setMonto_anticipo(float monto_anticipo) {
+    public void setMonto_anticipo(BigDecimal monto_anticipo) {
         this.monto_anticipo = monto_anticipo;
     }
 
@@ -80,7 +81,7 @@ public class AnticipoCliente {
         return empleado;
     }
 
-    public float getMonto_anticipo() {
+    public BigDecimal getMonto_anticipo() {
         return monto_anticipo;
     }
 

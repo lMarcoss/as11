@@ -1,17 +1,19 @@
 package entidades;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author lmarcoss
  */
 public class CostoMadera {
     private String id_madera;
-    private float monto_volumen;
+    private BigDecimal monto_volumen;
 
     public CostoMadera() {
     }
 
-    public CostoMadera(String id_madera, float monto_volumen) {
+    public CostoMadera(String id_madera, BigDecimal monto_volumen) {
         this.id_madera = id_madera;
         this.monto_volumen = monto_volumen;
     }
@@ -20,7 +22,7 @@ public class CostoMadera {
         this.id_madera = id_madera;
     }
 
-    public void setMonto_volumen(float monto_volumen) {
+    public void setMonto_volumen(BigDecimal monto_volumen) {
         this.monto_volumen = monto_volumen;
     }
 
@@ -28,7 +30,7 @@ public class CostoMadera {
         return id_madera;
     }
 
-    public float getMonto_volumen() {
+    public BigDecimal getMonto_volumen() {
         return monto_volumen;
     }
     

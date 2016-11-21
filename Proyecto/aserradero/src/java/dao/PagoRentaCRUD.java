@@ -146,7 +146,7 @@ public class PagoRentaCRUD extends Conexion implements OperacionesCRUD{
         pagorenta.setId_empleado(rs.getString("id_empleado"));
         pagorenta.setEmpleado(rs.getString("empleado"));
         pagorenta.setId_jefe(rs.getString("id_jefe"));
-        pagorenta.setMonto(rs.getFloat("monto"));
+        pagorenta.setMonto(rs.getBigDecimal("monto"));
         pagorenta.setObservacion(rs.getString("observacion"));
         return pagorenta;
     }

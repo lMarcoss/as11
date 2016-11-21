@@ -6,6 +6,7 @@ import entidades.Empleado;
 import entidades.PagoRenta;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -199,7 +200,7 @@ public class PagoRentaController extends HttpServlet {
       pagorenta.setFecha(request.getParameter("fecha"));
       pagorenta.setNombre_persona(request.getParameter("nombre_persona"));
       pagorenta.setId_empleado(request.getParameter("id_empleado"));
-      pagorenta.setMonto(Float.valueOf(request.getParameter("monto")));
+      pagorenta.setMonto(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto")))));
       pagorenta.setObservacion(request.getParameter("observacion"));
 
       return pagorenta;

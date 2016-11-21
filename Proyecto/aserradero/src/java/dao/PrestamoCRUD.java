@@ -84,7 +84,7 @@ public class PrestamoCRUD extends Conexion implements OperacionesCRUD{
             PreparedStatement st= this.conexion.prepareStatement("UPDATE PRESTAMO SET fecha = ?, id_persona = ?, monto = ?, interes = ? WHERE id_prestamo = ?");
             st.setDate(1,prestamo.getFecha());
             st.setString(2,calcularId.CalcularId(prestamo.getId_persona(),prestamo.getId_administrador()));
-            st.setFloat(3,prestamo.getMonto());
+            st.setBigDecimal(3,prestamo.getMonto());
             st.setInt(4,prestamo.getInteres());
             st.setInt(5,prestamo.getId_prestamo());
             st.executeUpdate();
@@ -144,9 +144,9 @@ public class PrestamoCRUD extends Conexion implements OperacionesCRUD{
         prestamo.setId_persona(rs.getString("id_persona"));
         prestamo.setPersona(rs.getString("persona"));
         prestamo.setId_administrador(rs.getString("id_administrador"));
-        prestamo.setMonto(rs.getFloat("monto"));
+        prestamo.setMonto(rs.getBigDecimal("monto"));
         prestamo.setInteres(rs.getInt("interes"));
-        prestamo.setInteres_mesual(rs.getFloat("interes_mensual"));
+        prestamo.setInteres_mesual(rs.getBigDecimal("interes_mensual"));
         return prestamo;
     }
     
@@ -157,7 +157,7 @@ public class PrestamoCRUD extends Conexion implements OperacionesCRUD{
         st.setDate(1,prestamo.getFecha());
         st.setString(2,calcularId.CalcularId(prestamo.getId_persona(),prestamo.getId_administrador()));
         st.setString(3,prestamo.getId_administrador());
-        st.setFloat(4,prestamo.getMonto());
+        st.setBigDecimal(4,prestamo.getMonto());
         st.setInt(5,prestamo.getInteres());
         return st;
     }
@@ -217,8 +217,8 @@ public class PrestamoCRUD extends Conexion implements OperacionesCRUD{
         prestamo.setId_administrador(rs.getString("id_administrador"));
         prestamo.setId_persona(rs.getString("id_persona"));
         prestamo.setPersona(rs.getString("persona"));
-        prestamo.setMonto(rs.getFloat("monto_total"));
-        prestamo.setInteres_mesual(rs.getFloat("interes_total"));
+        prestamo.setMonto(rs.getBigDecimal("monto_total"));
+        prestamo.setInteres_mesual(rs.getBigDecimal("interes_total"));
         return prestamo;
     }
     // Buscar un prestamo por persona

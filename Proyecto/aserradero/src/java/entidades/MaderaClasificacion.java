@@ -1,5 +1,7 @@
 package entidades;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author lmarcoss
@@ -7,15 +9,15 @@ package entidades;
 public class MaderaClasificacion {
     
     private String id_madera;
-    private float grueso;
-    private float ancho;
-    private float largo;
-    private float volumen;
+    private BigDecimal grueso;
+    private BigDecimal ancho;
+    private BigDecimal largo;
+    private BigDecimal volumen;
 
     public MaderaClasificacion() {
     }
 
-    public MaderaClasificacion(String id_madera, float grueso, float ancho, float largo, float volumen) {
+    public MaderaClasificacion(String id_madera, BigDecimal grueso, BigDecimal ancho, BigDecimal largo, BigDecimal volumen) {
         this.id_madera = id_madera;
         this.grueso = grueso;
         this.ancho = ancho;
@@ -28,19 +30,19 @@ public class MaderaClasificacion {
         this.id_madera = id_madera;
     }
 
-    public void setGrueso(float grueso) {
+    public void setGrueso(BigDecimal grueso) {
         this.grueso = grueso;
     }
 
-    public void setAncho(float ancho) {
+    public void setAncho(BigDecimal ancho) {
         this.ancho = ancho;
     }
 
-    public void setLargo(float largo) {
+    public void setLargo(BigDecimal largo) {
         this.largo = largo;
     }
 
-    public void setVolumen(float volumen) {
+    public void setVolumen(BigDecimal volumen) {
         this.volumen = volumen;
     }
 
@@ -48,19 +50,19 @@ public class MaderaClasificacion {
         return id_madera;
     }
 
-    public float getGrueso() {
+    public BigDecimal getGrueso() {
         return grueso;
     }
 
-    public float getAncho() {
+    public BigDecimal getAncho() {
         return ancho;
     }
 
-    public float getLargo() {
+    public BigDecimal getLargo() {
         return largo;
     }
 
-    public float getVolumen() {
+    public BigDecimal getVolumen() {
         return volumen;
     }
     

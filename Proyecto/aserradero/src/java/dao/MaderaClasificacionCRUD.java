@@ -57,7 +57,32 @@ public class MaderaClasificacionCRUD extends Conexion implements OperacionesCRUD
         } 
         return maderaClasificaciones;
     }
-
+    
+    public <T> List listarMaderaSinCosto() throws Exception {
+        List<MaderaClasificacion> maderaClasificaciones;
+        try{
+            this.abrirConexion();
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM MADERA_CLASIFICACION WHERE id_madera NOT IN (SELECT id_madera FROM COSTO_MADERA)")) {
+                maderaClasificaciones = new ArrayList();
+                try (ResultSet rs = st.executeQuery()) {
+                    while (rs.next()) {
+                        MaderaClasificacion maderaClasificacion = (MaderaClasificacion) extraerObject(rs);
+                        maderaClasificaciones.add(maderaClasificacion);
+                    }
+                }
+            }catch(Exception e){
+                maderaClasificaciones = null;
+                System.out.println(e);
+            }
+        }catch(Exception e){
+            System.out.println(e);
+            throw e;
+        }finally{
+            this.cerrarConexion();
+        } 
+        return maderaClasificaciones;
+    }
+    
     @Override
     public Object modificar(Object objeto) throws Exception {
         MaderaClasificacion maderaClasificacionM = (MaderaClasificacion) objeto;
@@ -80,10 +105,10 @@ public class MaderaClasificacionCRUD extends Conexion implements OperacionesCRUD
         try{
             this.abrirConexion();
             PreparedStatement st= this.conexion.prepareStatement("UPDATE MADERA_CLASIFICACION SET grueso = ?, ancho = ?, largo = ?, volumen = ? WHERE id_madera= ?");
-            st.setFloat(1,maderaClasificacion.getGrueso());
-            st.setFloat(2,maderaClasificacion.getAncho());
-            st.setFloat(3,maderaClasificacion.getLargo());
-            st.setFloat(4,maderaClasificacion.getVolumen());
+            st.setBigDecimal(1,maderaClasificacion.getGrueso());
+            st.setBigDecimal(2,maderaClasificacion.getAncho());
+            st.setBigDecimal(3,maderaClasificacion.getLargo());
+            st.setBigDecimal(4,maderaClasificacion.getVolumen());
             st.setString(5,maderaClasificacion.getId_madera());
             st.executeUpdate();
         }catch(Exception e){
@@ -138,10 +163,10 @@ public class MaderaClasificacionCRUD extends Conexion implements OperacionesCRUD
     public Object extraerObject(ResultSet rs) throws SQLException {
         MaderaClasificacion maderaClasificacion = new MaderaClasificacion();
         maderaClasificacion.setId_madera(rs.getString("id_madera"));
-        maderaClasificacion.setGrueso(rs.getFloat("grueso"));
-        maderaClasificacion.setAncho(rs.getFloat("ancho"));
-        maderaClasificacion.setLargo(rs.getFloat("largo"));
-        maderaClasificacion.setVolumen(rs.getFloat("volumen"));
+        maderaClasificacion.setGrueso(rs.getBigDecimal("grueso"));
+        maderaClasificacion.setAncho(rs.getBigDecimal("ancho"));
+        maderaClasificacion.setLargo(rs.getBigDecimal("largo"));
+        maderaClasificacion.setVolumen(rs.getBigDecimal("volumen"));
         return maderaClasificacion;
     }
 
@@ -149,10 +174,10 @@ public class MaderaClasificacionCRUD extends Conexion implements OperacionesCRUD
     public PreparedStatement cargarObject(PreparedStatement st, Object objeto) throws SQLException {
         MaderaClasificacion maderaClasificacion = (MaderaClasificacion) objeto;
         st.setString(1, maderaClasificacion.getId_madera());
-        st.setFloat(2,maderaClasificacion.getGrueso());
-        st.setFloat(3,maderaClasificacion.getAncho());
-        st.setFloat(4,maderaClasificacion.getLargo());
-        st.setFloat(5,maderaClasificacion.getVolumen());
+        st.setBigDecimal(2,maderaClasificacion.getGrueso());
+        st.setBigDecimal(3,maderaClasificacion.getAncho());
+        st.setBigDecimal(4,maderaClasificacion.getLargo());
+        st.setBigDecimal(5,maderaClasificacion.getVolumen());
         return st;
     }
 
@@ -207,11 +232,11 @@ public class MaderaClasificacionCRUD extends Conexion implements OperacionesCRUD
     public Object extraerCostoMaderaClasif(ResultSet rs) throws SQLException {
         CostoMaderaClasificacion cMaderaClasif = new CostoMaderaClasificacion();
         cMaderaClasif.setId_madera(rs.getString("id_madera"));
-        cMaderaClasif.setGrueso(rs.getFloat("grueso"));
-        cMaderaClasif.setAncho(rs.getFloat("ancho"));
-        cMaderaClasif.setLargo(rs.getFloat("largo"));
-        cMaderaClasif.setVolumen((rs.getFloat("volumen")));
-        cMaderaClasif.setMonto_volumen(Float.valueOf(rs.getString("monto_volumen")));
+        cMaderaClasif.setGrueso(rs.getBigDecimal("grueso"));
+        cMaderaClasif.setAncho(rs.getBigDecimal("ancho"));
+        cMaderaClasif.setLargo(rs.getBigDecimal("largo"));
+        cMaderaClasif.setVolumen((rs.getBigDecimal("volumen")));
+        cMaderaClasif.setMonto_volumen(rs.getBigDecimal("monto_volumen"));
         return cMaderaClasif;
     }
 }

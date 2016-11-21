@@ -6,6 +6,7 @@ import entidades.Empleado;
 import entidades.Vehiculo;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -204,7 +205,7 @@ public class VehiculoController extends HttpServlet {
         vehiculo.setCarga_admitida(request.getParameter("carga_admitida"));
         vehiculo.setMotor(request.getParameter("motor"));
         vehiculo.setModelo(request.getParameter("modelo"));
-        vehiculo.setCosto(Float.valueOf(request.getParameter("costo")));
+        vehiculo.setCosto(BigDecimal.valueOf((Double.valueOf(request.getParameter("costo")))));
         vehiculo.setId_empleado(request.getParameter("id_empleado"));
         return vehiculo;
     }

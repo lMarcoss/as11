@@ -1,5 +1,7 @@
 package entidades;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Ricardo Cortés Cruz ->> ricardo.crts.crz@gmail.com
@@ -7,13 +9,13 @@ package entidades;
 
  public class InventarioMaderaEntrada{
    private int num_piezas;
-   private float volumen_total;
+   private BigDecimal volumen_total;
 
    public InventarioMaderaEntrada(){
 
    }
 
-    public InventarioMaderaEntrada(int num_piezas, float volumen_total) {
+    public InventarioMaderaEntrada(int num_piezas, BigDecimal volumen_total) {
         this.num_piezas = num_piezas;
         this.volumen_total = volumen_total;
     }
@@ -22,7 +24,7 @@ package entidades;
         this.num_piezas = num_piezas;
     }
 
-    public void setVolumen_total(float volumen_total) {
+    public void setVolumen_total(BigDecimal volumen_total) {
         this.volumen_total = volumen_total;
     }
 
@@ -30,7 +32,7 @@ package entidades;
         return num_piezas;
     }
 
-    public float getVolumen_total() {
+    public BigDecimal getVolumen_total() {
         return volumen_total;
     }
 

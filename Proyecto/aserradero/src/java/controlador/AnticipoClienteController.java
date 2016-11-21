@@ -8,6 +8,7 @@ import entidades.Cliente;
 import entidades.Empleado;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -209,7 +210,7 @@ public class AnticipoClienteController extends HttpServlet {
         anticipoCliente.setFecha(Date.valueOf(request.getParameter("fecha")));
         anticipoCliente.setId_cliente(request.getParameter("id_cliente"));
         anticipoCliente.setId_empleado(request.getParameter("id_empleado"));
-        anticipoCliente.setMonto_anticipo(Float.valueOf(request.getParameter("monto_anticipo")));
+        anticipoCliente.setMonto_anticipo(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto_anticipo")))));
  
         return anticipoCliente;
     }

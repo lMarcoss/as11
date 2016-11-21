@@ -4,6 +4,7 @@ import dao.ClasificacionMaderaEntradaCRUD;
 import entidades.ClasificacionMaderaEntrada;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -173,7 +174,7 @@ public class ClasificacionMaderaEntradaController extends HttpServlet {
     private ClasificacionMaderaEntrada extraerClasificacionMaderaEntradaForm(HttpServletRequest request){
       ClasificacionMaderaEntrada clasificacionMaderaEntrada = new ClasificacionMaderaEntrada();
       clasificacionMaderaEntrada.setClasificacion(request.getParameter("clasificacion"));
-      clasificacionMaderaEntrada.setCosto(Float.valueOf(request.getParameter("costo")));
+      clasificacionMaderaEntrada.setCosto(BigDecimal.valueOf((Double.valueOf(request.getParameter("costo")))));
       return clasificacionMaderaEntrada;
     }
 }

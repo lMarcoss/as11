@@ -79,7 +79,7 @@ public class PagoEmpleadoCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             PreparedStatement st= this.conexion.prepareStatement("UPDATE PAGO_EMPLEADO SET monto = ?,observacion= ? WHERE id_pago_empleado = ?");
-            st.setFloat(1,pagoEmpleado.getMonto());
+            st.setBigDecimal(1,pagoEmpleado.getMonto());
             st.setString(2,pagoEmpleado.getObservacion());
             st.setInt(3,pagoEmpleado.getId_pago_empleado());
             st.executeUpdate();
@@ -138,7 +138,7 @@ public class PagoEmpleadoCRUD extends Conexion implements OperacionesCRUD{
         pagoEmpleado.setFecha(rs.getDate("fecha"));
         pagoEmpleado.setId_empleado(rs.getString("id_empleado"));
         pagoEmpleado.setEmpleado(rs.getString("empleado"));
-        pagoEmpleado.setMonto(rs.getFloat("monto"));
+        pagoEmpleado.setMonto(rs.getBigDecimal("monto"));
         pagoEmpleado.setObservacion(rs.getString("observacion"));
         return pagoEmpleado;
     }
@@ -148,7 +148,7 @@ public class PagoEmpleadoCRUD extends Conexion implements OperacionesCRUD{
         PagoEmpleado pagoEmpleado = (PagoEmpleado) objecto;
         st.setDate(1,pagoEmpleado.getFecha());    
         st.setString(2,pagoEmpleado.getId_empleado());
-        st.setFloat(3,pagoEmpleado.getMonto());
+        st.setBigDecimal(3,pagoEmpleado.getMonto());
         st.setString(4,pagoEmpleado.getObservacion());
         return st;
     }

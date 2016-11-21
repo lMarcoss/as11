@@ -1,5 +1,6 @@
 package entidades;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -12,14 +13,14 @@ public class Prestamo {
     private String id_persona;
     private String persona;
     private String id_administrador;
-    private float monto;
+    private BigDecimal monto;
     private int interes;
-    private float interes_mesual;
+    private BigDecimal interes_mesual;
 
     public Prestamo() {
     }
 
-    public Prestamo(int id_prestamo, Date fecha, String id_persona, String persona, String id_administrador, float monto, int interes, float interes_mesual) {
+    public Prestamo(int id_prestamo, Date fecha, String id_persona, String persona, String id_administrador, BigDecimal monto, int interes, BigDecimal interes_mesual) {
         this.id_prestamo = id_prestamo;
         this.fecha = fecha;
         this.id_persona = id_persona;
@@ -50,7 +51,7 @@ public class Prestamo {
         this.id_administrador = id_administrador;
     }
 
-    public void setMonto(float monto) {
+    public void setMonto(BigDecimal monto) {
         this.monto = monto;
     }
 
@@ -58,7 +59,7 @@ public class Prestamo {
         this.interes = interes;
     }
 
-    public void setInteres_mesual(float interes_mesual) {
+    public void setInteres_mesual(BigDecimal interes_mesual) {
         this.interes_mesual = interes_mesual;
     }
 
@@ -82,7 +83,7 @@ public class Prestamo {
         return id_administrador;
     }
 
-    public float getMonto() {
+    public BigDecimal getMonto() {
         return monto;
     }
 
@@ -90,7 +91,7 @@ public class Prestamo {
         return interes;
     }
 
-    public float getInteres_mesual() {
+    public BigDecimal getInteres_mesual() {
         return interes_mesual;
     }
     

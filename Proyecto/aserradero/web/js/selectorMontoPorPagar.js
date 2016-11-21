@@ -7,11 +7,20 @@ function seleccionarMontoPorPagar(){
     //Selecciona el monto asociado al proveedor seleccionado
     document.getElementById('cuenta_pendiente').selectedIndex = id_seleccionado;
     
+    //Selecciona cuenta por cobrar asociado al proveedor
+    document.getElementById('cuenta_por_cobrar').selectedIndex = id_seleccionado;
+    var cuenta_por_cobrar = document.getElementById('cuenta_por_cobrar').value;
     // El máximo monto que se puede pagar es el monto asociado al proveedor 
     document.getElementById('monto_pago').max = cuenta_pendiente;
+    // El minimo pago sera el de cuenta pr cobrar: lo que el proveedor debe
+    document.getElementById('monto_pago').min = cuenta_por_cobrar;
     
     // Calcula el monto para cuenta por pagar
-    var monto_pago = document.getElementById('monto_pago').value;
+    if(document.getElementById('monto_pago').value){
+        var monto_pago = document.getElementById('monto_pago').value;
+    }else{
+        monto_pago = 0;
+    }
     var maxMontoPorPagar = cuenta_pendiente - monto_pago;
     document.getElementById('monto_por_pagar').max = maxMontoPorPagar.toFixed(2);
     document.getElementById('monto_por_pagar').min = maxMontoPorPagar.toFixed(2);

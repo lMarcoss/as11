@@ -8,6 +8,7 @@ import entidades.Persona;
 import entidades.Prestamo;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -243,7 +244,7 @@ public class PrestamoController extends HttpServlet {
         prestamo.setFecha(Date.valueOf(request.getParameter("fecha")));
         prestamo.setId_persona(request.getParameter("id_persona"));
         prestamo.setId_administrador(request.getParameter("id_administrador"));
-        prestamo.setMonto(Float.valueOf(request.getParameter("monto")));
+        prestamo.setMonto(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto")))));
         prestamo.setInteres(Integer.valueOf(request.getParameter("interes")));
         return prestamo;
     }

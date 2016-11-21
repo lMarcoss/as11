@@ -109,7 +109,7 @@ public class CuentaPorCobrarCRUD extends Conexion implements OperacionesCRUD{
         CuentaPorCobrar cuentaPorCobrar = new CuentaPorCobrar();
         cuentaPorCobrar.setId_persona(rs.getString("id_persona"));
         cuentaPorCobrar.setPersona(rs.getString("persona"));
-        cuentaPorCobrar.setMonto(rs.getFloat("monto"));        
+        cuentaPorCobrar.setMonto(rs.getBigDecimal("monto"));        
         return cuentaPorCobrar;
     }
 

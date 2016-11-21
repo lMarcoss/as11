@@ -2,6 +2,7 @@ package dao;
 
 import entidades.Vehiculo;
 import interfaces.OperacionesCRUD;
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -150,7 +151,7 @@ public class VehiculoCRUD extends Conexion implements OperacionesCRUD{
         vehiculo.setCarga_admitida(rs.getString("carga_admitida"));
         vehiculo.setMotor(rs.getString("motor"));
         vehiculo.setModelo(rs.getString("modelo"));
-        vehiculo.setCosto(Float.valueOf(rs.getString("costo")));        
+        vehiculo.setCosto(rs.getBigDecimal("costo"));
         vehiculo.setId_empleado(rs.getString("id_empleado"));
         vehiculo.setEmpleado((rs.getString("empleado")));
         return vehiculo;

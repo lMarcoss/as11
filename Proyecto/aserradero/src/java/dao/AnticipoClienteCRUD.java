@@ -80,8 +80,8 @@ public class AnticipoClienteCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             PreparedStatement st= this.conexion.prepareStatement("UPDATE ANTICIPO_CLIENTE SET monto_anticipo = ? WHERE id_anticipo_c=?");
-            st.setFloat(1,anticipoCliente.getMonto_anticipo());
-            st.setFloat(2,anticipoCliente.getId_anticipo_c());
+            st.setBigDecimal(1,anticipoCliente.getMonto_anticipo());
+            st.setInt(2,anticipoCliente.getId_anticipo_c());
             st.executeUpdate();
         }catch(Exception e){
             System.out.println(e);
@@ -140,7 +140,7 @@ public class AnticipoClienteCRUD extends Conexion implements OperacionesCRUD{
         anticipoCliente.setCliente(rs.getString("cliente"));
         anticipoCliente.setId_empleado(rs.getString("id_empleado"));
         anticipoCliente.setEmpleado(rs.getString("empleado"));
-        anticipoCliente.setMonto_anticipo(rs.getFloat("monto_anticipo"));
+        anticipoCliente.setMonto_anticipo(rs.getBigDecimal("monto_anticipo"));
         
         return anticipoCliente;
     }
@@ -151,7 +151,7 @@ public class AnticipoClienteCRUD extends Conexion implements OperacionesCRUD{
         st.setDate(1,anticipoCliente.getFecha());
         st.setString(2,anticipoCliente.getId_cliente());
         st.setString(3,anticipoCliente.getId_empleado());
-        st.setFloat(4,anticipoCliente.getMonto_anticipo());
+        st.setBigDecimal(4,anticipoCliente.getMonto_anticipo());
         return st;
     }
 }

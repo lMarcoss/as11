@@ -79,7 +79,7 @@ public class CostoMaderaCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             PreparedStatement st= this.conexion.prepareStatement("UPDATE COSTO_MADERA SET  monto_volumen = ? WHERE id_madera = ?");
-            st.setFloat(1, costoMadera.getMonto_volumen());
+            st.setBigDecimal(1, costoMadera.getMonto_volumen());
             st.setString(3, costoMadera.getId_madera());
             st.executeUpdate();
         }catch(Exception e){
@@ -134,7 +134,7 @@ public class CostoMaderaCRUD extends Conexion implements OperacionesCRUD{
     public Object extraerObject(ResultSet rs) throws SQLException {
         CostoMadera costoMadera = new CostoMadera();
         costoMadera.setId_madera(rs.getString("id_madera"));
-        costoMadera.setMonto_volumen(rs.getFloat("monto_volumen"));
+        costoMadera.setMonto_volumen(rs.getBigDecimal("monto_volumen"));
         return costoMadera;
     }
 
@@ -142,7 +142,7 @@ public class CostoMaderaCRUD extends Conexion implements OperacionesCRUD{
     public PreparedStatement cargarObject(PreparedStatement st, Object objeto) throws SQLException {
         CostoMadera costoMadera = (CostoMadera) objeto;
         st.setString(1,costoMadera.getId_madera());
-        st.setFloat(2,costoMadera.getMonto_volumen());
+        st.setBigDecimal(2,costoMadera.getMonto_volumen());
         return st;
     }
 

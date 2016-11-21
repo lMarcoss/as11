@@ -1,5 +1,7 @@
 package entidades;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Ricardo Cortés Cruz ->> ricardo.crts.crz@gmail.com
@@ -7,13 +9,13 @@ package entidades;
 
  public class ClasificacionMaderaEntrada{
    public String clasificacion;
-   public Float costo;
+   public BigDecimal costo;
 
    public ClasificacionMaderaEntrada(){
        
    }
    
-    public ClasificacionMaderaEntrada(String clasificacion, Float costo) {
+    public ClasificacionMaderaEntrada(String clasificacion, BigDecimal costo) {
         this.clasificacion = clasificacion;
         this.costo = costo;
     }
@@ -26,11 +28,11 @@ package entidades;
         this.clasificacion = clasificacion;
     }
 
-    public Float getCosto() {
+    public BigDecimal getCosto() {
         return costo;
     }
 
-    public void setCosto(Float costo) {
+    public void setCosto(BigDecimal costo) {
         this.costo = costo;
     }
 

@@ -2,8 +2,9 @@ package controlador;
 
 import dao.PagoCompraCRUD;
 import entidades.PagoCompra;
-import entidadesVirtuales.MontoPagoCompra;
+import entidadesVirtuales.VistaMontoPagoCompra;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -134,8 +135,8 @@ public class PagoCompraController extends HttpServlet {
         }
         pagoCompra.setFecha(Date.valueOf(request.getParameter("fecha")));
         pagoCompra.setId_proveedor(request.getParameter("id_proveedor"));
-        pagoCompra.setMonto_pago(Float.valueOf(request.getParameter("monto_pago")));
-        pagoCompra.setMonto_por_pagar(Float.valueOf(request.getParameter("monto_por_pagar")));
+        pagoCompra.setMonto_pago(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto_pago")))));
+        pagoCompra.setMonto_por_pagar(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto_por_pagar")))));
         return pagoCompra;
     }
 
@@ -180,9 +181,9 @@ public class PagoCompraController extends HttpServlet {
     private void prepararNuevoPagoCompra(HttpServletRequest request, HttpServletResponse response) {
         String administrador = "PAXA20160913HOCSXN";
         PagoCompraCRUD pagoCompraCRUD = new PagoCompraCRUD();
-        List<MontoPagoCompra> listaMontoPagoCompra;
+        List<VistaMontoPagoCompra> listaMontoPagoCompra;
         try {
-            listaMontoPagoCompra = (List<MontoPagoCompra>) pagoCompraCRUD.listarMontoPagoCompra(administrador);
+            listaMontoPagoCompra = (List<VistaMontoPagoCompra>) pagoCompraCRUD.listarMontoPagoCompra(administrador);
             request.setAttribute("listaMontoPagoCompra", listaMontoPagoCompra);
             RequestDispatcher view = request.getRequestDispatcher("pagoCompra/nuevoPagoCompra.jsp");
             view.forward(request, response);

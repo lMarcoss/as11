@@ -1,5 +1,7 @@
 package entidades;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Ricardo Cortés Cruz ->> ricardo.crts.crz@gmail.com
@@ -13,7 +15,7 @@ package entidades;
    private String carga_admitida;
    private String motor;
    private String modelo;
-   private Float costo;
+   private BigDecimal costo;
    private String id_empleado;
    private String empleado;
 
@@ -21,7 +23,7 @@ package entidades;
 
    }
 
-    public Vehiculo(String id_vehiculo, String matricula, String tipo, String color, String carga_admitida, String motor, String modelo, Float costo, String id_empleado, String empleado) {
+    public Vehiculo(String id_vehiculo, String matricula, String tipo, String color, String carga_admitida, String motor, String modelo, BigDecimal costo, String id_empleado, String empleado) {
         this.id_vehiculo = id_vehiculo;
         this.matricula = matricula;
         this.tipo = tipo;
@@ -96,11 +98,11 @@ package entidades;
         this.modelo = modelo;
     }
 
-    public Float getCosto() {
+    public BigDecimal getCosto() {
         return costo;
     }
 
-    public void setCosto(Float costo) {
+    public void setCosto(BigDecimal costo) {
         this.costo = costo;
     }
 

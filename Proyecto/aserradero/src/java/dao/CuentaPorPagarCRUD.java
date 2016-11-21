@@ -110,7 +110,7 @@ public class CuentaPorPagarCRUD extends Conexion implements OperacionesCRUD {
         CuentaPorPagar cuentaPorPagar = new CuentaPorPagar();
         cuentaPorPagar.setId_persona(rs.getString("id_persona"));
         cuentaPorPagar.setPersona(rs.getString("persona"));
-        cuentaPorPagar.setMonto(rs.getFloat("monto"));
+        cuentaPorPagar.setMonto(rs.getBigDecimal("monto"));
         return cuentaPorPagar;
     }
 
@@ -118,7 +118,7 @@ public class CuentaPorPagarCRUD extends Conexion implements OperacionesCRUD {
     public PreparedStatement cargarObject(PreparedStatement st, Object objecto) throws SQLException {
         CuentaPorPagar cuentaPorPagar = (CuentaPorPagar) objecto;
         st.setString(1,cuentaPorPagar.getId_persona());    
-        st.setFloat(2,cuentaPorPagar.getMonto());
+        st.setBigDecimal(2,cuentaPorPagar.getMonto());
         return st;
     }
     public <T> List listarClientes() throws Exception{

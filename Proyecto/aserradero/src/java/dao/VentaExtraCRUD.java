@@ -71,7 +71,7 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
         venta.setEstatus(rs.getString("estatus"));
         venta.setTipo_venta(rs.getString("tipo_venta"));
         venta.setTipo_pago(rs.getString("tipo_pago"));
-        venta.setMonto(rs.getFloat("monto"));
+        venta.setMonto(rs.getBigDecimal("monto"));
         return venta;
     }
     

@@ -1,5 +1,7 @@
 package entidadesVirtuales;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author lmarcoss
@@ -7,16 +9,16 @@ package entidadesVirtuales;
 //Es una vista en la base de datos con nombre COSTO_MADERA_CLASIFICACION
 public class CostoMaderaClasificacion {
     private String id_madera;
-    private Float grueso;
-    private Float ancho;
-    private Float largo;
-    private Float volumen;
-    private float monto_volumen;
+    private BigDecimal grueso;
+    private BigDecimal ancho;
+    private BigDecimal largo;
+    private BigDecimal volumen;
+    private BigDecimal monto_volumen;
 
     public CostoMaderaClasificacion() {
     }
 
-    public CostoMaderaClasificacion(String id_madera, Float grueso, Float ancho, Float largo, Float volumen, float monto_volumen) {
+    public CostoMaderaClasificacion(String id_madera, BigDecimal grueso, BigDecimal ancho, BigDecimal largo, BigDecimal volumen, BigDecimal monto_volumen) {
         this.id_madera = id_madera;
         this.grueso = grueso;
         this.ancho = ancho;
@@ -29,23 +31,23 @@ public class CostoMaderaClasificacion {
         this.id_madera = id_madera;
     }
 
-    public void setGrueso(Float grueso) {
+    public void setGrueso(BigDecimal grueso) {
         this.grueso = grueso;
     }
 
-    public void setAncho(Float ancho) {
+    public void setAncho(BigDecimal ancho) {
         this.ancho = ancho;
     }
 
-    public void setLargo(Float largo) {
+    public void setLargo(BigDecimal largo) {
         this.largo = largo;
     }
 
-    public void setVolumen(Float volumen) {
+    public void setVolumen(BigDecimal volumen) {
         this.volumen = volumen;
     }
 
-    public void setMonto_volumen(float monto_volumen) {
+    public void setMonto_volumen(BigDecimal monto_volumen) {
         this.monto_volumen = monto_volumen;
     }
 
@@ -53,23 +55,23 @@ public class CostoMaderaClasificacion {
         return id_madera;
     }
 
-    public Float getGrueso() {
+    public BigDecimal getGrueso() {
         return grueso;
     }
 
-    public Float getAncho() {
+    public BigDecimal getAncho() {
         return ancho;
     }
 
-    public Float getLargo() {
+    public BigDecimal getLargo() {
         return largo;
     }
 
-    public float getMonto_volumen() {
+    public BigDecimal getMonto_volumen() {
         return monto_volumen;
     }
 
-    public Float getVolumen() {
+    public BigDecimal getVolumen() {
         return volumen;
     }
     

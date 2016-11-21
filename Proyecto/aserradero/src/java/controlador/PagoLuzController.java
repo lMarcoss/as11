@@ -6,6 +6,7 @@ import entidades.Empleado;
 import entidades.PagoLuz;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -199,7 +200,7 @@ public class PagoLuzController extends HttpServlet {
         pagoLuz.setId_pago_luz(request.getParameter("id_pago_luz"));
         pagoLuz.setFecha(request.getParameter("fecha"));
         pagoLuz.setId_empleado(request.getParameter("id_empleado"));
-        pagoLuz.setMonto(Float.valueOf(request.getParameter("monto")));
+        pagoLuz.setMonto(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto")))));
         pagoLuz.setObservacion(request.getParameter("observacion"));
         return pagoLuz;
     }

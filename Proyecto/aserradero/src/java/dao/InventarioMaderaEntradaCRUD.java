@@ -70,7 +70,7 @@ public class InventarioMaderaEntradaCRUD extends Conexion implements Operaciones
     public Object extraerObject(ResultSet rs) throws SQLException {
         InventarioMaderaEntrada inventariomaderaentrada = new InventarioMaderaEntrada();
         inventariomaderaentrada.setNum_piezas(rs.getInt("num_piezas"));        
-        inventariomaderaentrada.setVolumen_total(rs.getFloat("volumen_total"));
+        inventariomaderaentrada.setVolumen_total(rs.getBigDecimal("volumen_total"));
         return inventariomaderaentrada;
     }
 

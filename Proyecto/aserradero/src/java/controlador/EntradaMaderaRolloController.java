@@ -8,6 +8,7 @@ import entidades.Empleado;
 import entidades.Proveedor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -227,9 +228,9 @@ public class EntradaMaderaRolloController extends HttpServlet {
         entrada.setId_chofer(request.getParameter("id_chofer"));
         entrada.setId_empleado(request.getParameter("id_empleado"));
         entrada.setNum_piezas(Integer.valueOf(request.getParameter("num_piezas")));
-        entrada.setVolumen_primario(Float.valueOf(request.getParameter("volumen_primario")));
-        entrada.setVolumen_secundario(Float.valueOf(request.getParameter("volumen_secundario")));
-        entrada.setVolumen_terciario(Float.valueOf(request.getParameter("volumen_terciario")));
+        entrada.setVolumen_primario(BigDecimal.valueOf((Double.valueOf(request.getParameter("volumen_primario")))));
+        entrada.setVolumen_secundario(BigDecimal.valueOf((Double.valueOf(request.getParameter("volumen_secundario")))));
+        entrada.setVolumen_terciario(BigDecimal.valueOf((Double.valueOf(request.getParameter("volumen_terciario")))));
       return entrada;
     }
 }

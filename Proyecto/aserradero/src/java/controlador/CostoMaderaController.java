@@ -6,6 +6,7 @@ import entidades.CostoMadera;
 import entidades.MaderaClasificacion;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,7 +62,7 @@ public class CostoMaderaController extends HttpServlet {
                 try {
                     MaderaClasificacionCRUD maderaClasificacionCRUD= new MaderaClasificacionCRUD();
                     List<MaderaClasificacion> maderaClasificaciones;
-                    maderaClasificaciones = (List<MaderaClasificacion>)maderaClasificacionCRUD.listar();
+                    maderaClasificaciones = (List<MaderaClasificacion>)maderaClasificacionCRUD.listarMaderaSinCosto();
                     request.setAttribute("maderaClasificaciones",maderaClasificaciones);
                     RequestDispatcher view = request.getRequestDispatcher("costoMadera/nuevoCostoMadera.jsp");
                     view.forward(request,response);
@@ -210,7 +211,7 @@ public class CostoMaderaController extends HttpServlet {
     private CostoMadera extraerCostoMaderaForm(HttpServletRequest request) {
         CostoMadera costoMadera = new CostoMadera();
         costoMadera.setId_madera(request.getParameter("id_madera"));
-        costoMadera.setMonto_volumen(Float.valueOf(request.getParameter("monto_volumen")));
+        costoMadera.setMonto_volumen(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto_volumen")))));
         return costoMadera;
     }
 

@@ -1,5 +1,6 @@
 package entidades;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -13,12 +14,12 @@ public class SalidaMaderaRollo {
     private String id_jefe;
     private Date fecha;
     private int num_piezas;
-    private float volumen_total;
+    private BigDecimal volumen_total;
     
     public SalidaMaderaRollo() {
     }
 
-    public SalidaMaderaRollo(int id_salida, String id_empleado, String empleado, String id_jefe, Date fecha, int num_piezas, float volumen_total) {
+    public SalidaMaderaRollo(int id_salida, String id_empleado, String empleado, String id_jefe, Date fecha, int num_piezas, BigDecimal volumen_total) {
         this.id_salida = id_salida;
         this.id_empleado = id_empleado;
         this.empleado = empleado;
@@ -52,7 +53,7 @@ public class SalidaMaderaRollo {
         this.num_piezas = num_piezas;
     }
 
-    public void setVolumen_total(float volumen_total) {
+    public void setVolumen_total(BigDecimal volumen_total) {
         this.volumen_total = volumen_total;
     }
 
@@ -80,7 +81,7 @@ public class SalidaMaderaRollo {
         return num_piezas;
     }
 
-    public float getVolumen_total() {
+    public BigDecimal getVolumen_total() {
         return volumen_total;
     }
 }

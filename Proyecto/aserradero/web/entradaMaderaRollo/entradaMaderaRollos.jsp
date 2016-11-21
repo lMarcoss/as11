@@ -77,8 +77,8 @@
                                 +"<td>"+entrada.getVolumen_primario()+"</td>"
                                 +"<td>"+entrada.getVolumen_secundario()+"</td>"
                                 +"<td>"+entrada.getVolumen_terciario()+"</td>"
-                                +"<td>"+String.valueOf(entrada.getVolumen_total())+"</td>"
-                                +"<td>"+String.valueOf(entrada.getMonto_total())+"</td>"
+                                +"<td>"+entrada.getVolumen_total()+"</td>"
+                                +"<td>"+entrada.getMonto_total()+"</td>"
                                 +"<td><a href=\"/aserradero/EntradaMaderaRolloController?action=modificar&id_entrada="+entrada.getId_entrada()+"\">Modificar</a></td>"
 //                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/EntradaMaderaRolloController?action=eliminar&id_entrada="+entrada.getId_entrada()+"';};\">Eliminar</a></td>"
                             + "</tr>" );

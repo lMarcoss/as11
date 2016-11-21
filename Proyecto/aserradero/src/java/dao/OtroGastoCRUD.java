@@ -85,7 +85,7 @@ import java.util.List;
             st.setDate(1, otrogasto.getFecha());
             st.setString(2, otrogasto.getId_empleado());
             st.setString(3, otrogasto.getNombre_gasto());
-            st.setFloat(4, otrogasto.getMonto());
+            st.setBigDecimal(4, otrogasto.getMonto());
             st.setString(5, otrogasto.getObservacion());
             st.setInt(6, otrogasto.getId_gasto());
             st.executeUpdate();
@@ -145,7 +145,7 @@ import java.util.List;
         otrogasto.setId_empleado(rs.getString("id_empleado"));
         otrogasto.setEmpleado(rs.getString("empleado"));
         otrogasto.setNombre_gasto(rs.getString("nombre_gasto"));
-        otrogasto.setMonto(rs.getFloat("monto"));
+        otrogasto.setMonto(rs.getBigDecimal("monto"));
         otrogasto.setObservacion(rs.getString("observacion"));
         return otrogasto;
     }
@@ -156,7 +156,7 @@ import java.util.List;
         st.setDate(1, otrogasto.getFecha());
         st.setString(2, otrogasto.getId_empleado());
         st.setString(3, otrogasto.getNombre_gasto());
-        st.setFloat(4,otrogasto.getMonto());
+        st.setBigDecimal(4,otrogasto.getMonto());
         st.setString(5, otrogasto.getObservacion());
         return st;
     }

@@ -6,6 +6,7 @@ import entidades.Empleado;
 import entidades.OtroGasto;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -204,7 +205,7 @@ public class OtroGastoController extends HttpServlet {
         otrogasto.setFecha(Date.valueOf(request.getParameter("fecha")));
         otrogasto.setId_empleado(request.getParameter("id_empleado"));
         otrogasto.setNombre_gasto(request.getParameter("nombre_gasto"));
-        otrogasto.setMonto(Float.valueOf(request.getParameter("monto")));
+        otrogasto.setMonto(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto")))));
         otrogasto.setObservacion(request.getParameter("observacion"));
         return otrogasto;
     }

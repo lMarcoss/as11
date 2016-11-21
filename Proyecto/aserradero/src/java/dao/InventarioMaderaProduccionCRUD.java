@@ -2,6 +2,7 @@ package dao;
 
 import entidades.InventarioMaderaProduccion;
 import interfaces.OperacionesCRUD;
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -97,20 +98,26 @@ public class InventarioMaderaProduccionCRUD extends Conexion implements Operacio
 
     @Override
     public Object extraerObject(ResultSet rs) throws SQLException {
-        InventarioMaderaProduccion inventarioMaderaProduccion = new InventarioMaderaProduccion();
-        inventarioMaderaProduccion.setId_administrador(rs.getString("id_administrador"));
-        inventarioMaderaProduccion.setId_madera(rs.getString("id_madera"));
-        inventarioMaderaProduccion.setNum_piezas(rs.getInt("num_piezas"));
-        inventarioMaderaProduccion.setVolumen_total(rs.getInt("volumen_total"));
-        inventarioMaderaProduccion.setMonto_total(rs.getInt("monto_total"));
-        return inventarioMaderaProduccion;
+        int dVolumen = 3;   // cantidad de decimaes para el volumen
+        int dMonto = 2;     // cantidad de Decimales para el Costo
+        InventarioMaderaProduccion inventario = new InventarioMaderaProduccion();
+        inventario.setId_administrador(rs.getString("id_administrador"));
+        inventario.setId_madera(rs.getString("id_madera"));
+        inventario.setNum_piezas(rs.getInt("num_piezas"));
+        BigDecimal VolumenTotal = rs.getBigDecimal("volumen_total");
+        BigDecimal montoTotal = rs.getBigDecimal("monto_total");
+        VolumenTotal = VolumenTotal.setScale(dVolumen, BigDecimal.ROUND_DOWN);  // Redondeamos a 3 decimales
+        montoTotal = montoTotal.setScale(dMonto, BigDecimal.ROUND_DOWN);        // Redondeamos a 2 decimales
+        inventario.setVolumen_total(VolumenTotal);
+        inventario.setMonto_total(montoTotal);
+        return inventario;
     }
 
     @Override
     public PreparedStatement cargarObject(PreparedStatement st, Object objecto) throws SQLException {
         InventarioMaderaProduccion inventarioMaderaProduccion = (InventarioMaderaProduccion) objecto;
         st.setString(1,inventarioMaderaProduccion.getId_madera());    
-        st.setFloat(2,inventarioMaderaProduccion.getNum_piezas());
+        st.setInt(2,inventarioMaderaProduccion.getNum_piezas());
         return st;
     }
 

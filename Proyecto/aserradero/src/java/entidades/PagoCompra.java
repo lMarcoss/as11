@@ -1,5 +1,6 @@
 package entidades;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -12,13 +13,13 @@ public class PagoCompra {
     private String id_proveedor;
     private String proveedor;
     private String id_administrador;
-    private float monto_pago;
-    private float monto_por_pagar;
+    private BigDecimal monto_pago;
+    private BigDecimal monto_por_pagar;
 
     public PagoCompra() {
     }
 
-    public PagoCompra(int id_pago, Date fecha, String id_proveedor, String proveedor, String id_administrador, float monto_pago, float monto_por_pagar) {
+    public PagoCompra(int id_pago, Date fecha, String id_proveedor, String proveedor, String id_administrador, BigDecimal monto_pago, BigDecimal monto_por_pagar) {
         this.id_pago = id_pago;
         this.fecha = fecha;
         this.id_proveedor = id_proveedor;
@@ -48,11 +49,11 @@ public class PagoCompra {
         this.id_administrador = id_administrador;
     }
 
-    public void setMonto_pago(float monto_pago) {
+    public void setMonto_pago(BigDecimal monto_pago) {
         this.monto_pago = monto_pago;
     }
 
-    public void setMonto_por_pagar(float monto_por_pagar) {
+    public void setMonto_por_pagar(BigDecimal monto_por_pagar) {
         this.monto_por_pagar = monto_por_pagar;
     }
 
@@ -76,11 +77,11 @@ public class PagoCompra {
         return id_administrador;
     }
 
-    public float getMonto_pago() {
+    public BigDecimal getMonto_pago() {
         return monto_pago;
     }
 
-    public float getMonto_por_pagar() {
+    public BigDecimal getMonto_por_pagar() {
         return monto_por_pagar;
     }
     
