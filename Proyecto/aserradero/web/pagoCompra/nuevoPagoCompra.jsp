@@ -27,14 +27,14 @@
             <form action="/aserradero/PagoCompraController?action=insertar" method="post" id="formregistro">
                 <h3>Registrar pago</h3>
                 <fieldset id="user-details">
-                    <table>                        
+                    <table>
+                        <%
+                            if(!listaMontoPagoCompra.isEmpty()){
+                        %>
                         <tr>
                             <td style="padding-left: 10px;"><label for="fecha">Fecha:</label></td>
                             <td style="padding-left: 10px;"><input type="date" name="fecha" required="" placeholder="AAAA/MM/DD"/></td>
                         </tr>
-                        <%
-                            if(!listaMontoPagoCompra.isEmpty()){
-                        %>
                         <tr>
                             <td style="padding-left: 10px;"><label>Proveedor:</label></td>
                             <td style="padding-left: 10px;">
@@ -74,11 +74,6 @@
                                 </select>
                             </td>
                         </tr>
-                        <%
-                            }else{
-                                out.println("<p style='color:red;'>No hay compras/cuentas pendientes para pagar. Presione el botón cancelar</p>");
-                            }
-                        %>
                         <tr>
                             <td style="padding-left: 10px;"><label>Monto a pagar:</label></td>
                             <td style="padding-left: 10px;"><input type="number" step="0.01" name="monto_pago" id="monto_pago" min="0.01" max="" required="" onblur="seleccionarMontoPorPagar()"></td>
@@ -89,8 +84,19 @@
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><a href="/aserradero/PagoCompraController?action=listar"><input type="button" value="Cancelar"/></a> </td>
-                            <td style="padding-left: 10px;"><input type="submit" value="Guardar"/></td>
+                            <td style="padding-left: 10px;"><input type="submit" value="Guardar"></td>
                         </tr>
+                        <%
+                            }else{
+                                out.println("<p style='color:red;'>No hay compras pendientes por pagar.</p>");
+                        %>
+                        <tr>
+                            <td style="padding-left: 10px;"><a href="/aserradero/PagoCompraController?action=listar"><input type="button" value="Cancelar"/></a> </td>
+                            <td style="padding-left: 10px;"><input type="submit" value="Guardar" disabled=""></td>
+                        </tr>
+                        <%
+                            }
+                        %>
                     </table>
                 </fieldset>
             </form>

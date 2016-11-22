@@ -30,9 +30,9 @@ CREATE TRIGGER INVENTARIO_MADERA_ENTRADA BEFORE INSERT ON ENTRADA_MADERA_ROLLO
 FOR EACH ROW
 BEGIN
 	DECLARE _id_administrador VARCHAR(18);	
-    DECLARE _costo_primario DECIMAL(10,2);
-    DECLARE _costo_secundario DECIMAL(10,2);
-    DECLARE _costo_terciario DECIMAL(10,2);
+    DECLARE _costo_primario DECIMAL(15,2);
+    DECLARE _costo_secundario DECIMAL(15,2);
+    DECLARE _costo_terciario DECIMAL(15,2);
     
     -- Verificamos si existe los costos de clasificación madera entrada
     IF NOT EXISTS (SELECT costo FROM COSTO_MADERA_ENTRADA WHERE clasificacion = 'Primario') THEN
@@ -122,11 +122,11 @@ CREATE TRIGGER ACTUALIZAR_ENTRADA_MADERA_ROLLO BEFORE UPDATE ON ENTRADA_MADERA_R
 FOR EACH ROW
 BEGIN
 	DECLARE _id_administrador VARCHAR(18);	
-    DECLARE _costo_primario DECIMAL(10,2);
-    DECLARE _costo_secundario DECIMAL(10,2);
-    DECLARE _costo_terciario DECIMAL(10,2);
-    DECLARE _volumen_total_old DECIMAL(10,3);
-    DECLARE _monto_total_old DECIMAL(10,2);
+    DECLARE _costo_primario DECIMAL(15,2);
+    DECLARE _costo_secundario DECIMAL(15,2);
+    DECLARE _costo_terciario DECIMAL(15,2);
+    DECLARE _volumen_total_old DECIMAL(15,3);
+    DECLARE _monto_total_old DECIMAL(15,2);
     
     -- Consultamos si existe los costos de clasificación madera entrada
     IF NOT EXISTS (SELECT costo FROM COSTO_MADERA_ENTRADA WHERE clasificacion = 'Primario') THEN
@@ -179,7 +179,7 @@ FOR EACH ROW
 BEGIN
 	DECLARE _id_administrador VARCHAR(18);	
     DECLARE _num_piezas_disponible INT;	-- numero de piezas disponible en inventario
-    DECLARE _volumen_disponible DECIMAL(10,3); 			-- volumen disponible en inventario
+    DECLARE _volumen_disponible DECIMAL(15,3); 			-- volumen disponible en inventario
     
     -- consultamos el jefe del empleado que registra
     SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado;

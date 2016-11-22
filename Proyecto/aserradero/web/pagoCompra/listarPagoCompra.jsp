@@ -61,7 +61,7 @@
                                 +"<td>"+pago.getProveedor()+"</td>"
                                 +"<td>"+pago.getMonto_pago()+"</td>"
                                 +"<td>"+pago.getMonto_por_pagar()+"</td>"
-                                +"<td><a href=\"/aserradero/PagoCompraController?action=modificar&id_pago="+pago.getId_pago()+"\">Actualizar</a></td>"
+                                +"<td><a href=\"/aserradero/PagoCompraController?action=modificar&id_pago="+pago.getId_pago()+"\">Modificar</a></td>"
                                 + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/PagoCompraController?action=eliminar&id_pago="+pago.getId_pago()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;

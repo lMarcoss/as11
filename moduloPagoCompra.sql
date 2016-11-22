@@ -12,9 +12,9 @@ CREATE TABLE PAGO_COMPRA(
 
 -- Disparador para actualizar los id_pago en la tabla ENTRADA_MADERA_ROLLO: 
 -- Se actualizan todos los que tienen como id_pago = 0 con el nuevo id_pago de PAGO_COMPRA
-DROP TRIGGER IF EXISTS PAGO_COMRA;
+DROP TRIGGER IF EXISTS ACTUALIZAR_ENTRADA_MADERA;
 DELIMITER //
-CREATE TRIGGER PAGO_COMRA AFTER INSERT ON PAGO_COMPRA
+CREATE TRIGGER ACTUALIZAR_ENTRADA_MADERA AFTER INSERT ON PAGO_COMPRA
 FOR EACH ROW
 BEGIN
 	-- actualizamos todos los registros que tienen como id_pago = 0
@@ -156,7 +156,7 @@ SELECT * FROM VISTA_MONTO_PAGO_COMPRA;
 
 SELECT * FROM VISTA_MONTO_PAGO_COMPRA where monto_por_pagar > 0;
 
-SELECT * FROM VISTA_PAGO_COMPRA;
+SELECT * FROM VISTA_PAGO_COMPRA;	
 
 select * from PAGO_COMPRA;
 SELECT * from VISTA_ENTRADA_MADERA_ROLLO;
@@ -183,3 +183,97 @@ SELECT max(id_pago),id_proveedor,monto_por_pagar FROM PAGO_COMPRA;
 SELECT * FROM PAGO_COMPRA;
 
 describe PAGO_COMPRA;
+
+SELECT * FROM ENTRADA_MADERA_ROLLO;
+SELECT * FROM PAGO_COMPRA;
+
+-- Disparador para actualizar cuentas pr pagar al proveedor o cuentas por cobrar dependiendo del cambio
+-- de pago compra
+DROP TRIGGER IF EXISTS ACTUALIZAR_CUENTAS_PAGO_COMRA;
+DELIMITER //
+CREATE TRIGGER ACTUALIZAR_CUENTAS_PAGO_COMRA AFTER UPDATE ON PAGO_COMPRA
+FOR EACH ROW
+BEGIN
+	-- Restamos cuentas por pagar proveedor si es suficiente
+    CALL RESTAR_CUENTA_PROVEEDOR(NEW.id_proveedor,OLD.monto_por_pagar);
+    
+	-- Insertamos el nuevo valor en cuentas por pagar
+    CALL INSERTAR_CUENTA_PAGAR_PROVEEDOR(NEW.id_proveedor,NEW.monto_por_pagar);
+END;//
+DELIMITER ;
+select * from PAGO_COMPRA;
+
+
+-- Procedimiento de modificacion de de cuentas por pagar y por cobrar deL proveedor al modificar Pago compra
+DROP PROCEDURE IF EXISTS RESTAR_CUENTA_PROVEEDOR;
+DELIMITER //
+CREATE PROCEDURE RESTAR_CUENTA_PROVEEDOR (IN _id_proveedor CHAR(26), IN _monto DECIMAL(15,2))
+BEGIN
+	DECLARE _cuenta_pagar_existente 	decimal(15,2);
+    DECLARE _cuenta_cobrar_nuevo			 	decimal(15,2);
+    
+	-- Existe cuenta por pagar al proveedor?
+    IF EXISTS (SELECT id_persona FROM CUENTA_POR_PAGAR WHERE id_persona = _id_proveedor) THEN 
+		SELECT monto INTO _cuenta_pagar_existente FROM CUENTA_POR_PAGAR WHERE id_persona = _id_proveedor;
+        IF(_cuenta_pagar_existente > _monto) THEN
+			UPDATE CUENTA_POR_PAGAR SET monto = monto - _monto WHERE id_persona = _id_proveedor;
+		ELSE 
+			IF (_cuenta_pagar_existente = _monto) THEN
+				DELETE FROM CUENTA_POR_PAGAR WHERE id_persona = _id_proveedor;
+			ELSE 
+				-- si cuenta por pagar existente es menor al monto entonces se hace la diferencia y se inserta en cuentas por cobrar
+				IF (_cuenta_pagar_existente <  _monto) THEN
+					SET _cuenta_cobrar_nuevo = _monto - _cuenta_pagar_existente;
+                    DELETE FROM CUENTA_POR_PAGAR WHERE id_persona = _id_proveedor;
+                    INSERT INTO CUENTA_POR_COBRAR (id_persona, monto) VALUES (_id_proveedor, _cuenta_cobrar_nuevo);
+                END IF;
+            END IF;
+        END IF;
+	ELSE -- No existe cuenta por pagar al proveedor
+		-- Inserta en cuenta por cobrar como nuevo y si existe cuenta se actualiza
+        INSERT INTO CUENTA_POR_COBRAR SET
+				CUENTA_POR_COBRAR.id_persona = _id_proveedor,
+				CUENTA_POR_COBRAR.monto = _monto
+		ON DUPLICATE KEY UPDATE 
+				CUENTA_POR_COBRAR.monto = CUENTA_POR_COBRAR.monto + _monto;
+    END IF;
+END;//
+DELIMITER ;
+
+SELECT * FROM CUENTA_POR_COBRAR;
+
+-- Procedimiento para insertar cuenta por pagar al proveedor al insertar o actualizar PAGO_COMPRA
+DROP PROCEDURE IF EXISTS INSERTAR_CUENTA_PAGAR_PROVEEDOR;
+DELIMITER //
+CREATE PROCEDURE INSERTAR_CUENTA_PAGAR_PROVEEDOR (IN _id_proveedor CHAR(26), IN _monto DECIMAL(15,2))
+BEGIN
+	DECLARE _cuenta_cobrar_existente 	decimal(15,2);
+    DECLARE _cuenta_pagar_nuevo		 	decimal(15,2);
+    
+	-- Existe cuenta por cobrar al proveedor?
+    IF EXISTS (SELECT id_persona FROM CUENTA_POR_COBRAR WHERE id_persona = _id_proveedor) THEN 
+		SELECT monto INTO _cuenta_cobrar_existente FROM CUENTA_POR_COBRAR WHERE id_persona = _id_proveedor;
+        IF(_cuenta_cobrar_existente > _monto) THEN
+			UPDATE CUENTA_POR_COBRAR SET monto = monto - _monto WHERE id_persona = _id_proveedor;
+		ELSE 
+			IF (_cuenta_cobrar_existente = _monto) THEN
+				DELETE FROM CUENTA_POR_COBRAR WHERE id_persona = _id_proveedor;
+			ELSE 
+				-- si cuenta por cobrar existente es menor al monto entonces se hace la diferencia y se inserta en cuentas por pagar
+				IF (_cuenta_cobrar_existente <  _monto) THEN
+					SET _cuenta_pagar_nuevo = _monto - _cuenta_cobrar_existente;
+                    DELETE FROM CUENTA_POR_COBRAR WHERE id_persona = _id_proveedor;
+                    INSERT INTO CUENTA_POR_PAGAR (id_persona, monto) VALUES (_id_proveedor, _cuenta_pagar_nuevo);
+                END IF;
+            END IF;
+        END IF;
+	ELSE -- No existe cuenta por cobrar al proveedor
+		-- Inserta en cuenta por pagar como nuevo y si existe cuenta se actualiza
+        INSERT INTO CUENTA_POR_PAGAR SET
+			CUENTA_POR_PAGAR.id_persona = _id_proveedor,
+			CUENTA_POR_PAGAR.monto = _monto
+		ON DUPLICATE KEY UPDATE 
+			CUENTA_POR_PAGAR.monto = CUENTA_POR_PAGAR.monto + _monto;
+    END IF;
+END;//
+DELIMITER ;
