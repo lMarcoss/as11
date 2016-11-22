@@ -52,7 +52,7 @@ CREATE	TABLE PAGO_EMPLEADO(
 	id_pago_empleado INT NOT NULL AUTO_INCREMENT,
 	fecha 			DATE,
 	id_empleado 	VARCHAR(26) NOT NULL,
-	monto 			DECIMAL(10,2),
+	monto 			DECIMAL(15,2),
 	observacion		VARCHAR(250),
 	PRIMARY KEY (id_pago_empleado),
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
@@ -94,12 +94,12 @@ CREATE TABLE ENTRADA_MADERA_ROLLO( -- entrada_madera
     id_chofer			CHAR(26) NOT NULL,
 	id_empleado 		CHAR(26) NOT NULL,
 	num_piezas			INT,
-    volumen_primario	DECIMAL(11,3),	-- cantidad de volumen primaria
-    costo_primario		DECIMAL(11,2),	-- costo volumen primario
-    volumen_secundario	DECIMAL(11,3),	-- cantidad de volumen primaria
-    costo_secundario	DECIMAL(11,2),	-- cantidad de volumen primaria
-    volumen_terciario	DECIMAL(11,3),
-    costo_terciario		DECIMAL(11,2),	-- cantidad de volumen primaria
+    volumen_primario	DECIMAL(15,3),	-- cantidad de volumen primaria
+    costo_primario		DECIMAL(15,2),	-- costo volumen primario
+    volumen_secundario	DECIMAL(15,3),	-- cantidad de volumen primaria
+    costo_secundario	DECIMAL(15,2),	-- cantidad de volumen primaria
+    volumen_terciario	DECIMAL(15,3),
+    costo_terciario		DECIMAL(15,2),	-- cantidad de volumen primaria
     id_pago				INT(9) default 0, -- 0 para entradas no pagadas
 	PRIMARY KEY (id_entrada),
     FOREIGN KEY (id_proveedor) REFERENCES PROVEEDOR (id_proveedor) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -111,7 +111,7 @@ CREATE TABLE SALIDA_MADERA_ROLLO( -- entrada_madera
 	fecha 				DATE,
 	id_empleado 		CHAR(26) NOT NULL,
 	num_piezas			INT,
-    volumen_total	DECIMAL(10,3),	-- cantidad de volumen primaria
+    volumen_total	DECIMAL(15,3),	-- cantidad de volumen primaria
 	PRIMARY KEY (id_salida),
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
@@ -119,10 +119,10 @@ CREATE TABLE SALIDA_MADERA_ROLLO( -- entrada_madera
 
 CREATE TABLE MADERA_CLASIFICACION(
 	id_madera	VARCHAR(20) NOT NULL,
-	grueso		DECIMAL(6,2),
-	ancho		DECIMAL(6,2),
-	largo		DECIMAL(6,2),
-	volumen		DECIMAL(8,3),
+	grueso		DECIMAL(8,2),
+	ancho		DECIMAL(8,2),
+	largo		DECIMAL(8,2),
+	volumen		DECIMAL(15,3),
 	primary key(id_madera))ENGINE=InnoDB;
     
 -- producción
@@ -170,7 +170,7 @@ CREATE TABLE VENTA_MAYOREO(
 	id_madera 	VARCHAR(20),
 	num_piezas	INT,
 	volumen 	DECIMAL(8,3),
-	monto		DECIMAL(10,2),
+	monto		DECIMAL(15,2),
 	PRIMARY KEY(id_venta,id_madera),
 	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera))ENGINE=InnoDB;
@@ -180,8 +180,8 @@ CREATE TABLE VENTA_PAQUETE(
 	numero_paquete	INT,
 	id_madera 		VARCHAR(20),
 	num_piezas		INT,
-	volumen 		DECIMAL(8,3),
-	monto		DECIMAL(10,2),
+	volumen 		DECIMAL(15,3),
+	monto		DECIMAL(15,2),
 	PRIMARY KEY(id_venta,numero_paquete,id_madera),
 	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera))ENGINE=InnoDB;
@@ -189,14 +189,14 @@ CREATE TABLE VENTA_PAQUETE(
 CREATE TABLE VENTA_EXTRA(
 	id_venta 		VARCHAR(30),
 	tipo 			VARCHAR(50),
-	monto			DECIMAL(10,2),
+	monto			DECIMAL(15,2),
 	observacion		VARCHAR(100),
 	PRIMARY KEY(id_venta,tipo),
 	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
 CREATE TABLE COSTO_MADERA(
 	id_madera 		VARCHAR(20),
-	monto_volumen	DECIMAL(10,2),
+	monto_volumen	DECIMAL(15,2),
 	PRIMARY KEY(id_madera),
 	FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
@@ -205,7 +205,7 @@ CREATE	TABLE PAGO_RENTA(
 	fecha 			DATE,
 	nombre_persona	VARCHAR(50),
 	id_empleado 	VARCHAR(26) NOT NULL,
-	monto 			DECIMAL(10,2),
+	monto 			DECIMAL(15,2),
 	observacion		VARCHAR(250),
 	PRIMARY KEY (id_pago_renta),
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
@@ -218,7 +218,7 @@ CREATE	TABLE PAGO_LUZ(
 	id_pago_luz		INT NOT NULL AUTO_INCREMENT,
 	fecha 			DATE,
 	id_empleado 	VARCHAR(26) NOT NULL,
-	monto 			DECIMAL(10,2),
+	monto 			DECIMAL(15,2),
 	observacion		VARCHAR(250),
 	PRIMARY KEY (id_pago_luz),
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
@@ -228,7 +228,7 @@ CREATE	TABLE OTRO_GASTO(
 	fecha 			DATE,
 	id_empleado 	VARCHAR(26) NOT NULL,
 	nombre_gasto	VARCHAR(250),
-	monto 			DECIMAL(10,2),
+	monto 			DECIMAL(15,2),
 	observacion		VARCHAR(250),
 	PRIMARY KEY (id_gasto),
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
@@ -238,7 +238,7 @@ CREATE TABLE ANTICIPO_CLIENTE(
 	fecha 			DATE,
 	id_cliente 		CHAR(26) NOT NULL,
 	id_empleado 	VARCHAR(26) NOT NULL,
-	monto_anticipo	DECIMAL(11,2),
+	monto_anticipo	DECIMAL(15,2),
 	PRIMARY KEY(id_anticipo_c),
 	FOREIGN KEY (id_cliente) REFERENCES CLIENTE (id_cliente),
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
@@ -248,7 +248,7 @@ CREATE TABLE ANTICIPO_PROVEEDOR(
 	fecha 			DATE,
 	id_proveedor	CHAR(26) NOT NULL,
 	id_empleado 	VARCHAR(26) NOT NULL,
-	monto_anticipo	DECIMAL(11,2),
+	monto_anticipo	DECIMAL(15,2),
 	PRIMARY KEY(id_anticipo_p),
 	FOREIGN KEY (id_proveedor) REFERENCES PROVEEDOR (id_proveedor),
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
@@ -273,7 +273,7 @@ CREATE TABLE VEHICULO(
 	carga_admitida	VARCHAR(20),
 	motor			VARCHAR(20),
 	modelo			VARCHAR(20),
-	costo 			DECIMAL(10,2),
+	costo 			DECIMAL(15,2),
 	id_empleado		VARCHAR(26) NOT NULL,
 	PRIMARY KEY(id_vehiculo),
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
@@ -283,7 +283,7 @@ CREATE TABLE PRESTAMO(
     fecha 				DATE,
     id_persona			VARCHAR(26) NOT NULL, -- registramos un id de la tabla Persona agregando 8 letras del administrador para completar 26 caracteres
     id_administrador	VARCHAR(18) NOT NULL,
-	monto				DECIMAL(10,2),
+	monto				DECIMAL(15,2),
     interes				INT, -- porcentaje de interes (0-100)
 	PRIMARY KEY(id_prestamo),
     FOREIGN KEY (id_administrador) REFERENCES ADMINISTRADOR (id_administrador) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;

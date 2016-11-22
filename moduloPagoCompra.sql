@@ -1,6 +1,7 @@
 -- DELETE FROM ENTRADA_MADERA_ROLLO WHERE id_entrada = 1;
 -- describe ENTRADA_MADERA_ROLLO;
 USE aserradero;
+DROP TABLE IF EXISTS PAGO_COMPRA;
 CREATE TABLE PAGO_COMPRA(
 	id_pago				INT NOT NULL AUTO_INCREMENT,
     fecha 				DATE,
@@ -69,16 +70,6 @@ SELECT
     monto_por_pagar
 FROM PAGO_COMPRA;
 
---  Se utiliza para consultar las comprar pendientes para pagar
-DROP VIEW IF EXISTS VISTA_MONTO_PAGO_COMPRA;
-CREATE VIEW VISTA_MONTO_PAGO_COMPRA AS
-SELECT 
-    id_proveedor,
-    (SELECT concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(PROVEEDOR.id_proveedor,1,18)) as proveedor,
-    (SELECT OBTENER_MONTO_NUEVO_PAGO(id_proveedor)) monto_por_pagar, -- Si su valor es cero: no hay compras y no se hacen pagos
-    (SELECT OBTENER_CUENTA_POR_COBRAR(id_proveedor)) AS cuenta_por_cobrar,
-    id_jefe as id_administrador
-FROM PROVEEDOR;
 
 -- Procedimiento para obtener cuenta por cobrar al proveedor
 DROP FUNCTION IF EXISTS OBTENER_CUENTA_POR_COBRAR;
@@ -98,6 +89,18 @@ BEGIN
     return _cuenta_cobrar;
 END;//
 DELIMITER ;
+
+--  Se utiliza para consultar las comprar pendientes para pagar
+DROP VIEW IF EXISTS VISTA_MONTO_PAGO_COMPRA;
+CREATE VIEW VISTA_MONTO_PAGO_COMPRA AS
+SELECT 
+    id_proveedor,
+    (SELECT concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(PROVEEDOR.id_proveedor,1,18)) as proveedor,
+    (SELECT OBTENER_MONTO_NUEVO_PAGO(id_proveedor)) monto_por_pagar, -- Si su valor es cero: no hay compras y no se hacen pagos
+    (SELECT OBTENER_CUENTA_POR_COBRAR(id_proveedor)) AS cuenta_por_cobrar,
+    id_jefe as id_administrador
+FROM PROVEEDOR;
+
 
 
 -- Disparador para actualizar cuenta por cobrar despues de realizar pago compra
@@ -139,53 +142,6 @@ BEGIN
 END;//
 DELIMITER ;
 
-SELECT * FROM CUENTA_POR_COBRAR;
-describe PAGO_COMPRA;
-
-
-
-DESCRIBE PAGO_COMPRA;
-DESCRIBE VISTA_PAGO_COMPRA;
-describe OTRO_GASTO;
-SELECT * FROM ADMINISTRADOR;
-select * from PROVEEDOR;
-select * from VISTA_PAGO_COMPRA;
-update ENTRADA_MADERA_ROLLO set id_pago = 0 where id_entrada = 1;
-
-SELECT * FROM VISTA_MONTO_PAGO_COMPRA;
-
-SELECT * FROM VISTA_MONTO_PAGO_COMPRA where monto_por_pagar > 0;
-
-SELECT * FROM VISTA_PAGO_COMPRA;	
-
-select * from PAGO_COMPRA;
-SELECT * from VISTA_ENTRADA_MADERA_ROLLO;
-
-DESCRIBE CUENTA_POR_COBRAR;
-
-
-DESCRIBE ENTRADA_MADERA_ROLLO;
-DESCRIBE  ANTICIPO_PROVEEDOR;
-select * from VISTA_ENTRADA_MADERA_ROLLO;
-select * from VISTA_INVENTARIO_PRODUCION;
-SELECT * FROM INVENTARIO_MADERA_PRODUCCION;
-select OBTENER_MONTO_NUEVO_PAGO('PEXF20160910HOCRXRPAXA2016');
-
-INSERT INTO PAGO_COMPRA (fecha,id_proveedor,monto_pago,monto_por_pagar) VALUES (curdate(),'PEXF20160910HOCRXRPAXA2016',99999999,5101822915.68);
-SELECT * FROM ENTRADA_MADERA_ROLLO;
-drop table PAGO_COMPRA;
-
-
-SELECT SUM(monto_total) FROM VISTA_ENTRADA_MADERA_ROLLO WHERE id_pago = 0;
-
-SELECT * FROM PAGO_COMPRA order by id_pago desc limit 1;
-SELECT max(id_pago),id_proveedor,monto_por_pagar FROM PAGO_COMPRA;
-SELECT * FROM PAGO_COMPRA;
-
-describe PAGO_COMPRA;
-
-SELECT * FROM ENTRADA_MADERA_ROLLO;
-SELECT * FROM PAGO_COMPRA;
 
 -- Disparador para actualizar cuentas pr pagar al proveedor o cuentas por cobrar dependiendo del cambio
 -- de pago compra
@@ -277,3 +233,95 @@ BEGIN
     END IF;
 END;//
 DELIMITER ;
+
+
+
+
+SELECT * FROM CUENTA_POR_COBRAR;
+describe PAGO_COMPRA;
+
+
+
+DESCRIBE PAGO_COMPRA;
+DESCRIBE VISTA_PAGO_COMPRA;
+describe OTRO_GASTO;
+SELECT * FROM ADMINISTRADOR;
+select * from PROVEEDOR;
+select * from VISTA_PAGO_COMPRA;
+-- update ENTRADA_MADERA_ROLLO set id_pago = 0 where id_entrada = 1;
+
+SELECT * FROM VISTA_MONTO_PAGO_COMPRA;
+
+SELECT * FROM VISTA_MONTO_PAGO_COMPRA where monto_por_pagar > 0;
+
+SELECT * FROM VISTA_PAGO_COMPRA;	
+
+select * from PAGO_COMPRA;
+
+
+-- SELECT * FROM CUENTA_POR_COBRAR;
+-- describe PAGO_COMPRA;
+
+
+
+-- DESCRIBE PAGO_COMPRA;
+-- DESCRIBE VISTA_PAGO_COMPRA;
+-- describe OTRO_GASTO;
+-- SELECT * FROM ADMINISTRADOR;
+-- select * from PROVEEDOR;
+-- select * from VISTA_PAGO_COMPRA;
+-- update ENTRADA_MADERA_ROLLO set id_pago = 0 where id_entrada = 1;
+
+-- SELECT * FROM VISTA_MONTO_PAGO_COMPRA;
+
+-- SELECT * FROM VISTA_MONTO_PAGO_COMPRA where monto_por_pagar > 0;
+
+-- SELECT * FROM VISTA_PAGO_COMPRA;	
+
+-- select * from PAGO_COMPRA;
+
+-- DESCRIBE CUENTA_POR_COBRAR;
+
+
+-- DESCRIBE ENTRADA_MADERA_ROLLO;
+-- DESCRIBE  ANTICIPO_PROVEEDOR;
+-- select * from VISTA_INVENTARIO_PRODUCION;
+-- SELECT * FROM INVENTARIO_MADERA_PRODUCCION;
+-- select OBTENER_MONTO_NUEVO_PAGO('PEXF20160910HOCRXRPAXA2016');
+
+-- INSERT INTO PAGO_COMPRA (fecha,id_proveedor,monto_pago,monto_por_pagar) VALUES (curdate(),'PEXF20160910HOCRXRPAXA2016',99999999,5101822915.68);
+-- SELECT * FROM ENTRADA_MADERA_ROLLO;
+
+
+-- SELECT SUM(monto_total) FROM VISTA_ENTRADA_MADERA_ROLLO WHERE id_pago = 0;
+
+-- SELECT * FROM PAGO_COMPRA order by id_pago desc limit 1;
+-- SELECT max(id_pago),id_proveedor,monto_por_pagar FROM PAGO_COMPRA;
+-- SELECT * FROM PAGO_COMPRA;
+
+-- describe PAGO_COMPRA;
+
+-- SELECT * FROM ENTRADA_MADERA_ROLLO;
+-- SELECT * FROM PAGO_COMPRA;DESCRIBE CUENTA_POR_COBRAR;
+
+
+-- DESCRIBE ENTRADA_MADERA_ROLLO;
+-- DESCRIBE  ANTICIPO_PROVEEDOR;
+-- select * from VISTA_INVENTARIO_PRODUCION;
+-- SELECT * FROM INVENTARIO_MADERA_PRODUCCION;
+-- select OBTENER_MONTO_NUEVO_PAGO('PEXF20160910HOCRXRPAXA2016');
+
+-- INSERT INTO PAGO_COMPRA (fecha,id_proveedor,monto_pago,monto_por_pagar) VALUES (curdate(),'PEXF20160910HOCRXRPAXA2016',99999999,5101822915.68);
+-- SELECT * FROM ENTRADA_MADERA_ROLLO;
+
+
+-- SELECT SUM(monto_total) FROM VISTA_ENTRADA_MADERA_ROLLO WHERE id_pago = 0;
+
+-- SELECT * FROM PAGO_COMPRA order by id_pago desc limit 1;
+-- SELECT max(id_pago),id_proveedor,monto_por_pagar FROM PAGO_COMPRA;
+-- SELECT * FROM PAGO_COMPRA;
+
+-- describe PAGO_COMPRA;
+
+-- SELECT * FROM ENTRADA_MADERA_ROLLO;
+-- SELECT * FROM PAGO_COMPRA;

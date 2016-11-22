@@ -13,7 +13,7 @@ DELIMITER ;
 -- Procedimiento de actualización de cuentas para anticipo proveedores
 DROP PROCEDURE IF EXISTS UPDATE_CUENTAS_AFTER_ANTICIPO_PROVEEDOR;
 DELIMITER //
-CREATE PROCEDURE UPDATE_CUENTAS_AFTER_ANTICIPO_PROVEEDOR (IN fecha_a DATE,IN id_proveedor_a CHAR(26),IN id_empleado_a CHAR(26), IN monto_anticipo_a DECIMAL(10,2))
+CREATE PROCEDURE UPDATE_CUENTAS_AFTER_ANTICIPO_PROVEEDOR (IN fecha_a DATE,IN id_proveedor_a CHAR(26),IN id_empleado_a CHAR(26), IN monto_anticipo_a DECIMAL(15,2))
 BEGIN
     -- si debemos dinero al proveedor se paga con el anticipo
 	IF EXISTS (SELECT id_persona FROM CUENTA_POR_PAGAR WHERE id_persona = id_proveedor_a) THEN
@@ -51,10 +51,10 @@ DELIMITER //
 CREATE TRIGGER ACTUALIZAR_CUENTAS_PROVEEDOR  BEFORE UPDATE ON ANTICIPO_PROVEEDOR
 FOR EACH ROW
 BEGIN
-	DECLARE cuenta_pagar_existente decimal(10,2);
-    DECLARE cuenta_cobrar_existente decimal(10,2);
-    DECLARE cuenta_pagar_nuevo decimal(10,2);
-    DECLARE cuenta_cobrar_nuevo decimal(10,2);
+	DECLARE cuenta_pagar_existente decimal(15,2);
+    DECLARE cuenta_cobrar_existente decimal(15,2);
+    DECLARE cuenta_pagar_nuevo decimal(15,2);
+    DECLARE cuenta_cobrar_nuevo decimal(15,2);
     
     -- Consultamos cuenta por pagar
     IF EXISTS (SELECT id_persona FROM CUENTA_POR_PAGAR WHERE id_persona = new.id_proveedor) THEN

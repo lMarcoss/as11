@@ -11,7 +11,7 @@ DELIMITER //
 CREATE TRIGGER COBRAR_VENTA_ANTICIPADO  AFTER UPDATE ON VENTA
 FOR EACH ROW
 BEGIN
-	DECLARE totalCobrar decimal(10,2);
+	DECLARE totalCobrar decimal(15,2);
 	IF (NEW.tipo_venta = 'Paquete' AND NEW.tipo_pago = 'Anticipado') THEN
 		SELECT SUM(VENTA_PAQUETE.monto) INTO totalCobrar FROM VENTA_PAQUETE WHERE VENTA_PAQUETE.id_venta=NEW.id_venta;
         CALL COBRAR_VENTA_ANTICIPADO(totalCobrar,NEW.id_cliente);
@@ -29,10 +29,10 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS COBRAR_VENTA_ANTICIPADO;
 DELIMITER //
-CREATE PROCEDURE COBRAR_VENTA_ANTICIPADO (IN totalCobrar DECIMAL(10,2),IN _id_cliente CHAR(26))
+CREATE PROCEDURE COBRAR_VENTA_ANTICIPADO (IN totalCobrar DECIMAL(15,2),IN _id_cliente CHAR(26))
 BEGIN
-    DECLARE monto_disponible decimal(10,2);
-    DECLARE monto_faltante decimal(10,2);
+    DECLARE monto_disponible decimal(15,2);
+    DECLARE monto_faltante decimal(15,2);
     -- Consultamos el monto a cobrar
     
     -- SI existe una cuenta por pagar al cliente
@@ -72,8 +72,8 @@ BEGIN
 	DECLARE id_ventaOLD	INT;
     DECLARE id_maderaOLD	VARCHAR(20);
 	DECLARE num_piezasOLD	INT;
-	DECLARE volumenOLD 		DECIMAL(8,3);
-	DECLARE montoOLD		DECIMAL(10,2);
+	DECLARE volumenOLD 		DECIMAL(15,3);
+	DECLARE montoOLD		DECIMAL(15,2);
     -- capturamos los valores antiguos
 	SET id_maderaOLD = OLD.id_madera;
 	SET num_piezasOLD = OLD.num_piezas;
