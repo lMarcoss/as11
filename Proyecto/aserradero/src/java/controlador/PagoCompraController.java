@@ -120,7 +120,8 @@ public class PagoCompraController extends HttpServlet {
         PagoCompraCRUD pagoCompraCRUD = new PagoCompraCRUD();
         try {
             pagoCompraCRUD.registrar(pagoCompra);
-            listarPagoCompra(request, response, "registrado");
+            response.sendRedirect("/aserradero/PagoCompraController?action=listar"); // para evitar acciones repetidas al actualizar página
+            //listarPagoCompra(request, response, "registrado");
         } catch (Exception ex) {
             listarPagoCompra(request, response, "error_registrar");
             Logger.getLogger(PagoCompraController.class.getName()).log(Level.SEVERE, null, ex);
@@ -145,7 +146,7 @@ public class PagoCompraController extends HttpServlet {
         PagoCompraCRUD pagoCompraCRUD = new PagoCompraCRUD();
         try {
             pagoCompraCRUD.actualizar(pagoCompra);
-            listarPagoCompra(request, response, "actualizado");
+            response.sendRedirect("/aserradero/PagoCompraController?action=listar"); // para evitar acciones repetidas al actualizar página
         } catch (Exception ex) {
             listarPagoCompra(request, response, "error_actualizar");
             Logger.getLogger(PagoCompraController.class.getName()).log(Level.SEVERE, null, ex);
@@ -179,7 +180,7 @@ public class PagoCompraController extends HttpServlet {
     }
 
     private void prepararNuevoPagoCompra(HttpServletRequest request, HttpServletResponse response) {
-        String administrador = "PAXA20160913HOCSXN";
+        String administrador = "MASL19931106HOCRNN";
         PagoCompraCRUD pagoCompraCRUD = new PagoCompraCRUD();
         List<VistaMontoPagoCompra> listaMontoPagoCompra;
         try {
@@ -226,7 +227,7 @@ public class PagoCompraController extends HttpServlet {
         pagoCompra.setId_pago(Integer.valueOf(request.getParameter("id_pago")));
         try {
             pagoCompraCRUD.eliminar(pagoCompra);
-            listarPagoCompra(request, response, "eliminado");
+            response.sendRedirect("/aserradero/PagoCompraController?action=listar"); // para evitar acciones repetidas al actualizar página
         } catch (Exception ex) {
             listarPagoCompra(request, response, "error_eliminar");
             Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);

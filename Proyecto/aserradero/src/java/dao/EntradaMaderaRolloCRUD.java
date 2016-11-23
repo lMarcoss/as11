@@ -20,8 +20,8 @@ public class EntradaMaderaRolloCRUD  extends Conexion implements OperacionesCRUD
         EntradaMaderaRollo entrada = (EntradaMaderaRollo) objeto;
         try {
             this.abrirConexion();
-            PreparedStatement st = this.conexion.prepareStatement(""
-                    + "INSERT INTO ENTRADA_MADERA_ROLLO (fecha,id_proveedor,id_chofer,id_empleado,num_piezas,volumen_primario,costo_primario,volumen_secundario,costo_secundario,volumen_terciario,costo_terciario,id_pago ) values(?,?,?,?,?,?,null,?,null,?,null,?)");
+            PreparedStatement st = this.conexion.prepareStatement(
+                    "INSERT INTO ENTRADA_MADERA_ROLLO (fecha,id_proveedor,id_chofer,id_empleado,num_piezas,volumen_primario,costo_primario,volumen_secundario,costo_secundario,volumen_terciario,costo_terciario,id_pago ) values(?,?,?,?,?,?,null,?,null,?,null,?)");
             st = cargarObject(st, entrada);
             st.executeUpdate();
         }catch(Exception e){

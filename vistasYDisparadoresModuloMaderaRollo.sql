@@ -9,7 +9,7 @@ SELECT
     (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) from PERSONA where id_persona = SUBSTRING(id_chofer,1,18)) as chofer,
     id_empleado,
     (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) from PERSONA where id_persona = SUBSTRING(id_empleado,1,18)) as empleado,
-    (select id_jefe from EMPLEADO where EMPLEADO.id_empleado = ENTRADA_MADERA_ROLLO.id_empleado) as id_jefe,
+    (select id_jefe from EMPLEADO where EMPLEADO.id_empleado = ENTRADA_MADERA_ROLLO.id_empleado limit 1) as id_jefe ,
     num_piezas,
     volumen_primario,
     costo_primario,
@@ -56,7 +56,7 @@ BEGIN
     
     
     -- consultamos el jefe del empleado que registra
-    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado;
+    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado limit 1;
     
     
 	IF EXISTS (SELECT id_administrador FROM INVENTARIO_MADERA_ENTRADA WHERE id_administrador = _id_administrador) THEN
@@ -77,7 +77,7 @@ SELECT
     fecha,
     id_empleado,
     (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE id_persona = SUBSTRING(id_empleado,1,18)) as empleado,
-	(select id_jefe from EMPLEADO where id_empleado = SALIDA_MADERA_ROLLO.id_empleado) as id_jefe,
+	(select id_jefe from EMPLEADO where id_empleado = SALIDA_MADERA_ROLLO.id_empleado limit 1) as id_jefe,
     num_piezas,
     volumen_total
 	FROM SALIDA_MADERA_ROLLO;
@@ -95,7 +95,8 @@ BEGIN
     DECLARE _num_piezas_existente INT;
     DECLARE _volumen_total_existente DECIMAL(15,3);
     -- consultamos el jefe del empleado que registra
-    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado;
+    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado limit 1;
+    
     -- Consultamos inventario existente
     SELECT num_piezas INTO _num_piezas_existente FROM INVENTARIO_MADERA_ENTRADA WHERE id_administrador = _id_administrador;
     SELECT volumen_total INTO _volumen_total_existente FROM INVENTARIO_MADERA_ENTRADA WHERE id_administrador = _id_administrador;
@@ -155,7 +156,7 @@ BEGIN
     
     
     -- consultamos el jefe del empleado que registra
-    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado;
+    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado limit 1;
     
     -- Restamos los valores antiguos en inventario madera rollo
     UPDATE INVENTARIO_MADERA_ENTRADA
@@ -182,7 +183,7 @@ BEGIN
     DECLARE _volumen_disponible DECIMAL(15,3); 			-- volumen disponible en inventario
     
     -- consultamos el jefe del empleado que registra
-    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado;
+    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado limit 1;
     
     -- Consultamos inventario disponible
     SELECT num_piezas INTO _num_piezas_disponible FROM INVENTARIO_MADERA_ENTRADA WHERE id_administrador = _id_administrador;

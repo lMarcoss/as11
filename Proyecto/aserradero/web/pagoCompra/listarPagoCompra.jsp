@@ -48,7 +48,7 @@
                         <th>Fecha</th>
                         <th>Proveedor</th>
                         <th>Monto pagado</th>
-                        <th>Monto por pagar</th>
+                        <th>Monto por pagar por las compras</th>
                         <th></th>
                         <th></th>
                     </tr>

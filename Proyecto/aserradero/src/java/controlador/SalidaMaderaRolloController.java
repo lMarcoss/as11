@@ -123,7 +123,7 @@ public class SalidaMaderaRolloController extends HttpServlet {
                 salidaMaderaRolloCRUD = new SalidaMaderaRolloCRUD();
                 try {
                     salidaMaderaRolloCRUD.registrar(salidaMaderaRollo);
-                    listarSalidaMaderaRollos(request, response,"registrado");
+                    response.sendRedirect("/aserradero/SalidaMaderaRolloController?action=listar_salida"); // para evitar acciones repetidas al actualizar página
                 } catch (Exception ex) {
                     listarSalidaMaderaRollos(request, response, "inventario_entrada_inalcansable");
                     Logger.getLogger(EntradaMaderaRolloController.class.getName()).log(Level.SEVERE, null, ex);
@@ -135,6 +135,8 @@ public class SalidaMaderaRolloController extends HttpServlet {
                 try {
                     salidaMaderaRolloCRUD.actualizar(salidaMaderaRollo);
                     listarSalidaMaderaRollos(request, response,"actualizado");
+//                    request.getSession().setAttribute("nombre_param", "valor_param"); // Enviar parametro
+                    response.sendRedirect("/aserradero/SalidaMaderaRolloController?action=listar_salida"); // para evitar acciones repetidas al actualizar página
                 } catch (Exception ex) {
                     listarSalidaMaderaRollos(request, response,"inventario_entrada_inalcansable");
                     System.out.println(ex);
