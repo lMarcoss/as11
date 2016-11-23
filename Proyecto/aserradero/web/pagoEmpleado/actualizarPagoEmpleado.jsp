@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="/TEMPLATE/headNuevo.jsp" %>
+        <%@ include file="/TEMPLATE/head.jsp" %>
         <title>Actualizar</title>
     </head>
     <body>

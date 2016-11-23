@@ -2,7 +2,6 @@ package dao;
 
 import entidades.EntradaMaderaRollo;
 import interfaces.OperacionesCRUD;
-import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -139,8 +138,6 @@ public class EntradaMaderaRolloCRUD  extends Conexion implements OperacionesCRUD
 
     @Override
     public Object extraerObject(ResultSet rs) throws SQLException {
-        int dMonto = 2;     // cantidad de Decimales para el Costo
-        int dVolumen = 3;   // cantidad de decimaes para el volumen
         EntradaMaderaRollo entrada = new EntradaMaderaRollo();
         entrada.setId_entrada(rs.getInt("id_entrada"));
         entrada.setFecha(rs.getDate("fecha"));
@@ -158,12 +155,8 @@ public class EntradaMaderaRolloCRUD  extends Conexion implements OperacionesCRUD
         entrada.setCosto_secundario(rs.getBigDecimal("costo_secundario"));
         entrada.setVolumen_terciario(rs.getBigDecimal("volumen_terciario"));
         entrada.setCosto_terciario(rs.getBigDecimal("costo_terciario"));
-        BigDecimal VolumenTotal = rs.getBigDecimal("volumen_total");
-        BigDecimal montoTotal = rs.getBigDecimal("monto_total");
-        VolumenTotal = VolumenTotal.setScale(dVolumen, BigDecimal.ROUND_DOWN);
-        montoTotal = montoTotal.setScale(dMonto, BigDecimal.ROUND_DOWN);
-        entrada.setVolumen_total(VolumenTotal);
-        entrada.setMonto_total(montoTotal);
+        entrada.setVolumen_total(rs.getBigDecimal("volumen_total"));
+        entrada.setMonto_total(rs.getBigDecimal("monto_total"));
         entrada.setId_pago(rs.getInt("id_pago"));
         
         return entrada;

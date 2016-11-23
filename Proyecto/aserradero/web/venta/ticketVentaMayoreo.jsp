@@ -20,7 +20,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Ticket venta por mayoreo</title>
-        <link rel="stylesheet" href="/aserradero/css/menu/bootstrap.css">
+        <link rel="stylesheet" href="/aserradero/dist/css/bootstrap.css">
     </head>
     <body>
         <div class="container">

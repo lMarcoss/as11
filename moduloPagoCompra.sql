@@ -20,9 +20,18 @@ FOR EACH ROW
 BEGIN
 	-- actualizamos todos los registros que tienen como id_pago = 0
 	UPDATE ENTRADA_MADERA_ROLLO SET id_pago = NEW.id_pago WHERE id_pago = 0 AND id_proveedor = new.id_proveedor;
+    
+    -- actualizamos cuentas por pagar: ya que al hacer el pago se consulta cuentas por pagar
+    IF EXISTS (SELECT id_persona FROM CUENTA_POR_PAGAR WHERE id_persona = new.id_proveedor LIMIT 1) THEN 
+		DELETE FROM CUENTA_POR_PAGAR WHERE id_persona = new.id_proveedor;
+    END IF;
+	IF(NEW.monto_por_pagar > 0)THEN 
+		INSERT INTO CUENTA_POR_PAGAR (id_persona, monto) VALUES (new.id_proveedor, NEW.monto_por_pagar);
+	END IF;
 END;//
 DELIMITER ;
 
+SELECT * FROM CUENTA_POR_PAGAR;
 -- Procedimiento para obtener monto del pago de las comprar a un proveedor sumando cuenta pendiente del ultimo pago si existe
 DROP FUNCTION IF EXISTS OBTENER_MONTO_NUEVO_PAGO;
 DELIMITER //

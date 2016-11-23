@@ -4,6 +4,7 @@
 use aserradero;
 
 -- Vista para reportes y ticket de ventas por paquete
+DROP VIEW IF EXISTS VISTA_VENTAS_POR_PAQUETE;
 CREATE VIEW VISTA_VENTAS_POR_PAQUETE AS
 SELECT 
 		fecha,
@@ -20,7 +21,7 @@ SELECT
         ancho,
         largo,
         MADERA_CLASIFICACION.volumen as volumen_unitario,
-        monto_volumen AS costo_volumen,
+        ROUND((VENTA_PAQUETE.monto /VENTA_PAQUETE.volumen),2) as costo_volumen,
         num_piezas,
         VENTA_PAQUETE.volumen as volumen_total,
         VENTA_PAQUETE.monto as costo_total
@@ -31,6 +32,7 @@ WHERE VENTA.id_venta = VENTA_PAQUETE.id_venta AND
         VENTA.tipo_venta='Paquete';
 
 -- VISTA para reportes y ticket de ventas por mayoreo
+DROP VIEW IF EXISTS VISTA_VENTAS_POR_MAYOREO;
 CREATE VIEW VISTA_VENTAS_POR_MAYOREO AS
 SELECT fecha,
 		VENTA.id_venta,
@@ -46,7 +48,7 @@ SELECT fecha,
         ancho,
         largo,
         MADERA_CLASIFICACION.volumen as volumen_unitario,
-        monto_volumen as costo_volumen,
+        ROUND((VENTA_MAYOREO.monto /VENTA_MAYOREO.volumen),2) as costo_volumen,
         num_piezas,
         VENTA_MAYOREO.volumen AS volumen_total,
         VENTA_MAYOREO.monto as costo_total
@@ -55,6 +57,7 @@ WHERE VENTA.id_venta = VENTA_MAYOREO.id_venta AND
 		VENTA_MAYOREO.id_madera = MADERA_CLASIFICACION.id_madera AND
         MADERA_CLASIFICACION.id_madera = COSTO_MADERA.id_madera AND
         VENTA.tipo_venta='Mayoreo';
+
 -- Vista para reportes y ticket de ventas extras
 CREATE VIEW VISTA_VENTAS_EXTRA AS
 SELECT fecha,

@@ -3,7 +3,6 @@
     Created on : 26/09/2016, 06:08:43 PM
     Author     : rcortes
 --%>
-
 <%@page import="java.sql.Date"%>
 <%@page import="entidades.Proveedor"%>
 <%@page import="entidades.Empleado"%>

@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="/TEMPLATE/headNuevo.jsp" %>
+        <%@ include file="/TEMPLATE/head.jsp" %>
         <title>Nuevo</title>
     </head>
     <body>

@@ -8,8 +8,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="/TEMPLATE/headNuevo.jsp" %>
+        <%@ include file="/TEMPLATE/head.jsp" %>
         <!--Script para calcular el volumen de la madera-->
+        <script src="/aserradero/js/calcularVolumenMaderaClasificacion.js"></script>
         <title>Nuevo</title>
     </head>
     <body>

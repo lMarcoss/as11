@@ -15,7 +15,7 @@ function crearIdPersona(){
     materno = eliminarSufijos(materno);
         
     var letra_materno = materno.charAt(0);
-    if(letra_materno == ""){
+    if(letra_materno.equals("") ){
         letra_materno = "X";
     }
 

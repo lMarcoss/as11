@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="/TEMPLATE/headNuevo.jsp"%>
+        <%@ include file="/TEMPLATE/head.jsp"%>
         <script src="/aserradero/js/id_persona.js"></script>
         <title>Nuevo</title>
     </head>

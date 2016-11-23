@@ -5,7 +5,6 @@
 --%>
 
 <%@page import="entidades.Empleado"%>
-<%@page import="ClasesCompuestas.DatosPersona"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.List"%>
 <%@page import="entidades.Vehiculo"%>
@@ -17,7 +16,7 @@
 %>
 <html>
     <head>
-        <%@ include file="/TEMPLATE/headNuevo.jsp" %>
+        <%@ include file="/TEMPLATE/head.jsp" %>
         <title>Actualizar</title>
     </head>
     <body>

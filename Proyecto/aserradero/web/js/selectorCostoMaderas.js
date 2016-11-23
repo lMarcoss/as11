@@ -1,3 +1,7 @@
+/*
+ * Esta funcion se utiliza al registrar las ventas para seleccionar el costo de cada madera
+ * :Y para calcular el monto a pagar por todas las piezas
+ */
 function seleccionarCostoMaderaVenta(){
     var id_madera = document.getElementById('id_madera');
     var madera_seleccionada = id_madera.selectedIndex;

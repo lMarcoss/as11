@@ -17,11 +17,12 @@ SELECT
     costo_secundario,
     volumen_terciario,
     costo_terciario,
-    (volumen_primario + volumen_secundario + volumen_terciario) as volumen_total,
-    (volumen_primario * costo_primario + volumen_secundario * costo_secundario + volumen_terciario * costo_terciario) as monto_total,
+    ROUND((volumen_primario + volumen_secundario + volumen_terciario),3) as volumen_total,
+    ROUND((volumen_primario * costo_primario + volumen_secundario * costo_secundario + volumen_terciario * costo_terciario),2) as monto_total,
     id_pago
 FROM ENTRADA_MADERA_ROLLO;
 
+SELECT * FROM VISTA_ENTRADA_MADERA_ROLLO;
 -- Disparador para insertar en inventario entrada cada que se inserta en entrada madera
 DROP TRIGGER IF EXISTS INVENTARIO_MADERA_ENTRADA;
 DELIMITER //

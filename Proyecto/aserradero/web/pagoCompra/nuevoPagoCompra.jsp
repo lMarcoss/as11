@@ -13,9 +13,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="/TEMPLATE/headNuevo.jsp" %>
+        <%@ include file="/TEMPLATE/head.jsp" %>
+        <link rel="stylesheet" href="/aserradero/css/formulario.css">
         <script src="/aserradero/js/selectorMontoPorPagar.js"></script>
-        
         <title>Nuevo pago</title>
     </head>
     <body>
@@ -49,7 +49,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 10px;"><label>Monto compra por pagar:</label></td>
+                            <td style="padding-left: 10px;"><label>Monto por pagar:</label></td>
                             <td style="padding-left: 10px;">
                                 <select name="cuenta_pendiente" id="cuenta_pendiente" required="" disabled="">
                                     <option></option>

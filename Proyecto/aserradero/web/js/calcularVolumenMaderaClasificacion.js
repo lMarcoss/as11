@@ -1,3 +1,7 @@
+/*
+ * Esta funcion se utiliza al registrar nueva clasificacion de Madera que se produce en el aserradero
+ * :En el jsp: /maderaClasificacion/nuevoMaderaClasificacion
+ */
 function calcularVolumen(){
     // Leemos: grueso, ancho y largo de la madera
     var grueso = document.getElementById('grueso').value;
