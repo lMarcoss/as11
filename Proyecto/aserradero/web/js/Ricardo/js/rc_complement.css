@@ -7,10 +7,6 @@ and open the template in the editor.
     Created on : 4/10/2016, 12:59:57 AM
     Author     : rcortes
 */
-#page-wrapper{
-    width: 95%;
-    margin: 0 auto;
-}
 .lado_derecho{
     width: 50%;
     float: left;
@@ -26,7 +22,7 @@ and open the template in the editor.
     float: right;
 }
 .form-busc{
-    margin: 0 auto;
+    margin: 7px auto;
 }
 .agregar_element{
     margin: 0 auto;

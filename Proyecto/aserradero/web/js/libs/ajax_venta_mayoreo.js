@@ -1,4 +1,6 @@
-$(function(){
+/* global alertify */
+
+$(function(){    
     $("#agregar_venta_mayoreo").off("click");
     $("#agregar_venta_mayoreo").on("click", function(e) {
         /*Función para agregar elementos a la cola de venta*/       
@@ -12,25 +14,22 @@ $(function(){
             type: 'POST',
             data: {'accion':"add_venta_mayoreo",'id_venta':id_venta,'id_madera':id_madera,'volumen':volumen,'num_piezas':num_piezas,'monto':monto},
             dataType: 'json'
-        }).done(function (data){
-            alert(data);
-                if(data.success==="true"){
-                    alert(data.success);
-                  //alertify.success(result.msj);
-                }else{
-                    alert(data.success);
-                  //alertify.error(data.msj);
-                  $(".detalle-producto").load('ventaMayoreo/detalleVentaMayoreo.jsp');
-                }
-            });
-        $("#monto").val('');
-        $("#volumen").val('');
-        $("#num_detalle").val('');
-        $("#volumen_unitaria").val('');
-        $("#costo_volumen").val('');
-        $("#id_madera").val('');
-        $("#num_piezas").val('');
-        $(".detalle-producto").load('ventaMayoreo/detalleVentaMayoreo.jsp');
+        }).done(function (data){            
+            if(data.success==="true"){                    
+                alertify.success("El producto fue agregado con éxito");
+                $("#monto").val('');
+                $("#volumen").val('');
+                $("#num_detalle").val('');
+                $("#volumen_unitaria").val('');
+                $("#costo_volumen").val('');
+                $("#id_madera").val('');
+                $("#num_piezas").val('');
+                $(".detalle-producto").load('ventaMayoreo/detalleVentaMayoreo.jsp');
+            }else{
+                alertify.error("El producto no puede ser agregado a lista");
+                $(".detalle-producto").load('ventaMayoreo/detalleVentaMayoreo.jsp');
+            }
+        });                
         $(".detalle-producto").load('ventaMayoreo/detalleVentaMayoreo.jsp');
     });
     //en caso de que se elimine una fila
@@ -49,19 +48,15 @@ $(function(){
             type: 'POST',
             data: {'accion':"del_venta_mayoreo",'id_venta':id_venta,'id_madera':id,'volumen':0,'num_piezas':0,'monto':0},
             dataType: 'json'           
-        }).done(function(data){
-            alert(data);
-            if(data.success===true){
-                alert(data.success);
-                //alertify.success(data.msj);
+        }).done(function(data){            
+            if(data.success==="true"){                
+                alertify.success("El producto fue borrado de la lista");
                 $(".detalle-producto").load('ventaMayoreo/detalleVentaMayoreo.jsp');
-            }else{
-                alert(data.success);
-                //alertify.error(data.msj);
+            }else{                
+                alertify.error("El producto no pudo ser borrado");
                 $(".detalle-producto").load('ventaMayoreo/detalleVentaMayoreo.jsp');
             }
-        });
-        $(".detalle-producto").load('ventaMayoreo/detalleVentaMayoreo.jsp');
+        });        
         $(".detalle-producto").load('ventaMayoreo/detalleVentaMayoreo.jsp');
     });
 });

@@ -1,4 +1,6 @@
-    window.onload=function(){
+    /* global alertify */
+
+window.onload=function(){
     var mensaje = document.getElementById('mensaje').value;
     switch (mensaje){
         // Mensajes de error para modulo Madera en rollo
@@ -25,16 +27,16 @@
             alert("Ocurrió un error al intentar la búsqueda");
             break;
         case "error_buscar_id":
-            alert("El registro fue eliminado exitosamente");
+            alert("Error al buscar Id");
             break;
-        case "registrado":
-            alert("El nuevo registro fue exitoso");
+        case "registrado":                        
+            alertify.alert("El nuevo registro fue exitoso");
             break;
         case "actualizado":
-            alert("Los datos se actualizaron correctamente");
+            alertify.alert("Los datos se actualizaron correctamente");
             break;
         case "eliminado":
-            alert("El registro fue eliminado exitosamente");
+            alertify.alert("El registro fue eliminado exitosamente");
             break;
         //MENSAJES DE PAGO_COMPRA
         case "pagado":
