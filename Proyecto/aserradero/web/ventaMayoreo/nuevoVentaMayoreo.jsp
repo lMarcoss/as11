@@ -22,7 +22,7 @@
     List <Venta> ventas = (List<Venta>) request.getAttribute("ventas");
     String id_nVenta = String.valueOf(request.getAttribute("siguienteventa"));
     List <CostoMaderaClasificacion> costoMaderaClasificaciones = (List<CostoMaderaClasificacion>) request.getAttribute("costoMaderaClasificaciones");
-    
+
 %>
 <%
     HttpSession sesion_ajax = request.getSession(true);
@@ -91,7 +91,7 @@
                                      <div class="form-group pull-right col-md-2"><!-- agrupar inputs -->
                                         <input type="hidden" value="Mayoreo" name="tipo_venta" />
                                         <input type="submit" class="btn btn-block btn-success margen-boton" value="Guardar venta"/>
-                                        <a href="/aserradero/VentaController?action=listar"><input class="btn btn-block btn-warning" type="submit" value="Cancelar"/></a>
+                                        <a href="/aserradero/VentaController?action=listar"><input class="btn btn-block btn-warning" type="button" value="Cancelar"/></a>
                                     </div><!-- Fin div group -->
                                 </form><!-- Formulario de venta -->
                                 <div class="col-lg-12">
@@ -162,7 +162,7 @@
                                         out.print("<th></th>");
                                         out.print("</tr>");
                                         out.print("</thead>");
-                                        out.print("<tbody>");//Inicia el cuerpo de la tabla                                                             
+                                        out.print("<tbody>");//Inicia el cuerpo de la tabla
                                         for(VentaMayoreo a:VentaMay){
                                             out.print("<tr>");
                                             out.print("<td>"+a.getId_madera()+"</td>");
@@ -180,11 +180,11 @@
                                 }else{
                                     out.print("<h3 class='panel-title'>No hay registros agregados</h3>");
                                 }
-                            %>                                                            
+                            %>
                         </div><!-- Fin de cuerpo de listado -->
                     </div><!-- fin listado de productos -->
                 </div><!-- col-md-12 fin -->
             </div><!-- container fluid -->
-        </div><!--page wrapper fin -->      
+        </div><!--page wrapper fin -->
     </body>
 </html>
