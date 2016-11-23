@@ -21,7 +21,6 @@ SELECT
     (volumen_primario * costo_primario + volumen_secundario * costo_secundario + volumen_terciario * costo_terciario) as monto_total,
     id_pago
 FROM ENTRADA_MADERA_ROLLO;
-SELECT * FROM VISTA_ENTRADA_MADERA_ROLLO;
 
 -- Disparador para insertar en inventario entrada cada que se inserta en entrada madera
 DROP TRIGGER IF EXISTS INVENTARIO_MADERA_ENTRADA;
@@ -82,8 +81,6 @@ SELECT
     volumen_total
 	FROM SALIDA_MADERA_ROLLO;
     
-select * from VISTA_SALIDA_MADERA_ROLLO;
-
 -- Disparador para restar inventario en cada salida de madera en rollo
 DROP TRIGGER IF EXISTS RESTAR_INV_MADERA_ROLLO;
 DELIMITER //

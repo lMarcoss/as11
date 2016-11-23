@@ -115,4 +115,4 @@ SELECT id_anticipo_P,
         (SELECT id_jefe FROM EMPLEADO WHERE id_empleado = ANTICIPO_PROVEEDOR.id_empleado) as id_jefe,
         monto_anticipo
 FROM ANTICIPO_PROVEEDOR;
-SELECT * FROM VISTA_ANTICIPO_PROVEEDOR;
+-- SELECT * FROM VISTA_ANTICIPO_PROVEEDOR;

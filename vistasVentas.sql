@@ -85,6 +85,3 @@ SELECT VENTA.id_venta,VENTA.fecha,VENTA.tipo_venta,CLIENTE.id_jefe,CLIENTE.id_cl
 		CLIENTE.id_persona = PERSONA.id_persona AND
             PERSONA.localidad = LOCALIDAD.nombre_localidad AND
             LOCALIDAD.nombre_municipio = MUNICIPIO.nombre_municipio;
-SELECT * FROM VISTA_CLIENTE_TICKET;
-USE aserradero;
-SELECT * FROM USUARIO;

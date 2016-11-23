@@ -1,9 +1,4 @@
 
--- INSERT INTO EMPLEADO_JEFE (id_empleado,id_jefe) VALUES ("MASL19931106HOCRNN","MASL19931106HOCRNN");
-INSERT INTO ADMINISTRADOR VALUES ('MASL19931106HOCRNN');
--- INSERT INTO EMPLEADO VALUES ('12312312','1111','COXN20160915HOCRXX','Administrador','Activo');
-
-
 -- Disparador para insertar datos en la tabla cuentas por pagar cada que se hace un anticipoCliente
 -- verifica si hay se tiene cuenta pro cobrar con el cliente para restarle y si no, entonces inserta en cuentas por pagar
 DROP TRIGGER IF EXISTS COBRAR_VENTA_ANTICIPADO;

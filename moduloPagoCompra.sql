@@ -157,7 +157,7 @@ BEGIN
     CALL INSERTAR_CUENTA_PAGAR_PROVEEDOR(NEW.id_proveedor,NEW.monto_por_pagar);
 END;//
 DELIMITER ;
-select * from PAGO_COMPRA;
+-- select * from PAGO_COMPRA;
 
 
 -- Procedimiento de modificacion de de cuentas por pagar y por cobrar deL proveedor al modificar Pago compra
@@ -196,7 +196,7 @@ BEGIN
 END;//
 DELIMITER ;
 
-SELECT * FROM CUENTA_POR_COBRAR;
+-- SELECT * FROM CUENTA_POR_COBRAR;
 
 -- Procedimiento para insertar cuenta por pagar al proveedor al insertar o actualizar PAGO_COMPRA
 DROP PROCEDURE IF EXISTS INSERTAR_CUENTA_PAGAR_PROVEEDOR;
@@ -237,26 +237,26 @@ DELIMITER ;
 
 
 
-SELECT * FROM CUENTA_POR_COBRAR;
-describe PAGO_COMPRA;
+-- SELECT * FROM CUENTA_POR_COBRAR;
+-- describe PAGO_COMPRA;
 
 
 
-DESCRIBE PAGO_COMPRA;
-DESCRIBE VISTA_PAGO_COMPRA;
-describe OTRO_GASTO;
-SELECT * FROM ADMINISTRADOR;
-select * from PROVEEDOR;
-select * from VISTA_PAGO_COMPRA;
--- update ENTRADA_MADERA_ROLLO set id_pago = 0 where id_entrada = 1;
+-- DESCRIBE PAGO_COMPRA;
+-- DESCRIBE VISTA_PAGO_COMPRA;
+-- describe OTRO_GASTO;
+-- SELECT * FROM ADMINISTRADOR;
+-- select * from PROVEEDOR;
+-- select * from VISTA_PAGO_COMPRA;
+-- -- update ENTRADA_MADERA_ROLLO set id_pago = 0 where id_entrada = 1;
 
-SELECT * FROM VISTA_MONTO_PAGO_COMPRA;
+-- SELECT * FROM VISTA_MONTO_PAGO_COMPRA;
 
-SELECT * FROM VISTA_MONTO_PAGO_COMPRA where monto_por_pagar > 0;
+-- SELECT * FROM VISTA_MONTO_PAGO_COMPRA where monto_por_pagar > 0;
 
-SELECT * FROM VISTA_PAGO_COMPRA;	
+-- SELECT * FROM VISTA_PAGO_COMPRA;	
 
-select * from PAGO_COMPRA;
+-- select * from PAGO_COMPRA;
 
 
 -- SELECT * FROM CUENTA_POR_COBRAR;

@@ -348,8 +348,12 @@ INSERT INTO MADERA_CLASIFICACION (id_madera,grueso,ancho,largo,volumen) VALUES
 
 -- lista de administradores
 CREATE VIEW PERSONAL_ADMINISTRADOR AS
-SELECT id_administrador, (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = id_administrador)as nombre FROM ADMINISTRADOR;
-SELECT * FROM PERSONAL_ADMINISTRADOR;
+SELECT 
+		id_administrador, 
+		(select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre 
+	FROM PERSONA 
+	WHERE id_persona = id_administrador)as nombre FROM ADMINISTRADOR;
+-- SELECT * FROM PERSONAL_ADMINISTRADOR;
 
 -- lista a todo el personal Cliente id_cliente y nombre completo, id_jefe y nombre completo
 CREATE VIEW PERSONAL_CLIENTE AS
@@ -360,7 +364,7 @@ SELECT id_cliente,
         (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = id_jefe) as jefe
 	FROM CLIENTE,ADMINISTRADOR 
 	WHERE CLIENTE.id_jefe = id_administrador;
-SELECT * FROM PERSONAL_CLIENTE;
+-- SELECT * FROM PERSONAL_CLIENTE;
 
 -- lista a todo el personal Proveedor id_proveedor y nombre completo, id_jefe y nombre completo
 CREATE VIEW PERSONAL_PROVEEDOR AS 
@@ -370,7 +374,7 @@ SELECT id_proveedor,
 		id_jefe,
         (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = id_jefe) as jefe
 	FROM PROVEEDOR,ADMINISTRADOR WHERE PROVEEDOR.id_jefe = id_administrador;
-SELECT * FROM PERSONAL_PROVEEDOR;
+-- SELECT * FROM PERSONAL_PROVEEDOR;
 
 -- lista de empleados
 CREATE VIEW PERSONAL_EMPLEADO AS
@@ -380,7 +384,7 @@ SELECT id_empleado,
         id_jefe,
         (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = id_jefe) as jefe, 
         roll,estatus FROM EMPLEADO,ADMINISTRADOR WHERE id_jefe = id_administrador;
-SELECT * FROM PERSONAL_EMPLEADO;
+-- SELECT * FROM PERSONAL_EMPLEADO;
 
 -- lista de vehículos con nombre completo del empleado
 CREATE VIEW VISTA_VEHICULO AS
@@ -396,7 +400,7 @@ SELECT id_vehiculo,
         (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM EMPLEADO,PERSONA where EMPLEADO.id_persona = PERSONA.id_persona and EMPLEADO.id_empleado = VEHICULO.id_empleado) as empleado, 
         (select id_jefe FROM EMPLEADO,ADMINISTRADOR WHERE EMPLEADO.id_jefe = ADMINISTRADOR.id_administrador and EMPLEADO.id_empleado = VEHICULO.id_empleado) as id_jefe
 	FROM VEHICULO;
-SELECT * FROM VISTA_VEHICULO;
+-- SELECT * FROM VISTA_VEHICULO;
 
 -- Lista de pago a empleados
 CREATE VIEW VISTA_PAGO_EMPLEADO AS 
@@ -408,7 +412,7 @@ SELECT id_pago_empleado,
         monto,
         observacion 
 FROM PAGO_EMPLEADO,EMPLEADO WHERE PAGO_EMPLEADO.id_empleado = EMPLEADO.id_empleado;
-SELECT * FROM VISTA_PAGO_EMPLEADO;
+-- SELECT * FROM VISTA_PAGO_EMPLEADO;
 
 CREATE VIEW VISTA_PRODUCCION_MADERA AS
 SELECT 
@@ -426,7 +430,8 @@ FROM PRODUCCION_MADERA;
 CREATE VIEW COSTO_MADERA_CLASIFICACION AS 
 SELECT COSTO_MADERA.id_madera AS id_madera, grueso, ancho, largo,volumen, monto_volumen
 	FROM MADERA_CLASIFICACION
-	INNER JOIN COSTO_MADERA WHERE MADERA_CLASIFICACION.id_madera = COSTO_MADERA.id_madera;
+	INNER JOIN COSTO_MADERA 
+	WHERE MADERA_CLASIFICACION.id_madera = COSTO_MADERA.id_madera;
 
 DROP TRIGGER IF EXISTS AGREGAR_INVENTARIO_PRODUCCION;
 -- Disparador para insertar inventario de madera producida cada que se inserta una producción
@@ -494,7 +499,7 @@ SELECT CUENTA_POR_COBRAR.id_persona,
     PROVEEDOR.id_jefe as id_jefe,
     monto
 	FROM CUENTA_POR_COBRAR,PROVEEDOR WHERE CUENTA_POR_COBRAR.id_persona=id_proveedor;
-SELECT * FROM CUENTA_POR_COBRAR_PROVEEDOR;
+-- SELECT * FROM CUENTA_POR_COBRAR_PROVEEDOR;
 
 -- lista de cuentas por cobrar clientes
 CREATE VIEW CUENTA_POR_COBRAR_CLIENTE AS
@@ -503,7 +508,7 @@ SELECT CUENTA_POR_COBRAR.id_persona,
     CLIENTE.id_jefe as id_jefe,
     monto
 	FROM CUENTA_POR_COBRAR,CLIENTE WHERE CUENTA_POR_COBRAR.id_persona=id_cliente;
-SELECT * FROM CUENTA_POR_COBRAR_CLIENTE;
+-- SELECT * FROM CUENTA_POR_COBRAR_CLIENTE;
 
 -- lista de cuentas por pagar proveedores
 CREATE VIEW CUENTA_POR_PAGAR_PROVEEDOR AS
@@ -512,7 +517,7 @@ SELECT CUENTA_POR_PAGAR.id_persona,
         PROVEEDOR.id_jefe,
         monto
 	FROM CUENTA_POR_PAGAR,PROVEEDOR WHERE CUENTA_POR_PAGAR.id_persona = PROVEEDOR.id_proveedor;
-SELECT * FROM CUENTA_POR_PAGAR_PROVEEDOR;
+-- SELECT * FROM CUENTA_POR_PAGAR_PROVEEDOR;
 
 -- lista cuentas por pagar a clientes
 CREATE VIEW CUENTA_POR_PAGAR_CLIENTE AS
@@ -521,7 +526,7 @@ SELECT CUENTA_POR_PAGAR.id_persona,
         CLIENTE.id_jefe,
         monto
 	FROM CUENTA_POR_PAGAR,CLIENTE WHERE CUENTA_POR_PAGAR.id_persona = CLIENTE.id_cliente;
-SELECT * FROM CUENTA_POR_PAGAR_CLIENTE;
+-- SELECT * FROM CUENTA_POR_PAGAR_CLIENTE;
 
 INSERT INTO COSTO_MADERA (id_madera,monto_volumen) VALUES 
 ("clase12",9.55),
@@ -548,3 +553,7 @@ INSERT INTO COSTO_MADERA (id_madera,monto_volumen) VALUES
 ("quinta6",45.45),
 ("quinta4",75.45);
 
+INSERT INTO ADMINISTRADOR (id_administrador) VALUES ('MASL19931106HOCRNN');
+INSERT INTO CLIENTE (id_cliente, id_persona, id_jefe) VALUES
+('COXN20160915HOCRXXMASL1993', 'COXN20160915HOCRXX', 'MASL19931106HOCRNN'),
+('MAXP20160916HOCRXDMASL1993', 'MAXP20160916HOCRXD', 'MASL19931106HOCRNN');
