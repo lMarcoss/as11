@@ -144,6 +144,10 @@
         <servlet-name>PagoCompraController</servlet-name>
         <servlet-class>controlador.PagoCompraController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PagoPrestamoController</servlet-name>
+        <servlet-class>controlador.PagoPrestamoController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IniciarSesion</servlet-name>
         <url-pattern>/Iniciar</url-pattern>
@@ -283,6 +287,10 @@
     <servlet-mapping>
         <servlet-name>PagoCompraController</servlet-name>
         <url-pattern>/PagoCompraController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PagoPrestamoController</servlet-name>
+        <url-pattern>/PagoPrestamoController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

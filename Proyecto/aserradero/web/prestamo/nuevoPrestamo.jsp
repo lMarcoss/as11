@@ -4,13 +4,13 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.Administrador"%>
+<%@page import="entidades.Empleado"%>
 <%@page import="java.util.List"%>
 <%@page import="entidades.Persona"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     List <Persona> personas = (List<Persona>) request.getAttribute("personas");
-    List <Administrador> administradores = (List<Administrador>) request.getAttribute("administradores");
+    List <Empleado> empleados = (List<Empleado>) request.getAttribute("empleados");
 %>
 <!DOCTYPE html>
 <html>
@@ -37,7 +37,7 @@
                         <tr>
                             <td style="padding-left: 10px;"><label>Persona:</label></td>
                             <td style="padding-left: 10px;">
-                                <select name="id_persona" required="">
+                                <select name="id_prestador" required="">
                                     <option></option>
                                     <%
                                         for (Persona persona : personas) {
@@ -50,11 +50,11 @@
                         <tr>
                             <td style="padding-left: 10px;"><label>Administrador:</label></td>
                             <td style="padding-left: 10px;">
-                                <select name="id_administrador" required="">
+                                <select name="id_empleado" required="">
                                     <option></option>
                                     <%
-                                        for (Administrador administrador : administradores) {
-                                            out.print("<option value='"+administrador.getId_administrador()+"'>"+administrador.getNombre()+"</option>");
+                                        for (Empleado empleado : empleados) {
+                                            out.print("<option value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>");
                                         }
                                     %>
                                 </select>

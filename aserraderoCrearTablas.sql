@@ -100,7 +100,7 @@ CREATE TABLE ENTRADA_MADERA_ROLLO( -- entrada_madera
     costo_secundario	DECIMAL(15,2),	-- cantidad de volumen primaria
     volumen_terciario	DECIMAL(15,3),
     costo_terciario		DECIMAL(15,2),	-- cantidad de volumen primaria
-    id_pago				INT(9) default 0, -- 0 para entradas no pagadas
+    id_pago				INT(9) default 0, -- 0 para entradas no pagadas: Se le asigna: insertar un pago cada que se inserta entrada madera, con el campo Pago = "Pagado", "Sin pagar"
 	PRIMARY KEY (id_entrada),
     FOREIGN KEY (id_proveedor) REFERENCES PROVEEDOR (id_proveedor) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (id_chofer) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -281,12 +281,12 @@ CREATE TABLE VEHICULO(
 CREATE TABLE PRESTAMO(
 	id_prestamo			INT NOT NULL AUTO_INCREMENT,
     fecha 				DATE,
-    id_persona			VARCHAR(26) NOT NULL, -- registramos un id de la tabla Persona agregando 8 letras del administrador para completar 26 caracteres
-    id_administrador	VARCHAR(18) NOT NULL,
-	monto				DECIMAL(15,2),
+    id_prestador		VARCHAR(26) NOT NULL, -- registramos un id de la tabla Persona agregando 8 letras del administrador para completar 26 caracteres
+    id_empleado			VARCHAR(26) NOT NULL,
+	monto_prestado		DECIMAL(15,2),
     interes				INT, -- porcentaje de interes (0-100)
-	PRIMARY KEY(id_prestamo),
-    FOREIGN KEY (id_administrador) REFERENCES ADMINISTRADOR (id_administrador) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	PRIMARY KEY(id_prestamo, id_prestador),
+    FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON UPDATE CASCADE)ENGINE=InnoDB;
 
 -- Disparador para insertar un administrador como empleado su jefe será él mismo
 DELIMITER //

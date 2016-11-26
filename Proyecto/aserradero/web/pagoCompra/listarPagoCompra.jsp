@@ -47,7 +47,7 @@
                         <th>N°</th>
                         <th>Fecha</th>
                         <th>Proveedor</th>
-                        <th>Monto pagado</th>
+                        <th>Monto pago</th>
                         <th>Monto por pagar</th>
                         <th></th>
                         <th></th>

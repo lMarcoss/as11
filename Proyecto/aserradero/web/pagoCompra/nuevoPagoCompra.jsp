@@ -91,8 +91,7 @@
                                 out.println("<p style='color:red;'>No hay compras pendientes por pagar.</p>");
                         %>
                         <tr>
-                            <td style="padding-left: 10px;"><a href="/aserradero/PagoCompraController?action=listar"><input type="button" value="Cancelar"/></a> </td>
-                            <td style="padding-left: 10px;"><input type="submit" value="Guardar" disabled=""></td>
+                            <td style="padding-left: 10px;"><a href="/aserradero/PagoCompraController?action=listar"><input type="button" value="Aceptar"/></a> </td>
                         </tr>
                         <%
                             }

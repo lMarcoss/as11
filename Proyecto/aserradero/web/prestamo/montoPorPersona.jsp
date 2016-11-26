@@ -54,9 +54,9 @@
             <table class="table-condensed">
                     <tr>
                         <th>N°</th>
-                        <th>Persona</th>
+                        <th>Prestador</th>
                         <th>Monto total</th>
-                        <th>Interes mensual total</th>
+                        <th>Interes mensual</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -65,7 +65,7 @@
                         for (Prestamo prestamo : prestamos) {
                             out.print("<tr>"
                                 +"<td>"+(i+1)+"</td>"
-                                +"<td>"+prestamo.getPersona()+"</td>"
+                                +"<td>"+prestamo.getPrestador()+"</td>"
                                 +"<td>"+prestamo.getMonto()+"</td>"
                                 +"<td>"+prestamo.getInteres_mesual()+"</td>"
                             + "</tr>" );

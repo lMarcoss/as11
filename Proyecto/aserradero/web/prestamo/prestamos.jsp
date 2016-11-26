@@ -36,7 +36,7 @@
                 <table class="table-condensed">
                     <tr>
                         <td>
-                            <select name="nombre_campo" >
+                            <select name="nombre_campo">
                             <option value="fecha">Fecha</option>
                             <option value="persona">Persona</option>
                             <option value="monto">Monto</option>
@@ -56,7 +56,7 @@
                     <tr>
                         <th>N°</th>
                         <th>Fecha</th>
-                        <th>Persona</th>
+                        <th>Prestadord</th>
                         <th>Monto</th>
                         <th>% de interés</th>
                         <th>Interés mensual</th>
@@ -69,7 +69,7 @@
                             out.print("<tr>"
                                 +"<td>"+(i+1)+"</td>"
                                 +"<td>"+prestamo.getFecha()+"</td>"
-                                +"<td>"+prestamo.getPersona()+"</td>"
+                                +"<td>"+prestamo.getPrestador()+"</td>"
                                 +"<td>"+prestamo.getMonto()+"</td>"
                                 +"<td>"+prestamo.getInteres()+"%"+"</td>"
                                 +"<td>"+prestamo.getInteres_mesual()+"</td>"

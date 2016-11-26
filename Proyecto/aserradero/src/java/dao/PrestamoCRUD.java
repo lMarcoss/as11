@@ -21,7 +21,7 @@ public class PrestamoCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement(
-                    "INSERT INTO PRESTAMO (fecha,id_persona,id_administrador,monto,interes) VALUES (?,?,?,?,?)");
+                    "INSERT INTO PRESTAMO (fecha,id_prestador,id_empleado,monto,interes) VALUES (?,?,?,?,?)");
             st = cargarObject(st, prestamo);
             st.executeUpdate();
         }catch(Exception e){
@@ -83,7 +83,7 @@ public class PrestamoCRUD extends Conexion implements OperacionesCRUD{
             this.abrirConexion();
             PreparedStatement st= this.conexion.prepareStatement("UPDATE PRESTAMO SET fecha = ?, id_persona = ?, monto = ?, interes = ? WHERE id_prestamo = ?");
             st.setDate(1,prestamo.getFecha());
-            st.setString(2,calcularId.CalcularId(prestamo.getId_persona(),prestamo.getId_administrador()));
+            st.setString(2,calcularId.CalcularId(prestamo.getId_prestador(),prestamo.getId_administrador()));
             st.setBigDecimal(3,prestamo.getMonto());
             st.setInt(4,prestamo.getInteres());
             st.setInt(5,prestamo.getId_prestamo());
@@ -141,8 +141,10 @@ public class PrestamoCRUD extends Conexion implements OperacionesCRUD{
         Prestamo prestamo = new Prestamo();
         prestamo.setId_prestamo(rs.getInt("id_prestamo"));
         prestamo.setFecha(rs.getDate("fecha"));
-        prestamo.setId_persona(rs.getString("id_persona"));
-        prestamo.setPersona(rs.getString("persona"));
+        prestamo.setId_prestador(rs.getString("id_prestador"));
+        prestamo.setPrestador(rs.getString("prestador"));
+        prestamo.setId_empleado(rs.getString("id_empleado"));
+        prestamo.setEmpleado(rs.getString("empleado"));
         prestamo.setId_administrador(rs.getString("id_administrador"));
         prestamo.setMonto(rs.getBigDecimal("monto"));
         prestamo.setInteres(rs.getInt("interes"));
@@ -155,8 +157,8 @@ public class PrestamoCRUD extends Conexion implements OperacionesCRUD{
         Prestamo prestamo = (Prestamo) objeto;
         CalcularId calcularId = new CalcularId();
         st.setDate(1,prestamo.getFecha());
-        st.setString(2,calcularId.CalcularId(prestamo.getId_persona(),prestamo.getId_administrador()));
-        st.setString(3,prestamo.getId_administrador());
+        st.setString(2,calcularId.CalcularId(prestamo.getId_prestador(),prestamo.getId_empleado().substring(0, 8)));
+        st.setString(3,prestamo.getId_empleado());
         st.setBigDecimal(4,prestamo.getMonto());
         st.setInt(5,prestamo.getInteres());
         return st;
@@ -215,8 +217,8 @@ public class PrestamoCRUD extends Conexion implements OperacionesCRUD{
     public Object extraerPrestamoPorPersona(ResultSet rs) throws SQLException {
         Prestamo prestamo = new Prestamo();
         prestamo.setId_administrador(rs.getString("id_administrador"));
-        prestamo.setId_persona(rs.getString("id_persona"));
-        prestamo.setPersona(rs.getString("persona"));
+        prestamo.setId_prestador(rs.getString("id_prestador"));
+        prestamo.setPrestador(rs.getString("prestador"));
         prestamo.setMonto(rs.getBigDecimal("monto_total"));
         prestamo.setInteres_mesual(rs.getBigDecimal("interes_total"));
         return prestamo;

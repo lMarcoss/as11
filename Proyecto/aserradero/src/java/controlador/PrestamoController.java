@@ -1,9 +1,9 @@
 package controlador;
 
-import dao.AdministradorCRUD;
+import dao.EmpleadoCRUD;
 import dao.PersonaCRUD;
 import dao.PrestamoCRUD;
-import entidades.Administrador;
+import entidades.Empleado;
 import entidades.Persona;
 import entidades.Prestamo;
 import java.io.IOException;
@@ -69,9 +69,9 @@ public class PrestamoController extends HttpServlet {
                     request.setAttribute("personas",personas);
                     
                     //Consultamos la lista de administradores para asignarlos al prestador
-                    AdministradorCRUD administradorCRUD = new AdministradorCRUD();
-                    List<Administrador> administradores = (List<Administrador>) administradorCRUD.listar();
-                    request.setAttribute("administradores", administradores);
+                    EmpleadoCRUD empleadoCRUD = new EmpleadoCRUD();
+                    List<Empleado> empleados = (List<Empleado>) empleadoCRUD.listar();
+                    request.setAttribute("empleados", empleados);
                     
                     RequestDispatcher view = request.getRequestDispatcher("prestamo/nuevoPrestamo.jsp");
                     view.forward(request,response);
@@ -96,11 +96,6 @@ public class PrestamoController extends HttpServlet {
                     PersonaCRUD personaCRUD = new PersonaCRUD();
                     List<Persona> personas = (List<Persona>)personaCRUD.listar();
                     request.setAttribute("personas",personas);
-                    
-                    //Consultamos la lista de administradores para asignarlos al prestador
-                    AdministradorCRUD administradorCRUD = new AdministradorCRUD();
-                    List<Administrador> administradores = (List<Administrador>) administradorCRUD.listar();
-                    request.setAttribute("administradores", administradores);
                     
                     prestamo = (Prestamo) prestamoCRUD.modificar(prestamoEC);
                     request.setAttribute("prestamo",prestamo);
@@ -242,8 +237,8 @@ public class PrestamoController extends HttpServlet {
         Prestamo prestamo = new Prestamo();
         prestamo.setId_prestamo(Integer.valueOf(request.getParameter("id_prestamo")));
         prestamo.setFecha(Date.valueOf(request.getParameter("fecha")));
-        prestamo.setId_persona(request.getParameter("id_persona"));
-        prestamo.setId_administrador(request.getParameter("id_administrador"));
+        prestamo.setId_prestador(request.getParameter("id_prestador"));
+        prestamo.setId_empleado(request.getParameter("id_empleado"));
         prestamo.setMonto(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto")))));
         prestamo.setInteres(Integer.valueOf(request.getParameter("interes")));
         return prestamo;
