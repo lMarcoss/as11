@@ -283,7 +283,7 @@ CREATE TABLE PRESTAMO(
     fecha 				DATE,
     id_prestador		VARCHAR(26) NOT NULL, -- registramos un id de la tabla Persona agregando 8 letras del administrador para completar 26 caracteres
     id_empleado			VARCHAR(26) NOT NULL,
-	monto_prestado		DECIMAL(15,2),
+	monto_prestamo		DECIMAL(15,2),
     interes				INT, -- porcentaje de interes (0-100)
 	PRIMARY KEY(id_prestamo, id_prestador),
     FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON UPDATE CASCADE)ENGINE=InnoDB;

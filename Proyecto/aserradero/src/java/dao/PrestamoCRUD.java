@@ -21,7 +21,7 @@ public class PrestamoCRUD extends Conexion implements OperacionesCRUD{
         try{
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement(
-                    "INSERT INTO PRESTAMO (fecha,id_prestador,id_empleado,monto,interes) VALUES (?,?,?,?,?)");
+                    "INSERT INTO PRESTAMO (fecha,id_prestador,id_empleado,monto_prestamo,interes) VALUES (?,?,?,?,?)");
             st = cargarObject(st, prestamo);
             st.executeUpdate();
         }catch(Exception e){
@@ -78,13 +78,12 @@ public class PrestamoCRUD extends Conexion implements OperacionesCRUD{
     @Override
     public void actualizar(Object objeto) throws Exception {
         Prestamo prestamo = (Prestamo) objeto;
-        CalcularId calcularId = new CalcularId();
         try{
             this.abrirConexion();
-            PreparedStatement st= this.conexion.prepareStatement("UPDATE PRESTAMO SET fecha = ?, id_persona = ?, monto = ?, interes = ? WHERE id_prestamo = ?");
+            PreparedStatement st= this.conexion.prepareStatement("UPDATE PRESTAMO SET fecha = ?, id_prestador = ?, monto_prestamo = ?, interes = ? WHERE id_prestamo = ?");
             st.setDate(1,prestamo.getFecha());
-            st.setString(2,calcularId.CalcularId(prestamo.getId_prestador(),prestamo.getId_administrador()));
-            st.setBigDecimal(3,prestamo.getMonto());
+            st.setString(2,prestamo.getId_prestador());
+            st.setBigDecimal(3,prestamo.getMonto_prestamo());
             st.setInt(4,prestamo.getInteres());
             st.setInt(5,prestamo.getId_prestamo());
             st.executeUpdate();
@@ -146,9 +145,11 @@ public class PrestamoCRUD extends Conexion implements OperacionesCRUD{
         prestamo.setId_empleado(rs.getString("id_empleado"));
         prestamo.setEmpleado(rs.getString("empleado"));
         prestamo.setId_administrador(rs.getString("id_administrador"));
-        prestamo.setMonto(rs.getBigDecimal("monto"));
+        prestamo.setMonto_prestamo(rs.getBigDecimal("monto_prestamo"));
         prestamo.setInteres(rs.getInt("interes"));
         prestamo.setInteres_mesual(rs.getBigDecimal("interes_mensual"));
+        prestamo.setMonto_pagado(rs.getBigDecimal("monto_pagado"));
+        prestamo.setMonto_por_pagar(rs.getBigDecimal("monto_por_pagar"));
         return prestamo;
     }
     
@@ -159,7 +160,7 @@ public class PrestamoCRUD extends Conexion implements OperacionesCRUD{
         st.setDate(1,prestamo.getFecha());
         st.setString(2,calcularId.CalcularId(prestamo.getId_prestador(),prestamo.getId_empleado().substring(0, 8)));
         st.setString(3,prestamo.getId_empleado());
-        st.setBigDecimal(4,prestamo.getMonto());
+        st.setBigDecimal(4,prestamo.getMonto_prestamo());
         st.setInt(5,prestamo.getInteres());
         return st;
     }
@@ -187,17 +188,17 @@ public class PrestamoCRUD extends Conexion implements OperacionesCRUD{
         return prestamos;
     }
     
-    //Lista de prestamos por persona
-    public <T> List listarPrestamoPorPersona() throws Exception {
+    //Lista de prestamos por pagar
+    public <T> List listarPrestamoPorPagar() throws Exception {
         List<Prestamo> prestamos;
         try{
             this.abrirConexion();
             try (PreparedStatement st = this.conexion.prepareStatement(
-                    "SELECT * FROM PRESTAMO_TOTAL_PERSONA")) {
+                    "SELECT * FROM VISTA_PRESTAMO WHERE monto_por_pagar > 0")) {
                 prestamos = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
-                        Prestamo prestamo = (Prestamo) extraerPrestamoPorPersona(rs);
+                        Prestamo prestamo = (Prestamo) extraerObject(rs);
                         prestamos.add(prestamo);
                     }
                 }
@@ -219,7 +220,7 @@ public class PrestamoCRUD extends Conexion implements OperacionesCRUD{
         prestamo.setId_administrador(rs.getString("id_administrador"));
         prestamo.setId_prestador(rs.getString("id_prestador"));
         prestamo.setPrestador(rs.getString("prestador"));
-        prestamo.setMonto(rs.getBigDecimal("monto_total"));
+        prestamo.setMonto_prestamo(rs.getBigDecimal("monto_total"));
         prestamo.setInteres_mesual(rs.getBigDecimal("interes_total"));
         return prestamo;
     }

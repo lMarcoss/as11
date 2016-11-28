@@ -56,10 +56,12 @@
                     <tr>
                         <th>N°</th>
                         <th>Fecha</th>
-                        <th>Prestadord</th>
-                        <th>Monto</th>
+                        <th>Prestador</th>
+                        <th>Monto préstamo</th>
                         <th>% de interés</th>
                         <th>Interés mensual</th>
+                        <th>Monto pagado</th>
+                        <th>Monto por pagar</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -70,9 +72,11 @@
                                 +"<td>"+(i+1)+"</td>"
                                 +"<td>"+prestamo.getFecha()+"</td>"
                                 +"<td>"+prestamo.getPrestador()+"</td>"
-                                +"<td>"+prestamo.getMonto()+"</td>"
+                                +"<td>"+prestamo.getMonto_prestamo()+"</td>"
                                 +"<td>"+prestamo.getInteres()+"%"+"</td>"
                                 +"<td>"+prestamo.getInteres_mesual()+"</td>"
+                                +"<td>"+prestamo.getMonto_pagado()+"</td>"
+                                +"<td>"+prestamo.getMonto_por_pagar()+"</td>"
                                 +"<td><a href=\"/aserradero/PrestamoController?action=modificar&id_prestamo="+prestamo.getId_prestamo()+"\">Actualizar</a></td>"
                                 +"<td><a href=\"/aserradero/PrestamoController?action=modificar&id_prestamo="+prestamo.getId_prestamo()+"\">Pagar prestamo</a></td>"
                                 + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/PrestamoController?action=eliminar&id_prestamo="+prestamo.getId_prestamo()+"';};\">Eliminar</a></td>"

@@ -181,7 +181,7 @@ public class PagoPrestamoController extends HttpServlet {
         List<Prestamo> listaPrestamo;
         List<Empleado> listaEmpleado;
         try {
-            listaPrestamo = (List<Prestamo>) prestamoCRUD.listar();
+            listaPrestamo = (List<Prestamo>) prestamoCRUD.listarPrestamoPorPagar();
             listaEmpleado = (List<Empleado>) empleadoCRUD.listar();
             request.setAttribute("listaPrestamo", listaPrestamo);
             request.setAttribute("listaEmpleado", listaEmpleado);

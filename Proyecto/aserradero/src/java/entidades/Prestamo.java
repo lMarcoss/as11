@@ -15,14 +15,16 @@ public class Prestamo {
     private String id_empleado;
     private String empleado;
     private String id_administrador;
-    private BigDecimal monto;
+    private BigDecimal monto_prestamo;
     private int interes;
     private BigDecimal interes_mesual;
+    private BigDecimal monto_pagado;
+    private BigDecimal monto_por_pagar;
 
     public Prestamo() {
     }
 
-    public Prestamo(int id_prestamo, Date fecha, String id_prestador, String prestador, String id_empleado, String empleado, String id_administrador, BigDecimal monto, int interes, BigDecimal interes_mesual) {
+    public Prestamo(int id_prestamo, Date fecha, String id_prestador, String prestador, String id_empleado, String empleado, String id_administrador, BigDecimal monto_prestamo, int interes, BigDecimal interes_mesual, BigDecimal monto_pagado, BigDecimal monto_por_pagar) {
         this.id_prestamo = id_prestamo;
         this.fecha = fecha;
         this.id_prestador = id_prestador;
@@ -30,9 +32,11 @@ public class Prestamo {
         this.id_empleado = id_empleado;
         this.empleado = empleado;
         this.id_administrador = id_administrador;
-        this.monto = monto;
+        this.monto_prestamo = monto_prestamo;
         this.interes = interes;
         this.interes_mesual = interes_mesual;
+        this.monto_pagado = monto_pagado;
+        this.monto_por_pagar = monto_por_pagar;
     }
 
     public void setId_prestamo(int id_prestamo) {
@@ -63,8 +67,8 @@ public class Prestamo {
         this.id_administrador = id_administrador;
     }
 
-    public void setMonto(BigDecimal monto) {
-        this.monto = monto;
+    public void setMonto_prestamo(BigDecimal monto_prestamo) {
+        this.monto_prestamo = monto_prestamo;
     }
 
     public void setInteres(int interes) {
@@ -73,6 +77,14 @@ public class Prestamo {
 
     public void setInteres_mesual(BigDecimal interes_mesual) {
         this.interes_mesual = interes_mesual;
+    }
+
+    public void setMonto_pagado(BigDecimal monto_pagado) {
+        this.monto_pagado = monto_pagado;
+    }
+
+    public void setMonto_por_pagar(BigDecimal monto_por_pagar) {
+        this.monto_por_pagar = monto_por_pagar;
     }
 
     public int getId_prestamo() {
@@ -103,8 +115,8 @@ public class Prestamo {
         return id_administrador;
     }
 
-    public BigDecimal getMonto() {
-        return monto;
+    public BigDecimal getMonto_prestamo() {
+        return monto_prestamo;
     }
 
     public int getInteres() {
@@ -114,5 +126,12 @@ public class Prestamo {
     public BigDecimal getInteres_mesual() {
         return interes_mesual;
     }
-    
+
+    public BigDecimal getMonto_pagado() {
+        return monto_pagado;
+    }
+
+    public BigDecimal getMonto_por_pagar() {
+        return monto_por_pagar;
+    }    
 }

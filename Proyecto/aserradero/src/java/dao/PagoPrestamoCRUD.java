@@ -54,6 +54,7 @@ public class PagoPrestamoCRUD extends Conexion implements  OperacionesCRUD{
                         pagoPrestamos.add(pagoPrestamo);
                     }
                 } catch (Exception e) {
+                    System.out.println(e);
                 }
             } catch (Exception e) {
                 pagoPrestamos = null;
@@ -79,7 +80,7 @@ public class PagoPrestamoCRUD extends Conexion implements  OperacionesCRUD{
         pagoPrestamo.setEmpleado(rs.getString("empleado"));
         pagoPrestamo.setId_prestador(rs.getString("id_prestador"));
         pagoPrestamo.setPrestador(rs.getString("prestador"));
-        pagoPrestamo.setMonto_prestado(rs.getBigDecimal("monto_prestado"));
+        pagoPrestamo.setMonto_prestamo(rs.getBigDecimal("monto_prestamo"));
         pagoPrestamo.setMonto_pago(rs.getBigDecimal("monto_pago"));
         pagoPrestamo.setMonto_por_pagar(rs.getBigDecimal("monto_por_pagar"));
         return pagoPrestamo;

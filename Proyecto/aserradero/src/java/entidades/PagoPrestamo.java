@@ -16,14 +16,14 @@ public class PagoPrestamo {
     private String empleado;
     private String id_prestador;
     private String prestador;
-    private BigDecimal monto_prestado;
+    private BigDecimal monto_prestamo;
     private BigDecimal monto_pago;
     private BigDecimal monto_por_pagar;
 
     public PagoPrestamo() {
     }
 
-    public PagoPrestamo(int id_pago, int id_prestamo, Date fecha, String id_administrador, String id_empleado, String empleado, String id_prestador, String prestador, BigDecimal monto_prestado, BigDecimal monto_pago, BigDecimal monto_por_pagar) {
+    public PagoPrestamo(int id_pago, int id_prestamo, Date fecha, String id_administrador, String id_empleado, String empleado, String id_prestador, String prestador, BigDecimal monto_prestamo, BigDecimal monto_pago, BigDecimal monto_por_pagar) {
         this.id_pago = id_pago;
         this.id_prestamo = id_prestamo;
         this.fecha = fecha;
@@ -32,7 +32,7 @@ public class PagoPrestamo {
         this.empleado = empleado;
         this.id_prestador = id_prestador;
         this.prestador = prestador;
-        this.monto_prestado = monto_prestado;
+        this.monto_prestamo = monto_prestamo;
         this.monto_pago = monto_pago;
         this.monto_por_pagar = monto_por_pagar;
     }
@@ -69,8 +69,8 @@ public class PagoPrestamo {
         this.prestador = prestador;
     }
 
-    public void setMonto_prestado(BigDecimal monto_prestado) {
-        this.monto_prestado = monto_prestado;
+    public void setMonto_prestamo(BigDecimal monto_prestamo) {
+        this.monto_prestamo = monto_prestamo;
     }
 
     public void setMonto_pago(BigDecimal monto_pago) {
@@ -113,8 +113,8 @@ public class PagoPrestamo {
         return prestador;
     }
 
-    public BigDecimal getMonto_prestado() {
-        return monto_prestado;
+    public BigDecimal getMonto_prestamo() {
+        return monto_prestamo;
     }
 
     public BigDecimal getMonto_pago() {
