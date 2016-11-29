@@ -40,7 +40,7 @@
                                     <option></option>
                                     <%
                                         for(Prestamo prestamo: listaPrestamo){
-                                            out.print("<option value='"+prestamo.getId_prestamo()+"'>"+prestamo.getPrestador()+"</option>");
+                                            out.print("<option value='"+prestamo.getId_prestamo()+"'>Prestado el "+prestamo.getFecha()+" por "+prestamo.getPrestador()+"</option>");
                                         }
                                     %>
                                 </select>

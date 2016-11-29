@@ -86,16 +86,13 @@
             <li class="submenu" id="reportes">
                 <a href="#">Prestamo</a>
                 <ul class="children">
-                    <li class="reporte_compra"><a href="/aserradero/PrestamoController?action=listar">Detalles</a></li>
-                    <li class="reporte_compra"><a href="/aserradero/PrestamoController?action=listar_total">Préstamo por persona</a></li>
+                    <li class="reporte_compra"><a href="/aserradero/PrestamoController?action=listar">Registros</a></li>
                     <li class="reporte_compra"><a href="/aserradero/PagoPrestamoController?action=listar">Pago préstamo</a></li>
                 </ul>
             </li>
             <li class="submenu" id="reportes">
-                <a href="#">Reportes</a>
+                <a href="#">Cuentas</a>
                 <ul class="children">
-                    <!--<li class="reporte_compra"><a href="/aserradero/CompraController?action=ver_reporte">Reporte compra</a></li>-->
-                    <li class="reporte_compra"><a href="/aserradero/BalanceCuentaController?action=listar">Cuenta inicial</a></li>
                     <li class="reporte_compra"><a href="/aserradero/BalanceCuentaController?action=listar">Balance cuenta</a></li>
                 </ul>
             </li>

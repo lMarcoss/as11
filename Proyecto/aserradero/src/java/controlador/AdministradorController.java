@@ -6,6 +6,7 @@ import entidades.Administrador;
 import entidades.Persona;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -101,7 +102,7 @@ public class AdministradorController extends HttpServlet {
                     System.out.println(ex);
                     Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                break;                        
+                break;
         }
     }
 
@@ -197,6 +198,7 @@ public class AdministradorController extends HttpServlet {
     private Administrador extraerAdministradorForm(HttpServletRequest request) {
         Administrador administrador = new Administrador();
         administrador.setId_administrador(request.getParameter("id_administrador"));
+        administrador.setCuenta_inicial(BigDecimal.valueOf((Double.valueOf(request.getParameter("cuenta_inicial")))));
         return administrador;
     }
 }

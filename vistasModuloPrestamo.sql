@@ -31,3 +31,33 @@ GROUP BY id_administrador, id_prestador, prestador;
 
 SELECT * FROM PAGO_PRESTAMO;
 SELECT * FROM VISTA_PAGO_PRESTAMO;
+
+
+-- funcion para generar el id_del prestador al insertar un prestamo
+DROP FUNCTION IF EXISTS GENERAR_ID;
+DELIMITER //
+CREATE FUNCTION GENERAR_ID (_id VARCHAR(26), _id_empleado VARCHAR(26))
+RETURNS VARCHAR(26)
+BEGIN
+	DECLARE _id_administrador	VARCHAR(26);
+    DECLARE _id_nuevo			VARCHAR(26);
+        
+    -- consultamos el id del administrador
+    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = _id_empleado LIMIT 1;
+    
+    -- contatenamos el _id con las primeras 8 caracteres del id del administrador
+    SET _id_nuevo = CONCAT(_id, SUBSTRING(_id_administrador, 1, 8));
+    
+	RETURN _id_nuevo;
+END;//
+DELIMITER ;
+
+-- disparador para generar el id_del prestador antes de insertar un prestamo
+DROP TRIGGER IF EXISTS CREAR_ID;
+DELIMITER //
+CREATE TRIGGER CREAR_ID BEFORE INSERT ON PRESTAMO
+FOR EACH ROW
+BEGIN
+	SET NEW.id_prestador = (SELECT GENERAR_ID(NEW.id_prestador, NEW.id_empleado));
+END;//
+DELIMITER ;

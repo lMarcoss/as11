@@ -28,9 +28,9 @@
                       <td>
                         <select name="nombre_campo" >
                           <option value="fecha">Fecha</option>
-                          <option value="proveedor">Proveedor</option>
-                          <option value="monto_pago">Monto pagado</option>
-                          <option value="monto_por_pagar">Monto por pagar</option>
+                          <option value="empleado">Empleado</option>
+                          <option value="prestador">Prestador</option>
+                          <option value="monto_pagado">Monto pagado</option>
                         </select>
                       </td>
                         <td><input type="text" name="dato" placeholder="Escriba su búsqueda"></td>
@@ -50,7 +50,6 @@
                         <th>Prestador</th>
                         <th>Monto prestado</th>
                         <th>Monto pagado</th>
-                        <th>Monto por pagar</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -64,8 +63,7 @@
                                 +"<td>"+pago.getPrestador()+"</td>"
                                 +"<td>"+pago.getMonto_prestamo()+"</td>"
                                 +"<td>"+pago.getMonto_pago()+"</td>"
-                                +"<td>"+pago.getMonto_por_pagar()+"</td>"
-                                +"<td><a href=\"/aserradero/PagoPrestamoController?action=modificar&id_pago="+pago.getId_pago()+"\">Modificar</a></td>"
+                                +"<td><a href=\"/aserradero/PagoPrestamoController?action=modificar&id_pago="+pago.getId_pago()+"&id_prestamo="+pago.getId_prestamo()+"\">Modificar</a></td>"
                                 + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/PagoPrestamoController?action=eliminar&id_pago="+pago.getId_pago()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;

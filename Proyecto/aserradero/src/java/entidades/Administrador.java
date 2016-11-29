@@ -1,19 +1,24 @@
 package entidades;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author lmarcoss
  */
 public class Administrador {
+
     private String id_administrador;
     private String nombre;
+    private BigDecimal cuenta_inicial;
 
     public Administrador() {
     }
 
-    public Administrador(String id_administrador, String nombre) {
+    public Administrador(String id_administrador, String nombre, BigDecimal cuenta_inicial) {
         this.id_administrador = id_administrador;
         this.nombre = nombre;
+        this.cuenta_inicial = cuenta_inicial;
     }
 
     public void setId_administrador(String id_administrador) {
@@ -24,6 +29,10 @@ public class Administrador {
         this.nombre = nombre;
     }
 
+    public void setCuenta_inicial(BigDecimal cuenta_inicial) {
+        this.cuenta_inicial = cuenta_inicial;
+    }
+
     public String getId_administrador() {
         return id_administrador;
     }
@@ -31,5 +40,9 @@ public class Administrador {
     public String getNombre() {
         return nombre;
     }
-    
+
+    public BigDecimal getCuenta_inicial() {
+        return cuenta_inicial;
+    }
+
 }

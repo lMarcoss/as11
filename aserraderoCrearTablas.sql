@@ -32,6 +32,7 @@ CREATE TABLE PERSONA(
 
 CREATE TABLE ADMINISTRADOR(
 	id_administrador	VARCHAR(18) NOT NULL,
+    cuenta_inicial 		DECIMAL(15,2),
 	PRIMARY KEY (id_administrador),
 	FOREIGN KEY (id_administrador) REFERENCES PERSONA (id_persona) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
     
@@ -117,12 +118,13 @@ CREATE TABLE SALIDA_MADERA_ROLLO( -- entrada_madera
 
 -- CREATE TABLE PAGO_COMPRA(fecha		DATE,id_compra	CHAR(7) NOT NULL,monto 		DECIMAL(10,2),pago 		ENUM('Anticipado','Normal'),PRIMARY KEY (fecha,id_compra),	FOREIGN KEY (id_compra) REFERENCES COMPRA (id_compra) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
-CREATE TABLE MADERA_CLASIFICACION(
-	id_madera	VARCHAR(20) NOT NULL,
-	grueso		DECIMAL(8,2),
-	ancho		DECIMAL(8,2),
-	largo		DECIMAL(8,2),
-	volumen		DECIMAL(15,3),
+CREATE TABLE MADERA_ASERRADA_CLASIF(
+	id_madera				VARCHAR(20) NOT NULL,
+	grueso					DECIMAL(8,2),
+	ancho					DECIMAL(8,2),
+	largo					DECIMAL(8,2),
+	volumen					DECIMAL(15,3),
+    costo_por_volumen		DECIMAL(15,3),
 	primary key(id_madera))ENGINE=InnoDB;
     
 -- producción
@@ -347,12 +349,13 @@ INSERT INTO MADERA_CLASIFICACION (id_madera,grueso,ancho,largo,volumen) VALUES
 ("quinta4",0.75,4,6.25,2.062);
 
 -- lista de administradores
+DROP VIEW IF EXISTS PERSONAL_ADMINISTRADOR;
 CREATE VIEW PERSONAL_ADMINISTRADOR AS
 SELECT 
 		id_administrador, 
-		(select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre 
-	FROM PERSONA 
-	WHERE id_persona = id_administrador)as nombre FROM ADMINISTRADOR;
+		(SELECT concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE id_persona = id_administrador)as nombre,
+        cuenta_inicial
+FROM ADMINISTRADOR;
 -- SELECT * FROM PERSONAL_ADMINISTRADOR;
 
 -- lista a todo el personal Cliente id_cliente y nombre completo, id_jefe y nombre completo

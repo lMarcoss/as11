@@ -208,7 +208,9 @@ public class PagoPrestamoController extends HttpServlet {
     private void modificarPagoPrestamo(HttpServletRequest request, HttpServletResponse response) {
         PagoPrestamoCRUD pagoPrestamoCRUD = new PagoPrestamoCRUD();
         PagoPrestamo pagoPrestamo = new PagoPrestamo();
+        //Obtenemos el pago a modificar
         pagoPrestamo.setId_pago(Integer.valueOf(request.getParameter("id_pago")));
+        pagoPrestamo.setId_prestamo(Integer.valueOf(request.getParameter("id_prestamo")));
         try {
             pagoPrestamo = (PagoPrestamo) pagoPrestamoCRUD.modificar(pagoPrestamo);
             request.setAttribute("pagoPrestamo", pagoPrestamo);

@@ -1,6 +1,5 @@
 package dao;
 
-import calcularID.CalcularId;
 import entidades.Prestamo;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
@@ -156,9 +155,8 @@ public class PrestamoCRUD extends Conexion implements OperacionesCRUD{
     @Override
     public PreparedStatement cargarObject(PreparedStatement st, Object objeto) throws SQLException {
         Prestamo prestamo = (Prestamo) objeto;
-        CalcularId calcularId = new CalcularId();
         st.setDate(1,prestamo.getFecha());
-        st.setString(2,calcularId.CalcularId(prestamo.getId_prestador(),prestamo.getId_empleado().substring(0, 8)));
+        st.setString(2,prestamo.getId_prestador());
         st.setString(3,prestamo.getId_empleado());
         st.setBigDecimal(4,prestamo.getMonto_prestamo());
         st.setInt(5,prestamo.getInteres());
