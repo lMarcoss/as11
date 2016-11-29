@@ -16,19 +16,18 @@ SELECT
         (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(id_empleado,1,18)) as empleado,
         estatus,
         numero_paquete,
-        COSTO_MADERA.id_madera,
+        MADERA_ASERRADA_CLASIF.id_madera,
         grueso,
         ancho,
         largo,
-        MADERA_CLASIFICACION.volumen as volumen_unitario,
+        MADERA_ASERRADA_CLASIF.volumen as volumen_unitario,
         ROUND((VENTA_PAQUETE.monto /VENTA_PAQUETE.volumen),2) as costo_volumen,
         num_piezas,
         VENTA_PAQUETE.volumen as volumen_total,
         VENTA_PAQUETE.monto as costo_total
-FROM VENTA,VENTA_PAQUETE,MADERA_CLASIFICACION,COSTO_MADERA 
+FROM VENTA,VENTA_PAQUETE,MADERA_ASERRADA_CLASIF
 WHERE VENTA.id_venta = VENTA_PAQUETE.id_venta AND
-		VENTA_PAQUETE.id_madera = MADERA_CLASIFICACION.id_madera AND
-        MADERA_CLASIFICACION.id_madera = COSTO_MADERA.id_madera AND
+		VENTA_PAQUETE.id_madera = MADERA_ASERRADA_CLASIF.id_madera AND
         VENTA.tipo_venta='Paquete';
 
 -- VISTA para reportes y ticket de ventas por mayoreo
@@ -43,22 +42,22 @@ SELECT fecha,
 		id_empleado, 
         (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE id_persona = SUBSTRING(id_empleado,1,18)) as empleado,
 		estatus,
-        COSTO_MADERA.id_madera as id_madera,
+        MADERA_ASERRADA_CLASIF.id_madera as id_madera,
         grueso,
         ancho,
         largo,
-        MADERA_CLASIFICACION.volumen as volumen_unitario,
+        MADERA_ASERRADA_CLASIF.volumen as volumen_unitario,
         ROUND((VENTA_MAYOREO.monto /VENTA_MAYOREO.volumen),2) as costo_volumen,
         num_piezas,
         VENTA_MAYOREO.volumen AS volumen_total,
         VENTA_MAYOREO.monto as costo_total
-FROM VENTA,VENTA_MAYOREO,MADERA_CLASIFICACION,COSTO_MADERA
+FROM VENTA,VENTA_MAYOREO,MADERA_ASERRADA_CLASIF
 WHERE VENTA.id_venta = VENTA_MAYOREO.id_venta AND
-		VENTA_MAYOREO.id_madera = MADERA_CLASIFICACION.id_madera AND
-        MADERA_CLASIFICACION.id_madera = COSTO_MADERA.id_madera AND
+		VENTA_MAYOREO.id_madera = MADERA_ASERRADA_CLASIF.id_madera AND
         VENTA.tipo_venta='Mayoreo';
 
 -- Vista para reportes y ticket de ventas extras
+DROP VIEW IF EXISTS VISTA_VENTAS_EXTRA;
 CREATE VIEW VISTA_VENTAS_EXTRA AS
 SELECT fecha,
 		VENTA.id_venta,
@@ -76,6 +75,7 @@ FROM VENTA,VENTA_EXTRA
 WHERE VENTA.id_venta = VENTA_EXTRA.id_venta AND tipo_venta = 'Extra';
 
 -- vista para consultar datos del cliente para el ticket
+DROP VIEW IF EXISTS VISTA_CLIENTE_TICKET;
 CREATE VIEW VISTA_CLIENTE_TICKET AS
 SELECT VENTA.id_venta,VENTA.fecha,VENTA.tipo_venta,CLIENTE.id_jefe,CLIENTE.id_cliente,PERSONA.id_persona, 
 	concat(nombre," ", apellido_paterno, " ", apellido_materno) as cliente,

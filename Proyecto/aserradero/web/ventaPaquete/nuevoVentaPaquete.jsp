@@ -4,20 +4,26 @@
     Author     : lmarcoss
 --%>
 
+<%@page import="entidades.MaderaAserradaClasif"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="entidades.VentaPaquete"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.sql.Date"%>
 <%@page import="entidades.Empleado"%>
 <%@page import="entidades.Cliente"%>
-<%@page import="entidadesVirtuales.CostoMaderaClasificacion"%>
-<%@page import="entidades.MaderaClasificacion"%>
 <%@page import="entidades.Venta"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<% Date fecha = Date.valueOf(LocalDate.now()); List <Venta> ventas = (List<Venta>) request.getAttribute("ventas"); List <CostoMaderaClasificacion> costoMaderaClasificaciones = (List<CostoMaderaClasificacion>)
-request.getAttribute("costoMaderaClasificaciones"); List <Cliente> clientes = (List<Cliente>) request.getAttribute("clientes"); List <Empleado> empleados = (List<Empleado>) request.getAttribute("empleados"); String id_nVenta =
-String.valueOf(request.getAttribute("siguienteventa")); HttpSession sesion_ajax = request.getSession(true); sesion_ajax.setAttribute("detalle_venta_paquete", null); %>
+<% 
+    Date fecha = Date.valueOf(LocalDate.now()); 
+    List <Venta> ventas = (List<Venta>) request.getAttribute("ventas"); 
+    List <MaderaAserradaClasif> clasificaciones = (List<MaderaAserradaClasif>)request.getAttribute("clasificaciones"); 
+    List <Cliente> clientes = (List<Cliente>) request.getAttribute("clientes"); 
+    List <Empleado> empleados = (List<Empleado>) request.getAttribute("empleados"); 
+    String id_nVenta = String.valueOf(request.getAttribute("siguienteventa")); 
+    HttpSession sesion_ajax = request.getSession(true); 
+    sesion_ajax.setAttribute("detalle_venta_paquete", null); 
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -61,14 +67,22 @@ String.valueOf(request.getAttribute("siguienteventa")); HttpSession sesion_ajax 
                                         <label class="control-label">Cliente</label>
                                         <select class="form-control" name="id_cliente" required="">
                                             <option></option>
-                                            <% for (Cliente cliente : clientes) { out.print("<option value='"+cliente.getId_cliente()+"'>"+cliente.getCliente()+"</option>"); } %>
+                                            <% 
+                                                for (Cliente cliente : clientes) { 
+                                                    out.print("<option value='"+cliente.getId_cliente()+"'>"+cliente.getCliente()+"</option>");
+                                                } 
+                                            %>
                                         </select>
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="control-label">Empleado:</label>
                                         <select class="form-control" name="id_empleado" required="">
                                             <option></option>
-                                            <% for (Empleado empleado : empleados) { out.print("<option value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>"); } %>
+                                            <% 
+                                                for (Empleado empleado : empleados) {
+                                                    out.print("<option value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>");
+                                                }
+                                            %>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-2">
@@ -95,7 +109,11 @@ String.valueOf(request.getAttribute("siguienteventa")); HttpSession sesion_ajax 
                                     <label class="control-label">Madera:</label>
                                     <select name="id_madera" class="form-control" required="" id="id_madera" onblur="seleccionarCostoMaderaVenta()">
                                         <option></option>
-                                        <% for (CostoMaderaClasificacion costoMaderaClasificacion : costoMaderaClasificaciones) { out.print("<option value='"+costoMaderaClasificacion.getId_madera()+"'>"+costoMaderaClasificacion.getId_madera()+"</option>"); } %>
+                                        <% 
+                                            for (MaderaAserradaClasif clasificacion : clasificaciones) { 
+                                                out.print("<option value='"+clasificacion.getId_madera()+"'>"+clasificacion.getId_madera()+"</option>"); 
+                                            } 
+                                        %>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -108,14 +126,22 @@ String.valueOf(request.getAttribute("siguienteventa")); HttpSession sesion_ajax 
                                     <label class="control-label">volumen unitaria</label>
                                     <select name="volumen_unitaria" class="form-control" id="volumen_unitaria" readonly="" disabled="">
                                         <option></option>
-                                        <% for (CostoMaderaClasificacion costoMaderaClasificacion : costoMaderaClasificaciones) { out.print("<option value='"+costoMaderaClasificacion.getVolumen()+"'>"+costoMaderaClasificacion.getVolumen()+"</option>"); } %>
+                                        <% 
+                                            for (MaderaAserradaClasif clasificacion : clasificaciones) {
+                                                out.print("<option value='"+clasificacion.getVolumen()+"'>"+clasificacion.getVolumen()+"</option>");
+                                            }
+                                        %>
                                     </select>
                                 </div>
                                 <div class="col-md-2">
                                     <label class="control-label">Costo volumen</label>
                                     <select class="form-control" name="costo_volumen" id="costo_volumen" readonly="" disabled="">
                                         <option></option>
-                                        <% for (CostoMaderaClasificacion costoMaderaClasificacion : costoMaderaClasificaciones) { out.print("<option value='"+costoMaderaClasificacion.getMonto_volumen()+"'>"+costoMaderaClasificacion.getMonto_volumen()+"</option>"); } %>
+                                        <% 
+                                            for (MaderaAserradaClasif clasificacion : clasificaciones) { 
+                                                out.print("<option value='"+clasificacion.getCosto_por_volumen()+"'>"+clasificacion.getCosto_por_volumen()+"</option>"); 
+                                            } 
+                                        %>
                                     </select>
                                 </div>
                                 <div class="col-md-2">

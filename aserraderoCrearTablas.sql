@@ -135,7 +135,7 @@ CREATE TABLE PRODUCCION_MADERA(
  	num_piezas 		INT,
     id_empleado 	CHAR(26) NOT NULL,
  	PRIMARY KEY (id_produccion),
-    FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera),
+    FOREIGN KEY (id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_madera),
     FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 CREATE TABLE INVENTARIO_MADERA_PRODUCCION(
@@ -144,7 +144,7 @@ CREATE TABLE INVENTARIO_MADERA_PRODUCCION(
 	num_piezas	INT,
 	PRIMARY KEY(id_administrador,id_madera),
     FOREIGN KEY (id_administrador) REFERENCES ADMINISTRADOR (id_administrador) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera)ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_madera)ON UPDATE CASCADE)ENGINE=InnoDB;
 
 CREATE TABLE CLIENTE(
 	id_cliente 	CHAR(26) NOT NULL,
@@ -175,7 +175,7 @@ CREATE TABLE VENTA_MAYOREO(
 	monto		DECIMAL(15,2),
 	PRIMARY KEY(id_venta,id_madera),
 	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera))ENGINE=InnoDB;
+	FOREIGN KEY (id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_madera))ENGINE=InnoDB;
 
 CREATE TABLE VENTA_PAQUETE(
 	id_venta 		VARCHAR(30),
@@ -186,7 +186,7 @@ CREATE TABLE VENTA_PAQUETE(
 	monto		DECIMAL(15,2),
 	PRIMARY KEY(id_venta,numero_paquete,id_madera),
 	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera))ENGINE=InnoDB;
+	FOREIGN KEY (id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_madera))ENGINE=InnoDB;
 
 CREATE TABLE VENTA_EXTRA(
 	id_venta 		VARCHAR(30),
@@ -195,12 +195,6 @@ CREATE TABLE VENTA_EXTRA(
 	observacion		VARCHAR(100),
 	PRIMARY KEY(id_venta,tipo),
 	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
-
-CREATE TABLE COSTO_MADERA(
-	id_madera 		VARCHAR(20),
-	monto_volumen	DECIMAL(15,2),
-	PRIMARY KEY(id_madera),
-	FOREIGN KEY (id_madera) REFERENCES MADERA_CLASIFICACION (id_madera) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
 CREATE	TABLE PAGO_RENTA(
 	id_pago_renta	INT NOT NULL AUTO_INCREMENT,
@@ -323,30 +317,30 @@ INSERT INTO PERSONA (id_persona,nombre,apellido_paterno,apellido_materno,localid
 ("PAXA20160913HOCSXN","Antonio","Pascual","","Santa Cruz Monjas","H","2016-09-13","1234567890"),
 ("PEXF20160910HOCRXR","Francisco","Perez","","Santa Cruz Monjas","H","2016-09-10","1234567890");
 
-INSERT INTO MADERA_CLASIFICACION (id_madera,grueso,ancho,largo,volumen) VALUES 
-("clase12",0.75,12,8.25,6.187),
-("clase10",0.75,10,8.25,5.156),
-("clase8",0.75,8,8.25,4.125),
-("clase6",0.75,6,8.25,3.093),
-("clase4",0.75,4,8.25,2.062),
+INSERT INTO MADERA_ASERRADA_CLASIF (id_madera,grueso,ancho,largo,volumen,costo_por_volumen) VALUES 
+("clase12",0.75,12,8.25,6.187,15),
+("clase10",0.75,10,8.25,5.156,14),
+("clase8",0.75,8,8.25,4.125,13),
+("clase6",0.75,6,8.25,3.093,12),
+("clase4",0.75,4,8.25,2.062,11),
 
-("tercera12",0.75,12,8.25,6.187),
-("tercera10",0.75,10,8.25,5.156),
-("tercera8",0.75,8,8.25,4.125),
-("tercera6",0.75,6,8.25,3.093),
-("tercera4",0.75,4,6.25,2.062),
+("tercera12",0.75,12,8.25,6.187,5),
+("tercera10",0.75,10,8.25,5.156,5),
+("tercera8",0.75,8,8.25,4.125,5),
+("tercera6",0.75,6,8.25,3.093,5),
+("tercera4",0.75,4,6.25,2.062,5),
 
-("cuarta12",0.75,12,8.25,6.187),
-("cuarta10",0.75,10,8.25,5.156),
-("cuarta8",0.75,8,8.25,4.125),
-("cuarta6",0.75,6,8.25,3.093),
-("cuarta4",0.75,4,6.25,2.062),
+("cuarta12",0.75,12,8.25,6.187,7),
+("cuarta10",0.75,10,8.25,5.156,7),
+("cuarta8",0.75,8,8.25,4.125,7),
+("cuarta6",0.75,6,8.25,3.093,7),
+("cuarta4",0.75,4,6.25,2.062,7),
 
-("quinta12",0.75,12,8.25,6.187),
-("quinta10",0.75,10,8.25,5.156),
-("quinta8",0.75,8,8.25,4.125),
-("quinta6",0.75,6,8.25,3.093),
-("quinta4",0.75,4,6.25,2.062);
+("quinta12",0.75,12,8.25,6.187,3),
+("quinta10",0.75,10,8.25,5.156,3),
+("quinta8",0.75,8,8.25,4.125,3),
+("quinta6",0.75,6,8.25,3.093,3),
+("quinta4",0.75,4,6.25,2.062,3);
 
 -- lista de administradores
 DROP VIEW IF EXISTS PERSONAL_ADMINISTRADOR;
@@ -429,15 +423,8 @@ SELECT
 FROM PRODUCCION_MADERA;
 
 
--- Vista para CostoMaderaClasificación
-CREATE VIEW COSTO_MADERA_CLASIFICACION AS 
-SELECT COSTO_MADERA.id_madera AS id_madera, grueso, ancho, largo,volumen, monto_volumen
-	FROM MADERA_CLASIFICACION
-	INNER JOIN COSTO_MADERA 
-	WHERE MADERA_CLASIFICACION.id_madera = COSTO_MADERA.id_madera;
-
-DROP TRIGGER IF EXISTS AGREGAR_INVENTARIO_PRODUCCION;
 -- Disparador para insertar inventario de madera producida cada que se inserta una producción
+DROP TRIGGER IF EXISTS AGREGAR_INVENTARIO_PRODUCCION;
 DELIMITER //
 CREATE TRIGGER AGREGAR_INVENTARIO_PRODUCCION AFTER INSERT ON PRODUCCION_MADERA
 FOR EACH ROW
@@ -531,30 +518,6 @@ SELECT CUENTA_POR_PAGAR.id_persona,
 	FROM CUENTA_POR_PAGAR,CLIENTE WHERE CUENTA_POR_PAGAR.id_persona = CLIENTE.id_cliente;
 -- SELECT * FROM CUENTA_POR_PAGAR_CLIENTE;
 
-INSERT INTO COSTO_MADERA (id_madera,monto_volumen) VALUES 
-("clase12",9.55),
-("clase10",8.45),
-("clase8",7.35),
-("clase6",6.45),
-("clase4",5.00),
-
-("tercera12",5.45),
-("tercera10",4.45),
-("tercera8",3.45),
-("tercera6",2.45),
-("tercera4",1.45),
-
-("cuarta12",4.95),
-("cuarta10",8.45),
-("cuarta8",9.45),
-("cuarta6",10.45),
-("cuarta4",15.45),
-
-("quinta12",25.45),
-("quinta10",35.45),
-("quinta8",45.45),
-("quinta6",45.45),
-("quinta4",75.45);
 
 INSERT INTO ADMINISTRADOR (id_administrador) VALUES ('MASL19931106HOCRNN');
 INSERT INTO CLIENTE (id_cliente, id_persona, id_jefe) VALUES

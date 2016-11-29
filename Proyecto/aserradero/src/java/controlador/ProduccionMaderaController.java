@@ -1,10 +1,10 @@
 package controlador;
 
 import dao.EmpleadoCRUD;
-import dao.MaderaClasificacionCRUD;
+import dao.MaderaAserradaClasifCRUD;
 import dao.ProduccionMaderaCRUD;
 import entidades.Empleado;
-import entidades.MaderaClasificacion;
+import entidades.MaderaAserradaClasif;
 import entidades.ProduccionMadera;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -67,8 +67,8 @@ public class ProduccionMaderaController extends HttpServlet {
                     request.setAttribute("empleados",empleados);
                     
                     //enviamos lista de maderaClasificación al jsp
-                    MaderaClasificacionCRUD maderaClasificacionCRUD= new MaderaClasificacionCRUD();
-                    List<MaderaClasificacion> clasificaciones = (List<MaderaClasificacion>)maderaClasificacionCRUD.listar();
+                    MaderaAserradaClasifCRUD maderaClasificacionCRUD= new MaderaAserradaClasifCRUD();
+                    List<MaderaAserradaClasif> clasificaciones = (List<MaderaAserradaClasif>)maderaClasificacionCRUD.listar();
                     request.setAttribute("clasificaciones",clasificaciones);
                     
                     RequestDispatcher view = request.getRequestDispatcher("produccionMadera/nuevoProduccionMadera.jsp");

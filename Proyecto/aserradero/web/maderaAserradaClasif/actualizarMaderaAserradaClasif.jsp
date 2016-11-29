@@ -4,10 +4,10 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.MaderaClasificacion"%>
+<%@page import="entidades.MaderaAserradaClasif"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    MaderaClasificacion maderaClasificacion = (MaderaClasificacion) request.getAttribute("maderaClasificacion");
+    MaderaAserradaClasif maderaClasificacion = (MaderaAserradaClasif) request.getAttribute("maderaClasificacion");
 %>
 <!DOCTYPE html>
 <html>
@@ -21,7 +21,7 @@
         
          <!-- ******************* Formulario de registro-->
         <div>
-            <form action="/aserradero/MaderaClasificacionController?action=actualizar" method="post" id="formregistro">
+            <form action="/aserradero/MaderaAserradaClasifController?action=actualizar" method="post" id="formregistro">
                 <h3>Modificar datos de madera de producción</h3>
                 <fieldset id="user-details">
                     <table>
@@ -47,7 +47,7 @@
                             <td style="padding-left: 10px;"><input type="number" name="volumen" step=".001" min="0.001" max="99999.999" value="<%=maderaClasificacion.getVolumen()%>" title="Sólo números" required="" /></td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 10px;"><a href="/aserradero/MaderaClasificacionController?action=listar"><input type="button" value="Cancelar"/></a> </td>
+                            <td style="padding-left: 10px;"><a href="/aserradero/MaderaAserradaClasifController?action=listar"><input type="button" value="Cancelar"/></a> </td>
                             <td style="padding-left: 10px;"><input type="submit" value="Guardar"/></td>
                         </tr>
                     </table>

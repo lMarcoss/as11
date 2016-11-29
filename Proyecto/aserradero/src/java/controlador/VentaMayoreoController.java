@@ -2,14 +2,14 @@ package controlador;
 
 import dao.ClienteCRUD;
 import dao.EmpleadoCRUD;
-import dao.MaderaClasificacionCRUD;
+import dao.MaderaAserradaClasifCRUD;
 import dao.VentaCRUD;
 import dao.VentaMayoreoCRUD;
 import entidades.Cliente;
 import entidades.Empleado;
+import entidades.MaderaAserradaClasif;
 import entidades.Venta;
 import entidades.VentaMayoreo;
-import entidadesVirtuales.CostoMaderaClasificacion;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -85,10 +85,9 @@ public class VentaMayoreoController extends HttpServlet {
                     List<Empleado> empleados = (List<Empleado>)empleadoCRUD.listarEmpleadoPorRoll("Empleado");
                     request.setAttribute("empleados",empleados);
                     //enviamos lista de maderaClasificación al jsp
-                    MaderaClasificacionCRUD maderaClasificacionCRUD= new MaderaClasificacionCRUD();
-                    List<CostoMaderaClasificacion> costoMaderaClasificaciones;
-                    costoMaderaClasificaciones = (List<CostoMaderaClasificacion>)maderaClasificacionCRUD.listarCostoMaderaClasif();
-                    request.setAttribute("costoMaderaClasificaciones",costoMaderaClasificaciones);
+                    MaderaAserradaClasifCRUD maderaClasificacionCRUD= new MaderaAserradaClasifCRUD();
+                    List<MaderaAserradaClasif> clasificaciones = (List<MaderaAserradaClasif>)maderaClasificacionCRUD.listar();
+                    request.setAttribute("clasificaciones",clasificaciones);
                     
                     RequestDispatcher view = request.getRequestDispatcher("ventaMayoreo/nuevoVentaMayoreo.jsp");
                     view.forward(request,response);
@@ -108,10 +107,9 @@ public class VentaMayoreoController extends HttpServlet {
                 ventaMayoreoCRUD = new VentaMayoreoCRUD();
                 try {
                     //Enviamos clasificacion de madera con su costo
-                    MaderaClasificacionCRUD maderaClasificacionCRUD= new MaderaClasificacionCRUD();
-                    List<CostoMaderaClasificacion> costoMaderaClasificaciones;
-                    costoMaderaClasificaciones = (List<CostoMaderaClasificacion>)maderaClasificacionCRUD.listarCostoMaderaClasif();
-                    request.setAttribute("costoMaderaClasificaciones",costoMaderaClasificaciones);
+                    MaderaAserradaClasifCRUD maderaClasificacionCRUD= new MaderaAserradaClasifCRUD();
+                    List<MaderaAserradaClasif> clasificaciones = (List<MaderaAserradaClasif>)maderaClasificacionCRUD.listar();
+                    request.setAttribute("clasificaciones",clasificaciones);
                     //enviamos la venta a actualizar
                     ventaMayoreo = (VentaMayoreo) ventaMayoreoCRUD.modificar(ventaMayoreoEC);
                     request.setAttribute("ventaMayoreo",ventaMayoreo);

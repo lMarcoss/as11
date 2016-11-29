@@ -11,7 +11,31 @@ CREATE TABLE PAGO_PRESTAMO(
     FOREIGN KEY(id_prestamo) REFERENCES PRESTAMO (id_prestamo))ENGINE=InnoDB;
 
 
-DROP VIEW VISTA_PAGO_PRESTAMO;
+-- funcion para consultar el monto por pagar de un prestamo
+DROP FUNCTION IF EXISTS MONTO_A_PAGAR;
+DELIMITER //
+CREATE FUNCTION MONTO_A_PAGAR (_id_prestamo INT)
+RETURNS DECIMAL(15,2)
+BEGIN
+	DECLARE _monto_prestamo		 	decimal(15,2);
+	DECLARE _monto_pagar		 	decimal(15,2);
+    DECLARE _monto_pagado		 	decimal(15,2);
+        
+    -- consultamos el monto del prestamo
+    SELECT monto_prestamo INTO _monto_prestamo FROM PRESTAMO WHERE id_prestamo = _id_prestamo;
+    
+	-- Existe cuenta por cobrar al proveedor?
+    IF EXISTS (SELECT monto_pagado FROM VISTA_PRESTAMO_PAGADO WHERE id_prestamo = _id_prestamo limit 1) THEN 
+		SELECT monto_pagado INTO _monto_pagado FROM VISTA_PRESTAMO_PAGADO WHERE id_prestamo = _id_prestamo limit 1;
+        SET _monto_pagar = _monto_prestamo - _monto_pagado;
+        RETURN _monto_pagar;
+	ELSE -- No existe cuenta por cobrar al proveedor
+		RETURN _monto_prestamo;
+    END IF;
+END;//
+DELIMITER ;
+
+DROP VIEW IF EXISTS VISTA_PAGO_PRESTAMO;
 CREATE VIEW VISTA_PAGO_PRESTAMO AS
 SELECT 	
 		PP.id_pago,
@@ -37,26 +61,3 @@ FROM PAGO_PRESTAMO
 GROUP BY id_prestamo;
 
 
--- funcion para consultar el monto por pagar de un prestamo
-DROP FUNCTION IF EXISTS MONTO_A_PAGAR;
-DELIMITER //
-CREATE FUNCTION MONTO_A_PAGAR (_id_prestamo INT)
-RETURNS DECIMAL(15,2)
-BEGIN
-	DECLARE _monto_prestamo		 	decimal(15,2);
-	DECLARE _monto_pagar		 	decimal(15,2);
-    DECLARE _monto_pagado		 	decimal(15,2);
-        
-    -- consultamos el monto del prestamo
-    SELECT monto_prestamo INTO _monto_prestamo FROM PRESTAMO WHERE id_prestamo = _id_prestamo;
-    
-	-- Existe cuenta por cobrar al proveedor?
-    IF EXISTS (SELECT monto_pagado FROM VISTA_PRESTAMO_PAGADO WHERE id_prestamo = _id_prestamo limit 1) THEN 
-		SELECT monto_pagado INTO _monto_pagado FROM VISTA_PRESTAMO_PAGADO WHERE id_prestamo = _id_prestamo limit 1;
-        SET _monto_pagar = _monto_prestamo - _monto_pagado;
-        RETURN _monto_pagar;
-	ELSE -- No existe cuenta por cobrar al proveedor
-		RETURN _monto_prestamo;
-    END IF;
-END;//
-DELIMITER ;

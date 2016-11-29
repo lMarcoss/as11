@@ -53,8 +53,8 @@
         <servlet-class>controlador.ProveedorController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>MaderaClasificacionController</servlet-name>
-        <servlet-class>controlador.MaderaClasificacionController</servlet-class>
+        <servlet-name>MaderaAserradaClasifController</servlet-name>
+        <servlet-class>controlador.MaderaAserradaClasifController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ClasificacionMaderaEntradaController</servlet-name>
@@ -83,10 +83,6 @@
     <servlet>
         <servlet-name>CostoMaderaEntradaController</servlet-name>
         <servlet-class>controlador.ClasificacionMaderaEntradaController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CostoMaderaController</servlet-name>
-        <servlet-class>controlador.CostoMaderaController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>InventarioMaderaEntradaController</servlet-name>
@@ -197,8 +193,8 @@
         <url-pattern>/ProveedorController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>MaderaClasificacionController</servlet-name>
-        <url-pattern>/MaderaClasificacionController</url-pattern>
+        <servlet-name>MaderaAserradaClasifController</servlet-name>
+        <url-pattern>/MaderaAserradaClasifController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ClasificacionMaderaEntradaController</servlet-name>
@@ -235,10 +231,6 @@
     <servlet-mapping>
         <servlet-name>OtroGastoController</servlet-name>
         <url-pattern>/OtroGastoController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CostoMaderaController</servlet-name>
-        <url-pattern>/CostoMaderaController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CuentaPorCobrarController</servlet-name>

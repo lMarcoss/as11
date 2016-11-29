@@ -1,6 +1,7 @@
 -- Vistas del módulo gastos
 USE aserradero;
 
+DROP VIEW IF EXISTS VISTA_PAGO_RENTA;
 CREATE VIEW VISTA_PAGO_RENTA AS 
 SELECT
 	id_pago_renta,

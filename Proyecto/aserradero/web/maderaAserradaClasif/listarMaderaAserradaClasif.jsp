@@ -4,18 +4,18 @@
     Author     : lmarcoss
 --%>
 
+<%@page import="entidades.MaderaAserradaClasif"%>
 <%@page import="java.util.List"%>
-<%@page import="entidades.MaderaClasificacion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    List <MaderaClasificacion> maderaClasificaciones = (List<MaderaClasificacion>) request.getAttribute("maderaClasificaciones");
+    List <MaderaAserradaClasif> listaMaderaAserradaClasif = (List<MaderaAserradaClasif>) request.getAttribute("listaMaderaAserradaClasif");
     String mensaje = (String)request.getAttribute("mensaje");
 %>
 <!DOCTYPE html>
 <html>
     <head>
         <%@ include file="/TEMPLATE/head.jsp" %>
-        <title>Nuevo</title>
+        <title>Clasificación madera aserrada</title>
     </head>
     <body>
         <!--menu-->
@@ -25,7 +25,7 @@
         
         <!-- ************************** opción de búsqueda-->
         <div>
-            <form method="POST" action="/aserradero/MaderaClasificacionController?action=buscar">
+            <form method="POST" action="/aserradero/MaderaAserradaClasifController?action=buscar">
                 <table>
                     <tr>
                         <td>
@@ -35,6 +35,7 @@
                             <option value="ancho">Ancho</option>
                             <option value="largo">Largo</option>
                             <option value="volumen">Volumen</option>
+                            <option value="costo_por_volumen">Volumen</option>
                         </select>
                         </td>
                         <td><input type="text" name="dato" placeholder="Escriba su búsqueda"></td>
@@ -59,7 +60,7 @@
                     </tr>
                     <%
                         int i=0;
-                        for (MaderaClasificacion maderaClasificacion : maderaClasificaciones) {
+                        for (MaderaAserradaClasif maderaClasificacion : listaMaderaAserradaClasif) {
                             out.print("<tr>"
                                 +"<td>"+(i+1)+"</td>"
                                 +"<td><a href=\"/aserradero/CostoMaderaController?action=buscar_madera&id_madera="+maderaClasificacion.getId_madera()+"\">"+maderaClasificacion.getId_madera()+"</a></td>"
@@ -67,15 +68,16 @@
                                 +"<td>"+maderaClasificacion.getAncho()+"</td>"
                                 +"<td>"+maderaClasificacion.getLargo()+"</td>"
                                 +"<td>"+maderaClasificacion.getVolumen()+"</td>"
-                                +"<td><a href=\"/aserradero/MaderaClasificacionController?action=modificar&id_madera="+maderaClasificacion.getId_madera()+"\">Actualizar</a></td>"
-                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/MaderaClasificacionController?action=eliminar&id_madera="+maderaClasificacion.getId_madera()+"';};\">Eliminar</a></td>"
+                                +"<td>"+maderaClasificacion.getCosto_por_volumen()+"</td>"
+                                +"<td><a href=\"/aserradero/MaderaAserradaClasifController?action=modificar&id_madera="+maderaClasificacion.getId_madera()+"\">Actualizar</a></td>"
+                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/MaderaAserradaClasifController?action=eliminar&id_madera="+maderaClasificacion.getId_madera()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;
                         }
                     %>
             </table>
             <div>
-                <input type="button" value="Registrar nueva clasificación" onClick=" window.location.href='/aserradero/MaderaClasificacionController?action=nuevo' ">
+                <input type="button" value="Registrar nueva clasificación" onClick=" window.location.href='/aserradero/MaderaAserradaClasifController?action=nuevo' ">
             </div>
         </div><!-- Resultado Consulta-->
     </body>

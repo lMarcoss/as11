@@ -4,12 +4,12 @@
     Author     : lmarcoss
 --%>
 
+<%@page import="entidades.MaderaAserradaClasif"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="entidades.Cliente"%>
 <%@page import="entidades.Empleado"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.sql.Date"%>
-<%@page import="entidadesVirtuales.CostoMaderaClasificacion"%>
 <%@page import="entidades.Venta"%>
 <%@page import="java.util.List"%>
 <%@page import="entidades.VentaMayoreo"%>
@@ -21,7 +21,7 @@
     List <Empleado> empleados = (List<Empleado>) request.getAttribute("empleados");
     List <Venta> ventas = (List<Venta>) request.getAttribute("ventas");
     String id_nVenta = String.valueOf(request.getAttribute("siguienteventa"));
-    List <CostoMaderaClasificacion> costoMaderaClasificaciones = (List<CostoMaderaClasificacion>) request.getAttribute("costoMaderaClasificaciones");
+    List <MaderaAserradaClasif> clasificaciones = (List<MaderaAserradaClasif>) request.getAttribute("clasificaciones");
 
 %>
 <%
@@ -100,7 +100,7 @@
                                         <select class="form-control" name="id_madera" required="" id="id_madera" onblur="seleccionarCostoMaderaVenta()">
                                             <option></option>
                                             <%
-                                                for (CostoMaderaClasificacion costoMaderaClasificacion : costoMaderaClasificaciones) {
+                                                for (MaderaAserradaClasif costoMaderaClasificacion : clasificaciones) {
                                                     out.print("<option value='"+costoMaderaClasificacion.getId_madera()+"'>"+costoMaderaClasificacion.getId_madera()+"</option>");
                                                 }
                                             %>
@@ -109,8 +109,7 @@
                                         <select name="volumen_unitaria" class="form-control" id="volumen_unitaria" readonly="" disabled="">
                                             <option></option>
                                             <%
-                                                for (CostoMaderaClasificacion costoMaderaClasificacion : costoMaderaClasificaciones) {
-                                                    out.print("<option value='"+costoMaderaClasificacion.getMonto_volumen()+"'>"+costoMaderaClasificacion.getMonto_volumen()+"</option>");
+                                                for (MaderaAserradaClasif costoMaderaClasificacion : clasificaciones) {
                                                     out.print("<option value='"+costoMaderaClasificacion.getVolumen()+"'>"+costoMaderaClasificacion.getVolumen()+"</option>");
                                                 }
                                             %>
@@ -121,8 +120,8 @@
                                         <select name="costo_volumen" class="form-control" id="costo_volumen" readonly="" disabled="">
                                             <option></option>
                                             <%
-                                                for (CostoMaderaClasificacion costoMaderaClasificacion : costoMaderaClasificaciones) {
-                                                    out.print("<option value='"+costoMaderaClasificacion.getMonto_volumen()+"'>"+costoMaderaClasificacion.getMonto_volumen()+"</option>");
+                                                for (MaderaAserradaClasif costoMaderaClasificacion : clasificaciones) {
+                                                    out.print("<option value='"+costoMaderaClasificacion.getCosto_por_volumen()+"'>"+costoMaderaClasificacion.getCosto_por_volumen()+"</option>");
                                                 }
                                             %>
                                         </select>

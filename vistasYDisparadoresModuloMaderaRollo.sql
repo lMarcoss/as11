@@ -23,7 +23,6 @@ SELECT
     id_pago
 FROM ENTRADA_MADERA_ROLLO;
 
-SELECT * FROM VISTA_ENTRADA_MADERA_ROLLO;
 -- Disparador para insertar en inventario entrada cada que se inserta en entrada madera
 DROP TRIGGER IF EXISTS INVENTARIO_MADERA_ENTRADA;
 DELIMITER //
@@ -129,7 +128,6 @@ BEGIN
     DECLARE _monto_total_new DECIMAL(15,2);			-- monto para actualizar pago compra
     DECLARE _monto_total_old DECIMAL(15,2);			-- monto para actualizar pago compra
     DECLARE _volumen_total_old DECIMAL(15,3);
-    DECLARE _monto_total_old DECIMAL(15,2);
     
     -- Verificamos los valores antiguos
     SET _volumen_total_old = OLD.volumen_primario + OLD.volumen_secundario + OLD.volumen_terciario;
@@ -164,7 +162,7 @@ BEGIN
     END IF;
 END;//
 DELIMITER ;
-SELECT * FROM ENTRADA_MADERA_ROLLO;
+
 -- Actualizar inventario cada que se modifica una salida de madera
 DROP TRIGGER IF EXISTS ACTUALIZAR_SALIDA_MADERA_ROLLO;
 DELIMITER //
@@ -201,9 +199,8 @@ BEGIN
 END;//
 DELIMITER ;
 
-SELECT * FROM PAGO_COMPRA;
--- Procedimiento de actualización de cuentas para anticipo proveedores
-DROP PROCEDURE IF EXISTS UPDATE_CUENTAS_AFTER_ANTICIPO_PROVEEDOR;
+-- ACTUALIZAR PAGO COMPRA
+DROP PROCEDURE IF EXISTS ACTUALIZAR_PAGO_COMPRA;
 DELIMITER //
 CREATE PROCEDURE ACTUALIZAR_PAGO_COMPRA(IN _id_pago INT, IN _monto_total_new DECIMAL(15,2), IN _monto_total_old DECIMAL(15,2))
 BEGIN
@@ -226,7 +223,6 @@ BEGIN
 END;//
 DELIMITER ;
 
-describe ENTRADA_MADERA_ROLLO;
 
 /*
 	Falta actualizacion de las entradas para el caso cuando estan pagadas

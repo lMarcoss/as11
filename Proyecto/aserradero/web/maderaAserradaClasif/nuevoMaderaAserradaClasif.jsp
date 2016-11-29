@@ -19,7 +19,7 @@
         
          <!-- ******************* Formulario de registro-->
         <div>
-            <form action="/aserradero/MaderaClasificacionController?action=nuevo" method="post" id="formregistro">
+            <form action="/aserradero/MaderaAserradaClasifController?action=nuevo" method="post" id="formregistro">
                 <h3>Registrar nuevo tipo de madera producción</h3>
                 <fieldset id="user-details">
                     <table>
@@ -45,7 +45,7 @@
                             <td style="padding-left: 10px;"><input type="number" name="volumen" id="volumen" step=".001" min="0.001" max="99999.999" title="Sólo números" required="" /></td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 10px;"><a href="/aserradero/MaderaClasificacionController?action=listar"><input type="button" value="Cancelar"/></a> </td>
+                            <td style="padding-left: 10px;"><a href="/aserradero/MaderaAserradaClasifController?action=listar"><input type="button" value="Cancelar"/></a> </td>
                             <td style="padding-left: 10px;"><input type="submit" value="Guardar"/></td>
                         </tr>
                     </table>
