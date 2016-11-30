@@ -124,17 +124,17 @@ CREATE TABLE MADERA_ASERRADA_CLASIF(
 	ancho					DECIMAL(8,2),
 	largo					DECIMAL(8,2),
 	volumen					DECIMAL(15,3),
-    costo_por_volumen		DECIMAL(15,3),
+    costo_por_volumen		DECIMAL(15,2),
 	primary key(id_madera))ENGINE=InnoDB;
     
 -- producción
-CREATE TABLE PRODUCCION_MADERA(
-	id_produccion	INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE ENTRADA_MADERA_ASERRADA(
+	id_entrada	INT NOT NULL AUTO_INCREMENT,
 	fecha 			DATE,
  	id_madera    	VARCHAR(20) NOT NULL,
  	num_piezas 		INT,
     id_empleado 	CHAR(26) NOT NULL,
- 	PRIMARY KEY (id_produccion),
+ 	PRIMARY KEY (id_entrada),
     FOREIGN KEY (id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_madera),
     FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
@@ -411,22 +411,22 @@ SELECT id_pago_empleado,
 FROM PAGO_EMPLEADO,EMPLEADO WHERE PAGO_EMPLEADO.id_empleado = EMPLEADO.id_empleado;
 -- SELECT * FROM VISTA_PAGO_EMPLEADO;
 
-CREATE VIEW VISTA_PRODUCCION_MADERA AS
+CREATE VIEW VISTA_ENTRADA_MADERA_ASERRADA AS
 SELECT 
-	id_produccion,
+	id_entrada,
     fecha,
     id_madera,
     num_piezas,
     id_empleado,
-    (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) from PERSONA where id_persona = SUBSTRING(PRODUCCION_MADERA.id_empleado,1,18)) as empleado,
-    (select id_jefe from EMPLEADO where id_empleado = PRODUCCION_MADERA.id_empleado) as id_jefe
-FROM PRODUCCION_MADERA;
+    (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) from PERSONA where id_persona = SUBSTRING(ENTRADA_MADERA_ASERRADA.id_empleado,1,18)) as empleado,
+    (select id_jefe from EMPLEADO where id_empleado = ENTRADA_MADERA_ASERRADA.id_empleado) as id_jefe
+FROM ENTRADA_MADERA_ASERRADA;
 
 
 -- Disparador para insertar inventario de madera producida cada que se inserta una producción
 DROP TRIGGER IF EXISTS AGREGAR_INVENTARIO_PRODUCCION;
 DELIMITER //
-CREATE TRIGGER AGREGAR_INVENTARIO_PRODUCCION AFTER INSERT ON PRODUCCION_MADERA
+CREATE TRIGGER AGREGAR_INVENTARIO_PRODUCCION AFTER INSERT ON ENTRADA_MADERA_ASERRADA
 FOR EACH ROW
 BEGIN
 	-- consultamos el administrador
@@ -445,7 +445,7 @@ DELIMITER ;
 DROP TRIGGER IF EXISTS ACTUALIZAR_INVENTARIO_PRODUCCION;
 -- Disparador para actualizar inventario de madera producida cada que actualiza producción_madera
 DELIMITER //
-CREATE TRIGGER ACTUALIZAR_INVENTARIO_PRODUCCION  BEFORE UPDATE ON PRODUCCION_MADERA
+CREATE TRIGGER ACTUALIZAR_INVENTARIO_PRODUCCION  BEFORE UPDATE ON ENTRADA_MADERA_ASERRADA
 FOR EACH ROW
 BEGIN
 	-- consultamos el administrador

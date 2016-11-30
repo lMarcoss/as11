@@ -11,7 +11,7 @@ SELECT
     (select id_jefe FROM EMPLEADO WHERE id_empleado = id_empleado limit 1) as id_administrador,
     monto_prestamo,
     interes,
-    ROUND((monto_prestamo * (interes/100)),2) AS interes_mensual,
+    ROUND((ROUND((SELECT MONTO_A_PAGAR(id_prestamo)),2) * (interes/100)),2) AS interes_mensual,
     ROUND((monto_prestamo - (SELECT MONTO_A_PAGAR(id_prestamo))),2) AS monto_pagado,
     ROUND((SELECT MONTO_A_PAGAR(id_prestamo)),2) AS monto_por_pagar
 FROM PRESTAMO;

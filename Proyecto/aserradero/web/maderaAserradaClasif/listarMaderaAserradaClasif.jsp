@@ -34,8 +34,8 @@
                             <option value="greso">Grueso</option>
                             <option value="ancho">Ancho</option>
                             <option value="largo">Largo</option>
-                            <option value="volumen">Volumen</option>
-                            <option value="costo_por_volumen">Volumen</option>
+                            <option value="volumen">Volumen unitario</option>
+                            <option value="costo_por_volumen">Costo por volumen</option>
                         </select>
                         </td>
                         <td><input type="text" name="dato" placeholder="Escriba su búsqueda"></td>
@@ -54,7 +54,8 @@
                         <th>Grueso</th>
                         <th>Ancho</th>
                         <th>Largo</th>
-                        <th>Volumen</th>
+                        <th>Volumen unitario</th>
+                        <th>Costo por volumen</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -63,13 +64,13 @@
                         for (MaderaAserradaClasif maderaClasificacion : listaMaderaAserradaClasif) {
                             out.print("<tr>"
                                 +"<td>"+(i+1)+"</td>"
-                                +"<td><a href=\"/aserradero/CostoMaderaController?action=buscar_madera&id_madera="+maderaClasificacion.getId_madera()+"\">"+maderaClasificacion.getId_madera()+"</a></td>"
+                                +"<td>"+maderaClasificacion.getId_madera()+"</td>"
                                 +"<td>"+maderaClasificacion.getGrueso()+"</td>"
                                 +"<td>"+maderaClasificacion.getAncho()+"</td>"
                                 +"<td>"+maderaClasificacion.getLargo()+"</td>"
                                 +"<td>"+maderaClasificacion.getVolumen()+"</td>"
                                 +"<td>"+maderaClasificacion.getCosto_por_volumen()+"</td>"
-                                +"<td><a href=\"/aserradero/MaderaAserradaClasifController?action=modificar&id_madera="+maderaClasificacion.getId_madera()+"\">Actualizar</a></td>"
+                                +"<td><a href=\"/aserradero/MaderaAserradaClasifController?action=modificar&id_madera="+maderaClasificacion.getId_madera()+"\">Modificar</a></td>"
                                 + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/MaderaAserradaClasifController?action=eliminar&id_madera="+maderaClasificacion.getId_madera()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;

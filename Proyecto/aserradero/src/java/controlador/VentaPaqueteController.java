@@ -2,12 +2,12 @@ package controlador;
 
 import dao.ClienteCRUD;
 import dao.EmpleadoCRUD;
-import dao.MaderaAserradaClasifCRUD;
+import dao.InventarioMaderaAserradaCRUD;
 import dao.VentaCRUD;
 import dao.VentaPaqueteCRUD;
 import entidades.Cliente;
 import entidades.Empleado;
-import entidades.MaderaAserradaClasif;
+import entidades.InventarioMaderaAserrada;
 import entidades.Venta;
 import entidades.VentaPaquete;
 import java.io.IOException;
@@ -62,60 +62,56 @@ public class VentaPaqueteController extends HttpServlet {
         VentaPaquete ventaPaqueteEC; //Enviar al CRUD
         VentaPaquete ventaPaquete; //Respuesta del CRUD
         VentaPaqueteCRUD ventaPaqueteCRUD;
-        switch(action){
+        switch (action) {
             case "nuevo":
                 try {
-                    //enviamos lista de ventas al jsp
-                    VentaCRUD ventaCRUD= new VentaCRUD();
-                    List<Venta> ventas;
-                    ventas = (List<Venta>)ventaCRUD.listarVentasPaquete();
-                    request.setAttribute("ventas",ventas);
-                    
                     
                     //Generamos el Id de venta con los milisegundos del sistema
                     String id_venta = String.valueOf(System.currentTimeMillis());
                     request.setAttribute("siguienteventa", id_venta);
-                    
-                     //Enviamos la lista de clientes
-                    ClienteCRUD clienteCRUD= new ClienteCRUD();
-                    List<Cliente> clientes = (List<Cliente>)clienteCRUD.listar();
-                    request.setAttribute("clientes",clientes);
-                    
+
+                    //Enviamos la lista de clientes
+                    ClienteCRUD clienteCRUD = new ClienteCRUD();
+                    List<Cliente> clientes = (List<Cliente>) clienteCRUD.listar();
+                    request.setAttribute("clientes", clientes);
+
                     //Enviamos la lista de empleados
-                    EmpleadoCRUD empleadoCRUD= new EmpleadoCRUD();
-                    List<Empleado> empleados = (List<Empleado>)empleadoCRUD.listarEmpleadoPorRoll("Empleado");
-                    request.setAttribute("empleados",empleados);
-                    
-                    //enviamos lista de maderaClasificacion al jsp
-                    MaderaAserradaClasifCRUD maderaClasificacionCRUD= new MaderaAserradaClasifCRUD();
-                    List<MaderaAserradaClasif> clasificaciones = (List<MaderaAserradaClasif>)maderaClasificacionCRUD.listar();
-                    request.setAttribute("clasificaciones",clasificaciones);
-                    
+                    EmpleadoCRUD empleadoCRUD = new EmpleadoCRUD();
+                    List<Empleado> empleados = (List<Empleado>) empleadoCRUD.listarEmpleadoPorRoll("Empleado");
+                    request.setAttribute("empleados", empleados);
+
+                    //enviamos lista de inventario de madera aserrada
+                    InventarioMaderaAserradaCRUD inventarioMACRUD = new InventarioMaderaAserradaCRUD();
+                    List<InventarioMaderaAserrada> listaInventario = (List<InventarioMaderaAserrada>) inventarioMACRUD.listar();
+                    request.setAttribute("listaInventario", listaInventario);
+
                     RequestDispatcher view = request.getRequestDispatcher("ventaPaquete/nuevoVentaPaquete.jsp");
-                    view.forward(request,response);
+                    view.forward(request, response);
                 } catch (Exception ex) {
-                    listarVentaPaquetes(request, response,"error_nuevo");
+                    listarVentaPaquetes(request, response, "error_nuevo");
                     Logger.getLogger(VentaPaqueteController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 break;
             case "listar":
-                listarVentaPaquetes(request, response,"Lista de ventas por paquete");
+                listarVentaPaquetes(request, response, "Lista de ventas por paquete");
                 break;
             case "modificar":
                 ventaPaqueteEC = extraerClavesVentaPaquete(request);
                 ventaPaqueteCRUD = new VentaPaqueteCRUD();
                 try {
-                    //Enviamos clasificacion de madera con su costo
-                    MaderaAserradaClasifCRUD maderaClasificacionCRUD= new MaderaAserradaClasifCRUD();
-                    List<MaderaAserradaClasif> costoMaderaClasificaciones = (List<MaderaAserradaClasif>)maderaClasificacionCRUD.listar();
-                    request.setAttribute("costoMaderaClasificaciones",costoMaderaClasificaciones);
+
+                    //enviamos lista de inventario de madera aserrada
+                    InventarioMaderaAserradaCRUD inventarioMACRUD = new InventarioMaderaAserradaCRUD();
+                    List<InventarioMaderaAserrada> listaInventario = (List<InventarioMaderaAserrada>) inventarioMACRUD.listar();
+                    request.setAttribute("listaInventario", listaInventario);
+
                     //enviamos el paquete a modificar
                     ventaPaquete = (VentaPaquete) ventaPaqueteCRUD.modificar(ventaPaqueteEC);
-                    request.setAttribute("ventaPaquete",ventaPaquete);
-                    
+                    request.setAttribute("ventaPaquete", ventaPaquete);
+
                     RequestDispatcher view = request.getRequestDispatcher("ventaPaquete/actualizarVentaPaquete.jsp");
-                    view.forward(request,response);
+                    view.forward(request, response);
                 } catch (Exception ex) {
                     listarVentaPaquetes(request, response, "error_modificar");
                     System.out.println(ex);
@@ -127,13 +123,13 @@ public class VentaPaqueteController extends HttpServlet {
                 ventaPaqueteCRUD = new VentaPaqueteCRUD();
                 try {
                     ventaPaqueteCRUD.eliminar(ventaPaqueteEC);
-                    listarVentaPaquetes(request, response,"eliminado");
+                    listarVentaPaquetes(request, response, "eliminado");
                 } catch (Exception ex) {
                     listarVentaPaquetes(request, response, "error_eliminar");
                     System.out.println(ex);
                     Logger.getLogger(VentaPaqueteController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                break;                        
+                break;
         }
     }
 
@@ -154,13 +150,13 @@ public class VentaPaqueteController extends HttpServlet {
         String action = request.getParameter("action");
         VentaPaquete ventaPaquete;
         VentaPaqueteCRUD ventaPaqueteCRUD;
-        switch(action){
+        switch (action) {
             case "nuevo":
                 ventaPaquete = extraerVentaPaqueteForm(request);
                 ventaPaqueteCRUD = new VentaPaqueteCRUD();
                 try {
                     ventaPaqueteCRUD.registrar(ventaPaquete);
-                    listarVentaPaquetes(request, response,"registrado");
+                    listarVentaPaquetes(request, response, "registrado");
                 } catch (Exception ex) {
                     listarVentaPaquetes(request, response, "error_registrar");
                     System.out.println(ex);
@@ -172,7 +168,7 @@ public class VentaPaqueteController extends HttpServlet {
                 ventaPaqueteCRUD = new VentaPaqueteCRUD();
                 try {
                     ventaPaqueteCRUD.actualizar(ventaPaquete);
-                    listarVentaPaquetes(request, response,"actualizado");
+                    listarVentaPaquetes(request, response, "actualizado");
                 } catch (Exception ex) {
                     listarVentaPaquetes(request, response, "error_actualizar");
                     System.out.println(ex);
@@ -180,15 +176,15 @@ public class VentaPaqueteController extends HttpServlet {
                 }
                 break;
             case "buscar":
-                List <VentaPaquete> ventaPaquetes;
+                List<VentaPaquete> ventaPaquetes;
                 String nombre_campo = request.getParameter("nombre_campo");
                 String dato = request.getParameter("dato");
                 ventaPaqueteCRUD = new VentaPaqueteCRUD();
                 try {
-                    ventaPaquetes = (List<VentaPaquete>)ventaPaqueteCRUD.buscar(nombre_campo, dato);
-                    request.setAttribute("ventaPaquetes",ventaPaquetes);
+                    ventaPaquetes = (List<VentaPaquete>) ventaPaqueteCRUD.buscar(nombre_campo, dato);
+                    request.setAttribute("ventaPaquetes", ventaPaquetes);
                     RequestDispatcher view = request.getRequestDispatcher("ventaPaquete/ventaPaquetes.jsp");
-                    view.forward(request,response);
+                    view.forward(request, response);
                 } catch (Exception ex) {
                     listarVentaPaquetes(request, response, "error_buscar_campo");
                     System.out.println(ex);
@@ -207,24 +203,24 @@ public class VentaPaqueteController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-    private void listarVentaPaquetes(HttpServletRequest request, HttpServletResponse response,String mensaje) {
+
+    private void listarVentaPaquetes(HttpServletRequest request, HttpServletResponse response, String mensaje) {
         List<VentaPaquete> ventaPaquetes;
         VentaPaqueteCRUD ventaPaqueteCrud = new VentaPaqueteCRUD();
         try {
-            ventaPaquetes = (List<VentaPaquete>)ventaPaqueteCrud.listar();
+            ventaPaquetes = (List<VentaPaquete>) ventaPaqueteCrud.listar();
             //Enviamos las listas al jsp
-            request.setAttribute("ventaPaquetes",ventaPaquetes);
+            request.setAttribute("ventaPaquetes", ventaPaquetes);
             //Enviamos mensaje al jsp
-            request.setAttribute("mensaje",mensaje);
+            request.setAttribute("mensaje", mensaje);
             RequestDispatcher view = request.getRequestDispatcher("ventaPaquete/ventaPaquetes.jsp");
-            view.forward(request,response);
+            view.forward(request, response);
         } catch (Exception ex) {
             System.out.println(ex);
             Logger.getLogger(VentaPaqueteController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     // Extraer datos del formulario
     private VentaPaquete extraerVentaPaqueteForm(HttpServletRequest request) {
         VentaPaquete ventaPaquete = new VentaPaquete();

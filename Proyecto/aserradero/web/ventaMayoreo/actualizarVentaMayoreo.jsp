@@ -4,12 +4,12 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidadesVirtuales.CostoMaderaClasificacion"%>
+<%@page import="entidades.InventarioMaderaAserrada"%>
 <%@page import="java.util.List"%>
 <%@page import="entidades.VentaMayoreo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    List <CostoMaderaClasificacion> costoMaderaClasificaciones = (List<CostoMaderaClasificacion>) request.getAttribute("costoMaderaClasificaciones");
+    List <InventarioMaderaAserrada> listaInventario = (List<InventarioMaderaAserrada>) request.getAttribute("listaInventario");
     VentaMayoreo ventaMayoreo = (VentaMayoreo) request.getAttribute("ventaMayoreo");
 %>
 <!DOCTYPE html>
@@ -35,12 +35,12 @@
                             </td>
                         </tr>
                         <%
-                            for (CostoMaderaClasificacion costoMaderaClasificacion : costoMaderaClasificaciones) {
-                                if(costoMaderaClasificacion.getId_madera().equals(ventaMayoreo.getId_madera())){
+                            for (InventarioMaderaAserrada inventario : listaInventario) {
+                                if(inventario.getId_madera().equals(ventaMayoreo.getId_madera())){
 
-                                    out.print("<tr><td style='padding-left: 10px;'><label>Madera:</label></td><td style='padding-left: 10px;'><input name='id_madera' id='id_madera' value='"+costoMaderaClasificacion.getId_madera()+"' readonly=''/></td></tr>");
-                                    out.print("<tr><td>volumen unitaria<select name='volumen_unitaria' id='volumen_unitaria' readonly=''><option value='"+costoMaderaClasificacion.getVolumen()+"'>"+costoMaderaClasificacion.getVolumen()+"</option></select></td>");
-                                    out.print("<td>Costo volumen<select name='costo_volumen' id='costo_volumen' readonly=''><option value='"+costoMaderaClasificacion.getMonto_volumen()+"'>"+costoMaderaClasificacion.getMonto_volumen()+"</option></select></td></tr>");
+                                    out.print("<tr><td style='padding-left: 10px;'><label>Madera:</label></td><td style='padding-left: 10px;'><input name='id_madera' id='id_madera' value='"+inventario.getId_madera()+"' readonly=''/></td></tr>");
+                                    out.print("<tr><td>volumen unitaria<select name='volumen_unitaria' id='volumen_unitaria' readonly=''><option value='"+inventario.getVolumen_unitario()+"'>"+inventario.getVolumen_unitario()+"</option></select></td>");
+                                    out.print("<td>Costo volumen<select name='costo_volumen' id='costo_volumen' readonly=''><option value='"+inventario.getCosto_por_volumen()+"'>"+inventario.getCosto_por_volumen()+"</option></select></td></tr>");
                                 }
                             }
                         %>

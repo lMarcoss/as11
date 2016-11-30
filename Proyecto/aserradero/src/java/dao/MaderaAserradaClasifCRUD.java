@@ -102,7 +102,7 @@ public class MaderaAserradaClasifCRUD extends Conexion implements OperacionesCRU
         MaderaAserradaClasif maderaClasificacion = (MaderaAserradaClasif) objeto;
         try{
             this.abrirConexion();
-            PreparedStatement st= this.conexion.prepareStatement("UPDATE MADERA_ASERRADA_CLASIF SET grueso = ?, ancho = ?, largo = ?, volumen = ? WHERE id_madera= ?");
+            PreparedStatement st= this.conexion.prepareStatement("UPDATE MADERA_ASERRADA_CLASIF SET grueso = ?, ancho = ?, largo = ?, volumen = ?, costo_por_volumen = ? WHERE id_madera= ?");
             st.setBigDecimal(1,maderaClasificacion.getGrueso());
             st.setBigDecimal(2,maderaClasificacion.getAncho());
             st.setBigDecimal(3,maderaClasificacion.getLargo());

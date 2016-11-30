@@ -17,7 +17,7 @@
 
 <script src="/aserradero/js/id_persona.js"></script>
 <script src="/aserradero/js/validarFormulario.js"></script>
-<script src="/aserradero/js/selectorCostoMaderas.js"></script>
+<!--<script src="/aserradero/js/selectorCostoMaderas.js"></script>-->
 <script src="/aserradero/js/mensajeError.js"></script>
 <script languaje="javascript" type="text/javascript">
     window.history.go(1);

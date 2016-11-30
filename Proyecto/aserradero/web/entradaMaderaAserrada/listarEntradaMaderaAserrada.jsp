@@ -3,10 +3,10 @@
     Created on : 28-sep-2016, 9:48:27
     Author     : lmarcoss
 --%>
-<%@page import="entidades.ProduccionMadera"%>
+<%@page import="entidades.EntradaMaderaAserrada"%>
 <%@page import="java.util.List"%>
 <%
-    List <ProduccionMadera> produccionMaderas = (List<ProduccionMadera>) request.getAttribute("produccionMaderas");
+    List <EntradaMaderaAserrada> listaMEAserrada = (List<EntradaMaderaAserrada>) request.getAttribute("listaMEAserrada");
     String mensaje = (String)request.getAttribute("mensaje");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -24,7 +24,7 @@
         
         <!-- ************************** opción de búsqueda-->
         <div>
-            <form method="POST" action="/aserradero/ProduccionMaderaController?action=buscar">
+            <form method="POST" action="/aserradero/EntradaMaderaAserradaController?action=buscar">
                 <table>
                     <tr>
                         <td>
@@ -56,24 +56,24 @@
                     </tr>
                     <%
                         int i=0;
-                        for (ProduccionMadera produccionMadera : produccionMaderas) {
+                        for (EntradaMaderaAserrada maderaAserrada : listaMEAserrada) {
                             out.print("<tr>"
                                 +"<td>"+(i+1)+"</td>"
-                                +"<td>"+produccionMadera.getFecha()+"</td>"
-                                +"<td>"+produccionMadera.getId_madera()+"</td>"
-                                +"<td>"+produccionMadera.getNum_piezas()+"</td>"
-                                +"<td>"+produccionMadera.getEmpleado()+"</td>"
+                                +"<td>"+maderaAserrada.getFecha()+"</td>"
+                                +"<td>"+maderaAserrada.getId_madera()+"</td>"
+                                +"<td>"+maderaAserrada.getNum_piezas()+"</td>"
+                                +"<td>"+maderaAserrada.getEmpleado()+"</td>"
                                         
 //                                +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+produccionMadera.getId_empleado().substring(0,18)+"\">"+produccionMadera.getEmpleado()+"</a></td>"
-                                +"<td><a href=\"/aserradero/ProduccionMaderaController?action=modificar&id_produccion="+produccionMadera.getId_produccion()+"\">Modificar</a></td>"
-//                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/ProduccionMaderaController?action=eliminar&id_produccion="+produccionMadera.getId_produccion()+"';};\">Eliminar</a></td>"
+                                +"<td><a href=\"/aserradero/EntradaMaderaAserradaController?action=modificar&id_entrada="+maderaAserrada.getId_entrada()+"\">Modificar</a></td>"
+//                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/EntradaMaderaAserradaController?action=eliminar&id_produccion="+produccionMadera.getId_produccion()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;
                         }
                     %>
             </table>
             <div>
-                <input type="button" value="Agregar entrada" onClick=" window.location.href='/aserradero/ProduccionMaderaController?action=nuevo' ">
+                <input type="button" value="Agregar entrada" onClick=" window.location.href='/aserradero/EntradaMaderaAserradaController?action=nuevo' ">
             </div>
         </div><!-- Resultado Consulta-->
     </body>
