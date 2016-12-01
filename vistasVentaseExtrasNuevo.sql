@@ -1,10 +1,6 @@
 use aserradero;
 
-<<<<<<< HEAD:vistasVentaseExtrasNuevo.sql
 DROP VIEW IF EXISTS VISTA_VENTA_EXTRA;
-=======
-
->>>>>>> c34190ef37e49ccfd9819233ffab5654f99fc8cd:vistasVentasLeo.sql
 CREATE VIEW VISTA_VENTA_EXTRA AS
 SELECT 
 	V.id_venta, 
@@ -22,11 +18,7 @@ FROM VENTA as V, VENTA_EXTRA as VE
 WHERE V.id_venta = VE.id_venta
 GROUP BY id_venta;
 
-<<<<<<< HEAD:vistasVentaseExtrasNuevo.sql
 DROP VIEW IF EXISTS VISTA_VENTA_MAYOREO;
-=======
--- DROP VIEW VISTA_VENTA_MAYOREO;
->>>>>>> c34190ef37e49ccfd9819233ffab5654f99fc8cd:vistasVentasLeo.sql
 CREATE VIEW VISTA_VENTA_MAYOREO AS
 SELECT 
 	V.id_venta, 
@@ -44,11 +36,7 @@ FROM VENTA as V, VENTA_MAYOREO as VM
 WHERE V.id_venta = VM.id_venta
 GROUP BY id_venta;
 
-<<<<<<< HEAD:vistasVentaseExtrasNuevo.sql
 DROP VIEW IF EXISTS VISTA_VENTA_PAQUETE;
-=======
--- DROP VIEW VISTA_VENTA_PAQUETE;
->>>>>>> c34190ef37e49ccfd9819233ffab5654f99fc8cd:vistasVentasLeo.sql
 CREATE VIEW VISTA_VENTA_PAQUETE AS
 SELECT 
 	V.id_venta, 
