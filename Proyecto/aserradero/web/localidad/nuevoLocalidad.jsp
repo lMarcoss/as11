@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : nuevoMunicipio
     Created on : 13-sep-2016, 17:20:34
     Author     : lmarcoss
@@ -13,47 +13,57 @@
     <head>
         <%@ include file="/TEMPLATE/head.jsp" %>
         <title>Nuevo</title>
+        <script>
+            $(document).ready(function ($) {
+                $("#registros").css("background", "#448D00");
+                $("#localidades").css("background", "#448D00");
+            });
+        </script>
     </head>
     <body>
-        <!--menu-->
         <%@ include file="/TEMPLATE/menu.jsp" %>
-        
-        <!-- ******************* Formulario de registro-->
-        <div>
-            <form action="/aserradero/LocalidadController?action=nuevo" method="post" id="formregistro">
-                <h3>Agregar localidad</h3>
-                <fieldset id="user-details">
-                    <table>
-                        <tr>
-                            <td style="padding-left: 10px;"><label for="name">Nombre localidad:</label></td>
-                            <td style="padding-left: 10px;"><input type="text" name="nombre_localidad"  pattern="[A-Za-z].{3,}[A-Za-z]" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="45" required=""/></td>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 10px;"><label>Nombre municipio:</label></td>
-                            <td style="padding-left: 10px;">
-                                <select name="nombre_municipio" required="">
-                                    <option></option>
-                                    <%
-                                        for (Municipio municipio : municipios) {
-                                            out.print("<option value='"+municipio.getNombre_municipio()+"'>"+municipio.getNombre_municipio()+"</option>");
-                                        }
-                                    %>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 10px;"><label for="telefono">Teléfono:</label></td>
-                            <td style="padding-left: 10px;"><input type="text" name="telefono" pattern="[0-9]{10}" title="10 dígitos"/></td>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 10px;"><a href="/aserradero/LocalidadController?action=listar"><input type="button" value="Cancelar"/></a> </td>
-                            <td style="padding-left: 10px;"><input type="submit" value="Guardar"/></td>
-                        </tr>
-                    </table>
-                </fieldset>
-            </form>
-        </div><!--Fin Formulario de registro-->
-        
-        
+        <div class="container" style="margin-top:60px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>REGISTRO DE LOCALIDAD</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                          <div class="panel-heading">
+                                <h3 class="panel-title">Rellene los campos de manera correcta</h3>
+                          </div>
+                          <div class="panel-body">
+                                <form action="/aserradero/LocalidadController?action=nuevo" method="post" id="formregistro">
+                                    <div class="form-group">
+                                        <label class="control-label" for="name">Nombre localidad:</label>
+                                        <input type="text" class="form-control" name="nombre_localidad"  pattern="[A-Za-z].{3,}[A-Za-z]" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="45" required=""/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label" for="name">Nombre de Municipio:</label>
+                                        <select name="nombre_municipio" required="" class="form-control">
+                                            <option disabled="" selected="disable">Elige el municipio</option>
+                                            <%
+                                                for (Municipio municipio : municipios) {
+                                                    out.print("<option value='"+municipio.getNombre_municipio()+"'>"+municipio.getNombre_municipio()+"</option>");
+                                                }
+                                            %>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label" for="telefono">Teléfono:</label>
+                                        <input type="text" class="form-control" name="telefono" pattern="[0-9]{10}" title="10 dígitos"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <a href="/aserradero/LocalidadController?action=listar"><input type="button" class="btn btn-warning" value="Cancelar"/></a>
+                                        <input type="submit" class="btn btn-success" value="Guardar"/>
+                                    </div>
+                                </form>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

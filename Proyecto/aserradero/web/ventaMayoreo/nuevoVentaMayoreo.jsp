@@ -38,7 +38,7 @@
     <body>
         <!--menu-->
         <%@ include file="/TEMPLATE/menu.jsp" %>
-        <div id="page-wrapper">
+        <div class="container" style="margin-top:60px;">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">

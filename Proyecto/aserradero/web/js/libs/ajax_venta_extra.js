@@ -1,3 +1,4 @@
+/* global alertify */
 $(function(){
     $("#agregar_Ven_Ex").off("click");//Agregar producto a venta extra
     $("#agregar_Ven_Ex").on("click", function(e) {
@@ -11,19 +12,20 @@ $(function(){
             data: {'accion':"add_venta_extra",'id_venta':id_venta,'tipo':tipo,'monto':monto,'observacion':observacion},
             dataType: 'json'
         }).done(function(data){
-            if(data.success===true){
+            if(data.success==="true"){
                 $("#monto").val('');
+                $("#tipo").val('');
+                $("#observacion").val('');
+                $(".detalle-producto").load('ventaExtra/detalleVentaExtra.jsp');
+                $(".detalle-producto").load('ventaExtra/detalleVentaExtra.jsp');
+                alertify.success("El producto fue agregado con éxito");
             }else{
-                alert("falso");
+                alertify.error("El producto no puede ser agregado a lista");
+                $(".detalle-producto").load('ventaExtra/detalleVentaExtra.jsp');
             }
         });
-        $("#monto").val('');
-        $("#tipo").val('');
-        $("#observacion").val('');
-        $(".detalle-producto").load('ventaExtra/detalleVentaExtra.jsp');
-        $(".detalle-producto").load('ventaExtra/detalleVentaExtra.jsp');
     });
-    //Eliminar 
+    //Eliminar
     $(".eliminar-ve").off("click");//Agregar producto a venta extra
     $(".eliminar-ve").on("click", function(e) {
         var id = $(this).attr("id");
@@ -37,13 +39,14 @@ $(function(){
             data: {'accion':"del_venta_extra",'id_venta':id_venta,'tipo':id,'monto':monto,'observacion':observacion},
             dataType: 'json'
         }).done(function(data){
-            if(data.success===true){
-                $("#monto").val('');
+            if(data.success==="true"){
+                alertify.success("El producto fue borrado de la lista");
+                $(".detalle-producto").load('ventaExtra/detalleVentaExtra.jsp');
             }else{
-                alert("falso");
+                alertify.error("El producto no pudo ser borrado");
+                $(".detalle-producto").load('ventaExtra/detalleVentaExtra.jsp');
             }
         });
-        $(".detalle-producto").load('ventaExtra/detalleVentaExtra.jsp');
         $(".detalle-producto").load('ventaExtra/detalleVentaExtra.jsp');
     });
 });
