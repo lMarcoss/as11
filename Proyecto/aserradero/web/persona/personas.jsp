@@ -27,7 +27,7 @@
         <!--menu-->
         <%@ include file="/TEMPLATE/menu.jsp" %>
         <input type="hidden" name="mensaje" id="mensaje" value="<%=mensaje%>">
-        <div class="container">
+        <div class="container" style="margin-top:60px;">
             <div class="row">
                 <div class="col-md-12">
                     <h2 class="page-header">LISTADO DE PERSONAS</h2>
@@ -35,7 +35,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="panel panel-default">
+                    <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title">Si la persona que busca no aparece en el listado, agréguelo</h3>
                         </div>
@@ -58,39 +58,39 @@
                                 </form>
                             </div>
                             <table id="tabla" class="display cell-border" cellspacing="0" width="100%">
-                              <thead>
-                                <tr>
-                                    <th>N°</th>
-                                    <th>Id persona</th>
-                                    <th>Nombre</th>
-                                    <th>Apellido paterno</th>
-                                    <th>Apellido materno</th>
-                                    <th>Localidad</th>
-                                    <th>Dirección</th>
-                                    <th>Sexo</th>
-                                    <th>Fecha de nacimiento</th>
-                                    <th>Telefono</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <% int i=0;
-                                for (Persona persona : personas) {
-                                    out.print("<tr>" +"<td>"+(i+1)
-                                    +"</td>" +"<td>"+persona.getId_persona()+"</td>"
-                                    +"<td>"+persona.getNombre()+"</td>" +"<td>"+persona.getApellido_paterno()+"</td>"
-                                    +"<td>"+persona.getApellido_materno()+"</td>"
-                                    +"<td><a href=\"/aserradero/LocalidadController?action=buscar_localidad&nombre_localidad="+persona.getLocalidad()+"\">"+persona.getLocalidad()+"</a></td>"
-                                    +"<td>"+persona.getDireccion()+"</td>"
-                                    +"<td>"+persona.getSexo()+"</td>"
-                                    +"<td>"+persona.getFecha_nacimiento()+"</td>"
-                                    +"<td>"+persona.getTelefono()+"</td>"
-                                    +"<td><a class='btn btn-info' href=\"/aserradero/PersonaController?action=modificar&id_persona="+persona.getId_persona()+"\">Actualizar</a></td>"
-                                    +"<td><a class='btn btn-danger' href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/PersonaController?action=eliminar&id_persona="+persona.getId_persona()+"';};\">Eliminar</a></td>" + "</tr>" );
-                                    i++;
-                                } %>
-                              </tbody>
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>Id persona</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido paterno</th>
+                                        <th>Apellido materno</th>
+                                        <th>Localidad</th>
+                                        <th>Dirección</th>
+                                        <th>Sexo</th>
+                                        <th>Fecha de nacimiento</th>
+                                        <th>Telefono</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% int i=0;
+                                    for (Persona persona : personas) {
+                                        out.print("<tr>" +"<td>"+(i+1)
+                                        +"</td>" +"<td>"+persona.getId_persona()+"</td>"
+                                        +"<td>"+persona.getNombre()+"</td>" +"<td>"+persona.getApellido_paterno()+"</td>"
+                                        +"<td>"+persona.getApellido_materno()+"</td>"
+                                        +"<td><a href=\"/aserradero/LocalidadController?action=buscar_localidad&nombre_localidad="+persona.getLocalidad()+"\">"+persona.getLocalidad()+"</a></td>"
+                                        +"<td>"+persona.getDireccion()+"</td>"
+                                        +"<td>"+persona.getSexo()+"</td>"
+                                        +"<td>"+persona.getFecha_nacimiento()+"</td>"
+                                        +"<td>"+persona.getTelefono()+"</td>"
+                                        +"<td><a class='btn btn-info' href=\"/aserradero/PersonaController?action=modificar&id_persona="+persona.getId_persona()+"\">Actualizar</a></td>"
+                                        +"<td><a class='btn btn-danger' href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/PersonaController?action=eliminar&id_persona="+persona.getId_persona()+"';};\">Eliminar</a></td>" + "</tr>" );
+                                        i++;
+                                    } %>
+                                </tbody>
                             </table>
                             <div class="agregar_element">
                                 <input type="button" class="btn btn-primary" value="Agregar persona" onClick=" window.location.href='/aserradero/PersonaController?action=nuevo' ">

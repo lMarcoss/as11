@@ -8,12 +8,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="keywords" content="" />
 
-<script src="/aserradero/js/Ricardo/js/jquery.js"></script><!-- Para el funcionamiento de los procesos que requieran JS -->
+<script src="/aserradero/js/Ricardo/js/jquery-3.1.1.js"></script><!-- Para el funcionamiento de los procesos que requieran JS -->
 <!-- Bootstrap  -->
 <link rel="stylesheet" href="/aserradero/dist/css/bootstrap.css">
+<link rel="stylesheet" href="/aserradero/dist/css/font-awesome.css">
 <script type="text/javascript" src="/aserradero/dist/js/bootstrap.js"></script>
 <!-- Estilos de menu  -->
-<link rel="stylesheet" href="/aserradero/dist/estilos.css">
+<link href="/aserradero/dist/js_css_menu/jquery.smartmenus.bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" href="/aserradero/dist/js_css_menu/complemento_menu.css">
 
 <script src="/aserradero/js/id_persona.js"></script>
 <script src="/aserradero/js/validarFormulario.js"></script>

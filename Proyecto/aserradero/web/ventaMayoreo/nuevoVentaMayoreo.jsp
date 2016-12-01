@@ -38,7 +38,7 @@
     <body>
         <!--menu-->
         <%@ include file="/TEMPLATE/menu.jsp" %>
-        <div id="page-wrapper">
+        <div class="container" style="margin-top:60px;">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
@@ -132,7 +132,7 @@
                                     <div class="col-md-3 form-group">
                                         <label class="control-label" >Volumen:</label>
                                         <input class="form-control" type="number" name="volumen" id="volumen" step="0.001" min="0.001" max="99999.999" required="" readonly="" disabled=""/>
-                                        <label class="control-label" >Monto:</label>
+                                        <label class="control-label" >Monto:</label>                                        
                                         <input type="number" name="monto" class="form-control" id="monto" step="0.01" min="0.01" max="99999999.99"  required="" readonly=""/>
                                     </div>
                                     <div class="col-md-3">

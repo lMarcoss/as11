@@ -16,73 +16,90 @@
     <head>
         <%@ include file="/TEMPLATE/head.jsp" %>
         <title>Vehículos</title>
+        <script>
+            $(document).ready(function ($){
+                 $("#registros").css("background","#448D00");
+                 $("#vehiculos").css("background","#448D00");
+            });
+        </script>
     </head>
     <body>
         <!--menu-->
         <%@ include file="/TEMPLATE/menu.jsp" %>
-        
-        <input type="hidden" name="mensaje" id="mensaje" value="<%=mensaje%>"
-
-        <!-- ************************** opción de búsqueda-->
-            <form method="POST" action="/aserradero/VehiculoController?action=buscar">
-                <table>
-                    <tr>
-                      <td>
-                        <select name="nombre_campo" >
-                          <option value="matricula">Matrícula</option>
-                          <option value="tipo">Tipo</option>
-                          <option value="color">Color</option>
-                          <option value="carga_admitida">Carga máxima</option>
-                          <option value="motor">Motor</option>
-                          <option value="modelo">Modelo</option>
-                          <option value="costo">Costo</option>
-                          <option value="empleado">Empleado</option>
-                        </select>
-                      </td>
-                        <td><input type="text" name="dato" placeholder="Escriba su búsqueda"></td>
-                        <td colspan="2"><input type="submit" value="Buscar"></td>
-                    </tr>
-                </table>
-            </form>
-        </div> <!-- Fin opción de búsqueda-->
-
-        <!-- ************************* Resultado Consulta-->
-        <div>
-            <table class="table-condensed">
-                <tr>
-                    <th>N°</th>                    
-                    <th>Matricula</th>
-                    <th>Tipo</th>
-                    <th>Color</th>
-                    <th>Carga admitida</th>
-                    <th>Motor</th>
-                    <th>Modelo</th>
-                    <th>Costo</th>
-                    <th>Empleado</th>
-                </tr>
-                <%
-                    int i=0;
-                    for (Vehiculo vehiculo : vehiculos) {
-                        out.print("<tr>"
-                            +"<td>"+(i+1)+"</td>"                            
-                            +"<td>"+vehiculo.getMatricula()+"</td>"
-                            +"<td>"+vehiculo.getTipo()+"</td>"
-                            +"<td>"+vehiculo.getColor()+"</td>"
-                            +"<td>"+vehiculo.getCarga_admitida()+"</td>"
-                            +"<td>"+vehiculo.getMotor()+"</td>"
-                            +"<td>"+vehiculo.getModelo()+"</td>"
-                            +"<td>"+vehiculo.getCosto()+"</td>"
-                            +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+vehiculo.getId_empleado()+"\">"+vehiculo.getEmpleado()+"</a></td>"
-                            +"<td><a href=\"/aserradero/VehiculoController?action=modificar&id_vehiculo="+vehiculo.getId_vehiculo()+"\">Actualizar</a></td>"
-                            + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/VehiculoController?action=eliminar&id_vehiculo="+vehiculo.getId_vehiculo()+"';};\">Eliminar</a></td>"
-                        + "</tr>" );
-                        i++;
-                    }
-                %>
-            </table>
-            <div>
-                <input type="button" value="Agregar vehiculo" onClick=" window.location.href='/aserradero/VehiculoController?action=nuevo' ">
+        <input type="hidden" name="mensaje" id="mensaje" value="<%=mensaje%>">
+        <div class="container" style="margin-top:60px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">LISTADO DE VEHÍCULOS</h1>
+                </div>
             </div>
-        </div><!-- Resultado Consulta-->
+            <div class="row">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Si el vehículo no aparece, agréguelo</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group form-busc" >
+                            <form method="POST" action="/aserradero/VehiculoController?action=buscar" >
+                                <select name="nombre_campo" class="input-busc">
+                                    <option value="id_vehiculo">Id Vehiculo</option>
+                                    <option value="matricula">Matrícula</option>
+                                    <option value="tipo">Tipo</option>
+                                    <option value="color">Color</option>
+                                    <option value="carga_admitida">Carga máxima</option>
+                                    <option value="motor">Motor</option>
+                                    <option value="modelo">Modelo</option>
+                                    <option value="costo">Costo</option>
+                                    <option value="id_empleado">Id empleado</option>
+                                </select>
+                                <input type="text" class="input-busc"  name="dato" placeholder="Escriba su búsqueda" >
+                                <input type="submit" value="Buscar" class="btn btn-success">
+                            </form>
+                        </div> <!-- Fin opción de búsqueda-->
+                        <table id="tabla" class="display cell-border" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>N°</th>
+                                    <th >Matricula</th>
+                                    <th>Tipo</th>
+                                    <th>Color</th>
+                                    <th>Carga admitida</th>
+                                    <th>Motor</th>
+                                    <th>Modelo</th>
+                                    <th>Costo</th>
+                                    <th>Id empleado</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <%
+                                int i=0;
+                                for (Vehiculo vehiculo : vehiculos) {
+                                    out.print("<tr>"
+                                        +"<td>"+(i+1)+"</td>"
+                                        +"<td>"+vehiculo.getMatricula()+"</td>"
+                                        +"<td>"+vehiculo.getTipo()+"</td>"
+                                        +"<td>"+vehiculo.getColor()+"</td>"
+                                        +"<td>"+vehiculo.getCarga_admitida()+"</td>"
+                                        +"<td>"+vehiculo.getMotor()+"</td>"
+                                        +"<td>"+vehiculo.getModelo()+"</td>"
+                                        +"<td>"+vehiculo.getCosto()+"</td>"
+                                        +"<td>"+vehiculo.getId_empleado()+"</td>"
+                                        +"<td><a class=\"btn btn-info\" href=\"/aserradero/VehiculoController?action=modificar&id_vehiculo="+vehiculo.getId_vehiculo()+"\">Actualizar</a></td>"
+                                        + "<td><a class=\"btn btn-danger\" href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/VehiculoController?action=eliminar&id_vehiculo="+vehiculo.getId_vehiculo()+"';};\">Eliminar</a></td>"
+                                    + "</tr>" );
+                                    i++;
+                                }
+                            %>
+                            </tbody>
+                        </table>
+                        <div class="agregar_element">
+                            <input type="button" class="btn btn-primary" value="Agregar vehiculo" onClick=" window.location.href='/aserradero/VehiculoController?action=nuevo' ">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

@@ -98,22 +98,29 @@ public class VentasAjaxController extends HttpServlet {
                     out.print(jsonreturn.toString());
                     sesion_ajax.setAttribute("detalle_venta_extra", VentaExt);
                 } catch (Exception e) {
-                    jsonreturn.addProperty("success", false);
+                    jsonreturn.addProperty("success", "false");
+                    out.print(jsonreturn.toString());
                     System.out.println(e);
                 }
             break;
             case "del_venta_extra":
                 tipo=request.getParameter("tipo");
+                boolean banderaex=false;
                 ArrayList<VentaExtra> VentaExt = sesion_ajax.getAttribute("detalle_venta_extra") == null ? new ArrayList<>() : (ArrayList) sesion_ajax.getAttribute("detalle_venta_extra");
                 if(VentaExt!=null){
                     for(VentaExtra a:VentaExt){
                         if(a.getTipo().equals(tipo)){
                             VentaExt.remove(a);
+                            banderaex=true;
                             break;
                         }
                     }
                 }
-                jsonreturn.addProperty("success", "true");
+                if(banderaex){
+                 jsonreturn.addProperty("success", "true");   
+                }else{
+                 jsonreturn.addProperty("success", "false");   
+                }                
                 out.print(jsonreturn.toString());
                 sesion_ajax.setAttribute("detalle_venta_extra", VentaExt);
             break;
