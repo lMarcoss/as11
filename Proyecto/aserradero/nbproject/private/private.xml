@@ -2,16 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-<<<<<<< HEAD
-            <file>file:/home/rcortes/NetBeansProjects/Ricardo/aserradero/Proyecto/aserradero/web/TEMPLATE/menu.jsp</file>
-=======
-            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/web/js/actualizarSalidaMaderaRollo.js</file>
-            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/web/salidaMaderaRollo/nuevoSalidaMadera.jsp</file>
-            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/src/java/controlador/SalidaMaderaRolloController.java</file>
-            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/web/salidaMaderaRollo/actualizarSalidaMaderaRollo.jsp</file>
-            <file>file:/home/lmarcoss/NetBeansProjects/Aserradero/aserradero/Proyecto/aserradero/web/js/salidaMaderaRollo.js</file>
->>>>>>> master
-        </group>
+        <group/>
     </open-files>
 </project-private>
