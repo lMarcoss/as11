@@ -3,7 +3,7 @@
     Created on : 30-sep-2016, 1:42:10
     Author     : lmarcoss
 --%>
-<<<<<<< HEAD
+
 <div class="navbar navbar-default navbar-fixed-top" role="navigation" id="menu_respons">
     <div class="container">
         <div class="navbar-header">
