@@ -85,7 +85,6 @@ import java.util.List;
             st.setString(3, String.valueOf(pagoluz.getMonto()));
             st.setString(4, pagoluz.getObservacion());
             st.setString(5, pagoluz.getId_pago_luz());
-            System.out.print(pagoluz.getId_pago_luz());
             st.executeUpdate();
         } catch(Exception e){
             System.out.println(e);

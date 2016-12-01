@@ -3,7 +3,7 @@
  * :En el jsp: /maderaClasificacion/nuevoMaderaClasificacion
  * : Calcula el volumen dependiendo del ancho, largo y grueso de una madera
  */
-function calcularVolumen(){
+function actualizarVolumenMaderaClasif(){
     // Leemos: grueso, ancho y largo de la madera
     var grueso = document.getElementById('grueso').value;
     var ancho = document.getElementById('ancho').value;

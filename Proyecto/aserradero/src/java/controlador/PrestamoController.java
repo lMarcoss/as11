@@ -1,9 +1,9 @@
 package controlador;
 
-import dao.AdministradorCRUD;
+import dao.EmpleadoCRUD;
 import dao.PersonaCRUD;
 import dao.PrestamoCRUD;
-import entidades.Administrador;
+import entidades.Empleado;
 import entidades.Persona;
 import entidades.Prestamo;
 import java.io.IOException;
@@ -69,9 +69,9 @@ public class PrestamoController extends HttpServlet {
                     request.setAttribute("personas",personas);
                     
                     //Consultamos la lista de administradores para asignarlos al prestador
-                    AdministradorCRUD administradorCRUD = new AdministradorCRUD();
-                    List<Administrador> administradores = (List<Administrador>) administradorCRUD.listar();
-                    request.setAttribute("administradores", administradores);
+                    EmpleadoCRUD empleadoCRUD = new EmpleadoCRUD();
+                    List<Empleado> empleados = (List<Empleado>) empleadoCRUD.listar();
+                    request.setAttribute("empleados", empleados);
                     
                     RequestDispatcher view = request.getRequestDispatcher("prestamo/nuevoPrestamo.jsp");
                     view.forward(request,response);
@@ -84,9 +84,6 @@ public class PrestamoController extends HttpServlet {
             case "listar": // se muestran los préstamos por fecha e interes
                 listarPrestamos(request, response,"");
                 break;
-            case "listar_total": // se muestra el total de prestamo por persona
-                listarPrestamoPorPersona(request, response,"");
-                break;
             case "modificar":
                 prestamoEC = new Prestamo();
                 prestamoEC.setId_prestamo(Integer.valueOf(request.getParameter("id_prestamo")));
@@ -96,11 +93,6 @@ public class PrestamoController extends HttpServlet {
                     PersonaCRUD personaCRUD = new PersonaCRUD();
                     List<Persona> personas = (List<Persona>)personaCRUD.listar();
                     request.setAttribute("personas",personas);
-                    
-                    //Consultamos la lista de administradores para asignarlos al prestador
-                    AdministradorCRUD administradorCRUD = new AdministradorCRUD();
-                    List<Administrador> administradores = (List<Administrador>) administradorCRUD.listar();
-                    request.setAttribute("administradores", administradores);
                     
                     prestamo = (Prestamo) prestamoCRUD.modificar(prestamoEC);
                     request.setAttribute("prestamo",prestamo);
@@ -189,9 +181,6 @@ public class PrestamoController extends HttpServlet {
                     Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
-            case "buscar_interes_total":
-                buscarMontoPPersona(request, response,"buscar_interes_total");
-                break;
         }
     }
     
@@ -242,45 +231,10 @@ public class PrestamoController extends HttpServlet {
         Prestamo prestamo = new Prestamo();
         prestamo.setId_prestamo(Integer.valueOf(request.getParameter("id_prestamo")));
         prestamo.setFecha(Date.valueOf(request.getParameter("fecha")));
-        prestamo.setId_persona(request.getParameter("id_persona"));
-        prestamo.setId_administrador(request.getParameter("id_administrador"));
-        prestamo.setMonto(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto")))));
+        prestamo.setId_prestador(request.getParameter("id_prestador"));
+        prestamo.setId_empleado(request.getParameter("id_empleado"));
+        prestamo.setMonto_prestamo(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto_prestamo")))));
         prestamo.setInteres(Integer.valueOf(request.getParameter("interes")));
         return prestamo;
     }
-
-    private void listarPrestamoPorPersona(HttpServletRequest request, HttpServletResponse response, String mensaje) {
-        List<Prestamo> prestamos;
-        PrestamoCRUD prestamoCrud = new PrestamoCRUD();
-        try {
-            prestamos = (List<Prestamo>)prestamoCrud.listarPrestamoPorPersona();
-            //Enviamos las listas al jsp
-            request.setAttribute("prestamos",prestamos);
-            //Enviar mensaje
-            request.setAttribute("mensaje",mensaje);
-         
-            RequestDispatcher view = request.getRequestDispatcher("prestamo/montoPorPersona.jsp");
-            view.forward(request,response);
-        } catch (Exception ex) {
-            System.out.println(ex);
-            Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void buscarMontoPPersona(HttpServletRequest request, HttpServletResponse response, String buscar_interes_total) {
-        List <Prestamo> prestamos;
-        String nombre_campo = request.getParameter("nombre_campo");
-        String dato = request.getParameter("dato");
-        PrestamoCRUD prestamoCRUD = new PrestamoCRUD();
-        try {
-            prestamos = (List<Prestamo>)prestamoCRUD.buscarMontoPorPersona(nombre_campo, dato);
-            request.setAttribute("prestamos",prestamos);
-            RequestDispatcher view = request.getRequestDispatcher("prestamo/montoPorPersona.jsp");
-            view.forward(request,response);
-        } catch (Exception ex) {
-            listarPrestamos(request, response, "error_buscar_campo");
-            Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

@@ -3,6 +3,7 @@
     Created on : 30-sep-2016, 1:42:10
     Author     : lmarcoss
 --%>
+<<<<<<< HEAD
 <div class="navbar navbar-default navbar-fixed-top" role="navigation" id="menu_respons">
     <div class="container">
         <div class="navbar-header">
@@ -81,7 +82,50 @@
                     </ul>
                 </li>
                 <li  id="ventas">
-
+=======
+<header>
+    <nav class="">
+        <ul class="">
+            <li class="submenu">
+                <a href="#" id="registros">Registros</a>
+                <ul class="children">
+                    <li id="municipios"><a href="/aserradero/MunicipioController?action=listar">Municipios</a></li>
+                    <li id="localidades"><a href="/aserradero/LocalidadController?action=listar">Localidades</a></li>
+                    <li id="personas"><a href="/aserradero/PersonaController?action=listar">Personas</a></li>
+                    <li id="clientes"><a href="/aserradero/ClienteController?action=listar">Clientes</a></li>
+                    <li id="proveedor"><a href="/aserradero/ProveedorController?action=listar">Proveedor</a></li>
+                    <li id="vehiculos"><a href="/aserradero/VehiculoController?action=listar">Vehículos</a></li>
+                </ul>
+            </li>
+            <li class="submenu" id="empleados">
+                <a href="#">Empleados</a>
+                <ul class="children">
+                    <li id="empleado"><a href="/aserradero/EmpleadoController?action=listar">Registros</a></li>
+                    <li id="pago_empleado"><a href="/aserradero/PagoEmpleadoController?action=listar">Pago empleado</a></li>
+                    <li id="administrador"><a href="/aserradero/AdministradorController?action=listar">Administradores</a></li>
+                </ul>
+            </li>
+            <li class="submenu" id="compras">
+                <a href="#">Madera en rollo</a>
+                <!--<a href="/aserradero/CompraController?action=listar">Entrada de madera</a>-->
+                <ul class="children">
+                    <li class="detalle_compra"><a href="/aserradero/EntradaMaderaRolloController?action=listar_entrada">Entrada</a></li>
+                    <li class="detalle_compra"><a href="/aserradero/SalidaMaderaRolloController?action=listar_salida">Salida</a></li>
+                    <!--<li class="pagos_copra"><a href="/aserradero/PagoCompraController?action=listar">Pagos compra</a></li>-->
+                    <li class="inventario_madera_entrada"><a href="/aserradero/InventarioMaderaEntradaController?action=listar">Inventario</a></li>
+                    <li class="costo_madera_entrada"><a href="/aserradero/ClasificacionMaderaEntradaController?action=listar">Clasficación</a></li>
+                    <li class="costo_madera_entrada"><a href="/aserradero/PagoCompraController?action=listar">Pagos compra</a></li>
+                </ul>
+            </li>
+            <li class="submenu" id="produccion">
+                <a href="#">Madera aserrada</a>
+                <ul class="children">
+                    <li id="produccion_madera"><a href="/aserradero/EntradaMaderaAserradaController?action=listar">Entrada</a></li>
+                    <li id="inventario_produccion"><a href="/aserradero/InventarioMaderaAserradaController?action=listar">Inventario</a></li>
+                    <li id="clasificacion_madera"><a href="/aserradero/MaderaAserradaClasifController?action=listar">Clasificación</a></li>
+                </ul>
+            </li>
+            <li class="submenu" id="ventas">
                     <a href="/aserradero/VentaController?action=listar">Ventas</a>
                     <ul class="dropdown-menu">
                         <li id="ventas_extras"><a href="/aserradero/VentaExtraController?action=listar">Ventas extras</a></li>
@@ -142,3 +186,30 @@
 
     <!-- SmartMenus jQuery Bootstrap Addon -->
     <script type="text/javascript" src="/aserradero/dist/js_css_menu/jquery.smartmenus.bootstrap.js"></script>
+            </li>
+            <li class="submenu" id="gastos">
+                <a href="#">Gastos</a>
+                <ul class="children">
+                    <li id="renta"><a href="/aserradero/PagoRentaController?action=listar">Renta</a></li>
+                    <li id="pago_luz"><a href="/aserradero/PagoLuzController?action=listar">Pago luz</a></li>
+                    <li id="otro_gasto"><a href="/aserradero/OtroGastoController?action=listar">Otros gasto</a></li>
+                </ul>
+            </li>
+            <li class="submenu" id="reportes">
+                <a href="#">Prestamo</a>
+                <ul class="children">
+                    <li class="reporte_compra"><a href="/aserradero/PrestamoController?action=listar">Registros</a></li>
+                    <li class="reporte_compra"><a href="/aserradero/PagoPrestamoController?action=listar">Pago préstamo</a></li>
+                </ul>
+            </li>
+            <li class="submenu" id="reportes">
+                <a href="#">Cuentas</a>
+                <ul class="children">
+                    <li class="reporte_compra"><a href="/aserradero/BalanceCuentaController?action=listar">Balance cuenta</a></li>
+                </ul>
+            </li>
+            <!--<li class="cta"><a href="/aserradero/Iniciar?action=cerrar_sesion">Salir</a></li>-->
+        </ul>
+    </nav>
+</header>
+

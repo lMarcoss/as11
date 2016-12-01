@@ -1,6 +1,6 @@
 package dao;
 
-import entidades.ProduccionMadera;
+import entidades.EntradaMaderaAserrada;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,15 +12,15 @@ import java.util.List;
  *
  * @author lmarcoss
  */
-public class ProduccionMaderaCRUD extends Conexion implements OperacionesCRUD{
+public class EntradaMaderaAserradaCRUD extends Conexion implements OperacionesCRUD{
 
     @Override
     public void registrar(Object objeto) throws Exception {
-        ProduccionMadera produccionMadera = (ProduccionMadera) objeto;
+        EntradaMaderaAserrada produccionMadera = (EntradaMaderaAserrada) objeto;
         try{
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement(
-                    "INSERT INTO PRODUCCION_MADERA (fecha,id_madera,num_piezas,id_empleado) VALUES (?,?,?,?)");
+                    "INSERT INTO ENTRADA_MADERA_ASERRADA (fecha,id_madera,num_piezas,id_empleado) VALUES (?,?,?,?)");
             st = cargarObject(st, produccionMadera);
             st.executeUpdate();
         }catch(Exception e){
@@ -33,14 +33,14 @@ public class ProduccionMaderaCRUD extends Conexion implements OperacionesCRUD{
 
     @Override
     public <T> List listar() throws Exception {
-        List<ProduccionMadera> produccionMaderas;
+        List<EntradaMaderaAserrada> produccionMaderas;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PRODUCCION_MADERA")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_ENTRADA_MADERA_ASERRADA")) {
                 produccionMaderas = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
-                        ProduccionMadera produccionMadera = (ProduccionMadera) extraerObject(rs);
+                        EntradaMaderaAserrada produccionMadera = (EntradaMaderaAserrada) extraerObject(rs);
                         produccionMaderas.add(produccionMadera);
                     }
                 }
@@ -59,14 +59,14 @@ public class ProduccionMaderaCRUD extends Conexion implements OperacionesCRUD{
 
     @Override
     public Object modificar(Object objeto) throws Exception {
-        ProduccionMadera produccionM = (ProduccionMadera) objeto;
-        ProduccionMadera produccion = null;
+        EntradaMaderaAserrada produccionM = (EntradaMaderaAserrada) objeto;
+        EntradaMaderaAserrada produccion = null;
         this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PRODUCCION_MADERA WHERE id_produccion = ?")) {
-                st.setInt(1, produccionM.getId_produccion());
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_ENTRADA_MADERA_ASERRADA WHERE id_entrada = ?")) {
+                st.setInt(1, produccionM.getId_entrada());
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
-                        produccion = (ProduccionMadera) extraerObject(rs);
+                        produccion = (EntradaMaderaAserrada) extraerObject(rs);
                     }
                 }
             }
@@ -75,12 +75,12 @@ public class ProduccionMaderaCRUD extends Conexion implements OperacionesCRUD{
 
     @Override
     public void actualizar(Object objeto) throws Exception {
-        ProduccionMadera produccion = (ProduccionMadera) objeto;
+        EntradaMaderaAserrada produccion = (EntradaMaderaAserrada) objeto;
         try{
             this.abrirConexion();
-            PreparedStatement st= this.conexion.prepareStatement("UPDATE PRODUCCION_MADERA SET num_piezas = ? WHERE id_produccion = ?");
+            PreparedStatement st= this.conexion.prepareStatement("UPDATE ENTRADA_MADERA_ASERRADA SET num_piezas = ? WHERE id_entrada = ?");
             st.setInt(1,produccion.getNum_piezas());
-            st.setInt(2,produccion.getId_produccion());
+            st.setInt(2,produccion.getId_entrada());
             st.executeUpdate();
         }catch(Exception e){
             System.out.println(e);
@@ -92,11 +92,11 @@ public class ProduccionMaderaCRUD extends Conexion implements OperacionesCRUD{
 
     @Override
     public void eliminar(Object objeto) throws Exception {
-        ProduccionMadera produccionMadera = (ProduccionMadera) objeto;
+        EntradaMaderaAserrada produccionMadera = (EntradaMaderaAserrada) objeto;
         try{
             this.abrirConexion();
-            PreparedStatement st= this.conexion.prepareStatement("DELETE FROM PRODUCCION_MADERA WHERE id_produccion = ?");
-            st.setInt(1,produccionMadera.getId_produccion());
+            PreparedStatement st= this.conexion.prepareStatement("DELETE FROM ENTRADA_MADERA_ASERRADA WHERE id_entrada = ?");
+            st.setInt(1,produccionMadera.getId_entrada());
             st.executeUpdate();
         }catch(Exception e){
             System.out.println(e);
@@ -108,15 +108,15 @@ public class ProduccionMaderaCRUD extends Conexion implements OperacionesCRUD{
 
     @Override
     public <T> List buscar(String nombre_campo, String dato) throws Exception {
-        List<ProduccionMadera> produccionMaderas;
+        List<EntradaMaderaAserrada> produccionMaderas;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PRODUCCION_MADERA WHERE "+nombre_campo+" like ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_ENTRADA_MADERA_ASERRADA WHERE "+nombre_campo+" like ?")) {
                 st.setString(1, "%"+dato+"%");
                 produccionMaderas = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
-                        ProduccionMadera produccionMadera = (ProduccionMadera) extraerObject(rs);
+                        EntradaMaderaAserrada produccionMadera = (EntradaMaderaAserrada) extraerObject(rs);
                         produccionMaderas.add(produccionMadera);
                     }
                 }
@@ -132,8 +132,8 @@ public class ProduccionMaderaCRUD extends Conexion implements OperacionesCRUD{
     
     @Override
     public Object extraerObject(ResultSet rs) throws SQLException {
-        ProduccionMadera produccionMadera = new ProduccionMadera();
-        produccionMadera.setId_produccion(rs.getInt("id_produccion"));
+        EntradaMaderaAserrada produccionMadera = new EntradaMaderaAserrada();
+        produccionMadera.setId_entrada(rs.getInt("id_entrada"));
         produccionMadera.setFecha(rs.getDate("fecha"));
         produccionMadera.setId_madera(rs.getString("id_madera"));
         produccionMadera.setNum_piezas(rs.getInt("num_piezas"));
@@ -146,7 +146,7 @@ public class ProduccionMaderaCRUD extends Conexion implements OperacionesCRUD{
 
     @Override
     public PreparedStatement cargarObject(PreparedStatement st, Object objeto) throws SQLException {
-        ProduccionMadera produccionMadera = (ProduccionMadera) objeto;
+        EntradaMaderaAserrada produccionMadera = (EntradaMaderaAserrada) objeto;
         st.setDate(1,produccionMadera.getFecha());
         st.setString(2,produccionMadera.getId_madera());
         st.setInt(3,produccionMadera.getNum_piezas());
@@ -154,16 +154,16 @@ public class ProduccionMaderaCRUD extends Conexion implements OperacionesCRUD{
         return st;
     }
     
-    public List<ProduccionMadera> buscarPorFecha(String fecha) throws Exception {
-        List<ProduccionMadera> produccionMaderas;
+    public List<EntradaMaderaAserrada> buscarPorFecha(String fecha) throws Exception {
+        List<EntradaMaderaAserrada> produccionMaderas;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PRODUCCION_MADERA WHERE fecha = ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_ENTRADA_MADERA_ASERRADA WHERE fecha = ?")) {
                 st.setString(1, fecha);
                 produccionMaderas = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
-                        ProduccionMadera produccionMadera = (ProduccionMadera) extraerObject(rs);
+                        EntradaMaderaAserrada produccionMadera = (EntradaMaderaAserrada) extraerObject(rs);
                         produccionMaderas.add(produccionMadera);
                     }
                 }

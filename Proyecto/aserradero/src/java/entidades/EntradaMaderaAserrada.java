@@ -6,8 +6,8 @@ import java.sql.Date;
  *
  * @author lmarcoss
  */
-public class ProduccionMadera {
-    private int id_produccion;
+public class EntradaMaderaAserrada {
+    private int id_entrada;
     private Date fecha;
     private String id_madera;
     private int num_piezas;
@@ -15,11 +15,11 @@ public class ProduccionMadera {
     private String empleado;
     private String id_jefe;
 
-    public ProduccionMadera() {
+    public EntradaMaderaAserrada() {
     }
 
-    public ProduccionMadera(int id_produccion, Date fecha, String id_madera, int num_piezas, String id_empleado, String empleado, String id_jefe) {
-        this.id_produccion = id_produccion;
+    public EntradaMaderaAserrada(int id_entrada, Date fecha, String id_madera, int num_piezas, String id_empleado, String empleado, String id_jefe) {
+        this.id_entrada = id_entrada;
         this.fecha = fecha;
         this.id_madera = id_madera;
         this.num_piezas = num_piezas;
@@ -28,8 +28,8 @@ public class ProduccionMadera {
         this.id_jefe = id_jefe;
     }
 
-    public void setId_produccion(int id_produccion) {
-        this.id_produccion = id_produccion;
+    public void setId_entrada(int id_entrada) {
+        this.id_entrada = id_entrada;
     }
 
     public void setFecha(Date fecha) {
@@ -56,8 +56,8 @@ public class ProduccionMadera {
         this.id_jefe = id_jefe;
     }
 
-    public int getId_produccion() {
-        return id_produccion;
+    public int getId_entrada() {
+        return id_entrada;
     }
 
     public Date getFecha() {

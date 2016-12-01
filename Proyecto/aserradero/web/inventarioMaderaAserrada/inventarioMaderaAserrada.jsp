@@ -1,21 +1,21 @@
 <%-- 
-    Document   : inventarioMaderaProducciones
+    Document   : inventarioMaderaAserrada
     Created on : 28/09/2016, 04:11:42 PM
     Author     : Marcos
 --%>
 
-<%@page import="entidades.InventarioMaderaProduccion"%>
+<%@page import="entidades.InventarioMaderaAserrada"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    List <InventarioMaderaProduccion> inventarioMaderaProducciones = (List<InventarioMaderaProduccion>) request.getAttribute("inventarioMaderaProducciones");
+    List <InventarioMaderaAserrada> inventarioMaderaAserrada = (List<InventarioMaderaAserrada>) request.getAttribute("inventarioMaderaAserrada");
     String mensaje=(String) request.getAttribute("mensaje");
 %>
 <!DOCTYPE html>
 <html>
     <head>
         <%@ include file="/TEMPLATE/head.jsp" %>
-        <title>Personas</title>
+        <title>Inventario</title>
     </head>
     <body>
         <!--menu-->
@@ -25,13 +25,15 @@
 
         <!-- ************************** opción de búsqueda-->
         <div>
-            <form method="POST" action="/aserradero/InventarioMaderaProduccionController?action=buscar">
+            <form method="POST" action="/aserradero/InventarioMaderaAserradaController?action=buscar">
                 <table class="table-condensed">
                     <tr>
                         <td>
                             <select name="nombre_campo" >
                             <option value="id_madera">Id madera</option>
                             <option value="num_piezas">Num piezas</option>
+                            <option value="volumen_total">Volumen total</option>
+                            <option value="costo_total">Costo total</option>
                         </select>
                         </td>
                         <td><input type="text" name="dato" placeholder="Escriba su búsqueda"></td>
@@ -47,23 +49,26 @@
                     <tr>
                         <th>N°</th>
                         <th>Id madera</th>
-                        <th>Piezas</th>
+                        <th>Num. piezas</th>
+                        <th>Volumen unitario</th>
                         <th>Volumen total</th>
-                        <th>Monto total</th>
+                        <th>Costo por volumen</th>
+                        <th>Costo total</th>
                         <th> </th>
                         <th> </th>
                     </tr>
                     <%
                        
                         int i=0;
-                        for (InventarioMaderaProduccion inventarioMaderaProduccion : inventarioMaderaProducciones) {
+                        for (InventarioMaderaAserrada inventario : inventarioMaderaAserrada) {
                             out.print("<tr>"
                                 +"<td>"+(i+1)+"</td>"
-                                +"<td><a href=\"/aserradero/MaderaClasificacionController?action=buscar_maderaClasificacion&id_madera="+inventarioMaderaProduccion.getId_madera()+"\">"+inventarioMaderaProduccion.getId_madera()+"</a></td>"
-                                +"<td>"+inventarioMaderaProduccion.getNum_piezas()+"</td>"
-                                +"<td>"+inventarioMaderaProduccion.getVolumen_total()+"</td>"
-                                +"<td>"+inventarioMaderaProduccion.getMonto_total()+"</td>"
-                                + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/InventarioMaderaProduccionController?action=eliminar&id_madera="+inventarioMaderaProduccion.getId_madera()+"';};\">Eliminar</a></td>"
+                                +"<td><a href=\"/aserradero/MaderaClasificacionController?action=buscar_maderaClasificacion&id_madera="+inventario.getId_madera()+"\">"+inventario.getId_madera()+"</a></td>"
+                                +"<td>"+inventario.getNum_piezas()+"</td>"
+                                +"<td>"+inventario.getVolumen_unitario()+"</td>"
+                                +"<td>"+inventario.getVolumen_total()+"</td>"
+                                +"<td>"+inventario.getCosto_por_volumen()+"</td>"
+                                +"<td>"+inventario.getCosto_total()+"</td>"
                             + "</tr>" );
                             i++;
                         }

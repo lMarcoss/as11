@@ -4,12 +4,12 @@
     Author     : lmarcoss
 --%>
 
+<%@page import="entidades.InventarioMaderaAserrada"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="entidades.Cliente"%>
 <%@page import="entidades.Empleado"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.sql.Date"%>
-<%@page import="entidadesVirtuales.CostoMaderaClasificacion"%>
 <%@page import="entidades.Venta"%>
 <%@page import="java.util.List"%>
 <%@page import="entidades.VentaMayoreo"%>
@@ -19,9 +19,8 @@
     Date fecha = Date.valueOf(LocalDate.now());
     List <Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
     List <Empleado> empleados = (List<Empleado>) request.getAttribute("empleados");
-    List <Venta> ventas = (List<Venta>) request.getAttribute("ventas");
     String id_nVenta = String.valueOf(request.getAttribute("siguienteventa"));
-    List <CostoMaderaClasificacion> costoMaderaClasificaciones = (List<CostoMaderaClasificacion>) request.getAttribute("costoMaderaClasificaciones");
+    List <InventarioMaderaAserrada> listaInventario = (List<InventarioMaderaAserrada>) request.getAttribute("listaInventario");
 
 %>
 <%
@@ -31,9 +30,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="/TEMPLATE/headNuevo.jsp" %>
+        <%--<%@ include file="/TEMPLATE/headNuevo.jsp" %>--%>
         <%@ include file="/TEMPLATE/head.jsp" %>
         <title>Nuevo</title>
+        <script src="/aserradero/js/SelectorCostoVenta.js"></script>
     </head>
     <body>
         <!--menu-->
@@ -42,7 +42,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">NUEVA VENTA MAYOREO</h1>
+                        <h1 class="page-header">Registrar venta por mayoreo</h1>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -52,15 +52,12 @@
                       </div>
                       <div class="panel-body" id="PanelPrincipal">
                             <div class="col-lg-12">
-                                <form action="/aserradero/VentaController?action=nuevo" method="post" id="formregistro"><!-- Formulario de venta -->
+                                <form action="/aserradero/VentaController?action=nuevo&tipo_venta=mayoreo" method="post" id="formregistro"><!-- Formulario de venta -->
+                                    <input class="form-control" type="hidden" value="<%=id_nVenta%>" name="id_venta" id="id_venta" required="" title="escribe un identificador para la venta">
+                                    
                                     <div class="form-group col-md-2"><!-- agrupar inputs -->
-                                        <input name="tipo_venta" value="mayoreo" type="hidden"/>
                                         <label class="control-label">Fecha:</label>
                                         <input class="form-control" type="date" name="fecha" value="<%=fecha%>" required="" />
-                                    </div>
-                                    <div class="col-md-2 form-group">
-                                        <label class="control-label">Id venta:</label>
-                                        <input class="form-control" type="text" value="<%=id_nVenta%>" name="id_venta" id="id_venta" required="" title="escribe un identificador para la venta"/>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="control-label">Cliente</label>
@@ -88,10 +85,13 @@
                                         <label class="control-label">Estatus:</label>
                                         <input  name="estatus" value="Sin pagar" id="estatus" class="form-control" required="" readonly=""/>
                                     </div>
-                                     <div class="form-group pull-right col-md-2"><!-- agrupar inputs -->
-                                        <input type="hidden" value="Mayoreo" name="tipo_venta" />
+                                    <div class="col-md-2">
+                                        <br>
                                         <input type="submit" class="btn btn-block btn-success margen-boton" value="Guardar venta"/>
-                                        <a href="/aserradero/VentaController?action=listar"><input class="btn btn-block btn-warning" type="button" value="Cancelar"/></a>
+                                    </div>  
+                                    <div class="form-group pull-right col-md-2"><!-- agrupar inputs -->
+                                        <br>
+                                        <a href="/aserradero/VentaMayoreoController?action=listar"><input class="btn btn-block btn-warning" type="button" value="Cancelar"/></a>
                                     </div><!-- Fin div group -->
                                 </form><!-- Formulario de venta -->
                                 <div class="col-lg-12">
@@ -100,44 +100,52 @@
                                         <select class="form-control" name="id_madera" required="" id="id_madera" onblur="seleccionarCostoMaderaVenta()">
                                             <option></option>
                                             <%
-                                                for (CostoMaderaClasificacion costoMaderaClasificacion : costoMaderaClasificaciones) {
-                                                    out.print("<option value='"+costoMaderaClasificacion.getId_madera()+"'>"+costoMaderaClasificacion.getId_madera()+"</option>");
+                                                for (InventarioMaderaAserrada inventario : listaInventario) {
+                                                    out.print("<option value='"+inventario.getId_madera()+"'>"+inventario.getId_madera()+"</option>");
                                                 }
                                             %>
                                         </select>
-                                        <label class="control-label" >volumen unitario</label>
-                                        <select name="volumen_unitaria" class="form-control" id="volumen_unitaria" readonly="" disabled="">
+                                        <label class="control-label" >Costo volumen</label>
+                                        <select name="costo_volumen" class="form-control" id="costo_volumen" readonly="" disabled="">
                                             <option></option>
                                             <%
-                                                for (CostoMaderaClasificacion costoMaderaClasificacion : costoMaderaClasificaciones) {
-                                                    out.print("<option value='"+costoMaderaClasificacion.getMonto_volumen()+"'>"+costoMaderaClasificacion.getMonto_volumen()+"</option>");
-                                                    out.print("<option value='"+costoMaderaClasificacion.getVolumen()+"'>"+costoMaderaClasificacion.getVolumen()+"</option>");
+                                                for (InventarioMaderaAserrada inventario : listaInventario) {
+                                                    out.print("<option value='"+inventario.getCosto_por_volumen()+"'>"+inventario.getCosto_por_volumen()+"</option>");
                                                 }
                                             %>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label class="control-label" >Costo volumen</label>
-                                        <select name="costo_volumen" class="form-control" id="costo_volumen" readonly="" disabled="">
+                                        <label class="control-label" >Número de piezas:</label>
+                                        <input type="number" class="form-control" name="num_piezas" id="num_piezas" min="1" max="" required="" title="Escribe la cantidad de piezas" onblur="calcularVolumenTotal()"/>
+                                        <label class="control-label" >Volumen:</label>
+                                        <input class="form-control" type="number" name="volumen" id="volumen" step="0.001" min="0.001" max="99999.999" required="" readonly="" disabled=""/>
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label class="control-label" >Piezas en existencia</label>
+                                        <select name="pieza_existencia" class="form-control" id="pieza_existencia" readonly="" disabled="">
                                             <option></option>
                                             <%
-                                                for (CostoMaderaClasificacion costoMaderaClasificacion : costoMaderaClasificaciones) {
-                                                    out.print("<option value='"+costoMaderaClasificacion.getMonto_volumen()+"'>"+costoMaderaClasificacion.getMonto_volumen()+"</option>");
+                                                for (InventarioMaderaAserrada inventario : listaInventario) {
+                                                    out.print("<option value='"+inventario.getNum_piezas()+"'>"+inventario.getNum_piezas()+"</option>");
                                                 }
                                             %>
                                         </select>
-                                        <label class="control-label" >Número de piezas:</label>
-                                        <input type="number" class="form-control" name="num_piezas" id="num_piezas" min="1" max="999" required="" title="Escribe la cantidad de piezas" onblur="calcularVolumenTotal()"/>
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label class="control-label" >Volumen:</label>
-                                        <input class="form-control" type="number" name="volumen" id="volumen" step="0.001" min="0.001" max="99999.999" required="" readonly="" disabled=""/>
-                                        <label class="control-label" >Monto:</label>                                        
+                                        <label class="control-label" >Monto:</label>
                                         <input type="number" name="monto" class="form-control" id="monto" step="0.01" min="0.01" max="99999999.99"  required="" readonly=""/>
                                     </div>
-                                    <div class="col-md-3">
-                                        <br><br><br>
-                                        <input id="agregar_venta_mayoreo" type="button" class="btn btn-info col-md-9" value="Agregar producto"/>
+                                    <div class="col-md-2">
+                                        <label class="control-label" >volumen unitario</label>
+                                        <select name="volumen_unitaria" class="form-control" id="volumen_unitaria" readonly="" disabled="">
+                                            <option></option>
+                                            <%
+                                                for (InventarioMaderaAserrada inventario : listaInventario) {
+                                                    out.print("<option value='"+inventario.getVolumen_unitario()+"'>"+inventario.getVolumen_unitario()+"</option>");
+                                                }
+                                            %>
+                                        </select>
+                                        <br>
+                                        <input id="agregar_venta_mayoreo" type="button" class="btn btn-info col-md-12" value="Agregar producto"/>
                                     </div>
                                 </div>
                             </div>

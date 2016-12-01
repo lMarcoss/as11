@@ -20,8 +20,8 @@ public class PagoCompraCRUD extends Conexion implements OperacionesCRUD {
         PagoCompra pagoCompra = (PagoCompra) objeto;
         try {
             this.abrirConexion();
-            PreparedStatement st = this.conexion.prepareStatement(""
-                    + "INSERT INTO PAGO_COMPRA (fecha, id_proveedor, monto_pago, monto_por_pagar) values ( ?, ?, ?, ?)");                             
+            PreparedStatement st = this.conexion.prepareStatement(
+                    "INSERT INTO PAGO_COMPRA (fecha, id_proveedor, monto_pago, monto_por_pagar) values ( ?, ?, ?, ?)");
             st = cargarObject(st, pagoCompra);
             st.executeUpdate();
         } catch (Exception e) {

@@ -188,6 +188,7 @@ public class VentaController extends HttpServlet {
                             for(VentaMayoreo a:VentaMay){
                                 ventaMayoreoCRUD.registrar(a);
                             }
+                            response.sendRedirect("/aserradero/VentaMayoreoController?action=listar");
                             break;
                         case "extra":
                             sesion_ajax = request.getSession(true);
@@ -197,6 +198,7 @@ public class VentaController extends HttpServlet {
                             for(VentaExtra a:VentaExt){
                                 VentaExtraCrud.registrar(a);
                             }
+                            response.sendRedirect("/aserradero/VentaExtraController?action=listar");
                             break;
                         case "paquete":
                             sesion_ajax = request.getSession(true);
@@ -206,10 +208,10 @@ public class VentaController extends HttpServlet {
                             for(VentaPaquete a:VentaPaq){
                                 VentaPaqueteCrud.registrar(a);
                             }
+                            response.sendRedirect("/aserradero/VentaPaqueteController?action=listar");
                             break;
                         default:break;
                     }
-                    listarVentas(request, response,"registrado");
                 } catch (Exception ex) {
                     listarVentas(request, response,"error_registrar");
                     System.out.println(ex);

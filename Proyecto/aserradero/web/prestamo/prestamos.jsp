@@ -36,7 +36,7 @@
                 <table class="table-condensed">
                     <tr>
                         <td>
-                            <select name="nombre_campo" >
+                            <select name="nombre_campo">
                             <option value="fecha">Fecha</option>
                             <option value="persona">Persona</option>
                             <option value="monto">Monto</option>
@@ -56,8 +56,10 @@
                     <tr>
                         <th>N°</th>
                         <th>Fecha</th>
-                        <th>Persona</th>
-                        <th>Monto</th>
+                        <th>Prestador</th>
+                        <th>Monto préstamo</th>
+                        <th>Monto pagado</th>
+                        <th>Monto por pagar</th>
                         <th>% de interés</th>
                         <th>Interés mensual</th>
                         <th></th>
@@ -69,8 +71,10 @@
                             out.print("<tr>"
                                 +"<td>"+(i+1)+"</td>"
                                 +"<td>"+prestamo.getFecha()+"</td>"
-                                +"<td>"+prestamo.getPersona()+"</td>"
-                                +"<td>"+prestamo.getMonto()+"</td>"
+                                +"<td>"+prestamo.getPrestador()+"</td>"
+                                +"<td>"+prestamo.getMonto_prestamo()+"</td>"
+                                +"<td>"+prestamo.getMonto_pagado()+"</td>"
+                                +"<td>"+prestamo.getMonto_por_pagar()+"</td>"
                                 +"<td>"+prestamo.getInteres()+"%"+"</td>"
                                 +"<td>"+prestamo.getInteres_mesual()+"</td>"
                                 +"<td><a href=\"/aserradero/PrestamoController?action=modificar&id_prestamo="+prestamo.getId_prestamo()+"\">Actualizar</a></td>"

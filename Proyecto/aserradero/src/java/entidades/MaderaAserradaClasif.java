@@ -6,25 +6,26 @@ import java.math.BigDecimal;
  *
  * @author lmarcoss
  */
-public class MaderaClasificacion {
+public class MaderaAserradaClasif {
     
     private String id_madera;
     private BigDecimal grueso;
     private BigDecimal ancho;
     private BigDecimal largo;
     private BigDecimal volumen;
+    private BigDecimal costo_por_volumen;
 
-    public MaderaClasificacion() {
+    public MaderaAserradaClasif() {
     }
 
-    public MaderaClasificacion(String id_madera, BigDecimal grueso, BigDecimal ancho, BigDecimal largo, BigDecimal volumen) {
+    public MaderaAserradaClasif(String id_madera, BigDecimal grueso, BigDecimal ancho, BigDecimal largo, BigDecimal volumen, BigDecimal costo_por_volumen) {
         this.id_madera = id_madera;
         this.grueso = grueso;
         this.ancho = ancho;
         this.largo = largo;
         this.volumen = volumen;
+        this.costo_por_volumen = costo_por_volumen;
     }
-
 
     public void setId_madera(String id_madera) {
         this.id_madera = id_madera;
@@ -46,6 +47,10 @@ public class MaderaClasificacion {
         this.volumen = volumen;
     }
 
+    public void setCosto_por_volumen(BigDecimal costo_por_volumen) {
+        this.costo_por_volumen = costo_por_volumen;
+    }
+
     public String getId_madera() {
         return id_madera;
     }
@@ -64,6 +69,10 @@ public class MaderaClasificacion {
 
     public BigDecimal getVolumen() {
         return volumen;
+    }
+
+    public BigDecimal getCosto_por_volumen() {
+        return costo_por_volumen;
     }
     
 }

@@ -116,7 +116,7 @@ public class PagoCompraController extends HttpServlet {
     }// </editor-fold>
 
     private void registrarPagoCompra(HttpServletRequest request, HttpServletResponse response, String action) {
-        PagoCompra pagoCompra = extraerPagoCompraCompraForm(request, action);
+        PagoCompra pagoCompra = extraerPagoCompraForm(request, action);
         PagoCompraCRUD pagoCompraCRUD = new PagoCompraCRUD();
         try {
             pagoCompraCRUD.registrar(pagoCompra);
@@ -128,7 +128,7 @@ public class PagoCompraController extends HttpServlet {
         }
     }
 
-    private PagoCompra extraerPagoCompraCompraForm(HttpServletRequest request, String action) {
+    private PagoCompra extraerPagoCompraForm(HttpServletRequest request, String action) {
         PagoCompra pagoCompra = new PagoCompra();
         if (action.equals("actualizar")) {
             // Se ejecuta sólo en el caso de actualizar
@@ -142,7 +142,7 @@ public class PagoCompraController extends HttpServlet {
     }
 
     private void actualizarPagoCompra(HttpServletRequest request, HttpServletResponse response, String action) {
-        PagoCompra pagoCompra = extraerPagoCompraCompraForm(request, action);
+        PagoCompra pagoCompra = extraerPagoCompraForm(request, action);
         PagoCompraCRUD pagoCompraCRUD = new PagoCompraCRUD();
         try {
             pagoCompraCRUD.actualizar(pagoCompra);

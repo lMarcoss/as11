@@ -12,7 +12,6 @@
 <%
     Prestamo prestamo = (Prestamo) request.getAttribute("prestamo");
     List <Persona> personas = (List<Persona>) request.getAttribute("personas");
-    List <Administrador> administradores = (List<Administrador>) request.getAttribute("administradores");
 %>
 <!DOCTYPE html>
 <html>
@@ -39,13 +38,11 @@
                         <tr>
                             <td style="padding-left: 10px;"><label>Persona:</label></td>
                             <td style="padding-left: 10px;">
-                                <select name="id_persona" required="">
+                                <select name="id_prestador" required="">
                                     <%
                                         for (Persona persona : personas) {
-                                            if(prestamo.getId_persona().substring(0, 18).equals(persona.getId_persona())){
-                                                out.print("<option selected=\"\" value='"+persona.getId_persona()+"'>"+persona.getNombre()+" "+persona.getApellido_paterno()+" "+persona.getApellido_materno()+"</option>");
-                                            }else{
-                                                out.print("<option value='"+persona.getId_persona()+"'>"+persona.getNombre()+" "+persona.getApellido_paterno()+" "+persona.getApellido_materno()+"</option>");
+                                            if(prestamo.getId_prestador().substring(0, 18).equals(persona.getId_persona())){
+                                                out.print("<option selected=\"\" value='"+prestamo.getId_prestador()+"'>"+persona.getNombre()+" "+persona.getApellido_paterno()+" "+persona.getApellido_materno()+"</option>");
                                             }
                                         }
                                     %>
@@ -55,23 +52,14 @@
                         <tr>
                             <td style="padding-left: 10px;"><label>Administrador:</label></td>
                             <td style="padding-left: 10px;">
-                                <select name="id_administrador" required="">
-                                    <option></option>
-                                    <%
-                                        for (Administrador administrador : administradores) {
-                                            if(prestamo.getId_administrador().equals(administrador.getId_administrador())){
-                                                out.print("<option selected=\"\" value='"+administrador.getId_administrador()+"'>"+administrador.getNombre()+"</option>");
-                                            }else{
-                                                out.print("<option value='"+administrador.getId_administrador()+"'>"+administrador.getNombre()+"</option>");
-                                            }
-                                        }
-                                    %>
+                                <select name="id_empleado" required="">
+                                    <option value="<%= prestamo.getId_empleado()%>"><%= prestamo.getEmpleado()%></option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>Monto:</label></td>
-                            <td style="padding-left: 10px;"><input type="number" name="monto" value="<%=prestamo.getMonto()%>" step="0.01" min="0.01" max="99999999.99"  required=""></td>
+                            <td style="padding-left: 10px;"><input type="number" name="monto_prestamo" value="<%=prestamo.getMonto_prestamo()%>" step="0.01" min="0.01" max="99999999.99"  required=""></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>% de interés mensual:</label></td>

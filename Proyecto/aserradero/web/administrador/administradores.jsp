@@ -31,6 +31,7 @@
                         <td>
                             <select name="nombre_campo" >
                             <option value="administrador">Nombre</option>
+                            <option value="cuenta_inicial">Cuenta inicial</option>
                         </select>
                         </td>
                         <td><input type="text" name="dato" placeholder="Escriba su búsqueda"></td>
@@ -54,6 +55,8 @@
                             out.print("<tr>"
                                 +"<td>"+(i+1)+"</td>"
                                 +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+administrador.getId_administrador()+"\">"+administrador.getNombre()+"</a></td>"
+                                +"<td>"+administrador.getCuenta_inicial()+"</td>"
+                                +"<td><a href=\"/aserradero/AdministradorController?action=modificar&id_administrador="+administrador.getId_administrador()+"\">Modificar cuenta</a></td>"
                                 + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/AdministradorController?action=eliminar&id_administrador="+administrador.getId_administrador()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;
