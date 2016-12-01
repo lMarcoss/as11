@@ -1,9 +1,8 @@
 package controlador;
 
-import dao.InventarioMaderaEntradaCRUD;
-import entidades.InventarioMaderaEntrada;
+import dao.InventarioMaderaRolloCRUD;
+import entidades.InventarioMaderaRollo;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author rcortes
  */
-public class InventarioMaderaEntradaController extends HttpServlet {
+public class InventarioMaderaRolloController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,7 +30,20 @@ public class InventarioMaderaEntradaController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
+
+        //Acción a realizar
+        String action = request.getParameter("action");
+        switch (action) {
+            /**
+             * *************** Respuestas a métodos POST *********************
+             */
+            /**
+             * *************** Respuestas a métodos GET *********************
+             */
+            case "listar":
+                listarInventarioMaderaRollo(request, response, action);
+                break;
         }
     }
 
@@ -47,18 +59,7 @@ public class InventarioMaderaEntradaController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
-        String action = request.getParameter("action");
-        switch(action){
-            case "listar":
-                try {
-                 listarInventarioMaderaEntradas(request, response,"Inventario madera en rollo");   
-                } catch (Exception e) {
-                    System.out.println(e);
-                }                      
-                break;
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -72,8 +73,7 @@ public class InventarioMaderaEntradaController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        response.setCharacterEncoding("utf-8");
+        processRequest(request, response);
     }
 
     /**
@@ -85,21 +85,28 @@ public class InventarioMaderaEntradaController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    private void listarInventarioMaderaEntradas(HttpServletRequest request, HttpServletResponse response,String mensaje){
-        List<InventarioMaderaEntrada> inventarioMaderaEntradas;
-        InventarioMaderaEntradaCRUD inventariomaderaentradacrud = new InventarioMaderaEntradaCRUD();
-        String forward;
-        try {
-            inventarioMaderaEntradas = (List<InventarioMaderaEntrada>)inventariomaderaentradacrud.listar();
-            request.setAttribute("inventarioMaderaEntradas", inventarioMaderaEntradas);
-            request.setAttribute("mensaje", mensaje);
-            forward="inventarioMaderaEntrada/inventariomaderaentradas.jsp";
-            RequestDispatcher view=request.getRequestDispatcher(forward);
-            view.forward(request, response);
-        }catch (Exception ex) {
-            System.out.println(ex);
-            Logger.getLogger(InventarioMaderaEntradaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
+    private void listarInventarioMaderaRollo(HttpServletRequest request, HttpServletResponse response, String mensaje) {
+        List<InventarioMaderaRollo> listaInventario;
+        InventarioMaderaRolloCRUD pagoPrestamoCRUD = new InventarioMaderaRolloCRUD();
+        try {
+            listaInventario = (List<InventarioMaderaRollo>) pagoPrestamoCRUD.listar();
+            mostrarInventarioMaderaRollo(request, response, listaInventario, mensaje);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            Logger.getLogger(InventarioMaderaRolloController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void mostrarInventarioMaderaRollo(HttpServletRequest request, HttpServletResponse response, List<InventarioMaderaRollo> listaInventario, String action) {
+        request.setAttribute("mensaje", action);
+        request.setAttribute("listaInventario", listaInventario);
+        RequestDispatcher view = request.getRequestDispatcher("inventarioMaderaRollo/listarInventarioMaderaRollo.jsp");
+        try {
+            view.forward(request, response);
+        } catch (ServletException | IOException ex) {
+            System.err.println("No se pudo mostrar la lista inventario madera rollo");
+            Logger.getLogger(InventarioMaderaRolloController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

@@ -169,7 +169,7 @@ public class PagoPrestamoController extends HttpServlet {
         try {
             view.forward(request, response);
         } catch (ServletException | IOException ex) {
-            System.err.println("No se pudo mostrar la lista de pago compras");
+            System.err.println("No se pudo mostrar la lista de pago prestamo");
             Logger.getLogger(PagoPrestamoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

@@ -4,11 +4,11 @@ window.onload=function(){
     var mensaje = document.getElementById('mensaje').value;
     switch (mensaje){
         // Mensajes de error para modulo Madera en rollo
-        case "inventario_entrada_inalcansable":
+        case "inventario_entrada_inalcanzable":
             alert("Verifica que los datos sea correctos\n\n\nNo se puede registrar una salida con número de piezas o volumen mayor al inventario existente\n\n");
             break;
         case "error_registrar_entrada_madera_rollo":
-            alert("No se pudo crear el registro\n\n Verifica que tengas registrado los costos de las clasificaciones de madera en rollo, Primario, Secundario y Terciario\n\n Debe estar registrado las tres clasificaciones");
+            alert("No se pudo crear el registro \n\nVerifica que tengas registrado los costos de las clasificaciones de madera en rollo, Primario, Secundario y Terciario \n\nDebe estar registrado las tres clasificaciones \n\nPara registrar los costos ve al menú \nMadera en rollo -> Clasificación");
             break;
         // 
         case "error_nuevo":

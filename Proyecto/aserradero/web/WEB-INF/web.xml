@@ -85,8 +85,8 @@
         <servlet-class>controlador.ClasificacionMaderaEntradaController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>InventarioMaderaEntradaController</servlet-name>
-        <servlet-class>controlador.InventarioMaderaEntradaController</servlet-class>
+        <servlet-name>InventarioMaderaRolloController</servlet-name>
+        <servlet-class>controlador.InventarioMaderaRolloController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>OtroGastoController</servlet-name>
@@ -225,8 +225,8 @@
         <url-pattern>/CostoMaderaEntradaController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>InventarioMaderaEntradaController</servlet-name>
-        <url-pattern>/InventarioMaderaEntradaController</url-pattern>
+        <servlet-name>InventarioMaderaRolloController</servlet-name>
+        <url-pattern>/InventarioMaderaRolloController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>OtroGastoController</servlet-name>
