@@ -1,8 +1,10 @@
 package controlador;
 
 import dao.EmpleadoCRUD;
+import dao.InventarioMaderaRolloCRUD;
 import dao.SalidaMaderaRolloCRUD;
 import entidades.Empleado;
+import entidades.InventarioMaderaRollo;
 import entidades.SalidaMaderaRollo;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -67,7 +69,12 @@ public class SalidaMaderaRolloController extends HttpServlet {
                     empleadoCRUD = new EmpleadoCRUD();
                     List<Empleado> empleados = (List<Empleado>) empleadoCRUD.listarEmpleadoPorRoll("Empleado");
                     request.setAttribute("empleados",empleados);
-                                       
+                    
+                    //Enviamos el inventario de madera rollo
+                    InventarioMaderaRolloCRUD inventarioMRCRUD = new InventarioMaderaRolloCRUD();
+                    List<InventarioMaderaRollo> inventarioMR = (List<InventarioMaderaRollo>) inventarioMRCRUD.listar();
+                    request.setAttribute("inventarioMR",inventarioMR);
+                    
                     //Enviamos la fecha actual 
                     Date fechaActual = Date.valueOf(LocalDate.now());
                     request.setAttribute("fechaActual",fechaActual);
@@ -90,7 +97,12 @@ public class SalidaMaderaRolloController extends HttpServlet {
                     //enviamos la salidaMaderaRollo a modificar
                     salidaMaderaRollo = (SalidaMaderaRollo) salidaMaderaRolloCRUD.modificar(salidaMaderaRolloEC);
                     request.setAttribute("salidaMaderaRollo",salidaMaderaRollo);
-                                        
+                                    
+                    //enviamos el inventario de madera rollo
+                    InventarioMaderaRolloCRUD inventarioMRCRUD = new InventarioMaderaRolloCRUD();
+                    List<InventarioMaderaRollo> inventarioMR = (List<InventarioMaderaRollo>) inventarioMRCRUD.listar();
+                    request.setAttribute("inventarioMR",inventarioMR);
+                    
                     RequestDispatcher view = request.getRequestDispatcher("salidaMaderaRollo/actualizarSalidaMaderaRollo.jsp");
                     view.forward(request,response);
                 } catch (Exception ex) {

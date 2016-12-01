@@ -34,15 +34,15 @@ RETURNS INT
 BEGIN
 	DECLARE _num_piezas INT;
     
-	-- Existe cuenta por cobrar al proveedor?
     IF EXISTS (SELECT id_madera FROM MADERA_VENDIDA WHERE id_madera = _id_madera) THEN 
 		SELECT num_piezas INTO _num_piezas FROM MADERA_VENDIDA WHERE id_madera = _id_madera;
         RETURN _num_piezas;
-	ELSE -- No existe cuenta por cobrar al proveedor
+	ELSE 
 		RETURN 0;
     END IF;
 END;//
 DELIMITER ;
+
 DROP VIEW IF EXISTS INVENTARIO_MADERA_ASERRADA;
 CREATE VIEW INVENTARIO_MADERA_ASERRADA AS
 SELECT 

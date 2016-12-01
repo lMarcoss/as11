@@ -1,6 +1,6 @@
 package dao;
 
-import entidades.InventarioMaderaEntrada;
+import entidades.InventarioMaderaRollo;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,10 +10,10 @@ import java.util.List;
 
 /**
  *
- * @author rcortes
- * Modificado por lmarcoss
+ * @author rcortes Modificado por lmarcoss
  */
-public class InventarioMaderaEntradaCRUD extends Conexion implements OperacionesCRUD{
+public class InventarioMaderaRolloCRUD extends Conexion implements OperacionesCRUD {
+
     @Override
     public void registrar(Object objeto) throws Exception {
         //El inventario se se registra con triggers
@@ -21,14 +21,14 @@ public class InventarioMaderaEntradaCRUD extends Conexion implements Operaciones
 
     @Override
     public <T> List listar() throws Exception {
-        List<InventarioMaderaEntrada> inventariomaderaentradas;
+        List<InventarioMaderaRollo> inventariomaderaentradas;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM INVENTARIO_MADERA_ENTRADA;")){
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM INVENTARIO_MADERA_ROLLO WHERE num_piezas > 0")) {
                 inventariomaderaentradas = new ArrayList<>();
-                try (ResultSet rs = st.executeQuery()){
+                try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
-                        InventarioMaderaEntrada inventariomaderaentrada = (InventarioMaderaEntrada) extraerObject(rs);
+                        InventarioMaderaRollo inventariomaderaentrada = (InventarioMaderaRollo) extraerObject(rs);
                         inventariomaderaentradas.add(inventariomaderaentrada);
                     }
                 } catch (Exception e) {
@@ -41,10 +41,19 @@ public class InventarioMaderaEntradaCRUD extends Conexion implements Operaciones
         } catch (Exception e) {
             System.out.println(e);
             throw e;
-        }finally{
+        } finally {
             cerrarConexion();
         }
         return inventariomaderaentradas;
+    }
+
+    @Override
+    public Object extraerObject(ResultSet rs) throws SQLException {
+        InventarioMaderaRollo inventariomaderaentrada = new InventarioMaderaRollo();
+        inventariomaderaentrada.setId_administrador(rs.getString("id_administrador"));
+        inventariomaderaentrada.setNum_piezas(rs.getInt("num_piezas"));
+        inventariomaderaentrada.setVolumen_total(rs.getBigDecimal("volumen_total"));
+        return inventariomaderaentrada;
     }
 
     @Override
@@ -64,14 +73,6 @@ public class InventarioMaderaEntradaCRUD extends Conexion implements Operaciones
     @Override
     public <T> List buscar(String nombre_campo, String dato) throws Exception {
         return null;
-    }
-
-    @Override
-    public Object extraerObject(ResultSet rs) throws SQLException {
-        InventarioMaderaEntrada inventariomaderaentrada = new InventarioMaderaEntrada();
-        inventariomaderaentrada.setNum_piezas(rs.getInt("num_piezas"));        
-        inventariomaderaentrada.setVolumen_total(rs.getBigDecimal("volumen_total"));
-        return inventariomaderaentrada;
     }
 
     @Override

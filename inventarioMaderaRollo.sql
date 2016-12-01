@@ -1,4 +1,5 @@
 USE aserradero;
+
 DROP VIEW IF EXISTS VISTA_ENTRADA_MADERA_ROLLO;
 CREATE VIEW VISTA_ENTRADA_MADERA_ROLLO AS
 SELECT 
@@ -23,10 +24,10 @@ SELECT
     id_pago
 FROM ENTRADA_MADERA_ROLLO;
 
--- Disparador para insertar en inventario entrada cada que se inserta en entrada madera
-DROP TRIGGER IF EXISTS INVENTARIO_MADERA_ENTRADA;
+-- Disparador para insertar costos de madera entrada
+DROP TRIGGER IF EXISTS MODIFICAR_ENTRADA_M_ROLLO;
 DELIMITER //
-CREATE TRIGGER INVENTARIO_MADERA_ENTRADA BEFORE INSERT ON ENTRADA_MADERA_ROLLO
+CREATE TRIGGER MODIFICAR_ENTRADA_M_ROLLO BEFORE INSERT ON ENTRADA_MADERA_ROLLO
 FOR EACH ROW
 BEGIN
 	DECLARE _id_administrador VARCHAR(18);	
@@ -52,22 +53,9 @@ BEGIN
 	
     -- actualizamos los costo de volumen madera en cada EntradaMadera
     SET NEW.costo_primario = _costo_primario;
-    SET NEW.costo_secundario = _costo_terciario;
+    SET NEW.costo_secundario = _costo_secundario;
     SET NEW.costo_terciario = _costo_terciario;
     
-    
-    -- consultamos el jefe del empleado que registra
-    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado limit 1;
-    
-    
-	IF EXISTS (SELECT id_administrador FROM INVENTARIO_MADERA_ENTRADA WHERE id_administrador = _id_administrador) THEN
-        UPDATE INVENTARIO_MADERA_ENTRADA -- actualizamos inventario si existe inventario asociado al administrador
-			SET num_piezas = (num_piezas + NEW.num_piezas), 
-            volumen_total = (volumen_total + NEW.volumen_primario+NEW.volumen_secundario+NEW.volumen_terciario)
-            WHERE id_administrador = _id_administrador;
-    ELSE -- si no existe inventario asociado al administrador: insertamos
-        INSERT INTO INVENTARIO_MADERA_ENTRADA VALUES(_id_administrador,NEW.num_piezas,(NEW.volumen_primario+NEW.volumen_secundario+NEW.volumen_terciario));
-    END IF;
 END;//
 DELIMITER ;
 
@@ -84,38 +72,38 @@ SELECT
 	FROM SALIDA_MADERA_ROLLO;
     
 -- Disparador para restar inventario en cada salida de madera en rollo
-DROP TRIGGER IF EXISTS RESTAR_INV_MADERA_ROLLO;
-DELIMITER //
-CREATE TRIGGER RESTAR_INV_MADERA_ROLLO BEFORE INSERT ON SALIDA_MADERA_ROLLO
-FOR EACH ROW
-BEGIN
+-- DROP TRIGGER IF EXISTS RESTAR_INV_MADERA_ROLLO;
+-- DELIMITER //
+-- CREATE TRIGGER RESTAR_INV_MADERA_ROLLO BEFORE INSERT ON SALIDA_MADERA_ROLLO
+-- FOR EACH ROW
+-- BEGIN
 	
-	DECLARE _id_administrador VARCHAR(18);
-    DECLARE _num_piezas_existente INT;
-    DECLARE _volumen_total_existente DECIMAL(15,3);
-    -- consultamos el jefe del empleado que registra
-    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado limit 1;
+-- 	DECLARE _id_administrador VARCHAR(18);
+--     DECLARE _num_piezas_existente INT;
+--     DECLARE _volumen_total_existente DECIMAL(15,3);
+--     -- consultamos el jefe del empleado que registra
+--     SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado limit 1;
     
-    -- Consultamos inventario existente
-    SELECT num_piezas INTO _num_piezas_existente FROM INVENTARIO_MADERA_ENTRADA WHERE id_administrador = _id_administrador;
-    SELECT volumen_total INTO _volumen_total_existente FROM INVENTARIO_MADERA_ENTRADA WHERE id_administrador = _id_administrador;
+--     -- Consultamos inventario existente
+--     SELECT num_piezas INTO _num_piezas_existente FROM INVENTARIO_MADERA_ENTRADA WHERE id_administrador = _id_administrador;
+--     SELECT volumen_total INTO _volumen_total_existente FROM INVENTARIO_MADERA_ENTRADA WHERE id_administrador = _id_administrador;
     
-	IF EXISTS (SELECT id_administrador FROM INVENTARIO_MADERA_ENTRADA WHERE id_administrador = _id_administrador) THEN
-        IF(_num_piezas_existente >= NEW.num_piezas and _volumen_total_existente >= NEW.volumen_total)THEN
-			UPDATE INVENTARIO_MADERA_ENTRADA -- actualizamos inventario si existe inventario asociado al administrador Y el número de piezas es alcansable
-				SET num_piezas = (num_piezas - NEW.num_piezas), 
-				volumen_total = (volumen_total - NEW.volumen_total)
-				WHERE id_administrador = _id_administrador;
-		ELSE 
-			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No hay inventario';
-        END IF;
-	ELSE 
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No hay inventario';
-    END IF;
-END;//
-DELIMITER ;
+-- 	IF EXISTS (SELECT id_administrador FROM INVENTARIO_MADERA_ENTRADA WHERE id_administrador = _id_administrador) THEN
+--         IF(_num_piezas_existente >= NEW.num_piezas and _volumen_total_existente >= NEW.volumen_total)THEN
+-- 			UPDATE INVENTARIO_MADERA_ENTRADA -- actualizamos inventario si existe inventario asociado al administrador Y el número de piezas es alcansable
+-- 				SET num_piezas = (num_piezas - NEW.num_piezas), 
+-- 				volumen_total = (volumen_total - NEW.volumen_total)
+-- 				WHERE id_administrador = _id_administrador;
+-- 		ELSE 
+-- 			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No hay inventario';
+--         END IF;
+-- 	ELSE 
+-- 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No hay inventario';
+--     END IF;
+-- END;//
+-- DELIMITER ;
 
--- Actualizar inventario cada que se modifica una entrada de madera
+-- Actualizar datos cada que se modifica una entrada de madera
 DROP TRIGGER IF EXISTS ACTUALIZAR_ENTRADA_MADERA_ROLLO;
 DELIMITER //
 CREATE TRIGGER ACTUALIZAR_ENTRADA_MADERA_ROLLO BEFORE UPDATE ON ENTRADA_MADERA_ROLLO
@@ -140,19 +128,19 @@ BEGIN
     
     
     -- consultamos el jefe del empleado que registra
-    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado limit 1;
+    -- SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado limit 1;
     
     -- Restamos los valores antiguos en inventario madera rollo
-    UPDATE INVENTARIO_MADERA_ENTRADA
-			SET num_piezas = (num_piezas - OLD.num_piezas), 
-            volumen_total = (volumen_total - _volumen_total_old)
-            WHERE id_administrador = _id_administrador;
+   --  UPDATE INVENTARIO_MADERA_ENTRADA
+			-- SET num_piezas = (num_piezas - OLD.num_piezas), 
+   --          volumen_total = (volumen_total - _volumen_total_old)
+   --          WHERE id_administrador = _id_administrador;
     
 	-- actualizamos inventario con los nuevos valores
-	UPDATE INVENTARIO_MADERA_ENTRADA 
-		SET num_piezas = (num_piezas + NEW.num_piezas), 
-		volumen_total = (volumen_total + NEW.volumen_primario + NEW.volumen_secundario + NEW.volumen_terciario)
-		WHERE id_administrador = _id_administrador;
+	-- UPDATE INVENTARIO_MADERA_ENTRADA 
+	-- 	SET num_piezas = (num_piezas + NEW.num_piezas), 
+	-- 	volumen_total = (volumen_total + NEW.volumen_primario + NEW.volumen_secundario + NEW.volumen_terciario)
+	-- 	WHERE id_administrador = _id_administrador;
         
 	-- Actualizamos la tabla PAGO_COMPRA Si la venta se ha pagado ya
     SET _monto_total_new = ROUND((NEW.volumen_primario * NEW.costo_primario + NEW.volumen_secundario * NEW.costo_secundario + NEW.volumen_terciario * NEW.costo_terciario),2);
@@ -169,33 +157,33 @@ DELIMITER //
 CREATE TRIGGER ACTUALIZAR_SALIDA_MADERA_ROLLO BEFORE UPDATE ON SALIDA_MADERA_ROLLO
 FOR EACH ROW
 BEGIN
-	DECLARE _id_administrador VARCHAR(18);	
-    DECLARE _num_piezas_disponible INT;	-- numero de piezas disponible en inventario
-    DECLARE _volumen_disponible DECIMAL(15,3); 			-- volumen disponible en inventario
+	-- DECLARE _id_administrador VARCHAR(18);	
+    -- DECLARE _num_piezas_disponible INT;	-- numero de piezas disponible en inventario
+    -- DECLARE _volumen_disponible DECIMAL(15,3); 			-- volumen disponible en inventario
     
     -- consultamos el jefe del empleado que registra
-    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado limit 1;
+    -- SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado limit 1;
     
     -- Consultamos inventario disponible
-    SELECT num_piezas INTO _num_piezas_disponible FROM INVENTARIO_MADERA_ENTRADA WHERE id_administrador = _id_administrador;
-    SELECT volumen_total INTO _volumen_disponible FROM INVENTARIO_MADERA_ENTRADA WHERE id_administrador = _id_administrador;
+    -- SELECT num_piezas INTO _num_piezas_disponible FROM INVENTARIO_MADERA_ENTRADA WHERE id_administrador = _id_administrador;
+    -- SELECT volumen_total INTO _volumen_disponible FROM INVENTARIO_MADERA_ENTRADA WHERE id_administrador = _id_administrador;
     
     -- si el inventario es inalcansable se termina la transacción
-    IF((_num_piezas_disponible < NEW.num_piezas-OLD.num_piezas) or (_volumen_disponible<NEW.volumen_total-OLD.volumen_total))THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Inventario inalcansable';
-    END IF;
+  --   IF((_num_piezas_disponible < NEW.num_piezas-OLD.num_piezas) or (_volumen_disponible<NEW.volumen_total-OLD.volumen_total))THEN
+		-- SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Inventario inalcansable';
+  --   END IF;
     
     -- Sumamos los valores antiguos en inventario madera rollo
-    UPDATE INVENTARIO_MADERA_ENTRADA -- actualizamos inventario si existe inventario asociado al administrador
-			SET num_piezas = (num_piezas + OLD.num_piezas), 
-            volumen_total = (volumen_total + OLD.volumen_total)
-            WHERE id_administrador = _id_administrador;
+   --  UPDATE INVENTARIO_MADERA_ENTRADA -- actualizamos inventario si existe inventario asociado al administrador
+			-- SET num_piezas = (num_piezas + OLD.num_piezas), 
+   --          volumen_total = (volumen_total + OLD.volumen_total)
+   --          WHERE id_administrador = _id_administrador;
     
 	-- actualizamos inventario restando los nuevos valores
-	UPDATE INVENTARIO_MADERA_ENTRADA 
-		SET num_piezas = (num_piezas - NEW.num_piezas), 
-		volumen_total = (volumen_total - NEW.volumen_total)
-		WHERE id_administrador = _id_administrador;
+	-- UPDATE INVENTARIO_MADERA_ENTRADA 
+	-- 	SET num_piezas = (num_piezas - NEW.num_piezas), 
+	-- 	volumen_total = (volumen_total - NEW.volumen_total)
+	-- 	WHERE id_administrador = _id_administrador;
 END;//
 DELIMITER ;
 
@@ -224,6 +212,65 @@ END;//
 DELIMITER ;
 
 
-/*
-	Falta actualizacion de las entradas para el caso cuando estan pagadas
-*/
+DROP VIEW IF EXISTS TOTAL_ENTRADA_MADERA_ROLLO;
+CREATE VIEW TOTAL_ENTRADA_MADERA_ROLLO AS
+SELECT 
+	id_jefe AS id_administrador,
+    SUM(num_piezas) AS num_piezas,
+    SUM(volumen_total) AS volumen_total
+FROM VISTA_ENTRADA_MADERA_ROLLO
+GROUP BY id_jefe;
+
+DROP VIEW IF EXISTS TOTAL_SALIDA_MADERA_ROLLO;
+CREATE VIEW TOTAL_SALIDA_MADERA_ROLLO AS
+SELECT 
+	id_jefe AS id_administrador,
+    SUM(num_piezas) AS num_piezas,
+    SUM(volumen_total) AS volumen_total
+FROM VISTA_SALIDA_MADERA_ROLLO
+GROUP BY id_jefe;
+
+-- funcion para consultar numero de piezas de madera rollo han salido: se ha enviado para aserrar
+DROP FUNCTION IF EXISTS C_MADERA_ASERRADA_SALIDA_PIEZA;
+DELIMITER //
+CREATE FUNCTION C_MADERA_ASERRADA_SALIDA_PIEZA (_id_administrador VARCHAR(30))
+RETURNS INT
+BEGIN
+	DECLARE _num_piezas INT;
+    
+	-- consultamos si han salido madera rollo
+    IF EXISTS (SELECT num_piezas FROM TOTAL_SALIDA_MADERA_ROLLO WHERE id_administrador = _id_administrador) THEN 
+		SELECT num_piezas INTO _num_piezas FROM TOTAL_SALIDA_MADERA_ROLLO WHERE id_administrador = _id_administrador;
+        RETURN _num_piezas;
+	ELSE -- No existe cuenta por cobrar al proveedor
+		RETURN 0;
+    END IF;
+END;//
+DELIMITER ;
+
+-- funcion para consultar el volumen total de madera rollo salida 
+DROP FUNCTION IF EXISTS C_MADERA_ASERRADA_SALIDA_VOL;
+DELIMITER //
+CREATE FUNCTION C_MADERA_ASERRADA_SALIDA_VOL (_id_administrador VARCHAR(30))
+RETURNS DECIMAL(15,3)
+BEGIN
+	DECLARE _volumen_total DECIMAL(15,3);
+    
+	-- consultamos si han salido madera rollo
+    IF EXISTS (SELECT volumen_total FROM TOTAL_SALIDA_MADERA_ROLLO WHERE id_administrador = _id_administrador) THEN 
+		SELECT volumen_total INTO _volumen_total FROM TOTAL_SALIDA_MADERA_ROLLO WHERE id_administrador = _id_administrador;
+        RETURN _volumen_total;
+	ELSE -- No existe cuenta por cobrar al proveedor
+		RETURN 0;
+    END IF;
+END;//
+DELIMITER ;
+
+
+DROP VIEW IF EXISTS INVENTARIO_MADERA_ROLLO;
+CREATE VIEW INVENTARIO_MADERA_ROLLO AS 
+SELECT 
+	ENTRADA.id_administrador,
+    (ENTRADA.num_piezas - (SELECT C_MADERA_ASERRADA_SALIDA_PIEZA(ENTRADA.id_administrador))) AS num_piezas,
+    ROUND((ENTRADA.volumen_total - (SELECT C_MADERA_ASERRADA_SALIDA_VOL(ENTRADA.id_administrador))),3) AS volumen_total
+FROM TOTAL_ENTRADA_MADERA_ROLLO AS ENTRADA;

@@ -4,11 +4,11 @@
     Author     : rcortes
 --%>
 
-<%@page import="entidades.InventarioMaderaEntrada"%>
+<%@page import="entidades.InventarioMaderaRollo"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    List <InventarioMaderaEntrada> inventarioMaderaEntradas = (List<InventarioMaderaEntrada>) request.getAttribute("inventarioMaderaEntradas");
+    List <InventarioMaderaRollo> listaInventario = (List<InventarioMaderaRollo>) request.getAttribute("listaInventario");
     String mensaje = (String)request.getAttribute("mensaje");
 %>
 <!DOCTYPE html>
@@ -23,25 +23,9 @@
         
         <input type="hidden" name="mensaje" id="mensaje" value="<%=mensaje%>"
             
-        <% if(!inventarioMaderaEntradas.isEmpty()){%>
-        <!-- ************************** opción de búsqueda-->
-        <div>
-            <form method="POST" action="/aserradero/MaderaEntradaController?action=buscar">
-                <table>
-                    <tr>
-                        <td>
-                            <select name="nombre_campo" >
-                                <option value="clasificacion">Clasificacion</option>
-                                <option value="volumen">Volumen</option>
-                            </select>
-                        </td>
-                        <td><input type="text" name="dato" placeholder="Escriba su búsqueda"></td>
-                        <td colspan="2"><input type="submit" value="Buscar"></td>
-                    </tr>
-                </table>
-            </form>
-        </div> <!-- Fin opción de búsqueda-->
+        <% if(!listaInventario.isEmpty()){%>
         <!-- ************************* Resultado Consulta-->
+        <h1>Inventario madera en rollo</h1>
         <div>
             <table class="table-condensed">
                     <tr>
@@ -51,11 +35,11 @@
                     </tr>
                     <%
                         int i=0;
-                        for (InventarioMaderaEntrada inventariomaderaentrada : inventarioMaderaEntradas) {
+                        for (InventarioMaderaRollo inventario : listaInventario) {
                             out.print("<tr>"
                                 +"<td>"+(i+1)+"</td>"
-                                +"<td>"+inventariomaderaentrada.getNum_piezas()+"</td>"                                
-                                +"<td>"+inventariomaderaentrada.getVolumen_total()+"</td>"                                
+                                +"<td>"+inventario.getNum_piezas()+"</td>"
+                                +"<td>"+inventario.getVolumen_total()+"</td>"
                             + "</tr>" );
                             i++;
                         }
