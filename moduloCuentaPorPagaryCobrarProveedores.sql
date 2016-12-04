@@ -1,6 +1,7 @@
 USE aserradero;
 
 -- muestra todos los anticipos a proveedores
+DROP VIEW IF EXISTS VISTA_ANTICIPO_PROVEEDOR;
 CREATE VIEW VISTA_ANTICIPO_PROVEEDOR AS
 SELECT id_anticipo_P,
 		fecha,
@@ -13,6 +14,7 @@ SELECT id_anticipo_P,
 FROM ANTICIPO_PROVEEDOR;
 
 -- muestra el monto total de los anticipo proveedores:
+DROP VIEW IF EXISTS MONTO_TOTAL_ANTICIPO;
 CREATE VIEW MONTO_TOTAL_ANTICIPO AS
 SELECT
     id_proveedor,
@@ -21,6 +23,7 @@ FROM VISTA_ANTICIPO_PROVEEDOR
 GROUP BY id_proveedor;
 
 -- muestra el monto total de las entrada de madera en rollo: $ costo total
+DROP VIEW IF EXISTS MONTO_TOTAL_ENTRADA_MADERA;
 CREATE VIEW MONTO_TOTAL_ENTRADA_MADERA AS
 SELECT 
 	id_proveedor,
@@ -72,6 +75,7 @@ DELIMITER ;
 -- Muestra cuentas por cobrar y por pagar a los proveedores
 -- : los negativos representan cuenta por pagar
 -- : los positivos son cuentas por cobrar
+DROP VIEW IF EXISTS CUENTAS_PROVEEDOR;
 CREATE VIEW CUENTAS_PROVEEDOR AS 
 SELECT
 	id_proveedor,

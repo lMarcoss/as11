@@ -259,6 +259,15 @@ CREATE TABLE PRESTAMO(
 	PRIMARY KEY(id_prestamo, id_prestador),
     FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON UPDATE CASCADE)ENGINE=InnoDB;
 
+CREATE TABLE PAGO_COMPRA(
+	id_pago				INT NOT NULL AUTO_INCREMENT,
+    fecha 				DATE,
+    id_proveedor		CHAR(26) NOT NULL,
+    monto_pago 			DECIMAL(15,2),
+    monto_por_pagar		DECIMAL(15,2),
+ 	PRIMARY KEY (id_pago),
+    FOREIGN KEY (id_proveedor) REFERENCES PROVEEDOR (id_proveedor))ENGINE=InnoDB;
+    
 -- Disparador para insertar un administrador como empleado su jefe será él mismo
 DELIMITER //
 CREATE TRIGGER EMPLEADO  AFTER INSERT ON ADMINISTRADOR

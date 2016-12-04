@@ -16,7 +16,7 @@
 USE aserradero;
 
 -- muestra el monto total de los anticipo clientes: $ monto total
-DROP VIEW MONTO_TOTAL_ANTICIPO_C;
+DROP VIEW IF EXISTS MONTO_TOTAL_ANTICIPO_C;
 CREATE VIEW MONTO_TOTAL_ANTICIPO_C AS
 SELECT
     id_cliente,
@@ -27,11 +27,12 @@ GROUP BY id_cliente;
 -- muestra el monto total de las ventas de madera aserrada: $ monto total
 CREATE VIEW MONTO_TOTAL_ENTRADA_MADERA AS
 SELECT 
-	id_cliente,
+	id_proveedor,
     SUM(monto_total) AS monto_total
 FROM VISTA_ENTRADA_MADERA_ROLLO
-GROUP BY id_cliente;
+GROUP BY id_proveedor;
 
+SELECT * FROM VISTA_ENTRADA_MADERA_ROLLO;
 -- funcion para consultar $ monto total de las maderas en rollo entrada por cada proveedor
 DROP FUNCTION IF EXISTS C_MADERA_ENTRADA_ROLLO;
 DELIMITER //

@@ -62,7 +62,7 @@
                                       for (Empleado empleado : empleados) {
                                           out.print("<tr>"
                                               +"<td>"+(i+1)+"</td>"
-                                              +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+empleado.getId_empleado()+"\">"+empleado.getId_empleado()+"</a></td>"
+                                              +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+empleado.getId_empleado()+"\">"+empleado.getEmpleado()+"</a></td>"
                                               +"<td>"+empleado.getRoll()+"</td>"
                                               +"<td>"+empleado.getEstatus()+"</td>"
                                               +"<td><a  class='btn btn-warning' href=\"/aserradero/EmpleadoController?action=modificar&id_empleado="+empleado.getId_empleado()+"&roll="+empleado.getRoll()+"\">Actualizar</a></td>"
