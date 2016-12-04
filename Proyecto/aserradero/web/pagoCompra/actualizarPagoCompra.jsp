@@ -50,7 +50,7 @@
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>Monto a pagar:</label></td>
-                            <td style="padding-left: 10px;"><input type="number" step="0.01" name="monto_pago" id="monto_pago" value="<%=pagoCompra.getMonto_pago()%>" min="0.01" max="<%=pagoCompra.getMonto_pago().add(pagoCompra.getMonto_por_pagar())%>" required="" onblur="calcularMontoPorPagar()"></td>
+                            <td style="padding-left: 10px;"><input type="number" step="0.01" name="monto_pago" id="monto_pago" value="<%=pagoCompra.getMonto_pago()%>" min="0.00" max="<%=pagoCompra.getMonto_pago().add(pagoCompra.getMonto_por_pagar())%>" required="" onblur="calcularMontoPorPagar()"></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>Monto pendiente (por pagar):</label></td>

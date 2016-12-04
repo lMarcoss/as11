@@ -79,14 +79,34 @@ BEGIN
 END;//
 DELIMITER ;
 
---  Se utiliza para consultar las comprar pendientes para pagar
+-- Procedimiento para obtener cuenta por cobrar al proveedor
+DROP FUNCTION IF EXISTS EXISTE_ENTRADA_MADERA;
+DELIMITER //
+CREATE FUNCTION EXISTE_ENTRADA_MADERA (_id_proveedor CHAR(26))
+RETURNS INT
+BEGIN
+	DECLARE _existe INT; -- Existe entradas pendientes por pagar
+    
+    -- Si existen entradas pendientes por pagar
+    IF EXISTS (SELECT id_entrada FROM ENTRADA_MADERA_ROLLO WHERE id_pago = 0 LIMIT 1) THEN
+        SET _existe = 1;
+	ELSE 
+		SET _existe = 0;
+    END IF;
+
+    return _existe;
+END;//
+DELIMITER ;
+
+--  Se utiliza para consultar las compras pendientes para pagar
 DROP VIEW IF EXISTS VISTA_MONTO_PAGO_COMPRA;
 CREATE VIEW VISTA_MONTO_PAGO_COMPRA AS
 SELECT 
     id_proveedor,
     (SELECT concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(PROVEEDOR.id_proveedor,1,18)) as proveedor,
-    (SELECT OBTENER_MONTO_NUEVO_PAGO(id_proveedor)) monto_por_pagar, -- Si su valor es cero: no hay compras y no se hacen pagos
+    (SELECT OBTENER_MONTO_NUEVO_PAGO(id_proveedor)) monto_por_pagar, -- monto por pagar hasta la fecha del pago
     (SELECT OBTENER_CUENTA_POR_COBRAR(id_proveedor)) AS cuenta_por_cobrar,
+    (SELECT EXISTE_ENTRADA_MADERA(id_proveedor)) AS existe_entrada,
     id_jefe as id_administrador
 FROM PROVEEDOR;
 
@@ -98,3 +118,4 @@ SELECT * FROM VISTA_MONTO_PAGO_COMPRA;
 SELECT * FROM VISTA_ENTRADA_MADERA_ROLLO;
 
 SELECT * FROM VISTA_ENTRADA_MADERA_ROLLO;
+SELECT * FROM ENTRADA_MADERA_ROLLO;

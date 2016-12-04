@@ -1,3 +1,6 @@
+/*
+ * Funcion para calcular el monto máximo permitido al realizar un pago compra
+ */
 function seleccionarMontoPorPagar(){
     //Verificamos el proveedor seleccionado
     var id_proveedor = document.getElementById('id_proveedor');
@@ -13,7 +16,12 @@ function seleccionarMontoPorPagar(){
     // El máximo monto que se puede pagar es el monto asociado al proveedor 
     document.getElementById('monto_pago').max = cuenta_pendiente;
     // El minimo pago sera el de cuenta pr cobrar: lo que el proveedor debe
-    document.getElementById('monto_pago').min = cuenta_por_cobrar;
+    if(cuenta_pendiente == 0){
+        document.getElementById('monto_pago').min = 0;
+    }else{
+        document.getElementById('monto_pago').min = cuenta_por_cobrar;
+    }
+    
     
     // Calcula el monto para cuenta por pagar
     if(document.getElementById('monto_pago').value){

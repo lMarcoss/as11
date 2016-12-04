@@ -1,8 +1,9 @@
+/*
+ */
 function calcularMontoPorPagar(){
     //Verificamos el proveedor seleccionado
     
     var cuenta_pendiente = document.getElementById('cuenta_pendiente').value;
-    
     
     // El máximo monto que se puede pagar es el monto asociado al proveedor 
     document.getElementById('monto_pago').max = cuenta_pendiente;

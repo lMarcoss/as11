@@ -164,7 +164,7 @@ public class PagoCompraCRUD extends Conexion implements OperacionesCRUD {
         List<VistaMontoPagoCompra> listaMontoPagoCompra;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_MONTO_PAGO_COMPRA WHERE id_administrador = ? AND monto_por_pagar > 0")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_MONTO_PAGO_COMPRA WHERE id_administrador = ? AND existe_entrada > 0")) {
                 st.setString(1, administrador);
                 listaMontoPagoCompra = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {

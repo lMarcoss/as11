@@ -22,7 +22,7 @@ SELECT
 FROM VISTA_ANTICIPO_PROVEEDOR
 GROUP BY id_proveedor;
 
--- muestra el monto total de las entrada de madera en rollo: $ costo total
+-- muestra el monto total de las entrada de madera no pagadas en rollo: $ costo total
 DROP VIEW IF EXISTS MONTO_TOTAL_ENTRADA_MADERA;
 CREATE VIEW MONTO_TOTAL_ENTRADA_MADERA AS
 SELECT 
@@ -31,26 +31,35 @@ SELECT
 FROM VISTA_ENTRADA_MADERA_ROLLO
 GROUP BY id_proveedor;
 
--- funcion para consultar $ monto total de las maderas en rollo entrada por cada proveedor
+
+-- funcion para consultar $ monto total de las maderas en rollo entrada por cada proveedor restando los pagos que se ha hecho
 DROP FUNCTION IF EXISTS C_MADERA_ENTRADA_ROLLO;
 DELIMITER //
 CREATE FUNCTION C_MADERA_ENTRADA_ROLLO (_id_proveedor VARCHAR(30))
 RETURNS DECIMAL(15,2)
 BEGIN
 	DECLARE _monto_total DECIMAL(15,2);
+    DECLARE _pago DECIMAL(15,2);
+    -- Consultamos si hay pagos
+    IF EXISTS(SELECT id_proveedor FROM PAGO_COMPRA WHERE id_proveedor =_id_proveedor) THEN
+		SELECT SUM(monto_pago) INTO _pago FROM PAGO_COMPRA WHERE id_proveedor =_id_proveedor GROUP BY id_proveedor;
+	ELSE
+		SET _pago = 0;
+    END IF;
     
 	-- consultamos si han entrado madera del proveedor
     IF EXISTS (SELECT id_proveedor FROM MONTO_TOTAL_ENTRADA_MADERA WHERE id_proveedor = _id_proveedor LIMIT 1) THEN 
 		-- consultamos el monto total de las maderas que han entrado
         SELECT monto_total INTO _monto_total FROM MONTO_TOTAL_ENTRADA_MADERA WHERE id_proveedor = _id_proveedor;
 		-- retornamos el monto total
-        RETURN _monto_total;
+        RETURN (_monto_total - _pago);
 	ELSE -- No hay entradas
 		RETURN 0;
     END IF;
 END;//
 DELIMITER ;
 
+SELECT * FROM PAGO_COMPRA;
 -- funcion para consultar $ monto total de los anticipos dados al proveedor
 DROP FUNCTION IF EXISTS C_ANTICIPO_PROVEEDOR;
 DELIMITER //
