@@ -228,6 +228,7 @@ public class VentaMayoreoController extends HttpServlet {
         ventaMayoreo.setNum_piezas(Integer.valueOf(request.getParameter("num_piezas")));
         ventaMayoreo.setVolumen(Float.valueOf(request.getParameter("volumen")));
         ventaMayoreo.setMonto(Float.valueOf(request.getParameter("monto")));
+        ventaMayoreo.setTipo_madera(request.getParameter("tipo_madera"));
         return ventaMayoreo;
     }
 }

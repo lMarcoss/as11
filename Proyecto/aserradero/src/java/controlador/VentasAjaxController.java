@@ -69,6 +69,7 @@ public class VentasAjaxController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String id_venta=request.getParameter("id_venta");
         String accion=request.getParameter("accion");
+        String tipo_madera;
         JsonArray jArray = new JsonArray();
         JsonObject jsonreturn =new JsonObject();
         PrintWriter out = response.getWriter();
@@ -126,6 +127,7 @@ public class VentasAjaxController extends HttpServlet {
             break;
             case "add_venta_mayoreo":
                 String Madera=request.getParameter("id_madera");
+                tipo_madera=request.getParameter("tipo_madera");
                 float volumen=Float.valueOf(request.getParameter("volumen"));
                 Integer num_piezas=Integer.valueOf(request.getParameter("num_piezas"));
                 float Monto=Float.valueOf(request.getParameter("monto"));
@@ -134,7 +136,7 @@ public class VentasAjaxController extends HttpServlet {
                     boolean bandera=false;
                     if(VentaMay.size()>0){
                         for(VentaMayoreo a:VentaMay){
-                            if(a.getId_madera().equals(Madera)){
+                            if(a.getId_madera().equals(Madera) && a.getTipo_madera().equals(tipo_madera)){
                                 a.setNum_piezas(a.getNum_piezas()+num_piezas);
                                 a.setMonto(a.getMonto()+Monto);
                                 a.setVolumen(a.getVolumen()+volumen);
@@ -144,7 +146,7 @@ public class VentasAjaxController extends HttpServlet {
                         }
                     }
                     if(!bandera){
-                     VentaMay.add(new VentaMayoreo(id_venta,Madera,num_piezas,volumen,Monto));
+                     VentaMay.add(new VentaMayoreo(id_venta,Madera,num_piezas,volumen,Monto,tipo_madera));
                     }
                     jsonreturn.addProperty("success", "true");
                     out.print(jsonreturn.toString());
@@ -181,13 +183,14 @@ public class VentasAjaxController extends HttpServlet {
                 volumen=Float.valueOf(request.getParameter("volumen"));
                 num_piezas=Integer.valueOf(request.getParameter("num_piezas"));
                 Monto=Float.valueOf(request.getParameter("monto"));
+                tipo_madera = request.getParameter("tipo_madera");
                 Integer numero_paquete=Integer.valueOf(request.getParameter("numero_paquete"));
                 try {
                     ArrayList<VentaPaquete>  VentaPaq = sesion_ajax.getAttribute("detalle_venta_paquete") == null ? new ArrayList<>() : (ArrayList) sesion_ajax.getAttribute("detalle_venta_paquete");
                     boolean bandera=false;
                     if(VentaPaq.size()>0){
                         for(VentaPaquete a:VentaPaq){
-                            if(a.getId_madera().equals(Madera) && (a.getNumero_paquete()==numero_paquete)){
+                            if(a.getId_madera().equals(Madera) && (a.getNumero_paquete()==numero_paquete) && (a.getTipo_madera().equals(tipo_madera))){
                                 a.setNum_piezas(a.getNum_piezas()+num_piezas);
                                 a.setMonto(a.getMonto()+Monto);
                                 a.setVolumen(a.getVolumen()+volumen);
@@ -197,7 +200,8 @@ public class VentasAjaxController extends HttpServlet {
                         }
                     }
                     if(!bandera){
-                     VentaPaq.add(new VentaPaquete(id_venta,numero_paquete,Madera,num_piezas,volumen,Monto));
+                     VentaPaq.add(new VentaPaquete(id_venta,numero_paquete,Madera,num_piezas,volumen,Monto,tipo_madera));
+                        System.err.println("tipo: "+ tipo_madera);
                     }                    
                     sesion_ajax.setAttribute("detalle_venta_paquete", VentaPaq);                                                            
                     jsonreturn.addProperty("success", "true");                

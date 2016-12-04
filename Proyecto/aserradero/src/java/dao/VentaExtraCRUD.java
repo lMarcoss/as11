@@ -1,7 +1,7 @@
 package dao;
 
 import entidades.VentaExtra;
-import entidadesVirtuales.VentaGeneral;
+import entidades.Venta;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,14 +35,14 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
     @Override
     public <T> List listar() throws Exception {
         // Se consultan datos generales de las ventas extra
-        List<VentaGeneral> ventas;
+        List<Venta> ventas;
         try{
             this.abrirConexion();
             try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_VENTA_EXTRA")) {
                 ventas = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
-                        VentaGeneral venta = (VentaGeneral) extraerVentaG(rs);
+                        Venta venta = (Venta) extraerVenta(rs);
                         ventas.add(venta);
                     }
                 }
@@ -59,8 +59,8 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
         return ventas;
     }
     
-    private VentaGeneral extraerVentaG(ResultSet rs) throws SQLException {
-        VentaGeneral venta = new VentaGeneral();
+    private Venta extraerVenta(ResultSet rs) throws SQLException {
+        Venta venta = new Venta();
         venta.setId_venta(rs.getString("id_venta"));
         venta.setFecha(rs.getDate("fecha"));
         venta.setId_cliente(rs.getString("id_cliente"));

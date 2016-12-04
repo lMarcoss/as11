@@ -5,10 +5,10 @@
 --%>
 
 <%@page import="java.util.List"%>
-<%@page import="entidades.VentaPaquete"%>
+<%@page import="entidades.Venta"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    List <VentaPaquete> ventaPaquetes = (List<VentaPaquete>) request.getAttribute("ventaPaquetes");
+    List <Venta> ventaPaquetes = (List<Venta>) request.getAttribute("ventaPaquetes");
     String mensaje = (String)request.getAttribute("mensaje");
 %>
 <!DOCTYPE html>
@@ -29,13 +29,15 @@
                     <tr>
                         <td>
                             <select name="nombre_campo" >
-                            <option value="id_venta">Id venta</option>
-                            <option value="numero_paquete">Paquete</option>
-                            <option value="id_madera">Madera</option>
-                            <option value="num_piezas">Número piezas</option>
-                            <option value="volumen">Volumen</option>
-                            <option value="monto">Monto</option>
-                        </select>
+                                <option value="id_venta">Id venta</option>
+                                <option value="fecha">Fecha</option>
+                                <option value="cliente">Cliente</option>
+                                <option value="empleado">Empleado</option>
+                                <option value="estatus">Estatus</option>
+                                <option value="tipo">Tipo</option>
+                                <option value="monto">Monto</option>
+                                <option value="observacion">Observacion</option>
+                            </select>
                         </td>
                         <td><input type="search" name="dato" placeholder="Escriba su búsqueda"></td>
                         <td colspan="2"><input type="submit" value="Buscar"></td>
@@ -50,27 +52,29 @@
                 <tr>
                     <th>N°</th>
                     <th>Id venta</th>
-                    <th>Paquete</th>
-                    <th>Madera</th>
-                    <th>Núm piezas</th>
-                    <th>Volúmen</th>
+                    <th>Fecha</th>
+                    <th>Cliente</th>
+                    <th>Empleado</th>
+                    <th>Estatus</th>
+                    <th>Tipo pago</th>
                     <th>Monto</th>
                     <th></th>
                     <th></th>
                 </tr>
                 <%
                     int i=0;
-                    for (VentaPaquete ventaPaquete : ventaPaquetes) {
+                    for (Venta venta : ventaPaquetes) {
                         out.print("<tr>"
                             +"<td>"+(i+1)+"</td>"
-                            +"<td><a href=\"/aserradero/VentaController?action=buscar_venta&id_venta="+ventaPaquete.getId_venta()+"\">"+ventaPaquete.getId_venta()+"</a></td>"
-                            +"<td>"+ventaPaquete.getNumero_paquete()+"</td>"    
-                            +"<td><a href=\"/aserradero/MaderaClasificacionController?action=buscar_maderaClasificacion&id_madera="+ventaPaquete.getId_madera()+"\">"+ventaPaquete.getId_madera()+"</a></td>"
-                            +"<td>"+ventaPaquete.getNum_piezas()+"</td>"
-                            +"<td>"+ventaPaquete.getVolumen()+"</td>"
-                            +"<td>"+ventaPaquete.getMonto()+"</td>"
-                            +"<td><a href=\"/aserradero/VentaPaqueteController?action=modificar&id_venta="+ventaPaquete.getId_venta()+"&numero_paquete="+ventaPaquete.getNumero_paquete()+"&id_madera="+ventaPaquete.getId_madera()+"\">Actualizar</a></td>"
-                            +"<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/VentaPaqueteController?action=eliminar&id_venta="+ventaPaquete.getId_venta()+"&numero_paquete="+ventaPaquete.getNumero_paquete()+"&id_madera="+ventaPaquete.getId_madera()+"';};\">Eliminar</a></td>"
+                            +"<td>"+venta.getId_venta()+"</td>"
+                            +"<td>"+venta.getFecha()+"</td>"
+                            +"<td>"+venta.getCliente()+"</td>"
+                            +"<td>"+venta.getEmpleado()+"</td>"
+                            +"<td>"+venta.getEstatus()+"</td>"
+                            +"<td>"+venta.getTipo_pago()+"</td>"
+                            +"<td>"+venta.getMonto()+"</td>"
+                            +"<td><a href=\"/aserradero/VentaPaqueteController?action=detalle&id_venta="+venta.getId_venta()+"\">Detalle venta</a></td>"
+                            + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/VentaPaqueteController?action=eliminar&id_venta="+venta.getId_venta()+"&tipo_venta="+venta.getTipo_venta()+"';};\">Eliminar</a></td>"
                         + "</tr>" );
                         i++;
                     }

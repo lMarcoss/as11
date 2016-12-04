@@ -9,11 +9,12 @@ $(function(){
         var id_madera = $("#id_madera").val();
         var num_piezas = $("#num_piezas").val();
         var monto = $("#monto").val();
+        var tipo_madera = $("#tipo_madera").val();
         var numero_paquete = $("#numero_paquete").val();
         $.ajax({
             url: 'VentasAjaxController',
             type: 'POST',
-            data: {'accion':"add_venta_paquete",'id_venta':id_venta,'numero_paquete':numero_paquete,'id_madera':id_madera,'volumen':volumen,'num_piezas':num_piezas,'monto':monto},
+            data: {'accion':"add_venta_paquete",'id_venta':id_venta,'numero_paquete':numero_paquete,'id_madera':id_madera,'volumen':volumen,'num_piezas':num_piezas,'monto':monto,'tipo_madera':tipo_madera},
             dataType: 'json'
         }).done(function (data){
                 if(data.success==="true"){
@@ -24,6 +25,8 @@ $(function(){
                     $("#costo_volumen").val('');
                     $("#id_madera").val('');
                     $("#num_piezas").val('');
+                    $("#pieza_existencia").val('');
+                    $("#tipo_madera").val('Madera');
                     $("#numero_paquete").val('');
                     alertify.success("El producto fue agregado a la lista");
                     $("#detalle_producto_paquete").load('ventaPaquete/detalleVentaPaquete.jsp');
@@ -46,10 +49,11 @@ $(function(){
         var id_madera = $("#id_madera").val();
         var num_piezas = $("#num_piezas").val();
         var monto = $("#monto").val();
+        var tipo_madera = $("#tipo_madera").val();
         $.ajax({
             url: 'VentasAjaxController',
             type: 'POST',
-            data: {'accion':"del_venta_paquete",'id_venta':id_venta,'id_madera':id,'volumen':0,'num_piezas':0,'monto':0,'numero_paquete':numero_paquete},
+            data: {'accion':"del_venta_paquete",'id_venta':id_venta,'id_madera':id,'volumen':0,'num_piezas':0,'monto':0,'tipo_madera':tipo_madera,'numero_paquete':numero_paquete},
             dataType: 'json'
         }).done(function(data){
             if(data.success==="true"){

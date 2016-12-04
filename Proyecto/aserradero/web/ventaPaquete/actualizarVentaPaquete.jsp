@@ -43,8 +43,8 @@
                                 if(inventario.getId_madera().equals(ventaPaquete.getId_madera())){
 
                                     out.print("<tr><td style='padding-left: 10px;'><label>Madera:</label></td><td style='padding-left: 10px;'><input name='id_madera' id='id_madera' value='"+inventario.getId_madera()+"' readonly=''/></td></tr>");
-                                    out.print("<tr><td>volumen unitaria<select name='volumen_unitaria' id='volumen_unitaria' readonly=''><option value='"+inventario.getVolumen_unitario()+"'>"+inventario.getVolumen_unitario()+"</option></select></td>");
-                                    out.print("<td>Costo volumen<select name='costo_volumen' id='costo_volumen' readonly=''><option value='"+inventario.getCosto_por_volumen()+"'>"+inventario.getCosto_por_volumen()+"</option></select></td></tr>");
+                                    out.print("<tr><td><label>volumen unitaria:</label></td><td><select name='volumen_unitaria' id='volumen_unitaria' readonly=''><option value='"+inventario.getVolumen_unitario()+"'>"+inventario.getVolumen_unitario()+"</option></select></td></tr>");
+                                    out.print("<tr><td><label>Costo volumen:</label></td><td><select name='costo_volumen' id='costo_volumen' readonly=''><option value='"+inventario.getCosto_por_volumen()+"'>"+inventario.getCosto_por_volumen()+"</option></select></td></tr>");
                                 }
                             }
                         %>
@@ -61,6 +61,11 @@
                         <tr>
                             <td style="padding-left: 10px;"><label>Monto:</label></td>
                             <td style="padding-left: 10px;"><input type="number" name="monto" id="monto" value="<%=ventaPaquete.getMonto()%>" step="0.01" min="0.01" max="99999999.99"  required="" readonly=""/></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 10px;"><label>Tipo madera</label></td>
+                            <td style="padding-left: 10px;"><input type="text" name="tipo_madera" id="tipo_madera" value="<%=ventaPaquete.getTipo_madera()%>" required=""></td>
                             <td></td>
                         </tr>
                         <tr>

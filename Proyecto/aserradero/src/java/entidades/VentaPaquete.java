@@ -5,24 +5,26 @@ package entidades;
  * @author lmarcoss
  */
 public class VentaPaquete {
-    
+
     private String id_venta;
     private int numero_paquete;
     private String id_madera;
     private int num_piezas;
     private float volumen;
     private float monto;
+    private String tipo_madera;
 
     public VentaPaquete() {
     }
 
-    public VentaPaquete(String id_venta, int numero_paquete, String id_madera, int num_piezas, float volumen, float monto) {
+    public VentaPaquete(String id_venta, int numero_paquete, String id_madera, int num_piezas, float volumen, float monto, String tipo_madera) {
         this.id_venta = id_venta;
         this.numero_paquete = numero_paquete;
         this.id_madera = id_madera;
         this.num_piezas = num_piezas;
         this.volumen = volumen;
         this.monto = monto;
+        this.tipo_madera = tipo_madera;
     }
 
     public void setId_venta(String id_venta) {
@@ -49,6 +51,10 @@ public class VentaPaquete {
         this.monto = monto;
     }
 
+    public void setTipo_madera(String tipo_madera) {
+        this.tipo_madera = tipo_madera;
+    }
+
     public String getId_venta() {
         return id_venta;
     }
@@ -72,5 +78,9 @@ public class VentaPaquete {
     public float getMonto() {
         return monto;
     }
-    
+
+    public String getTipo_madera() {
+        return tipo_madera;
+    }
+
 }

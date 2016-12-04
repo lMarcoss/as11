@@ -3,7 +3,6 @@ package controlador;
 import dao.ClienteCRUD;
 import dao.EmpleadoCRUD;
 import dao.InventarioMaderaAserradaCRUD;
-import dao.VentaCRUD;
 import dao.VentaPaqueteCRUD;
 import entidades.Cliente;
 import entidades.Empleado;
@@ -109,7 +108,9 @@ public class VentaPaqueteController extends HttpServlet {
                     //enviamos el paquete a modificar
                     ventaPaquete = (VentaPaquete) ventaPaqueteCRUD.modificar(ventaPaqueteEC);
                     request.setAttribute("ventaPaquete", ventaPaquete);
-
+                    System.out.println(ventaPaquete.getId_madera());
+                    System.out.println(ventaPaquete.getNum_piezas());
+                    
                     RequestDispatcher view = request.getRequestDispatcher("ventaPaquete/actualizarVentaPaquete.jsp");
                     view.forward(request, response);
                 } catch (Exception ex) {
@@ -123,12 +124,16 @@ public class VentaPaqueteController extends HttpServlet {
                 ventaPaqueteCRUD = new VentaPaqueteCRUD();
                 try {
                     ventaPaqueteCRUD.eliminar(ventaPaqueteEC);
-                    listarVentaPaquetes(request, response, "eliminado");
+                    listarDetalleVenta(ventaPaqueteEC.getId_venta(), request, response);
                 } catch (Exception ex) {
                     listarVentaPaquetes(request, response, "error_eliminar");
                     System.out.println(ex);
                     Logger.getLogger(VentaPaqueteController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                break;
+            case "detalle":
+                String id_venta = request.getParameter("id_venta");
+                listarDetalleVenta(id_venta,request,response);
                 break;
         }
     }
@@ -168,7 +173,7 @@ public class VentaPaqueteController extends HttpServlet {
                 ventaPaqueteCRUD = new VentaPaqueteCRUD();
                 try {
                     ventaPaqueteCRUD.actualizar(ventaPaquete);
-                    listarVentaPaquetes(request, response, "actualizado");
+                    listarDetalleVenta(ventaPaquete.getId_venta(), request, response);
                 } catch (Exception ex) {
                     listarVentaPaquetes(request, response, "error_actualizar");
                     System.out.println(ex);
@@ -176,12 +181,12 @@ public class VentaPaqueteController extends HttpServlet {
                 }
                 break;
             case "buscar":
-                List<VentaPaquete> ventaPaquetes;
+                List<Venta> ventaPaquetes;
                 String nombre_campo = request.getParameter("nombre_campo");
                 String dato = request.getParameter("dato");
                 ventaPaqueteCRUD = new VentaPaqueteCRUD();
                 try {
-                    ventaPaquetes = (List<VentaPaquete>) ventaPaqueteCRUD.buscar(nombre_campo, dato);
+                    ventaPaquetes = (List<Venta>) ventaPaqueteCRUD.buscar(nombre_campo, dato);
                     request.setAttribute("ventaPaquetes", ventaPaquetes);
                     RequestDispatcher view = request.getRequestDispatcher("ventaPaquete/ventaPaquetes.jsp");
                     view.forward(request, response);
@@ -230,6 +235,7 @@ public class VentaPaqueteController extends HttpServlet {
         ventaPaquete.setNum_piezas(Integer.valueOf(request.getParameter("num_piezas")));
         ventaPaquete.setVolumen(Float.valueOf(request.getParameter("volumen")));
         ventaPaquete.setMonto(Float.valueOf(request.getParameter("monto")));
+        ventaPaquete.setTipo_madera(request.getParameter("tipo_madera"));
         return ventaPaquete;
     }
 
@@ -239,6 +245,23 @@ public class VentaPaqueteController extends HttpServlet {
         ventaPaqueteEC.setNumero_paquete(Integer.valueOf(request.getParameter("numero_paquete")));
         ventaPaqueteEC.setId_madera(request.getParameter("id_madera"));
         return ventaPaqueteEC;
+    }
+
+    private void listarDetalleVenta(String id_venta, HttpServletRequest request, HttpServletResponse response) {
+        List<VentaPaquete> detalles;
+        VentaPaqueteCRUD ventaPaqueteCrud = new VentaPaqueteCRUD();
+        try {
+            detalles = (List<VentaPaquete>)ventaPaqueteCrud.listarDetalleVP(id_venta);
+            //Enviamos los detalles de la venta
+            request.setAttribute("detalles",detalles);
+            //enviamos mensaje al jsp
+            request.setAttribute("mensaje","detalles");
+            RequestDispatcher view = request.getRequestDispatcher("ventaPaquete/mostrarDetalleVP.jsp");
+            view.forward(request,response);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            Logger.getLogger(VentaPaqueteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

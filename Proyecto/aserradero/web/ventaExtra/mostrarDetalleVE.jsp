@@ -50,6 +50,9 @@
                     }
                 %>
             </table>
+            <div>
+                <input type="button" value="Regresar" onClick=" window.location.href='/aserradero/VentaExtraController?action=listar' ">
+            </div>
         </div><!-- Resultado Consulta-->
     </body>
 </html>

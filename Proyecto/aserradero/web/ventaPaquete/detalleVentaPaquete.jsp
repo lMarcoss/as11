@@ -20,6 +20,7 @@
                 out.print("<th>Número de piezas</th>");
                 out.print("<th>Volumen</th>");
                 out.print("<th>Monto</th>");
+                out.print("<th>Tipo madera</th>");
                 out.print("<th></th>");
                 out.print("</tr>");
                 out.print("</thead>");
@@ -31,6 +32,7 @@
                     out.print("<td>"+a.getNum_piezas()+"</td>");
                     out.print("<td>"+a.getVolumen()+"</td>");
                     out.print("<td>"+a.getMonto()+"</td>");
+                    out.print("<td>"+a.getTipo_madera()+"</td>");
                     out.print("<td><input type='button' value='Eliminar' name='"+a.getNumero_paquete()+"' class='btn btn-danger eliminar_vp' id='"+a.getId_madera()+"' /></td>");
                     out.print("</tr>");
                 }

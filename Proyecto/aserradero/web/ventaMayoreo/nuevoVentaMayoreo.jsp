@@ -168,6 +168,7 @@
                                         out.print("<th>Número de piezas</th>");
                                         out.print("<th>Volumen</th>");
                                         out.print("<th>Monto</th>");
+                                        out.print("<th>Tipo madera</th>");
                                         out.print("<th></th>");
                                         out.print("</tr>");
                                         out.print("</thead>");
@@ -178,6 +179,7 @@
                                             out.print("<td>"+a.getNum_piezas()+"</td>");
                                             out.print("<td>"+a.getVolumen()+"</td>");
                                             out.print("<td>"+a.getMonto()+"</td>");
+                                            out.print("<td>"+a.getTipo_madera()+"</td>");
                                             out.print("<td><input type='button' value='Eliminar' /></td>");
                                             out.print("</tr>");
                                         }

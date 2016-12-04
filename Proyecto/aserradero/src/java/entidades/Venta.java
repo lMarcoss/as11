@@ -1,5 +1,6 @@
 package entidades;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -7,27 +8,35 @@ import java.sql.Date;
  * @author lmarcoss
  */
 public class Venta {
-    public Date fecha;
+
     public String id_venta;
+    public Date fecha;
     public String id_cliente;
+    public String cliente;
     public String id_empleado;
+    public String empleado;
     public String estatus;
     private String tipo_venta;
     private String tipo_pago;
+    private String id_jefe;
+    private BigDecimal monto; // Es el único atributo que se extrae de los tipos de ventas
 
     public Venta() {
     }
 
-    public Venta(Date fecha, String id_venta, String id_cliente, String id_empleado, String estatus, String tipo_venta, String tipo_pago) {
-        this.fecha = fecha;
+    public Venta(String id_venta, Date fecha, String id_cliente, String cliente, String id_empleado, String empleado, String estatus, String tipo_venta, String tipo_pago, String id_jefe, BigDecimal monto) {
         this.id_venta = id_venta;
+        this.fecha = fecha;
         this.id_cliente = id_cliente;
+        this.cliente = cliente;
         this.id_empleado = id_empleado;
+        this.empleado = empleado;
         this.estatus = estatus;
         this.tipo_venta = tipo_venta;
         this.tipo_pago = tipo_pago;
+        this.id_jefe = id_jefe;
+        this.monto = monto;
     }
-
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
@@ -41,8 +50,16 @@ public class Venta {
         this.id_cliente = id_cliente;
     }
 
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
+
     public void setId_empleado(String id_empleado) {
         this.id_empleado = id_empleado;
+    }
+
+    public void setEmpleado(String empleado) {
+        this.empleado = empleado;
     }
 
     public void setEstatus(String estatus) {
@@ -57,6 +74,14 @@ public class Venta {
         this.tipo_pago = tipo_pago;
     }
 
+    public void setId_jefe(String id_jefe) {
+        this.id_jefe = id_jefe;
+    }
+
+    public void setMonto(BigDecimal monto) {
+        this.monto = monto;
+    }
+
     public Date getFecha() {
         return fecha;
     }
@@ -69,8 +94,16 @@ public class Venta {
         return id_cliente;
     }
 
+    public String getCliente() {
+        return cliente;
+    }
+
     public String getId_empleado() {
         return id_empleado;
+    }
+
+    public String getEmpleado() {
+        return empleado;
     }
 
     public String getEstatus() {
@@ -84,6 +117,13 @@ public class Venta {
     public String getTipo_pago() {
         return tipo_pago;
     }
-    
-    
+
+    public String getId_jefe() {
+        return id_jefe;
+    }
+
+    public BigDecimal getMonto() {
+        return monto;
+    }
+
 }

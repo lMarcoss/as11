@@ -201,10 +201,10 @@ public class VentaExtraController extends HttpServlet {
     }// </editor-fold>
     
     private void listarVentaExtras(HttpServletRequest request, HttpServletResponse response, String mensaje) {
-        List<VentaExtra> ventaExtras;
+        List<Venta> ventaExtras;
         VentaExtraCRUD ventaExtraCrud = new VentaExtraCRUD();
         try {
-            ventaExtras = (List<VentaExtra>)ventaExtraCrud.listar();
+            ventaExtras = (List<Venta>)ventaExtraCrud.listar();
             //Enviamos las listas al jsp
             request.setAttribute("ventaExtras",ventaExtras);
             //enviamos mensaje al jsp
