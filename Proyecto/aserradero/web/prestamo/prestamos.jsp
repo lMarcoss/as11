@@ -77,8 +77,7 @@
                                 +"<td>"+prestamo.getMonto_por_pagar()+"</td>"
                                 +"<td>"+prestamo.getInteres()+"%"+"</td>"
                                 +"<td>"+prestamo.getInteres_mesual()+"</td>"
-                                +"<td><a href=\"/aserradero/PrestamoController?action=modificar&id_prestamo="+prestamo.getId_prestamo()+"\">Actualizar</a></td>"
-                                +"<td><a href=\"/aserradero/PrestamoController?action=modificar&id_prestamo="+prestamo.getId_prestamo()+"\">Pagar prestamo</a></td>"
+                                +"<td><a href=\"/aserradero/PrestamoController?action=modificar&id_prestamo="+prestamo.getId_prestamo()+"\">Modificar</a></td>"
                                 + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/PrestamoController?action=eliminar&id_prestamo="+prestamo.getId_prestamo()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;

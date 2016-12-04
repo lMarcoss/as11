@@ -140,7 +140,6 @@ public class EntradaMaderaAserradaCRUD extends Conexion implements OperacionesCR
         produccionMadera.setId_empleado(rs.getString("id_empleado"));
         produccionMadera.setEmpleado(rs.getString("empleado"));
         produccionMadera.setId_jefe(rs.getString("id_jefe"));
-        
         return produccionMadera;
     }
 

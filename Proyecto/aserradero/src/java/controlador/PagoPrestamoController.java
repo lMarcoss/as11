@@ -116,7 +116,6 @@ public class PagoPrestamoController extends HttpServlet {
         try {
             pagoPrestamoCRUD.registrar(pagoPrestamo);
             response.sendRedirect("/aserradero/PagoPrestamoController?action=listar"); // para evitar acciones repetidas al actualizar página
-            //listarPagoPrestamo(request, response, "registrado");
         } catch (Exception ex) {
             listarPagoPrestamo(request, response, "error_registrar");
             Logger.getLogger(PagoPrestamoController.class.getName()).log(Level.SEVERE, null, ex);

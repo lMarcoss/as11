@@ -30,7 +30,7 @@
                     <tr>
                         <td>
                             <select name="nombre_campo" >
-                            <option value="administrador">Nombre</option>
+                            <option value="administrador">Administrador</option>
                             <option value="cuenta_inicial">Cuenta inicial</option>
                         </select>
                         </td>
@@ -46,7 +46,8 @@
             <table class="table-condensed">
                     <tr>
                         <th>N°</th>
-                        <th>Nombre</th>
+                        <th>Administrador</th>
+                        <th>Cuenta inicial</th>
                         <th></th>
                     </tr>
                     <%

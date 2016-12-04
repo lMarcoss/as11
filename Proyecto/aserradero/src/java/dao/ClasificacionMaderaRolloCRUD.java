@@ -1,6 +1,6 @@
 package dao;
 
-import entidades.ClasificacionMaderaEntrada;
+import entidades.ClasificacionMaderaRollo;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,10 +12,10 @@ import java.util.List;
  *
  * @author rcortes
  */
-public class ClasificacionMaderaEntradaCRUD extends Conexion implements OperacionesCRUD{
+public class ClasificacionMaderaRolloCRUD extends Conexion implements OperacionesCRUD{
     @Override
     public void registrar(Object objeto) throws Exception {
-        ClasificacionMaderaEntrada costoMaderaEntrada = (ClasificacionMaderaEntrada) objeto;
+        ClasificacionMaderaRollo costoMaderaEntrada = (ClasificacionMaderaRollo) objeto;
         try {
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement(""
@@ -32,14 +32,14 @@ public class ClasificacionMaderaEntradaCRUD extends Conexion implements Operacio
 
     @Override
     public <T> List listar() throws Exception {
-        List<ClasificacionMaderaEntrada> costoMaderaEntradas;
+        List<ClasificacionMaderaRollo> costoMaderaEntradas;
         try {
             this.abrirConexion();
             try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM COSTO_MADERA_ENTRADA")){
                 costoMaderaEntradas = new ArrayList<>();
                 try (ResultSet rs = st.executeQuery()){
                     while (rs.next()) {
-                        ClasificacionMaderaEntrada costoMaderaEntrada = (ClasificacionMaderaEntrada) extraerObject(rs);
+                        ClasificacionMaderaRollo costoMaderaEntrada = (ClasificacionMaderaRollo) extraerObject(rs);
                         costoMaderaEntradas.add(costoMaderaEntrada);
                     }
                 } catch (Exception e) {
@@ -59,14 +59,14 @@ public class ClasificacionMaderaEntradaCRUD extends Conexion implements Operacio
 
     @Override
     public Object modificar(Object objeto) throws Exception {
-        ClasificacionMaderaEntrada costoMaderaEntradaM = (ClasificacionMaderaEntrada) objeto;
-        ClasificacionMaderaEntrada costoMaderaEntrada = null;
+        ClasificacionMaderaRollo costoMaderaEntradaM = (ClasificacionMaderaRollo) objeto;
+        ClasificacionMaderaRollo costoMaderaEntrada = null;
         this.abrirConexion();
         try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM COSTO_MADERA_ENTRADA WHERE clasificacion = ?")) {
             st.setString(1, costoMaderaEntradaM.getClasificacion());
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
-                    costoMaderaEntrada = (ClasificacionMaderaEntrada) extraerObject(rs);
+                    costoMaderaEntrada = (ClasificacionMaderaRollo) extraerObject(rs);
                 }
             }
         } catch (Exception e) {
@@ -77,7 +77,7 @@ public class ClasificacionMaderaEntradaCRUD extends Conexion implements Operacio
 
     @Override
     public void actualizar(Object objeto) throws Exception {
-        ClasificacionMaderaEntrada costoMaderaEntrada = (ClasificacionMaderaEntrada) objeto;
+        ClasificacionMaderaRollo costoMaderaEntrada = (ClasificacionMaderaRollo) objeto;
         try {
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement("UPDATE COSTO_MADERA_ENTRADA SET costo = ? where clasificacion=?");            
@@ -94,7 +94,7 @@ public class ClasificacionMaderaEntradaCRUD extends Conexion implements Operacio
 
     @Override
     public void eliminar(Object objeto) throws Exception {
-        ClasificacionMaderaEntrada costoMaderaEntrada = (ClasificacionMaderaEntrada) objeto;
+        ClasificacionMaderaRollo costoMaderaEntrada = (ClasificacionMaderaRollo) objeto;
         try {
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement("DELETE FROM COSTO_MADERA_ENTRADA WHERE clasificacion = ?");
@@ -110,7 +110,7 @@ public class ClasificacionMaderaEntradaCRUD extends Conexion implements Operacio
 
     @Override
     public <T> List buscar(String nombre_campo, String dato) throws Exception {
-        List<ClasificacionMaderaEntrada> costoMaderaEntradas;
+        List<ClasificacionMaderaRollo> costoMaderaEntradas;
         try {
             this.abrirConexion();
             try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM COSTO_MADERA_ENTRADA WHERE "+nombre_campo+" like ?")){
@@ -118,7 +118,7 @@ public class ClasificacionMaderaEntradaCRUD extends Conexion implements Operacio
                 costoMaderaEntradas = new ArrayList<>();
                 try (ResultSet rs = st.executeQuery()){
                     while (rs.next()) {
-                        ClasificacionMaderaEntrada costoMaderaEntrada = (ClasificacionMaderaEntrada) extraerObject(rs);
+                        ClasificacionMaderaRollo costoMaderaEntrada = (ClasificacionMaderaRollo) extraerObject(rs);
                         costoMaderaEntradas.add(costoMaderaEntrada);
                     }
                 }
@@ -134,7 +134,7 @@ public class ClasificacionMaderaEntradaCRUD extends Conexion implements Operacio
 
     @Override
     public Object extraerObject(ResultSet rs) throws SQLException {
-        ClasificacionMaderaEntrada costoMaderaEntrada = new ClasificacionMaderaEntrada();
+        ClasificacionMaderaRollo costoMaderaEntrada = new ClasificacionMaderaRollo();
         costoMaderaEntrada.setClasificacion(rs.getString("clasificacion"));
         costoMaderaEntrada.setCosto(rs.getBigDecimal("costo"));
         return costoMaderaEntrada;
@@ -142,7 +142,7 @@ public class ClasificacionMaderaEntradaCRUD extends Conexion implements Operacio
 
     @Override
     public PreparedStatement cargarObject(PreparedStatement st, Object objeto) throws SQLException {
-        ClasificacionMaderaEntrada costoMaderaEntrada = (ClasificacionMaderaEntrada) objeto;
+        ClasificacionMaderaRollo costoMaderaEntrada = (ClasificacionMaderaRollo) objeto;
         st.setString(1, costoMaderaEntrada.getClasificacion());
         st.setString(2,String.valueOf(costoMaderaEntrada.getCosto()));
         return st;

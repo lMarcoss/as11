@@ -127,7 +127,8 @@ public class EntradaMaderaRolloController extends HttpServlet {
                 entradaMaderaRolloCRUD = new EntradaMaderaRolloCRUD();
                 try {
                     entradaMaderaRolloCRUD.eliminar(entradaMaderaRolloEC);
-                    listarEntradaMaderas(request, response,"eliminado");
+                    //enviar mensaje -> eliminado
+                    response.sendRedirect("/aserradero/EntradaMaderaRolloController?action=listar_entrada");
                 } catch (Exception e) {
                     listarEntradaMaderas(request, response,"error_eliminar");
                     Logger.getLogger(EntradaMaderaRolloController.class.getName()).log(Level.SEVERE, null, e);
@@ -158,7 +159,8 @@ public class EntradaMaderaRolloController extends HttpServlet {
                 entradaMaderaRolloCRUD = new EntradaMaderaRolloCRUD();
                 try {
                     entradaMaderaRolloCRUD.registrar(entradaMaderaRollo);
-                    listarEntradaMaderas(request, response,"registrado");
+                    //enviar mensaje -> registrado
+                    response.sendRedirect("/aserradero/EntradaMaderaRolloController?action=listar_entrada");
                 } catch (Exception ex) {
                     listarEntradaMaderas(request, response, "error_registrar_entrada_madera_rollo");
                     Logger.getLogger(EntradaMaderaRolloController.class.getName()).log(Level.SEVERE, null, ex);
@@ -169,7 +171,8 @@ public class EntradaMaderaRolloController extends HttpServlet {
                 entradaMaderaRolloCRUD = new EntradaMaderaRolloCRUD();
                 try {
                     entradaMaderaRolloCRUD.actualizar(entradaMaderaRollo);
-                    listarEntradaMaderas(request, response,"actualizado");
+                    //enviar mensaje -> actualizado
+                    response.sendRedirect("/aserradero/EntradaMaderaRolloController?action=listar_entrada");
                 } catch (Exception ex) {
                     listarEntradaMaderas(request, response,"error_actualizar");
                     System.out.println(ex);

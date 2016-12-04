@@ -100,7 +100,7 @@ public class PagoRentaController extends HttpServlet {
                 pagorentaCRUD = new PagoRentaCRUD();
                 try {
                     pagorentaCRUD.eliminar(pagorentaEC);
-                    listarPagoRentas(request, response,"eliminado");
+                    response.sendRedirect("/aserradero/PagoRentaController?action=listar");
                 } catch (Exception e) {
                     listarPagoRentas(request, response, "error_eliminar");
                     Logger.getLogger(PagoRentaController.class.getName()).log(Level.SEVERE, null, e);
@@ -131,7 +131,8 @@ public class PagoRentaController extends HttpServlet {
               pagorentacrud = new PagoRentaCRUD();
               try {
                   pagorentacrud.registrar(pagorenta);
-                  listarPagoRentas(request, response,"registrado");
+                  //enviar mensaje -> registrado
+                  response.sendRedirect("/aserradero/PagoRentaController?action=listar");
               } catch (Exception ex) {
                   listarPagoRentas(request, response,"error_registrar");
                   Logger.getLogger(PagoRentaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -142,7 +143,8 @@ public class PagoRentaController extends HttpServlet {
               pagorentacrud = new PagoRentaCRUD();
               try {
                   pagorentacrud.actualizar(pagorenta);
-                  listarPagoRentas(request, response,"actualizado");
+                  //enviar mensaje -> actualizado
+                  response.sendRedirect("/aserradero/PagoRentaController?action=listar");
               } catch (Exception ex) {
                   listarPagoRentas(request, response, "error_actualizar");
                   System.out.println(ex);

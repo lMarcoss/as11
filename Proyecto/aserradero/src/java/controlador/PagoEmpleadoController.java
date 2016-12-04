@@ -107,7 +107,8 @@ public class PagoEmpleadoController extends HttpServlet {
                 pagoEmpleadoCRUD = new PagoEmpleadoCRUD();
                 try {
                     pagoEmpleadoCRUD.eliminar(pagoEmpleadoEC);
-                    listarPagoEmpleados(request, response,"eliminado");
+                    //enviar mensaje -> eliminado
+                    response.sendRedirect("/aserradero/PagoEmpleadoController?action=listar");
                 } catch (Exception ex) {
                     listarPagoEmpleados(request, response, "error_eliminar");
                     System.out.println(ex);
@@ -139,7 +140,8 @@ public class PagoEmpleadoController extends HttpServlet {
                 pagoEmpleadoCRUD = new PagoEmpleadoCRUD();
                 try {
                     pagoEmpleadoCRUD.registrar(pagoEmpleado);
-                    listarPagoEmpleados(request, response,"registrado");
+                    //enviar mensaje -> registrado
+                    response.sendRedirect("/aserradero/PagoEmpleadoController?action=listar");
                 } catch (Exception ex) {
                     listarPagoEmpleados(request, response,"error_registrar");
                     System.out.println(ex);
@@ -151,7 +153,8 @@ public class PagoEmpleadoController extends HttpServlet {
                 pagoEmpleadoCRUD = new PagoEmpleadoCRUD();
                 try {
                     pagoEmpleadoCRUD.actualizar(pagoEmpleado);
-                    listarPagoEmpleados(request, response,"actualizado");
+                    //enviar mensaje -> actualizado
+                    response.sendRedirect("/aserradero/PagoEmpleadoController?action=listar");
                 } catch (Exception ex) {
                     listarPagoEmpleados(request, response,"error_actualizar");
                     System.out.println(ex);

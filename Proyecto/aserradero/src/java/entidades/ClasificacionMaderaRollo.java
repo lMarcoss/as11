@@ -7,15 +7,15 @@ import java.math.BigDecimal;
  * @author Ricardo Cortés Cruz ->> ricardo.crts.crz@gmail.com
  */
 
- public class ClasificacionMaderaEntrada{
+ public class ClasificacionMaderaRollo{
    public String clasificacion;
    public BigDecimal costo;
 
-   public ClasificacionMaderaEntrada(){
+   public ClasificacionMaderaRollo(){
        
    }
    
-    public ClasificacionMaderaEntrada(String clasificacion, BigDecimal costo) {
+    public ClasificacionMaderaRollo(String clasificacion, BigDecimal costo) {
         this.clasificacion = clasificacion;
         this.costo = costo;
     }

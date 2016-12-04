@@ -48,7 +48,6 @@
                         <th>Fecha</th>
                         <th>Empleado</th>
                         <th>Prestador</th>
-                        <th>Monto prestado</th>
                         <th>Monto pagado</th>
                         <th></th>
                         <th></th>
@@ -61,7 +60,6 @@
                                 +"<td>"+pago.getFecha()+"</td>"
                                 +"<td>"+pago.getEmpleado()+"</td>"
                                 +"<td>"+pago.getPrestador()+"</td>"
-                                +"<td>"+pago.getMonto_prestamo()+"</td>"
                                 +"<td>"+pago.getMonto_pago()+"</td>"
                                 +"<td><a href=\"/aserradero/PagoPrestamoController?action=modificar&id_pago="+pago.getId_pago()+"&id_prestamo="+pago.getId_prestamo()+"\">Modificar</a></td>"
                                 + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/PagoPrestamoController?action=eliminar&id_pago="+pago.getId_pago()+"';};\">Eliminar</a></td>"

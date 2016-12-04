@@ -109,7 +109,7 @@ public class PrestamoController extends HttpServlet {
                 prestamoCRUD = new PrestamoCRUD();
                 try {
                     prestamoCRUD.eliminar(prestamoEC);
-                    listarPrestamos(request, response,"eliminado");
+                    response.sendRedirect("/aserradero/PrestamoController?action=listar");
                 } catch (Exception ex) {
                     listarPrestamos(request, response,"error_eliminar");
                     Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -149,7 +149,7 @@ public class PrestamoController extends HttpServlet {
                 prestamoCRUD = new PrestamoCRUD();
                 try {
                     prestamoCRUD.registrar(prestamo);
-                    listarPrestamos(request, response,"registrado");
+                    response.sendRedirect("/aserradero/PrestamoController?action=listar");
                 } catch (Exception ex) {
                     listarPrestamos(request, response,"error_registrar");
                     Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -160,7 +160,7 @@ public class PrestamoController extends HttpServlet {
                 prestamoCRUD = new PrestamoCRUD();
                 try {
                     prestamoCRUD.actualizar(prestamo);
-                    listarPrestamos(request, response,"actualizado");
+                    response.sendRedirect("/aserradero/PrestamoController?action=listar");
                 } catch (Exception ex) {
                     listarPrestamos(request, response,"error_actualizar");
                     Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);

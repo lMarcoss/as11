@@ -67,7 +67,7 @@
                         <li class="detalle_compra"><a href="/aserradero/SalidaMaderaRolloController?action=listar_salida">Salida</a></li>
                         <!--<li class="pagos_copra"><a href="/aserradero/PagoCompraController?action=listar">Pagos compra</a></li>-->
                         <li class="inventario_madera_entrada"><a href="/aserradero/InventarioMaderaRolloController?action=listar">Inventario</a></li>
-                        <li class="costo_madera_entrada"><a href="/aserradero/ClasificacionMaderaEntradaController?action=listar">Clasficación</a></li>
+                        <li class="costo_madera_entrada"><a href="/aserradero/ClasificacionMaderaRolloController?action=listar">Clasficación</a></li>
                         <li class="costo_madera_entrada"><a href="/aserradero/PagoCompraController?action=listar">Pagos compra</a></li>
                     </ul>
                 </li>
@@ -119,23 +119,29 @@
                 <li  id="reportes" class="submenu">
                     <a href="#">Préstamo</a>
                     <ul class="dropdown-menu">
-                        <li class="reporte_compra"><a href="/aserradero/PrestamoController?action=listar">Detalles</a></li>
-                        <li class="reporte_compra"><a href="/aserradero/PrestamoController?action=listar_total">Préstamo por persona</a></li>
+                        <!--<li class="reporte_compra"><a href="/aserradero/PrestamoController?action=listar">Detalles</a></li>-->
+                        <!--<li class="reporte_compra"><a href="/aserradero/PrestamoController?action=listar_total">Préstamo por persona</a></li>-->
+                        <!--<li class="reporte_compra"><a href="/aserradero/PagoPrestamoController?action=listar">Pago préstamo</a></li>-->
+                        <li class="reporte_compra"><a href="/aserradero/PrestamoController?action=listar">Registros</a></li>
                         <li class="reporte_compra"><a href="/aserradero/PagoPrestamoController?action=listar">Pago préstamo</a></li>
                     </ul>
                 </li>
                 <li  id="reportes" class="submenu">
-                    <a href="#">Reportes</a>
+                    <a href="#">Cuenta</a>
                     <ul class="dropdown-menu">
-                        <!--<li class="reporte_compra"><a href="/aserradero/CompraController?action=ver_reporte">Reporte compra</a></li>-->
-                        <li class="reporte_compra"><a href="/aserradero/BalanceCuentaController?action=listar">Cuenta inicial</a></li>
-                        <li class="reporte_compra"><a href="/aserradero/BalanceCuentaController?action=listar">Balance cuenta</a></li>
+                        <!--<li class="reporte_compra"><a href="/aserradero/BalanceCuentaController?action=listar">Cuenta inicial</a></li>-->
+                        <li class="reporte_compra"><a href="#">Cuenta inicial</a></li>
+                        <!--<li class="reporte_compra"><a href="/aserradero/BalanceCuentaController?action=listar">Balance cuenta</a></li>-->
+                        <li class="reporte_compra"><a href="#">Balance cuenta</a></li>
                     </ul>
                 </li>
                 </ul>
             </div>
         </div>
     </div>
+            <br>
+            <br>
+            <br>
     <!-- SmartMenus jQuery plugin -->
     <script type="text/javascript" src="/aserradero/dist/js_css_menu/jquery.smartmenus.js"></script>
 

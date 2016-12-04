@@ -102,7 +102,8 @@ public class OtroGastoController extends HttpServlet {
                 otrogastoCRUD = new OtroGastoCRUD();
                 try {
                     otrogastoCRUD.eliminar(otrogastoEC);
-                    listarOtrosGastos(request, response, "eliminado");
+                    //enviar mensaje -> eliminado
+                    response.sendRedirect("/aserradero/OtroGastoController?action=listar");
                 } catch (Exception ex) {
                     listarOtrosGastos(request, response, "error_eliminar");
                     Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -130,22 +131,22 @@ public class OtroGastoController extends HttpServlet {
         OtroGastoCRUD otrogastoCRUD;
         switch (action) {
             case "nuevo":
-                otrogasto = extraerMunicipioForm(request);
+                otrogasto = extraerOtroGastoForm(request, action);
                 otrogastoCRUD = new OtroGastoCRUD();
                 try {
                     otrogastoCRUD.registrar(otrogasto);
-                    listarOtrosGastos(request, response, "registrado");
+                    response.sendRedirect("/aserradero/OtroGastoController?action=listar");
                 } catch (Exception ex) {
                     listarOtrosGastos(request, response, "error_registrar");
                     Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             case "actualizar":
-                otrogasto = extraerMunicipioForm(request);
+                otrogasto = extraerOtroGastoForm(request, action);
                 otrogastoCRUD = new OtroGastoCRUD();
                 try {
                     otrogastoCRUD.actualizar(otrogasto);
-                    listarOtrosGastos(request, response, "actualizado");
+                    response.sendRedirect("/aserradero/OtroGastoController?action=listar");
                 } catch (Exception ex) {
                     listarOtrosGastos(request, response, "error_actualizar");
                     Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -199,14 +200,17 @@ public class OtroGastoController extends HttpServlet {
     }
 
     // Extraer datos del formulario
-    private OtroGasto extraerMunicipioForm(HttpServletRequest request) {
+    private OtroGasto extraerOtroGastoForm(HttpServletRequest request, String action) {
         OtroGasto otrogasto = new OtroGasto();
-        otrogasto.setId_gasto(Integer.valueOf(request.getParameter("id_gasto")));
+        if(action.equals("actualizar")){
+            otrogasto.setId_gasto(Integer.valueOf(request.getParameter("id_gasto")));
+        }
         otrogasto.setFecha(Date.valueOf(request.getParameter("fecha")));
         otrogasto.setId_empleado(request.getParameter("id_empleado"));
         otrogasto.setNombre_gasto(request.getParameter("nombre_gasto"));
         otrogasto.setMonto(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto")))));
         otrogasto.setObservacion(request.getParameter("observacion"));
+        System.out.println("Hola");
         return otrogasto;
     }
 }

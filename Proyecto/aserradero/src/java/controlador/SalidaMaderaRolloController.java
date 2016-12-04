@@ -146,8 +146,7 @@ public class SalidaMaderaRolloController extends HttpServlet {
                 salidaMaderaRolloCRUD = new SalidaMaderaRolloCRUD();
                 try {
                     salidaMaderaRolloCRUD.actualizar(salidaMaderaRollo);
-                    listarSalidaMaderaRollos(request, response,"actualizado");
-//                    request.getSession().setAttribute("nombre_param", "valor_param"); // Enviar parametro
+//                    request.getSession().setAttribute("mensaje", "valor_param"); // Enviar parametro
                     response.sendRedirect("/aserradero/SalidaMaderaRolloController?action=listar_salida"); // para evitar acciones repetidas al actualizar página
                 } catch (Exception ex) {
                     listarSalidaMaderaRollos(request, response,"inventario_entrada_inalcansable");

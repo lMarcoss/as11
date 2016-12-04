@@ -105,7 +105,8 @@ public class EmpleadoController extends HttpServlet {
                 empleadoCRUD = new EmpleadoCRUD();
                 try {
                     empleadoCRUD.eliminar(empleadoEC);
-                    listarEmpleados(request, response,"eliminado");
+                    //enviar mensaje -> eliminado
+                    response.sendRedirect("/aserradero/EmpleadoController?action=listar");
                 } catch (Exception ex) {
                     listarEmpleados(request, response, "error_eliminar");
                     System.out.println(ex);
@@ -138,7 +139,8 @@ public class EmpleadoController extends HttpServlet {
                 empleadoCRUD = new EmpleadoCRUD();
                 try {
                     empleadoCRUD.registrar(empleado);
-                    listarEmpleados(request, response,"registrado");
+                    //enviar mensaje -> registrado
+                    response.sendRedirect("/aserradero/EmpleadoController?action=listar");
                 } catch (Exception ex) {
                     listarEmpleados(request, response, "error_registrar");
                     System.out.println(ex);
@@ -150,7 +152,8 @@ public class EmpleadoController extends HttpServlet {
                 empleadoCRUD = new EmpleadoCRUD();
                 try {
                     empleadoCRUD.actualizar(empleado);
-                    listarEmpleados(request, response,"actualizado");
+                    //enviar mensaje -> actualizado
+                    response.sendRedirect("/aserradero/EmpleadoController?action=listar");
                 } catch (Exception ex) {
                     listarEmpleados(request, response, "error_actualizar");
                     System.out.println(ex);

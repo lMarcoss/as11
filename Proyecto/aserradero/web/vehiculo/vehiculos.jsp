@@ -67,7 +67,7 @@
                                     <th>Motor</th>
                                     <th>Modelo</th>
                                     <th>Costo</th>
-                                    <th>Id empleado</th>
+                                    <th>Empleado</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -85,7 +85,7 @@
                                         +"<td>"+vehiculo.getMotor()+"</td>"
                                         +"<td>"+vehiculo.getModelo()+"</td>"
                                         +"<td>"+vehiculo.getCosto()+"</td>"
-                                        +"<td>"+vehiculo.getId_empleado()+"</td>"
+                                        +"<td>"+vehiculo.getEmpleado()+"</td>"
                                         +"<td><a class=\"btn btn-info\" href=\"/aserradero/VehiculoController?action=modificar&id_vehiculo="+vehiculo.getId_vehiculo()+"\">Actualizar</a></td>"
                                         + "<td><a class=\"btn btn-danger\" href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/VehiculoController?action=eliminar&id_vehiculo="+vehiculo.getId_vehiculo()+"';};\">Eliminar</a></td>"
                                     + "</tr>" );

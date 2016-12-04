@@ -92,11 +92,14 @@ public class AdministradorController extends HttpServlet {
                 }
                 break;
             case "eliminar":
-                administradorEC = extraerAdministradorForm(request);
+                administradorEC = new Administrador();
+                administradorEC.setId_administrador(request.getParameter("id_administrador"));
+                
                 administradorCRUD = new AdministradorCRUD();
                 try {
                     administradorCRUD.eliminar(administradorEC);
-                    listarAdministradores(request, response,"eliminado");
+                    //enviar mensaje -> eliminado
+                    response.sendRedirect("/aserradero/AdministradorController?action=listar");
                 } catch (Exception ex) {
                     listarAdministradores(request, response,"error_eliminar");
                     System.out.println(ex);
@@ -129,7 +132,8 @@ public class AdministradorController extends HttpServlet {
                 administradorCRUD = new AdministradorCRUD();
                 try {
                     administradorCRUD.registrar(administrador);
-                    listarAdministradores(request, response,"registrado");
+                    //enviar mensaje -> registrado
+                    response.sendRedirect("/aserradero/AdministradorController?action=listar");
                 } catch (Exception ex) {
                     listarAdministradores(request, response, "error_registrar");
                     System.out.println(ex);
@@ -141,7 +145,8 @@ public class AdministradorController extends HttpServlet {
                 administradorCRUD = new AdministradorCRUD();
                 try {
                     administradorCRUD.actualizar(administrador);
-                    listarAdministradores(request, response,"actualizado");
+                    //enviar mensaje -> actualizado
+                    response.sendRedirect("/aserradero/AdministradorController?action=listar");
                 } catch (Exception ex) {
                     listarAdministradores(request, response,"error_actualizar");
                     System.out.println(ex);

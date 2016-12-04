@@ -4,10 +4,10 @@
     Author     : rcortes
 --%>
 
-<%@page import="entidades.ClasificacionMaderaEntrada"%>
+<%@page import="entidades.ClasificacionMaderaRollo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    ClasificacionMaderaEntrada clasificacion = (ClasificacionMaderaEntrada) request.getAttribute("clasificacionMaderaEntrada");
+    ClasificacionMaderaRollo clasificacion = (ClasificacionMaderaRollo) request.getAttribute("clasificacion");
 %>
 <!DOCTYPE html>
 <html>
@@ -23,7 +23,7 @@
         
         <!-- ******************* Formulario de registro-->
         <div>
-            <form action="/aserradero/ClasificacionMaderaEntradaController?action=actualizar" method="post" id="formregistro">
+            <form action="/aserradero/ClasificacionMaderaRolloController?action=actualizar" method="post" id="formregistro">
                 <h3>Actualizar datos</h3>
                 <fieldset id="user-details">
                     <table>
@@ -37,7 +37,7 @@
                             <td style="padding-left: 10px;"><input type="number" name="costo" step=".01" min="0.01" max="999999.99"  value="<%=clasificacion.getCosto()%>"/></td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 10px;"><a href="/aserradero/ClasificacionMaderaEntradaController?action=listar"><input type="button" value="Cancelar"/></a> </td>
+                            <td style="padding-left: 10px;"><a href="/aserradero/ClasificacionMaderaRolloController?action=listar"><input type="button" value="Cancelar"/></a> </td>
                             <!--<td><input type="submit" value="Registrar" class="submit"/> </td>-->
                             <td style="padding-left: 10px;"><input type="submit" value="Guardar"/></td>
                         </tr>

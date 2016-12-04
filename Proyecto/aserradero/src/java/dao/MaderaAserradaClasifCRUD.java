@@ -20,7 +20,7 @@ public class MaderaAserradaClasifCRUD extends Conexion implements OperacionesCRU
         try{
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement(
-                    "INSERT INTO MADERA_ASERRADA_CLASIF (id_madera,grueso,ancho,largo,volumen,costo) VALUES (?,?,?,?,?,?)");
+                    "INSERT INTO MADERA_ASERRADA_CLASIF (id_madera,grueso,ancho,largo,volumen,costo_por_volumen) VALUES (?,?,?,?,?,?)");
             st = cargarObject(st, maderaClasificacion);
             st.executeUpdate();
         }catch(Exception e){

@@ -17,7 +17,7 @@
         <%@ include file="/TEMPLATE/menu.jsp" %>
         
         <!-- ******************* Formulario de registro-->
-            <form action="/aserradero/ClasificacionMaderaEntradaController?action=nuevo" method="POST">
+            <form action="/aserradero/ClasificacionMaderaRolloController?action=nuevo" method="POST">
                 <h3>Agregar</h3>
                 <fieldset id="user-details">
                     <table>
@@ -36,7 +36,7 @@
                             <td style="padding-left: 10px;"><input type="number" step=".01" name="costo" min="0.01" max="999999.99"/></td>
                         </tr>                        
                         <tr>
-                            <td style="padding-left: 10px;"><a href="/aserradero/ClasificacionMaderaEntradaController?action=listar"><input type="button" value="Cancelar"/></a> </td>
+                            <td style="padding-left: 10px;"><a href="/aserradero/ClasificacionMaderaRolloController?action=listar"><input type="button" value="Cancelar"/></a> </td>
                             <td style="padding-left: 10px;"><input type="submit" value="Guardar"/></td>
                         </tr>
                     </table>

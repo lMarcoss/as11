@@ -23,9 +23,9 @@
         <!-- ******************* Formulario de registro-->
         <div>
             <form action="/aserradero/OtroGastoController?action=nuevo" method="post" id="formregistro">
-                <h3>Agregar pago</h3>
+                <h3>Agregar gasto</h3>
                 <fieldset id="user-details">
-                    <table>                        
+                    <table>
                         <tr>
                             <td style="padding-left: 10px;"><label for="fecha">Fecha:</label></td>
                             <td style="padding-left: 10px;"><input type="date" name="fecha" required="" placeholder="AAAA/MM/DD"/></td>

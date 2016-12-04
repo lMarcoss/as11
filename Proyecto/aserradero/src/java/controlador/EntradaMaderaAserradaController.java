@@ -86,14 +86,15 @@ public class EntradaMaderaAserradaController extends HttpServlet {
                 entradaMaderaAserradaEC = new EntradaMaderaAserrada();
                 entradaMaderaAserradaEC.setId_entrada(Integer.valueOf(request.getParameter("id_entrada")));
                 entradaMaderaAserradaCRUD = new EntradaMaderaAserradaCRUD();
+                
                 try {
                     //enviamos la entradaMaderaAserrada a modificar
-                    EntradaMaderaAserrada produccion = (EntradaMaderaAserrada) entradaMaderaAserradaCRUD.modificar(entradaMaderaAserradaEC);
-                    request.setAttribute("produccion",produccion);
-                                        
+                    EntradaMaderaAserrada entrada = (EntradaMaderaAserrada) entradaMaderaAserradaCRUD.modificar(entradaMaderaAserradaEC);
+                    request.setAttribute("entrada",entrada);
                     RequestDispatcher view = request.getRequestDispatcher("entradaMaderaAserrada/actualizarEntradaMaderaAserrada.jsp");
                     view.forward(request,response);
                 } catch (Exception ex) {
+                    System.err.println(ex);
                     listarEntradaMaderaAserrada(request, response, "error_modificar");
                     Logger.getLogger(EntradaMaderaAserradaController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -104,7 +105,8 @@ public class EntradaMaderaAserradaController extends HttpServlet {
                 entradaMaderaAserradaCRUD = new EntradaMaderaAserradaCRUD();
                 try {
                     entradaMaderaAserradaCRUD.eliminar(entradaMaderaAserradaEC);
-                    listarEntradaMaderaAserrada(request, response,"eliminado");
+                    //enviar mensaje -> eliminado
+                    response.sendRedirect("/aserradero/EntradaMaderaAserradaController?action=listar");
                 } catch (Exception ex) {
                     listarEntradaMaderaAserrada(request, response,"error_eliminar");
                     Logger.getLogger(EntradaMaderaAserradaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -140,7 +142,8 @@ public class EntradaMaderaAserradaController extends HttpServlet {
                 entradaMaderaAserradaCRUD = new EntradaMaderaAserradaCRUD();
                 try {
                     entradaMaderaAserradaCRUD.registrar(entradaMaderaAserrada);
-                    listarEntradaMaderaAserrada(request, response,"registrado");
+                    //enviar mensaje -> registrado
+                    response.sendRedirect("/aserradero/EntradaMaderaAserradaController?action=listar");
                 } catch (Exception ex) {
                     listarEntradaMaderaAserrada(request, response,"error_registrar");
                     Logger.getLogger(EntradaMaderaAserradaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -151,7 +154,8 @@ public class EntradaMaderaAserradaController extends HttpServlet {
                 entradaMaderaAserradaCRUD = new EntradaMaderaAserradaCRUD();
                 try {
                     entradaMaderaAserradaCRUD.actualizar(entradaMaderaAserrada);
-                    listarEntradaMaderaAserrada(request, response,"actualizado");
+                    //enviar mensaje -> actualizado
+                    response.sendRedirect("/aserradero/EntradaMaderaAserradaController?action=listar");
                 } catch (Exception ex) {
                     listarEntradaMaderaAserrada(request, response,"error_actualizar");
                     Logger.getLogger(PersonaController.class.getName()).log(Level.SEVERE, null, ex);

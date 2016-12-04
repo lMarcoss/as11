@@ -57,8 +57,8 @@
         <servlet-class>controlador.MaderaAserradaClasifController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ClasificacionMaderaEntradaController</servlet-name>
-        <servlet-class>controlador.ClasificacionMaderaEntradaController</servlet-class>
+        <servlet-name>ClasificacionMaderaRolloController</servlet-name>
+        <servlet-class>controlador.ClasificacionMaderaRolloController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EntradaMaderaAserradaController</servlet-name>
@@ -82,7 +82,7 @@
     </servlet>
     <servlet>
         <servlet-name>CostoMaderaEntradaController</servlet-name>
-        <servlet-class>controlador.ClasificacionMaderaEntradaController</servlet-class>
+        <servlet-class>controlador.ClasificacionMaderaRolloController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>InventarioMaderaRolloController</servlet-name>
@@ -197,8 +197,8 @@
         <url-pattern>/MaderaAserradaClasifController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ClasificacionMaderaEntradaController</servlet-name>
-        <url-pattern>/ClasificacionMaderaEntradaController</url-pattern>
+        <servlet-name>ClasificacionMaderaRolloController</servlet-name>
+        <url-pattern>/ClasificacionMaderaRolloController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EntradaMaderaAserradaController</servlet-name>
