@@ -7,16 +7,18 @@ import java.math.BigDecimal;
  * @author lmarcoss
  */
 public class CuentaPorPagar {
-    private String id_persona; // puede ser id_cliente o id_proveedor
-    private String persona; //puede ser cliente o proveedor
+    private String id_persona; // puede ser id_cliente o id_persona
+    private String persona; //puede ser cliente o persona
+    private String id_jefe;
     private BigDecimal monto;
 
     public CuentaPorPagar() {
     }
 
-    public CuentaPorPagar(String id_persona, String persona, BigDecimal monto) {
+    public CuentaPorPagar(String id_persona, String persona, String id_jefe, BigDecimal monto) {
         this.id_persona = id_persona;
         this.persona = persona;
+        this.id_jefe = id_jefe;
         this.monto = monto;
     }
 
@@ -26,6 +28,10 @@ public class CuentaPorPagar {
 
     public void setPersona(String persona) {
         this.persona = persona;
+    }
+
+    public void setId_jefe(String id_jefe) {
+        this.id_jefe = id_jefe;
     }
 
     public void setMonto(BigDecimal monto) {
@@ -40,8 +46,11 @@ public class CuentaPorPagar {
         return persona;
     }
 
+    public String getId_jefe() {
+        return id_jefe;
+    }
+
     public BigDecimal getMonto() {
         return monto;
     }
-
 }

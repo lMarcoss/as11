@@ -20,7 +20,9 @@
     <body>
         <!--menu-->
         <%@ include file="/TEMPLATE/menu.jsp" %>
-        
+        <br>
+        <br>
+        <br>
         <input type="hidden" name="mensaje" id="mensaje" value="<%=mensaje%>"
 
         <!-- ************************** opción de búsqueda-->

@@ -38,7 +38,7 @@
     <body>
         <!--menu-->
         <%@ include file="/TEMPLATE/menu.jsp" %>
-        <div class="container" style="margin-top:60px;">
+        <div id="page-wrapper" style="margin-top: 30px;">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
@@ -94,6 +94,7 @@
                                         <a href="/aserradero/VentaMayoreoController?action=listar"><input class="btn btn-block btn-warning" type="button" value="Cancelar"/></a>
                                     </div><!-- Fin div group -->
                                 </form><!-- Formulario de venta -->
+                                
                                 <div class="col-lg-12">
                                     <div class="form-group col-md-3">
                                         <label class="control-label">Madera:</label>
@@ -121,7 +122,7 @@
                                         <label class="control-label" >Volumen:</label>
                                         <input class="form-control" type="number" name="volumen" id="volumen" step="0.001" min="0.001" max="99999.999" required="" readonly="" disabled=""/>
                                     </div>
-                                    <div class="col-md-2 form-group">
+                                    <div class="col-md-3 form-group">
                                         <label class="control-label" >Piezas en existencia</label>
                                         <select name="pieza_existencia" class="form-control" id="pieza_existencia" readonly="" disabled="">
                                             <option></option>
@@ -134,7 +135,7 @@
                                         <label class="control-label" >Monto:</label>
                                         <input type="number" name="monto" class="form-control" id="monto" step="0.01" min="0.01" max="99999999.99"  required="" readonly=""/>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-3">
                                         <label class="control-label" >volumen unitario</label>
                                         <select name="volumen_unitaria" class="form-control" id="volumen_unitaria" readonly="" disabled="">
                                             <option></option>

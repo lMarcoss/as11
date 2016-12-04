@@ -24,7 +24,8 @@ SELECT
         ROUND((VENTA_PAQUETE.monto /VENTA_PAQUETE.volumen),2) as costo_volumen,
         num_piezas,
         VENTA_PAQUETE.volumen as volumen_total,
-        VENTA_PAQUETE.monto as costo_total
+        VENTA_PAQUETE.monto as costo_total,
+        tipo_madera
 FROM VENTA,VENTA_PAQUETE,MADERA_ASERRADA_CLASIF
 WHERE VENTA.id_venta = VENTA_PAQUETE.id_venta AND
 		VENTA_PAQUETE.id_madera = MADERA_ASERRADA_CLASIF.id_madera AND
@@ -50,7 +51,8 @@ SELECT fecha,
         ROUND((VENTA_MAYOREO.monto /VENTA_MAYOREO.volumen),2) as costo_volumen,
         num_piezas,
         VENTA_MAYOREO.volumen AS volumen_total,
-        VENTA_MAYOREO.monto as costo_total
+        VENTA_MAYOREO.monto as costo_total,
+        tipo_madera
 FROM VENTA,VENTA_MAYOREO,MADERA_ASERRADA_CLASIF
 WHERE VENTA.id_venta = VENTA_MAYOREO.id_venta AND
 		VENTA_MAYOREO.id_madera = MADERA_ASERRADA_CLASIF.id_madera AND

@@ -47,7 +47,7 @@
             </table>            
         </div><!-- Resultado Consulta-->
         <%}else{
-            out.print("<p>No hay inventarios</p>");
+            out.print("<br><br><br><h2>No hay inventario</h2>");
         }%>
     </body>
 </html>

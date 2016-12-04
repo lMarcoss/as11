@@ -76,11 +76,11 @@
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>Num. piezas</label></td>
-                            <td style="padding-left: 10px;"><input type="number" name="num_piezas" id="num_piezas" value="<%=salida.getNum_piezas()%>" min="1" max="9999" required="" onblur="calcularVolumenPermitido()"></td>
+                            <td style="padding-left: 10px;"><input type="number" name="num_piezas" id="num_piezas" value="<%=salida.getNum_piezas()%>" min="1" max="9999" required="" onblur="actualizarVolumenPermitido(),actualizarCantidadPiezasPermitida()"></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>Volumen total</label></td>
-                            <td style="padding-left: 10px;"><input type="number" step=".001" name="volumen_total" id="volumen_total" value="<%=salida.getVolumen_total()%>" min="0.001" max="9999999.999" required="" onblur="calcularCantidadPiezasPermitida()"></td>
+                            <td style="padding-left: 10px;"><input type="number" step=".001" name="volumen_total" id="volumen_total" value="<%=salida.getVolumen_total()%>" min="0.001" max="9999999.999" required="" onblur="actualizarCantidadPiezasPermitida(),actualizarVolumenPermitido()"></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><a href="/aserradero/SalidaMaderaRolloController?action=listar_salida"><input type="button" value="Cancelar"/></a> </td>

@@ -80,10 +80,10 @@
                             </td>
                         </tr>
                             <td style="padding-left: 10px;"><label>Num. piezas (salida)</label></td>
-                            <td style="padding-left: 10px;"><input type="number" name="num_piezas" id="num_piezas" min="1" max="<%=pieza_existente%>" required="" onblur="salidaVolumenMinimoPermitido()"></td>
+                            <td style="padding-left: 10px;"><input type="number" name="num_piezas" id="num_piezas" min="1" max="" required="" onblur="salidaVolumenMinimoPermitido(),salidaMaderaRolloPermitido()"></td>
                         <tr>
                             <td style="padding-left: 10px;"><label>Volumen total (salida)</label></td>
-                            <td style="padding-left: 10px;"><input type="number" step=".001" name="volumen_total" id="volumen_total" min="" max="<%=volumen_existente%>" required="" onblur="salidaMaderaRolloPermitido()"></td>
+                            <td style="padding-left: 10px;"><input type="number" step=".001" name="volumen_total" id="volumen_total" min="" max="" required="" onblur="salidaMaderaRolloPermitido(),salidaVolumenMinimoPermitido()"></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><a href="/aserradero/SalidaMaderaRolloController?action=listar_salida"><input type="button" value="Cancelar"/></a> </td>
@@ -93,7 +93,9 @@
                 </fieldset>
             </form>
         <%}else{%>
-            <h3>No se puede registrar salida, No hay inventario</h3>
+            <br>
+            <br>
+            <h2>No se puede registrar salida, No hay inventario</h2>
             <a href="/aserradero/SalidaMaderaRolloController?action=listar_salida"><input type="button" value="Aceptar"/></a>
         <%}%>
         </div><!--Fin Formulario de registro-->

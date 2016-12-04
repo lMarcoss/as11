@@ -35,7 +35,7 @@
         <!--menu-->
         <%@ include file="/TEMPLATE/menu.jsp" %>
         <!--formulario de registro-->
-        <div id="page-wrapper">
+        <div id="page-wrapper" style="margin-top: 30px;">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
@@ -131,6 +131,13 @@
                                             %>
                                         </select>
                                     </div>
+                                    <div class="col-md-2">
+                                        <label class="control-label" >Tipo</label>
+                                        <select name="tipo_madera" class="form-control" id="pieza_existencia">
+                                            <option value="Madera">Madera</option>
+                                            <option value="Amarre">Amarre</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="col-md-2">
@@ -163,10 +170,10 @@
                                         <label class="control-label">Monto total:</label>
                                         <input type="number" class="form-control" name="monto" id="monto" step="0.01" min="0.01" max="99999999.99" required="" readonly=""/>
                                     </div>
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <!--<input type="button" value="Agregar" id="agregar_venta_paquete" class="btn btn-primary centrar-btn-vp"/>-->
                                         <br>
-                                        <input id="agregar_venta_mayoreo" type="button" class="btn btn-info col-md-13" value="Agregar producto"/>
+                                        <input id="agregar_venta_paquete" type="button" class="btn btn-info col-md-15" value="Agregar producto" style="width: 100%;">
                                     </div>
                                 </div>
                             </div>
@@ -184,6 +191,7 @@
                             ArrayList<VentaPaquete> VentaPaq = (ArrayList<VentaPaquete>) sesion_ajax.getAttribute("detalle_venta_paquete");
                             if((sesion_ajax.getAttribute("detalle_venta_paquete"))!=null){
                                 if(VentaPaq.size()>0){//Si la cantida de productos agregados es mayor a cero
+                                    System.out.println("Hola");
                                     out.print("<table class='table'>");
                                     out.print("<thead>");
                                     out.print("<tr>");
@@ -203,6 +211,7 @@
                                         out.print("<td>"+a.getNum_piezas()+"</td>");
                                         out.print("<td>"+a.getVolumen()+"</td>");
                                         out.print("<td>"+a.getMonto()+"</td>");
+//                                        out.print("<td>"+a.getTipo_madera()+"</td>");
                                         out.print("<td><input type='button' value='Eliminar' class='btn btn-danger eliminar_ventap' id='"+a.getId_madera()+"' /></td>");
                                         out.print("</tr>");
                                     }

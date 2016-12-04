@@ -19,7 +19,9 @@
     <body>
         <!--menu-->
         <%@ include file="/TEMPLATE/menu.jsp" %>
-        
+        <br>
+        <br>
+        <br>
         <!-- ************************** opción de búsqueda-->
         <div>
             <form method="POST" action="/aserradero/PagoCompraController?action=buscar">

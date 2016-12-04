@@ -260,7 +260,7 @@ BEGIN
     IF EXISTS (SELECT volumen_total FROM TOTAL_SALIDA_MADERA_ROLLO WHERE id_administrador = _id_administrador) THEN 
 		SELECT volumen_total INTO _volumen_total FROM TOTAL_SALIDA_MADERA_ROLLO WHERE id_administrador = _id_administrador;
         RETURN _volumen_total;
-	ELSE -- No existe cuenta por cobrar al proveedor
+	ELSE -- si no existe salida 
 		RETURN 0;
     END IF;
 END;//

@@ -8,7 +8,6 @@ function salidaMaderaRolloPermitido(){
     
     document.getElementById('num_piezas').max = pieza_existente;
     document.getElementById('volumen_total').max = volumen_existente;
-    
     return null;
 }
 function salidaVolumenMinimoPermitido(){
@@ -22,6 +21,7 @@ function salidaVolumenMinimoPermitido(){
             document.getElementById('volumen_total').min = volumen_existente;
         }else{
             document.getElementById('volumen_total').min = 0.001;
+            document.getElementById('volumen_total').max = volumen_existente - 2;
         }
     }
     return null;

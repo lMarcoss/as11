@@ -66,18 +66,17 @@
                         <li class="detalle_compra"><a href="/aserradero/EntradaMaderaRolloController?action=listar_entrada">Entrada</a></li>
                         <li class="detalle_compra"><a href="/aserradero/SalidaMaderaRolloController?action=listar_salida">Salida</a></li>
                         <!--<li class="pagos_copra"><a href="/aserradero/PagoCompraController?action=listar">Pagos compra</a></li>-->
-                        <li class="inventario_madera_entrada"><a href="/aserradero/InventarioMaderaEntradaController?action=listar">Inventario</a></li>
+                        <li class="inventario_madera_entrada"><a href="/aserradero/InventarioMaderaRolloController?action=listar">Inventario</a></li>
                         <li class="costo_madera_entrada"><a href="/aserradero/ClasificacionMaderaEntradaController?action=listar">Clasficación</a></li>
                         <li class="costo_madera_entrada"><a href="/aserradero/PagoCompraController?action=listar">Pagos compra</a></li>
                     </ul>
                 </li>
-                <li  id="produccion" class="submenu">
+                <li id="produccion" class="submenu">
                     <a href="#">Madera aserrada</a>
                     <ul class="dropdown-menu">
-                        <li id="produccion_madera"><a href="/aserradero/ProduccionMaderaController?action=listar">Entrada</a></li>
-                        <li id="inventario_produccion"><a href="/aserradero/InventarioMaderaProduccionController?action=listar">Inventario</a></li>
-                        <li id="clasificacion_madera"><a href="/aserradero/MaderaClasificacionController?action=listar">Clasificación</a></li>
-                        <li id="costo_madera_produccion"><a href="/aserradero/CostoMaderaController?action=listar">Costo clasificación</a></li>
+                        <li id="produccion_madera"><a href="/aserradero/EntradaMaderaAserradaController?action=listar">Entrada</a></li>
+                        <li id="inventario_produccion"><a href="/aserradero/InventarioMaderaAserradaController?action=listar">Inventario</a></li>
+                        <li id="clasificacion_madera"><a href="/aserradero/MaderaAserradaClasifController?action=listar">Clasificación</a></li>
                     </ul>
                 </li>
                 <li  id="ventas">

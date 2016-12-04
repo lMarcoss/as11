@@ -158,6 +158,7 @@ CREATE TABLE VENTA_MAYOREO(
 	num_piezas	INT,
 	volumen 	DECIMAL(8,3),
 	monto		DECIMAL(15,2),
+    tipo_madera 	ENUM('Madera','Amarre') NOT NULL,
 	PRIMARY KEY(id_venta,id_madera),
 	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_madera))ENGINE=InnoDB;
@@ -168,7 +169,8 @@ CREATE TABLE VENTA_PAQUETE(
 	id_madera 		VARCHAR(20),
 	num_piezas		INT,
 	volumen 		DECIMAL(15,3),
-	monto		DECIMAL(15,2),
+	monto			DECIMAL(15,2),
+    tipo_madera 	ENUM('Madera','Amarre') NOT NULL,
 	PRIMARY KEY(id_venta,numero_paquete,id_madera),
 	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_madera))ENGINE=InnoDB;
@@ -233,18 +235,6 @@ CREATE TABLE ANTICIPO_PROVEEDOR(
 	PRIMARY KEY(id_anticipo_p),
 	FOREIGN KEY (id_proveedor) REFERENCES PROVEEDOR (id_proveedor),
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
-
-
-CREATE TABLE CUENTA_POR_PAGAR(
-	id_persona 	CHAR(26) NOT NULL, -- puede ser id_proveedor o id_cliente
-	monto		DECIMAL(15,2),
-	PRIMARY KEY(id_persona))ENGINE=InnoDB;
-
-CREATE TABLE CUENTA_POR_COBRAR(
-	id_persona 	CHAR(26) NOT NULL, -- puede ser id_cliente o id_proveedor
-	monto		DECIMAL(15,2),
-	PRIMARY KEY(id_persona))ENGINE=InnoDB;
-
 
 CREATE TABLE VEHICULO(
 	id_vehiculo		INT NOT NULL AUTO_INCREMENT,
@@ -408,54 +398,6 @@ SELECT
 FROM ENTRADA_MADERA_ASERRADA;
 
 
--- Disparador para insertar inventario de madera producida cada que se inserta una producción
-DROP TRIGGER IF EXISTS AGREGAR_INVENTARIO_PRODUCCION;
-DELIMITER //
-CREATE TRIGGER AGREGAR_INVENTARIO_PRODUCCION AFTER INSERT ON ENTRADA_MADERA_ASERRADA
-FOR EACH ROW
-BEGIN
-	-- consultamos el administrador
-	DECLARE _id_administrador VARCHAR(18);	
-    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado;
-    
-	INSERT INTO INVENTARIO_MADERA_PRODUCCION SET
-		INVENTARIO_MADERA_PRODUCCION.id_administrador = _id_administrador,
-		INVENTARIO_MADERA_PRODUCCION.id_madera = NEW.id_madera,
-		INVENTARIO_MADERA_PRODUCCION.num_piezas = NEW.num_piezas
-	ON DUPLICATE KEY UPDATE 
-      INVENTARIO_MADERA_PRODUCCION.num_piezas = INVENTARIO_MADERA_PRODUCCION.num_piezas + NEW.num_piezas;
-END;//
-DELIMITER ;
-
-DROP TRIGGER IF EXISTS ACTUALIZAR_INVENTARIO_PRODUCCION;
--- Disparador para actualizar inventario de madera producida cada que actualiza producción_madera
-DELIMITER //
-CREATE TRIGGER ACTUALIZAR_INVENTARIO_PRODUCCION  BEFORE UPDATE ON ENTRADA_MADERA_ASERRADA
-FOR EACH ROW
-BEGIN
-	-- consultamos el administrador
-	DECLARE _id_administrador VARCHAR(18);	
-    SELECT id_jefe INTO _id_administrador FROM EMPLEADO WHERE id_empleado = new.id_empleado;
-    
-    -- aseguramos que existe el inventario
-    IF EXISTS (SELECT id_administrador FROM INVENTARIO_MADERA_PRODUCCION WHERE id_administrador = _id_administrador AND id_madera = new.id_madera) THEN
-		-- Restamos los valores antiguos en inventario madera producción
-		UPDATE INVENTARIO_MADERA_PRODUCCION
-				SET num_piezas = (num_piezas - OLD.num_piezas)
-		WHERE id_administrador = _id_administrador and id_madera = OLD.id_madera;
-		
-		-- actualizamos inventario con los nuevos valores
-		UPDATE INVENTARIO_MADERA_PRODUCCION 
-			SET num_piezas = (num_piezas + NEW.num_piezas)
-		WHERE id_administrador = _id_administrador and id_madera = OLD.id_madera;
-	ELSE
-		INSERT INTO INVENTARIO_MADERA_PRODUCCION VALUES (_id_administrador,NEW.id_madera,NEW.num_piezas);
-    END IF;
-    
-	
-END;//
-DELIMITER ;
-
 CREATE VIEW VISTA_ANTICIPO_CLIENTE AS 
 SELECT id_anticipo_c,
 		fecha,
@@ -466,43 +408,6 @@ SELECT id_anticipo_c,
         (SELECT id_jefe FROM EMPLEADO WHERE id_empleado = ANTICIPO_CLIENTE.id_empleado) as id_jefe,
         monto_anticipo
 FROM ANTICIPO_CLIENTE;
-
--- lista cuentas por cobrar proveedor
-CREATE VIEW CUENTA_POR_COBRAR_PROVEEDOR AS
-SELECT CUENTA_POR_COBRAR.id_persona,
-	(select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(CUENTA_POR_COBRAR.id_persona,1,18)) as persona,
-    PROVEEDOR.id_jefe as id_jefe,
-    monto
-	FROM CUENTA_POR_COBRAR,PROVEEDOR WHERE CUENTA_POR_COBRAR.id_persona=id_proveedor;
--- SELECT * FROM CUENTA_POR_COBRAR_PROVEEDOR;
-
--- lista de cuentas por cobrar clientes
-CREATE VIEW CUENTA_POR_COBRAR_CLIENTE AS
-SELECT CUENTA_POR_COBRAR.id_persona,
-	(select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(CUENTA_POR_COBRAR.id_persona,1,18)) as persona,
-    CLIENTE.id_jefe as id_jefe,
-    monto
-	FROM CUENTA_POR_COBRAR,CLIENTE WHERE CUENTA_POR_COBRAR.id_persona=id_cliente;
--- SELECT * FROM CUENTA_POR_COBRAR_CLIENTE;
-
--- lista de cuentas por pagar proveedores
-CREATE VIEW CUENTA_POR_PAGAR_PROVEEDOR AS
-SELECT CUENTA_POR_PAGAR.id_persona,
-		(select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(CUENTA_POR_PAGAR.id_persona,1,18)) as persona,
-        PROVEEDOR.id_jefe,
-        monto
-	FROM CUENTA_POR_PAGAR,PROVEEDOR WHERE CUENTA_POR_PAGAR.id_persona = PROVEEDOR.id_proveedor;
--- SELECT * FROM CUENTA_POR_PAGAR_PROVEEDOR;
-
--- lista cuentas por pagar a clientes
-CREATE VIEW CUENTA_POR_PAGAR_CLIENTE AS
-SELECT CUENTA_POR_PAGAR.id_persona,
-		(select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(CUENTA_POR_PAGAR.id_persona,1,18)) as persona,
-        CLIENTE.id_jefe,
-        monto
-	FROM CUENTA_POR_PAGAR,CLIENTE WHERE CUENTA_POR_PAGAR.id_persona = CLIENTE.id_cliente;
--- SELECT * FROM CUENTA_POR_PAGAR_CLIENTE;
-
 
 INSERT INTO ADMINISTRADOR (id_administrador) VALUES ('MASL19931106HOCRNN');
 INSERT INTO CLIENTE (id_cliente, id_persona, id_jefe) VALUES

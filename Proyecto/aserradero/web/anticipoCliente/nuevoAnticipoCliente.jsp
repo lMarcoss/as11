@@ -17,7 +17,7 @@
     <head>
         <%@ include file="/TEMPLATE/head.jsp" %>
         <link rel="stylesheet" href="/aserradero/css/formulario.css">
-        <script type="text/javascript" src="/aserradero/js/fechaActual.js"></script>
+        <!--<script type="text/javascript" src="/aserradero/js/fechaActual.js"></script>-->
         <title>Nuevo</title>
     </head>
     <body>

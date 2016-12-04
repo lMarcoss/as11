@@ -54,5 +54,3 @@ SELECT
     ROUND(((MAP.num_piezas - (SELECT(C_MADERA_VENDIDA(MAP.id_madera)))) * MAC.volumen * MAC.costo_por_volumen),2) AS costo_total
 FROM MADERA_ASERRADA_PROD AS  MAP, MADERA_ASERRADA_CLASIF AS MAC
 WHERE MAP.id_madera = MAC.id_madera;
-
-SELECT * FROM INVENTARIO_MADERA_ASERRADA ;

@@ -63,35 +63,6 @@ public class CuentaPorPagarController extends HttpServlet {
             case "listar_proveedores":
                 listarCuentaPorPagares(request, response,"proveedor","Lista cuenta por pagar");
                 break;
-            case "modificar":
-                cuentaPorPagarEC = new CuentaPorPagar();
-                cuentaPorPagarEC.setId_persona(request.getParameter("id_cliente"));
-                cuentaPorPagarCRUD = new CuentaPorPagarCRUD();
-                try {
-                    cuentaPorPagar = (CuentaPorPagar) cuentaPorPagarCRUD.modificar(cuentaPorPagarEC);
-                    request.setAttribute("cuentaPorPagar",cuentaPorPagar);
-                    request.setAttribute("tabla",tabla);
-                    RequestDispatcher view = request.getRequestDispatcher("cuentaPorPagar/actualizarCuentaPorPagar.jsp");
-                    view.forward(request,response);
-                } catch (Exception ex) {
-                    listarCuentaPorPagares(request, response,tabla,"error_modificar");
-                    System.out.println(ex);
-                    Logger.getLogger(CuentaPorPagarController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "eliminar":
-                cuentaPorPagarEC = new CuentaPorPagar();
-                cuentaPorPagarEC.setId_persona(request.getParameter("id_cliente"));
-                cuentaPorPagarCRUD = new CuentaPorPagarCRUD();
-                try {
-                    cuentaPorPagarCRUD.eliminar(cuentaPorPagarEC);
-                    listarCuentaPorPagares(request, response,tabla,"eliminado");
-                } catch (Exception ex) {
-                    listarCuentaPorPagares(request, response,tabla,"error_eliminar");
-                    System.out.println(ex);
-                    Logger.getLogger(CuentaPorPagarController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;                        
         }
     }
 
@@ -114,25 +85,30 @@ public class CuentaPorPagarController extends HttpServlet {
         CuentaPorPagar cuentaPorPagar;
         CuentaPorPagarCRUD cuentaPorPagarCRUD;
         switch(action){
-            case "nuevo":
-                cuentaPorPagar = extraerCuentaPorPagarForm(request);
-                cuentaPorPagarCRUD = new CuentaPorPagarCRUD();
-                try {
-                    cuentaPorPagarCRUD.registrar(cuentaPorPagar);
-                    listarCuentaPorPagares(request, response,tabla,"registrado");
-                } catch (Exception ex) {
-                    listarCuentaPorPagares(request, response,tabla,"error_registrar");
-                    System.out.println(ex);
-                    Logger.getLogger(CuentaPorPagarController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "buscar":
+            case "buscar_proveedor": // buscar cuentas por pagar a proveedores
                 List <CuentaPorPagar> cuentaPorPagares;
                 String nombre_campo = request.getParameter("nombre_campo");
                 String dato = request.getParameter("dato");
                 cuentaPorPagarCRUD = new CuentaPorPagarCRUD();
                 try {
-                    cuentaPorPagares = (List<CuentaPorPagar>) cuentaPorPagarCRUD.buscar(nombre_campo, dato);
+                    cuentaPorPagares = (List<CuentaPorPagar>) cuentaPorPagarCRUD.buscarCPProveedor(nombre_campo, dato);
+                    request.setAttribute("cuentaPorPagares",cuentaPorPagares);
+                    request.setAttribute("tabla",tabla);
+                    RequestDispatcher view = request.getRequestDispatcher("cuentaPorPagar/cuentaPorPagares.jsp");
+                    view.forward(request,response);
+                } catch (Exception ex) {
+                    listarCuentaPorPagares(request, response,tabla,"error_buscar_campo");
+                    System.out.println(ex);
+                    Logger.getLogger(CuentaPorPagarController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case "buscar_cliente": // buscar cuentas por pagar a proveedores
+//                List <CuentaPorPagar> cuentaPorPagares;
+                nombre_campo = request.getParameter("nombre_campo");
+                dato = request.getParameter("dato");
+                cuentaPorPagarCRUD = new CuentaPorPagarCRUD();
+                try {
+                    cuentaPorPagares = (List<CuentaPorPagar>) cuentaPorPagarCRUD.buscarCPCliente(nombre_campo, dato);
                     request.setAttribute("cuentaPorPagares",cuentaPorPagares);
                     request.setAttribute("tabla",tabla);
                     RequestDispatcher view = request.getRequestDispatcher("cuentaPorPagar/cuentaPorPagares.jsp");
@@ -160,9 +136,9 @@ public class CuentaPorPagarController extends HttpServlet {
         CuentaPorPagarCRUD cuentaPorPagarCrud = new CuentaPorPagarCRUD();
         try {
             if(tabla.equals("cliente")){
-                cuentaPorPagares = (List<CuentaPorPagar>)cuentaPorPagarCrud.listarClientes();
+                cuentaPorPagares = (List<CuentaPorPagar>)cuentaPorPagarCrud.listarCPCliente();
             }else if(tabla.equals("proveedor")){
-                cuentaPorPagares = (List<CuentaPorPagar>)cuentaPorPagarCrud.listarProveedores();
+                cuentaPorPagares = (List<CuentaPorPagar>)cuentaPorPagarCrud.listarCPProveedore();
             }
             //Enviamos las listas al jsp
             request.setAttribute("cuentaPorPagares",cuentaPorPagares);

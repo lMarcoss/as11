@@ -39,7 +39,7 @@
                         <div class="panel-body">
                             <form action="/aserradero/ProveedorController?action=nuevo" method="post" id="formregistro">
                                 <div class="form-group">
-                                    <label class="control-label">Id empleado:</label>
+                                    <label class="control-label">Persona:</label>
                                     <select class="form-control" name="id_persona" required="" title="Si no existe la persona que busca, primero agreguelo en la lista de personas">
                                         <option></option>
                                         <%

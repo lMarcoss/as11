@@ -69,13 +69,16 @@ BEGIN
 	DECLARE num_piezasOLD	INT;
 	DECLARE volumenOLD 		DECIMAL(15,3);
 	DECLARE montoOLD		DECIMAL(15,2);
+    
     -- capturamos los valores antiguos
 	SET id_maderaOLD = OLD.id_madera;
 	SET num_piezasOLD = OLD.num_piezas;
 	SET volumenOLD = OLD.volumen;
 	SET montoOLD = OLD.monto;
-     -- Modificamos inventarioMaderaProduccion
+    
+    -- Modificamos inventarioMaderaProduccion
 	CALL MOFICAR_INVENTARIO_MADERA_PROD(id_maderaOLD,num_piezasOLD);
+    
     -- modificamos cuentas por cobrar, por pagar o cuenta efectiva dependiendo del tipo de pago
     CALL REVERTIR_PAGO(id_ventaOLD,montoOLD,NEW.monto);
 END;//
