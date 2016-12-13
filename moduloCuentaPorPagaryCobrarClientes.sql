@@ -104,3 +104,6 @@ SELECT
     id_jefe,
     ABS(monto) AS monto
 FROM CUENTAS_PROVEEDOR WHERE monto > 0;
+
+SELECT * from MONTO_TOTAL_ANTICIPO;
+

@@ -5,7 +5,6 @@ import dao.PersonaCRUD;
 import entidades.Administrador;
 import entidades.Persona;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
@@ -34,7 +33,38 @@ public class AdministradorController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
+
+        //Acción a realizar
+        String action = request.getParameter("action");
+        switch (action) {
+            /**
+             * *************** Respuestas a métodos POST *********************
+             */
+            case "insertar":
+                registrarAdministrador(request, response, action);
+                break;
+            case "actualizar":
+                actualizarAdministrador(request, response, action);
+                break;
+            case "buscar":
+                buscarAdministrador(request, response, action);
+                break;
+            /**
+             * *************** Respuestas a métodos GET *********************
+             */
+            case "nuevo":
+                prepararNuevoAdministrador(request, response);
+                break;
+            case "listar":
+                listarAdministrador(request, response, action);
+                break;
+            case "modificar":
+                modificarAdministrador(request, response);
+                break;
+            case "eliminar":
+                eliminarAdministrador(request, response);
+                break;
         }
     }
 
@@ -50,63 +80,7 @@ public class AdministradorController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
-        //Llegan url
-        String action = request.getParameter("action");
-        Administrador administradorEC; //Enviar al CRUD
-        Administrador administrador; //Respuesta del CRUD
-        AdministradorCRUD administradorCRUD;
-        switch(action){
-            case "nuevo":
-                try {
-                    PersonaCRUD personaCRUD = new PersonaCRUD();
-                    List<Persona> personas;
-                    personas = (List<Persona>) personaCRUD.listar();
-                    request.setAttribute("personas",personas);
-                    
-                    RequestDispatcher view = request.getRequestDispatcher("administrador/nuevoAdministrador.jsp");
-                    view.forward(request,response);
-                } catch (Exception ex) {
-                    listarAdministradores(request, response, "error_nuevo");
-                    System.out.println(ex);
-                    Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "listar":
-                listarAdministradores(request, response,"Lista Administradores");
-                break;
-            case "modificar":
-                administradorEC = new Administrador();
-                administradorEC.setId_administrador(request.getParameter("id_administrador"));
-                administradorCRUD = new AdministradorCRUD();
-                try {
-                    administrador = (Administrador) administradorCRUD.modificar(administradorEC);
-                    request.setAttribute("administrador",administrador);
-                    RequestDispatcher view = request.getRequestDispatcher("administrador/actualizarAdministrador.jsp");
-                    view.forward(request,response);
-                } catch (Exception ex) {
-                    listarAdministradores(request, response,"error_modificar");
-                    System.out.println(ex);
-                    Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "eliminar":
-                administradorEC = new Administrador();
-                administradorEC.setId_administrador(request.getParameter("id_administrador"));
-                
-                administradorCRUD = new AdministradorCRUD();
-                try {
-                    administradorCRUD.eliminar(administradorEC);
-                    //enviar mensaje -> eliminado
-                    response.sendRedirect("/aserradero/AdministradorController?action=listar");
-                } catch (Exception ex) {
-                    listarAdministradores(request, response,"error_eliminar");
-                    System.out.println(ex);
-                    Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -120,56 +94,7 @@ public class AdministradorController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
-        
-        String action = request.getParameter("action");
-        Administrador administrador;
-        AdministradorCRUD administradorCRUD;
-        switch(action){
-            case "nuevo":
-                administrador = extraerAdministradorForm(request);
-                administradorCRUD = new AdministradorCRUD();
-                try {
-                    administradorCRUD.registrar(administrador);
-                    //enviar mensaje -> registrado
-                    response.sendRedirect("/aserradero/AdministradorController?action=listar");
-                } catch (Exception ex) {
-                    listarAdministradores(request, response, "error_registrar");
-                    System.out.println(ex);
-                    Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "actualizar":
-                administrador = extraerAdministradorForm(request);
-                administradorCRUD = new AdministradorCRUD();
-                try {
-                    administradorCRUD.actualizar(administrador);
-                    //enviar mensaje -> actualizado
-                    response.sendRedirect("/aserradero/AdministradorController?action=listar");
-                } catch (Exception ex) {
-                    listarAdministradores(request, response,"error_actualizar");
-                    System.out.println(ex);
-                    Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "buscar":
-                List <Administrador> administradores;
-                String nombre_campo = request.getParameter("nombre_campo");
-                String dato = request.getParameter("dato");
-                administradorCRUD = new AdministradorCRUD();
-                try {
-                    administradores = (List<Administrador>) administradorCRUD.buscar(nombre_campo, dato);
-                    request.setAttribute("administradores",administradores);
-                    RequestDispatcher view = request.getRequestDispatcher("administrador/administradores.jsp");
-                    view.forward(request,response);
-                } catch (Exception ex) {
-                    listarAdministradores(request, response,"error_buscar_campo");
-                    System.out.println(ex);
-                    Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -181,29 +106,132 @@ public class AdministradorController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-    private void listarAdministradores(HttpServletRequest request, HttpServletResponse response,String mensaje) {
-        List<Administrador> administradores;
-        AdministradorCRUD administradorCrud = new AdministradorCRUD();
-        try {
-            administradores = (List<Administrador>) administradorCrud.listar();
-            //Enviamos las listas al jsp
-            request.setAttribute("administradores",administradores);
-            //Enviamos mensaje
-            request.setAttribute("mensaje", mensaje);
-            RequestDispatcher view = request.getRequestDispatcher("administrador/administradores.jsp");
-            view.forward(request,response);
-        } catch (Exception ex) {
-            System.out.println(ex);
-            Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
+
+
     // Extraer datos del formulario
     private Administrador extraerAdministradorForm(HttpServletRequest request) {
         Administrador administrador = new Administrador();
         administrador.setId_administrador(request.getParameter("id_administrador"));
         administrador.setCuenta_inicial(BigDecimal.valueOf((Double.valueOf(request.getParameter("cuenta_inicial")))));
         return administrador;
+    }
+
+    private void registrarAdministrador(HttpServletRequest request, HttpServletResponse response, String action) {
+        Administrador administrador = extraerAdministradorForm(request);
+        AdministradorCRUD administradorCRUD = new AdministradorCRUD();
+        try {
+            administradorCRUD.registrar(administrador);
+            //enviar mensaje -> registrado
+            response.sendRedirect("/aserradero/AdministradorController?action=listar");
+        } catch (Exception ex) {
+            listarAdministrador(request, response, "error_registrar");
+            System.out.println(ex);
+            Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void actualizarAdministrador(HttpServletRequest request, HttpServletResponse response, String action) {
+        Administrador administrador = extraerAdministradorForm(request);
+        AdministradorCRUD administradorCRUD = new AdministradorCRUD();
+        try {
+            administradorCRUD.actualizar(administrador);
+            //enviar mensaje -> actualizado
+            response.sendRedirect("/aserradero/AdministradorController?action=listar");
+        } catch (Exception ex) {
+            listarAdministrador(request, response, "error_actualizar");
+            System.out.println(ex);
+            Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void buscarAdministrador(HttpServletRequest request, HttpServletResponse response, String action) {
+        try {
+            List<Administrador> administradores;
+            String nombre_campo = request.getParameter("nombre_campo");
+            String dato = request.getParameter("dato");
+            AdministradorCRUD administradorCRUD = new AdministradorCRUD();
+            administradores = (List<Administrador>) administradorCRUD.buscar(nombre_campo, dato);
+            mostrarListaAdministrador(request, response, administradores, action);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void mostrarListaAdministrador(HttpServletRequest request, HttpServletResponse response, List<Administrador> listaAdministrador, String action) {
+        request.setAttribute("mensaje", action);
+        request.setAttribute("listaAdministrador", listaAdministrador);
+        RequestDispatcher view = request.getRequestDispatcher("administrador/listarAdministrador.jsp");
+        try {
+            view.forward(request, response);
+        } catch (ServletException | IOException ex) {
+            System.err.println("No se pudo mostrar la listaAdministrador");
+            Logger.getLogger(PagoCompraController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void prepararNuevoAdministrador(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            PersonaCRUD personaCRUD = new PersonaCRUD();
+            List<Persona> personas;
+            personas = (List<Persona>) personaCRUD.listar();
+            request.setAttribute("personas", personas);
+
+            RequestDispatcher view = request.getRequestDispatcher("administrador/nuevoAdministrador.jsp");
+            view.forward(request, response);
+        } catch (Exception ex) {
+            listarAdministrador(request, response, "error_nuevo");
+            System.out.println(ex);
+            Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void listarAdministrador(HttpServletRequest request, HttpServletResponse response, String action) {
+        List<Administrador> administradores;
+        AdministradorCRUD administradorCrud = new AdministradorCRUD();
+        try {
+            administradores = (List<Administrador>) administradorCrud.listar();
+            //Enviamos las listas al jsp
+            request.setAttribute("administradores", administradores);
+            //Enviamos mensaje
+            request.setAttribute("mensaje", action);
+            RequestDispatcher view = request.getRequestDispatcher("administrador/administradores.jsp");
+            view.forward(request, response);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void modificarAdministrador(HttpServletRequest request, HttpServletResponse response) {
+        Administrador administradorEC = new Administrador();
+        administradorEC.setId_administrador(request.getParameter("id_administrador"));
+        AdministradorCRUD administradorCRUD = new AdministradorCRUD();
+        try {
+            Administrador administrador = (Administrador) administradorCRUD.modificar(administradorEC);
+            request.setAttribute("administrador", administrador);
+            RequestDispatcher view = request.getRequestDispatcher("administrador/actualizarAdministrador.jsp");
+            view.forward(request, response);
+        } catch (Exception ex) {
+            listarAdministrador(request, response, "error_modificar");
+            System.out.println(ex);
+            Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void eliminarAdministrador(HttpServletRequest request, HttpServletResponse response) {
+        Administrador administradorEliminar = new Administrador();
+        administradorEliminar.setId_administrador(request.getParameter("id_administrador"));
+
+        AdministradorCRUD administradorCRUD = new AdministradorCRUD();
+        try {
+            administradorCRUD.eliminar(administradorEliminar);
+            //enviar mensaje -> eliminado
+            response.sendRedirect("/aserradero/AdministradorController?action=listar");
+        } catch (Exception ex) {
+            listarAdministrador(request, response, "error_eliminar");
+            System.out.println(ex);
+            Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

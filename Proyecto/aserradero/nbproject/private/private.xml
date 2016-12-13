@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/lmarcoss/workspaceNetbeans/aserradero/Proyecto/aserradero/web/pagoCompra/nuevoPagoCompra.jsp</file>
-            <file>file:/home/lmarcoss/workspaceNetbeans/aserradero/Proyecto/aserradero/web/pagoCompra/actualizarPagoCompra.jsp</file>
             <file>file:/home/lmarcoss/workspaceNetbeans/aserradero/Proyecto/aserradero/src/java/controlador/PagoCompraController.java</file>
-            <file>file:/home/lmarcoss/workspaceNetbeans/aserradero/Proyecto/aserradero/web/js/selectorMontoPorPagar.js</file>
-            <file>file:/home/lmarcoss/workspaceNetbeans/aserradero/Proyecto/aserradero/src/java/dao/PagoCompraCRUD.java</file>
+            <file>file:/home/lmarcoss/workspaceNetbeans/aserradero/Proyecto/aserradero/src/java/dao/Conexion.java</file>
+            <file>file:/home/lmarcoss/workspaceNetbeans/aserradero/Proyecto/aserradero/web/administrador/nuevoAdministrador.jsp</file>
+            <file>file:/home/lmarcoss/workspaceNetbeans/aserradero/Proyecto/aserradero/src/java/controlador/AdministradorController.java</file>
+            <file>file:/home/lmarcoss/workspaceNetbeans/aserradero/Proyecto/aserradero/web/TEMPLATE/menu.jsp</file>
         </group>
     </open-files>
 </project-private>

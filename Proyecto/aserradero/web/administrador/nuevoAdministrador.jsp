@@ -23,7 +23,7 @@
         
         <!-- ******************* Formulario de registro-->
         <div>
-            <form action="/aserradero/AdministradorController?action=nuevo" method="post" id="formregistro">
+            <form action="/aserradero/AdministradorController?action=insertar" method="post" id="formregistro">
                 <h3>Agregar nuevo administrador</h3>
                 <fieldset id="user-details">
                     <table>
