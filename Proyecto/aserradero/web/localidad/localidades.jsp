@@ -70,7 +70,7 @@
                                             +"<td>"+(i+1)+"</td>"
                                             +"<td>"+localidad.getNombre_localidad()+"</td>"
                                             +"<td><a href=\"/aserradero/MunicipioController?action=buscar_municipio&nombre_municipio="+localidad.getNombre_municipio()+"\">"+localidad.getNombre_municipio()+"</a></td>"
-                                            +"<td>"+localidad.getTelefono()+"</td>"
+                                            +"<td>"+localidad.getTelefono_localidad()+"</td>"
                                             +"<td><a class=\"btn btn-warning\" href=\"/aserradero/LocalidadController?action=modificar&nombre_localidad="+localidad.getNombre_localidad()+"\">Actualizar</a></td>"
                                             + "<td><a class=\"btn btn-danger\" href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/LocalidadController?action=eliminar&nombre_localidad="+localidad.getNombre_localidad()+"';};\">Eliminar</a></td>"
                                         + "</tr>" );

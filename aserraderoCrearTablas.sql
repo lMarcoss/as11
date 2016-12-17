@@ -30,24 +30,34 @@ CREATE TABLE PERSONA(
 	primary key(id_persona),
 	FOREIGN KEY (localidad) REFERENCES LOCALIDAD (nombre_localidad) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
-CREATE TABLE ADMINISTRADOR(
-	id_administrador	VARCHAR(18) NOT NULL,
-    cuenta_inicial 		DECIMAL(15,2),
-	PRIMARY KEY (id_administrador),
-	FOREIGN KEY (id_administrador) REFERENCES PERSONA (id_persona) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+
     
+-- CREATE TABLE EMPLEADO(
+-- 	id_empleado 	VARCHAR(26) NOT NULL,
+--     id_persona		CHAR(18) NOT NULL,
+--     id_jefe 		VARCHAR(18) NOT NULL,
+-- 	roll			ENUM('Administrador','Empleado','Vendedor','Chofer'),	
+-- 	estatus			ENUM('Activo','Inactivo'),
+-- 	PRIMARY KEY (id_empleado,id_jefe,roll),
+-- 	FOREIGN KEY (id_persona) REFERENCES PERSONA (id_persona) ON DELETE CASCADE ON UPDATE CASCADE,
+--     FOREIGN KEY (id_jefe) REFERENCES ADMINISTRADOR (id_administrador) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+
 CREATE TABLE EMPLEADO(
 	id_empleado 	VARCHAR(26) NOT NULL,
     id_persona		CHAR(18) NOT NULL,
-    id_jefe 		VARCHAR(18) NOT NULL,
-	roll			ENUM('Administrador','Empleado','Vendedor','Chofer'),	
+    id_jefe 		VARCHAR(26) NOT NULL,
+	rol				ENUM('Administrador','Empleado','Vendedor','Chofer'),	
 	estatus			ENUM('Activo','Inactivo'),
-	PRIMARY KEY (id_empleado,id_jefe,roll),
+	PRIMARY KEY (id_empleado,id_jefe,rol),
 	FOREIGN KEY (id_persona) REFERENCES PERSONA (id_persona) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (id_jefe) REFERENCES ADMINISTRADOR (id_administrador) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
-
+    FOREIGN KEY (id_jefe) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
  -- CREATE TABLE EMPLEADO_JEFE(id_empleado 	VARCHAR(18) NOT NULL,id_jefe			VARCHAR(18) NOT NULL,PRIMARY KEY (id_empleado,id_jefe),FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE,	FOREIGN KEY (id_jefe) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
+CREATE TABLE ADMINISTRADOR(
+	id_administrador	VARCHAR(26) NOT NULL,
+    cuenta_inicial 		DECIMAL(15,2),
+	PRIMARY KEY (id_administrador),
+	FOREIGN KEY (id_administrador) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
 CREATE	TABLE PAGO_EMPLEADO(
 	id_pago_empleado INT NOT NULL AUTO_INCREMENT,
@@ -63,7 +73,7 @@ CREATE TABLE USUARIO(
 	nombre_usuario 		VARCHAR(30),
     contrasenia			varchar(50) NOT NULL,
 	metodo 				ENUM('sha1'), -- metodo para encriptar contraseña
-    email			VARCHAR(50),
+    email				VARCHAR(50),
     PRIMARY KEY(nombre_usuario),
     FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
@@ -73,13 +83,17 @@ CREATE TABLE PROVEEDOR(
 	id_persona 		VARCHAR(18) NOT NULL,
 	id_jefe			VARCHAR(18) NOT NULL,
 	PRIMARY KEY (id_proveedor,id_jefe),
-	FOREIGN KEY (id_persona) REFERENCES PERSONA (id_persona) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (id_persona) REFERENCES PERSONA (id_persona),
 	FOREIGN KEY (id_jefe) REFERENCES ADMINISTRADOR (id_administrador) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
 CREATE TABLE COSTO_MADERA_ENTRADA(
-	clasificacion	ENUM('Primario','Secundario','Terciario') NOT NULL,
-	costo 			DECIMAL(8,2),
-	PRIMARY KEY (clasificacion))ENGINE=InnoDB;
+	id_administrador 	VARCHAR(18) NOT NULL,
+    id_empleado			VARCHAR(26) NOT NULL,
+	clasificacion		ENUM('Primario','Secundario','Terciario') NOT NULL,
+	costo 				DECIMAL(8,2),
+	PRIMARY KEY (id_administrador,clasificacion),
+    FOREIGN KEY (id_administrador) REFERENCES ADMINISTRADOR (id_administrador) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 CREATE TABLE ENTRADA_MADERA_ROLLO( -- entrada_madera	
 	id_entrada	 		INT NOT NULL AUTO_INCREMENT,
@@ -96,9 +110,9 @@ CREATE TABLE ENTRADA_MADERA_ROLLO( -- entrada_madera
     costo_terciario		DECIMAL(15,2),	-- cantidad de volumen primaria
     id_pago				INT(9) default 0, -- 0 para entradas no pagadas: Se le asigna: insertar un pago cada que se inserta entrada madera, con el campo Pago = "Pagado", "Sin pagar"
 	PRIMARY KEY (id_entrada),
-    FOREIGN KEY (id_proveedor) REFERENCES PROVEEDOR (id_proveedor) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (id_chofer) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+    FOREIGN KEY (id_proveedor) REFERENCES PROVEEDOR (id_proveedor),
+    FOREIGN KEY (id_chofer) REFERENCES EMPLEADO (id_empleado),
+	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 CREATE TABLE SALIDA_MADERA_ROLLO( -- entrada_madera	
 	id_salida	 		INT NOT NULL AUTO_INCREMENT,
@@ -107,29 +121,36 @@ CREATE TABLE SALIDA_MADERA_ROLLO( -- entrada_madera
 	num_piezas			INT,
     volumen_total	DECIMAL(15,3),	-- cantidad de volumen primaria
 	PRIMARY KEY (id_salida),
-	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 -- CREATE TABLE PAGO_COMPRA(fecha		DATE,id_compra	CHAR(7) NOT NULL,monto 		DECIMAL(10,2),pago 		ENUM('Anticipado','Normal'),PRIMARY KEY (fecha,id_compra),	FOREIGN KEY (id_compra) REFERENCES COMPRA (id_compra) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
 CREATE TABLE MADERA_ASERRADA_CLASIF(
+	id_administrador 		VARCHAR(18) NOT NULL,
+	id_empleado		 		VARCHAR(26) NOT NULL,
 	id_madera				VARCHAR(20) NOT NULL,
 	grueso					DECIMAL(8,2),
 	ancho					DECIMAL(8,2),
 	largo					DECIMAL(8,2),
 	volumen					DECIMAL(15,3),
     costo_por_volumen		DECIMAL(15,2),
-	primary key(id_madera))ENGINE=InnoDB;
-    
+	primary key(id_administrador,id_madera),
+    FOREIGN KEY (id_administrador) REFERENCES ADMINISTRADOR (id_administrador) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
+
 -- producción
 CREATE TABLE ENTRADA_MADERA_ASERRADA(
-	id_entrada	INT NOT NULL AUTO_INCREMENT,
-	fecha 			DATE,
- 	id_madera    	VARCHAR(20) NOT NULL,
- 	num_piezas 		INT,
-    id_empleado 	CHAR(26) NOT NULL,
+	id_entrada			INT NOT NULL AUTO_INCREMENT,
+	fecha 				DATE,
+ 	id_madera    		VARCHAR(20) NOT NULL,
+ 	num_piezas 			INT,
+    id_empleado 		VARCHAR(26) NOT NULL,
+    id_administrador 	VARCHAR(18) NOT NULL,
  	PRIMARY KEY (id_entrada),
-    FOREIGN KEY (id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_madera),
+    FOREIGN KEY (id_administrador,id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_administrador,id_madera),    
     FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
+
+-- FOREIGN KEY (id_administrador) REFERENCES MADERA_ASERRADA_CLASIF (id_administrador)
 
 CREATE TABLE CLIENTE(
 	id_cliente 	CHAR(26) NOT NULL,
@@ -153,33 +174,35 @@ CREATE TABLE VENTA(
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 CREATE TABLE VENTA_MAYOREO(
-	id_venta 	VARCHAR(30),
-	id_madera 	VARCHAR(20),
-	num_piezas	INT,
-	volumen 	DECIMAL(8,3),
-	monto		DECIMAL(15,2),
-    tipo_madera 	ENUM('Madera','Amarre') NOT NULL,
+	id_administrador		VARCHAR(18) NOT NULL,
+	id_venta 				VARCHAR(30),
+	id_madera 				VARCHAR(20),
+	num_piezas				INT,
+	volumen 				DECIMAL(8,3),
+	monto					DECIMAL(15,2),
+    tipo_madera 			ENUM('Madera','Amarre') NOT NULL,
 	PRIMARY KEY(id_venta,id_madera),
 	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_madera))ENGINE=InnoDB;
+	FOREIGN KEY (id_administrador,id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_administrador,id_madera))ENGINE=InnoDB;
 
 CREATE TABLE VENTA_PAQUETE(
-	id_venta 		VARCHAR(30),
-	numero_paquete	INT,
-	id_madera 		VARCHAR(20),
-	num_piezas		INT,
-	volumen 		DECIMAL(15,3),
-	monto			DECIMAL(15,2),
-    tipo_madera 	ENUM('Madera','Amarre') NOT NULL,
+	id_administrador		VARCHAR(18) NOT NULL,
+	id_venta 				VARCHAR(30),
+	numero_paquete			INT,
+	id_madera 				VARCHAR(20),
+	num_piezas				INT,
+	volumen 				DECIMAL(15,3),
+	monto					DECIMAL(15,2),
+    tipo_madera 			ENUM('Madera','Amarre') NOT NULL,
 	PRIMARY KEY(id_venta,numero_paquete,id_madera),
 	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_madera))ENGINE=InnoDB;
+	FOREIGN KEY (id_administrador,id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_administrador,id_madera))ENGINE=InnoDB;
 
 CREATE TABLE VENTA_EXTRA(
-	id_venta 		VARCHAR(30),
-	tipo 			VARCHAR(50),
-	monto			DECIMAL(15,2),
-	observacion		VARCHAR(100),
+	id_venta 				VARCHAR(30),
+	tipo 					VARCHAR(50),
+	monto					DECIMAL(15,2),
+	observacion				VARCHAR(100),
 	PRIMARY KEY(id_venta,tipo),
 	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
@@ -191,7 +214,7 @@ CREATE	TABLE PAGO_RENTA(
 	monto 			DECIMAL(15,2),
 	observacion		VARCHAR(250),
 	PRIMARY KEY (id_pago_renta),
-	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 -- INICIAR id_pago_renta con 1
 -- ALTER TABLE PAGO_RENTA AUTO_INCREMENT=1;
 -- insertar dato en PAGO RENTA: NO SE INSERTA EL ID_PAGO_RENTA
@@ -257,7 +280,7 @@ CREATE TABLE PRESTAMO(
 	monto_prestamo		DECIMAL(15,2),
     interes				INT, -- porcentaje de interes (0-100)
 	PRIMARY KEY(id_prestamo, id_prestador),
-    FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON UPDATE CASCADE)ENGINE=InnoDB;
+    FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 CREATE TABLE PAGO_COMPRA(
 	id_pago				INT NOT NULL AUTO_INCREMENT,
@@ -268,157 +291,3 @@ CREATE TABLE PAGO_COMPRA(
  	PRIMARY KEY (id_pago),
     FOREIGN KEY (id_proveedor) REFERENCES PROVEEDOR (id_proveedor))ENGINE=InnoDB;
     
--- Disparador para insertar un administrador como empleado su jefe será él mismo
-DELIMITER //
-CREATE TRIGGER EMPLEADO  AFTER INSERT ON ADMINISTRADOR
-FOR EACH ROW
-BEGIN
-INSERT INTO EMPLEADO SET
-				EMPLEADO.id_empleado = (select concat (NEW.id_administrador,substring(NEW.id_administrador,1,8))),
-				EMPLEADO.id_persona = NEW.id_administrador,
-				EMPLEADO.id_jefe = NEW.id_administrador,
-				EMPLEADO.roll = 'Empleado',
-                EMPLEADO.estatus= 'Activo';
-END;//
-DELIMITER ;
-
--- Insertamos datos ficticios
-INSERT INTO MUNICIPIO (nombre_municipio, estado,telefono) VALUES 
-("Miahuatlan de porfirio diaz","Oaxaca",'9876543210'),
-("Santa Cruz Mixtepec","Oaxaca",'9876543211'),
-("Oaxaca de Juarez","Oaxaca",'9876543212'),
-('Santa Cruz Xitla', "Oaxaca",'951901872');
-
-INSERT INTO LOCALIDAD (nombre_localidad,nombre_municipio,telefono) VALUES 
-("San Mateo Mixtepec","Santa Cruz Mixtepec",'9870654321'),
-("Santa Cruz Monjas","Miahuatlan de porfirio diaz",'9870654322'),
-('Xitla', 'Santa Cruz Xitla', '4435628711');
-
-INSERT INTO PERSONA (id_persona,nombre,apellido_paterno,apellido_materno,localidad,sexo,fecha_nacimiento,telefono) VALUES 
-("MASL19931106HOCRNN","Leonardo","Marcos","Santiago","San Mateo Mixtepec","H","1993-11-06","9876543210"),
-("COXN20160915HOCRXX","Noe","Cortes","","Santa Cruz Monjas","H","2016-09-15","1234567890"),
-("MAXP20160916HOCRXD","Pedro","Martinez","","Santa Cruz Monjas","H","2016-09-16","1234567890"),
-("PAXA20160913HOCSXN","Antonio","Pascual","","Santa Cruz Monjas","H","2016-09-13","1234567890"),
-("PEXF20160910HOCRXR","Francisco","Perez","","Santa Cruz Monjas","H","2016-09-10","1234567890");
-
-INSERT INTO MADERA_ASERRADA_CLASIF (id_madera,grueso,ancho,largo,volumen,costo_por_volumen) VALUES 
-("clase12",0.75,12,8.25,6.187,15),
-("clase10",0.75,10,8.25,5.156,14),
-("clase8",0.75,8,8.25,4.125,13),
-("clase6",0.75,6,8.25,3.093,12),
-("clase4",0.75,4,8.25,2.062,11),
-
-("tercera12",0.75,12,8.25,6.187,5),
-("tercera10",0.75,10,8.25,5.156,5),
-("tercera8",0.75,8,8.25,4.125,5),
-("tercera6",0.75,6,8.25,3.093,5),
-("tercera4",0.75,4,6.25,2.062,5),
-
-("cuarta12",0.75,12,8.25,6.187,7),
-("cuarta10",0.75,10,8.25,5.156,7),
-("cuarta8",0.75,8,8.25,4.125,7),
-("cuarta6",0.75,6,8.25,3.093,7),
-("cuarta4",0.75,4,6.25,2.062,7),
-
-("quinta12",0.75,12,8.25,6.187,3),
-("quinta10",0.75,10,8.25,5.156,3),
-("quinta8",0.75,8,8.25,4.125,3),
-("quinta6",0.75,6,8.25,3.093,3),
-("quinta4",0.75,4,6.25,2.062,3);
-
--- lista de administradores
-DROP VIEW IF EXISTS PERSONAL_ADMINISTRADOR;
-CREATE VIEW PERSONAL_ADMINISTRADOR AS
-SELECT 
-		id_administrador, 
-		(SELECT concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE id_persona = id_administrador)as nombre,
-        cuenta_inicial
-FROM ADMINISTRADOR;
--- SELECT * FROM PERSONAL_ADMINISTRADOR;
-
--- lista a todo el personal Cliente id_cliente y nombre completo, id_jefe y nombre completo
-CREATE VIEW PERSONAL_CLIENTE AS
-SELECT id_cliente,
-		id_persona,
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = CLIENTE.id_persona) as cliente,
-        id_jefe,
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = id_jefe) as jefe
-	FROM CLIENTE,ADMINISTRADOR 
-	WHERE CLIENTE.id_jefe = id_administrador;
--- SELECT * FROM PERSONAL_CLIENTE;
-
--- lista a todo el personal Proveedor id_proveedor y nombre completo, id_jefe y nombre completo
-CREATE VIEW PERSONAL_PROVEEDOR AS 
-SELECT id_proveedor,
-		id_persona,
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE id_persona = PROVEEDOR.id_persona) as proveedor,
-		id_jefe,
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = id_jefe) as jefe
-	FROM PROVEEDOR,ADMINISTRADOR WHERE PROVEEDOR.id_jefe = id_administrador;
--- SELECT * FROM PERSONAL_PROVEEDOR;
-
--- lista de empleados
-CREATE VIEW PERSONAL_EMPLEADO AS
-SELECT id_empleado,
-		id_persona,
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE PERSONA.id_persona = EMPLEADO.id_persona) as empleado,
-        id_jefe,
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = id_jefe) as jefe, 
-        roll,estatus FROM EMPLEADO,ADMINISTRADOR WHERE id_jefe = id_administrador;
--- SELECT * FROM PERSONAL_EMPLEADO;
-
--- lista de vehículos con nombre completo del empleado
-CREATE VIEW VISTA_VEHICULO AS
-SELECT id_vehiculo, 
-		matricula, 
-        tipo, 
-        color, 
-        carga_admitida, 
-        motor, 
-        modelo, 
-        costo, 
-        VEHICULO.id_empleado, 
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM EMPLEADO,PERSONA where EMPLEADO.id_persona = PERSONA.id_persona and EMPLEADO.id_empleado = VEHICULO.id_empleado) as empleado, 
-        (select id_jefe FROM EMPLEADO,ADMINISTRADOR WHERE EMPLEADO.id_jefe = ADMINISTRADOR.id_administrador and EMPLEADO.id_empleado = VEHICULO.id_empleado) as id_jefe
-	FROM VEHICULO;
--- SELECT * FROM VISTA_VEHICULO;
-
--- Lista de pago a empleados
-CREATE VIEW VISTA_PAGO_EMPLEADO AS 
-SELECT id_pago_empleado,
-		fecha,
-        EMPLEADO.id_empleado AS id_empleado,
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = EMPLEADO.id_persona)as empleado,
-        EMPLEADO.id_jefe AS id_jefe,
-        monto,
-        observacion 
-FROM PAGO_EMPLEADO,EMPLEADO WHERE PAGO_EMPLEADO.id_empleado = EMPLEADO.id_empleado;
--- SELECT * FROM VISTA_PAGO_EMPLEADO;
-
-CREATE VIEW VISTA_ENTRADA_MADERA_ASERRADA AS
-SELECT 
-	id_entrada,
-    fecha,
-    id_madera,
-    num_piezas,
-    id_empleado,
-    (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) from PERSONA where id_persona = SUBSTRING(ENTRADA_MADERA_ASERRADA.id_empleado,1,18)) as empleado,
-    (select id_jefe from EMPLEADO where id_empleado = ENTRADA_MADERA_ASERRADA.id_empleado) as id_jefe
-FROM ENTRADA_MADERA_ASERRADA;
-
-
-CREATE VIEW VISTA_ANTICIPO_CLIENTE AS 
-SELECT id_anticipo_c,
-		fecha,
-        id_cliente,
-        (SELECT concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(ANTICIPO_CLIENTE.id_cliente,1,18)) as cliente,
-        id_empleado,
-        (SELECT concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(ANTICIPO_CLIENTE.id_empleado,1,18)) as empleado,
-        (SELECT id_jefe FROM EMPLEADO WHERE id_empleado = ANTICIPO_CLIENTE.id_empleado) as id_jefe,
-        monto_anticipo
-FROM ANTICIPO_CLIENTE;
-
-INSERT INTO ADMINISTRADOR (id_administrador) VALUES ('MASL19931106HOCRNN');
-INSERT INTO CLIENTE (id_cliente, id_persona, id_jefe) VALUES
-('COXN20160915HOCRXXMASL1993', 'COXN20160915HOCRXX', 'MASL19931106HOCRNN'),
-('MAXP20160916HOCRXDMASL1993', 'MAXP20160916HOCRXD', 'MASL19931106HOCRNN');

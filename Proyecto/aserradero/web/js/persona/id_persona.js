@@ -13,18 +13,20 @@ function crearIdPersona(){
     //leer apeellido materno eliminar espacios y convertir a mayúsculas 
     var materno = document.getElementById('apellido_materno').value.toUpperCase();
     materno = eliminarSufijos(materno);
-        
-    var letra_materno = materno.charAt(0);
-    if(letra_materno.equals("") ){
+    
+    var letra_materno;
+    if(materno.length > 0){
+        letra_materno = materno.charAt(0);
+    }else{
         letra_materno = "X";
     }
-
+    
     //Obtener letra nombre
     var nombre = document.getElementById('nombre').value.toUpperCase();
     nombre = eliminarPrimerNombre(nombre);
         
     var letra_nombre = nombre.charAt(0);
-    
+    alert('Hola 3');
     // Obtener fecha de nacimiento:se utilizará los 4 digitos de año
     var fecha = document.getElementById("fecha_nacimiento").value;
     fecha = obtenerFechaNacimiento(fecha);
@@ -38,7 +40,7 @@ function crearIdPersona(){
         
     //Obtener consonante interna no inicial del apellido paterno
     var consonante_paterno = obtenerConsonanteInterna(paterno);
-    if(consonante_paterno == ""){
+    if(consonante_paterno.length < 1){
         consonante_paterno = "X";
     }
     
@@ -47,13 +49,13 @@ function crearIdPersona(){
     if(materno.length>0){
         consonante_materno = obtenerConsonanteInterna(materno);
     }
-    if(consonante_materno == "" | materno.length == 0 ){
+    if(consonante_materno.length < 1 | materno.length < 1 ){
         consonante_materno = "X";
     }   
     
     //Consonante no inicial del nombre
     var consonante_nombre = obtenerConsonanteInterna(nombre);
-    if(consonante_nombre == ""){
+    if(consonante_nombre.length <1){
         consonante_nombre = "X";
     }
     //concatenar resultados
@@ -64,7 +66,7 @@ function crearIdPersona(){
 }
 
 function eliminarEspaciosPrincipio(cadena){
-    while(cadena.charAt(0) == " "){
+    while(cadena.charAt(0).length < 1){
         cadena = cadena.substr(1, cadena.length - 1);
     }
     return cadena;

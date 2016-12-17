@@ -21,7 +21,7 @@
     }else if( nombre_usuario != null){
 %>
 <!DOCTYPE html>
-<html> 
+<html>
     <head>
         <%@ include file="/TEMPLATE/head.jsp" %>
         <title>Inicio</title>
@@ -29,7 +29,11 @@
     <body>
         <!--menu-->
         <%@ include file="/TEMPLATE/menu.jsp" %>
-        
+        <%
+            String nombre = (String)sesion.getAttribute("nombre_usuario");
+            out.print("Nombre: " +nombre);
+            out.print("Nombre: " +nombre);
+        %>
     </body>
 </html>
 

@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,7 +38,11 @@ public class PagoPrestamoController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
-
+        
+        // Sesiones
+        HttpSession sesion = request.getSession(false);
+        String nombre_usuario = (String)sesion.getAttribute("nombre_usuario");
+        System.out.println("usuario: " + nombre_usuario);
         //Acción a realizar
         String action = request.getParameter("action");
         switch (action) {

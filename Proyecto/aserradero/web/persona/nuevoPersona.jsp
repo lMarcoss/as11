@@ -14,7 +14,8 @@
 <html>
     <head>
         <%@ include file="/TEMPLATE/head.jsp"%>
-        <script src="/aserradero/js/id_persona.js"></script>
+        <script src="/aserradero/js/persona/id_persona.js"></script>
+        <script src="/aserradero/js/persona/selector_estadoPersona.js"></script>
         <title>Nuevo</title>
         <script>
             $(document).ready(function ($){
@@ -66,7 +67,7 @@
                                 <div class="lado_izquierdo"><!-- Grupo Izquierdo -->
                                     <div class="form-group">
                                         <label class="control-label">Localidad:</label>
-                                        <select class="form-control" name="localidad" required="">
+                                        <select class="form-control" name="localidad" id="localidad" required="" onblur="seleccionarEstadoLocalidad()">
                                             <option></option>
                                             <%
                                                 for (Localidad localidad : localidades) {
@@ -79,38 +80,11 @@
                                         <label class="control-label">Estado:</label>
                                         <select class="form-control" name="estado" id="estado" required="">
                                             <option></option>
-                                            <option value="AGUASCALIENTES">AGUASCALIENTES</option>
-                                            <option value="BAJA CALIFORNIA">BAJA CALIFORNIA</option>
-                                            <option value="BAJA CALIFORNIA SUR">BAJA CALIFORNIA SUR</option>
-                                            <option value="CAMPECHE">CAMPECHE</option>
-                                            <option value="COAHUILA DE ZARAGOZA">COAHUILA</option>
-                                            <option value="COLIMA">COLIMA</option>
-                                            <option value="CHIAPAS">CHIAPAS</option>
-                                            <option value="CHIHUAHUA">CHIHUAHUA</option>
-                                            <option value="DISTRITO FEDERAL">DISTRITO FEDERAL</option>
-                                            <option value="DURANGO">DURANGO</option>
-                                            <option value="GUANAJUATO">GUANAJUATO</option>
-                                            <option value="GUERRERO">GUERRERO</option>
-                                            <option value="HIDALGO">HIDALGO</option>
-                                            <option value="JALISCO">JALISCO</option>
-                                            <option value="MÉXICO">MÉXICO</option>
-                                            <option value="MICHOACÁN DE OCAMPO">MICHOACÁN</option>
-                                            <option value="MORELOS">MORELOS</option>
-                                            <option value="NAYARIT">NAYARIT</option>
-                                            <option value="NUEVO LEÓN">NUEVO LEÓN</option>
-                                            <option value="OAXACA">OAXACA</option>
-                                            <option value="PUEBLA">PUEBLA</option>
-                                            <option value="QUERÉTARO">QUERÉTARO</option>
-                                            <option value="QUINTANA ROO">QUINTANA ROO</option>
-                                            <option value="SAN LUIS POTOSÍ">SAN LUIS POTOSÍ</option>
-                                            <option value="SINALOA">SINALOA</option>
-                                            <option value="SONORA">SONORA</option>
-                                            <option value="TABASCO">TABASCO</option>
-                                            <option value="TAMAULIPAS">TAMAULIPAS</option>
-                                            <option value="TLAXCALA">TLAXCALA</option>
-                                            <option value="VERACRUZ DE IGNACIO DE LA LLAVE">VERACRUZ</option>
-                                            <option value="YUCATÁN">YUCATÁN</option>
-                                            <option value="ZACATECAS">ZACATECAS</option>
+                                            <%
+                                                for (Localidad localidad : localidades) {
+                                                    out.print("<option value='"+localidad.getEstado()+"'>"+localidad.getEstado()+"</option>");
+                                                }
+                                            %>
                                         </select>
                                     </div>
                                     <div class="form-group">

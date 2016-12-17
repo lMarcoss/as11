@@ -8,15 +8,17 @@ public class Localidad {
     
     public String nombre_localidad;
     public String nombre_municipio;
-    public String telefono;
+    public String telefono_localidad;
+    public String estado;
 
     public Localidad() {
     }
 
-    public Localidad(String nombre_localidad, String nombre_municipio, String telefono) {
+    public Localidad(String nombre_localidad, String nombre_municipio, String telefono_localidad, String estado) {
         this.nombre_localidad = nombre_localidad;
         this.nombre_municipio = nombre_municipio;
-        this.telefono = telefono;
+        this.telefono_localidad = telefono_localidad;
+        this.estado = estado;
     }
 
     public void setNombre_localidad(String nombre_localidad) {
@@ -27,8 +29,12 @@ public class Localidad {
         this.nombre_municipio = nombre_municipio;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setTelefono_localidad(String telefono_localidad) {
+        this.telefono_localidad = telefono_localidad;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public String getNombre_localidad() {
@@ -39,8 +45,12 @@ public class Localidad {
         return nombre_municipio;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getTelefono_localidad() {
+        return telefono_localidad;
+    }
+
+    public String getEstado() {
+        return estado;
     }
     
 }

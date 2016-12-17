@@ -130,15 +130,17 @@ public class UsuarioCRUD extends Conexion{
         Usuario user = null;
         try{
             this.abrirConexion();
-            PreparedStatement st= this.conexion.prepareStatement("select * from USUARIO where nombre_usuario = ? and contrasenia = (select SHA1(?))");
-            st.setString(1,nombre_usuario);
-            st.setString(2,contrasenia);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {                
-                user = extraerUsuario(rs);
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT  * FROM USUARIO WHERE nombre_usuario = ? AND contrasenia = (SELECT SHA1(?))")) {
+                st.setString(1,nombre_usuario);
+                st.setString(2,contrasenia);
+                try (ResultSet rs = st.executeQuery()) {
+                    while (rs.next()) {
+                        user = extraerUsuario(rs);
+                    }
+                }catch(Exception e){
+                    System.out.println(e);
+                }
             }
-            rs.close();
-            st.close();
         }catch(Exception e){
             System.out.println(e);
             throw e;
