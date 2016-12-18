@@ -4,11 +4,11 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.Cliente"%>
+<%@page import="entidades.registros.Cliente"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    List <Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
+    List <Cliente> clientes = (List<Cliente>) request.getAttribute("listaClientes");
     String mensaje = (String)request.getAttribute("mensaje");
 %>
 <!DOCTYPE html>
@@ -42,8 +42,7 @@
                         <div class="form-group form-busc" ><!-- Formulario para realizar búsquedas en la base de datos -->
                             <form method="POST" action="/aserradero/ClienteController?action=buscar">
                                 <select name="nombre_campo" class="input-busc">
-                                    <option value="id_cliente">Id cliente</option>
-                                    <option value="id_jefe">Id jefe</option>
+                                    <option value="cliente">Cliente</option>
                                 </select>
                                 <input type="text" name="dato" placeholder="Escriba su búsqueda" class="input-busc">
                                 <input type="submit" value="Buscar" class="btn btn-success">
@@ -53,8 +52,8 @@
                             <thead>
                                 <tr>
                                   <th>N°</th>
-                                  <th>Id Cliente</th>
-                                  <th>Id jefe</th>
+                                  <th>Cliente</th>
+                                  <th>Jefe</th>
                                   <th></th>
                                 </tr>
                             </thead>
@@ -64,9 +63,9 @@
                                 for (Cliente cliente : clientes) {
                                     out.print("<tr>"
                                         +"<td>"+(i+1)+"</td>"
-                                        +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+cliente.getId_cliente()+"\">"+cliente.getId_cliente()+"</a></td>"
-                                        +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+cliente.getId_jefe()+"\">"+cliente.getId_jefe()+"</a></td>"
-                                        + "<td><a class=\"btn btn-danger\" href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/ClienteController?action=eliminar&id_cliente="+cliente.getId_cliente()+"&id_jefe="+cliente.getId_jefe()+"';};\">Eliminar</a></td>"
+                                        +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+cliente.getId_cliente()+"\">"+cliente.getCliente()+"</a></td>"
+                                        +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+cliente.getId_jefe()+"\">"+cliente.getJefe()+"</a></td>"
+                                        + "<td><a class=\"btn btn-danger\" href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/ClienteController?action=eliminar&id_cliente="+cliente.getId_cliente()+"';};\">Eliminar</a></td>"
                                     + "</tr>" );
                                     i++;
                                 }

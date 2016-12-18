@@ -4,8 +4,7 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.Administrador"%>
-<%@page import="entidades.Persona"%>
+<%@page import="entidades.registros.Persona"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -37,7 +36,7 @@
                             <h3 class="panel-title">Rellene los campos de manera correcta</h3>
                         </div>
                         <div class="panel-body">
-                            <form action="/aserradero/ClienteController?action=nuevo" method="post" id="formregistro">
+                            <form action="/aserradero/ClienteController?action=insertar" method="post" id="formregistro">
                                 <div class="form-group">
                                     <label class="control-label">Cliente:</label>
                                     <select class="form-control" name="id_persona" required="" title="Si no existe la persona que busca, primero agreguelo en la lista de personas">
@@ -45,19 +44,7 @@
                                         <%
                                             List <Persona> personas = (List<Persona>) request.getAttribute("personas");
                                             for (Persona persona : personas) {
-                                                out.print("<option value='"+persona.getId_persona()+"'>"+persona.getNombre()+" "+persona.getApellido_paterno()+" "+persona.getApellido_materno()+"</option>");
-                                            }
-                                        %>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">Jefe:</label>
-                                    <select class="form-control" name="id_jefe" required="" title="Si no existe la persona que busca, primero agreguelo en la lista de empleados jefe">
-                                        <option></option>
-                                        <%
-                                            List <Administrador> administradores = (List<Administrador>) request.getAttribute("administradores");
-                                            for (Administrador administrador : administradores) {
-                                                out.print("<option value='"+administrador.getId_administrador()+"'>"+administrador.getNombre()+"</option>");
+                                                out.print("<option value='"+persona.getId_persona()+"'>"+persona.getNombre()+"</option>");
                                             }
                                         %>
                                     </select>

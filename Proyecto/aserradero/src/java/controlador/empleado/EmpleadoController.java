@@ -1,9 +1,9 @@
 package controlador.empleado;
 
 import dao.empleado.EmpleadoCRUD;
-import dao.PersonaCRUD;
+import dao.registros.PersonaCRUD;
 import entidades.empleado.Empleado;
-import entidades.Persona;
+import entidades.registros.Persona;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;

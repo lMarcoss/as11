@@ -1,10 +1,10 @@
 package controlador;
 
-import dao.ClienteCRUD;
+import dao.registros.ClienteCRUD;
 import dao.empleado.EmpleadoCRUD;
 import dao.VentaCRUD;
 import dao.VentaExtraCRUD;
-import entidades.Cliente;
+import entidades.registros.Cliente;
 import entidades.empleado.Empleado;
 import entidades.Venta;
 import entidades.VentaExtra;

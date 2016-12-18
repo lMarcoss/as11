@@ -1,7 +1,7 @@
-package dao;
+package dao.registros;
 
-import calcularID.CalcularId;
-import entidades.Cliente;
+import dao.Conexion;
+import entidades.registros.Cliente;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,11 +33,12 @@ public class ClienteCRUD extends Conexion implements OperacionesCRUD{
     }
 
     @Override
-    public <T> List listar() throws Exception {
+    public <T> List listar(String id_jefe) throws Exception {
         List<Cliente> clientes;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PERSONAL_CLIENTE")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PERSONAL_CLIENTE WHERE id_jefe = ?")) {
+                st.setString(1, id_jefe);
                 clientes = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -122,8 +123,7 @@ public class ClienteCRUD extends Conexion implements OperacionesCRUD{
     @Override
     public PreparedStatement cargarObject(PreparedStatement st, Object objeto) throws SQLException {
         Cliente cliente = (Cliente) objeto;
-        CalcularId calcularId = new CalcularId();
-        st.setString(1,calcularId.CalcularId(cliente.getId_persona(),cliente.getId_jefe())); //calculamos el id con la clase CalcularId
+        st.setString(1,cliente.getId_persona()); //se cambia con el trigger de la BD
         st.setString(2,cliente.getId_persona());
         st.setString(3,cliente.getId_jefe());
         return st;

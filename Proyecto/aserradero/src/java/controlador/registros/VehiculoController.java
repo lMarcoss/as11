@@ -1,9 +1,10 @@
-package controlador;
+package controlador.registros;
 
+import controlador.PagoRentaController;
 import dao.empleado.EmpleadoCRUD;
-import dao.VehiculoCRUD;
+import dao.registros.VehiculoCRUD;
 import entidades.empleado.Empleado;
-import entidades.Vehiculo;
+import entidades.registros.Vehiculo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;

@@ -4,12 +4,12 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.Proveedor"%>
+<%@page import="entidades.registros.Proveedor"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    List <Proveedor> proveedores = (List<Proveedor>) request.getAttribute("proveedores");
-    String mensaje = (String)request.getAttribute("mensaje");
+    List<Proveedor> proveedores = (List<Proveedor>) request.getAttribute("listaProveedores");
+    String mensaje = (String) request.getAttribute("mensaje");
 %>
 <!DOCTYPE html>
 <html>
@@ -17,9 +17,9 @@
         <%@ include file="/TEMPLATE/head.jsp" %>
         <title>Proveedores</title>
         <script>
-            $(document).ready(function ($){
-                 $("#registros").css("background","#448D00");
-                 $("#proveedor").css("background","#448D00");
+            $(document).ready(function ($) {
+                $("#registros").css("background", "#448D00");
+                $("#proveedor").css("background", "#448D00");
             });
         </script>
     </head>
@@ -43,8 +43,7 @@
                             <div class="form-group form-busc" ><!-- Formulario para realizar búsquedas en la base de datos -->
                                 <form method="POST" action="/aserradero/ProveedorController?action=buscar">
                                     <select name="nombre_campo" class="input-busc">
-                                        <option value="id_proveedor">Id proveedor</option>
-                                        <option value="id_jefe">Id jefe</option>
+                                        <option value="proveedor">Proveedor</option>
                                     </select>
                                     <input type="text" name="dato" placeholder="Escriba su búsqueda" class="input-busc">
                                     <input type="submit" value="Buscar" class="btn btn-success">
@@ -53,29 +52,29 @@
                             <table id="tabla" class="display cell-border" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
-                                      <th>N°</th>
-                                       <th>Id Proveedor</th>
-                                       <th>Id jefe</th>
-                                       <th></th>
+                                        <th>N°</th>
+                                        <th>Proveedor</th>
+                                        <th>Jefe</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  <%
-                                        int i=0;
+                                    <%
+                                        int i = 0;
                                         for (Proveedor proveedor : proveedores) {
                                             out.print("<tr>"
-                                                +"<td>"+(i+1)+"</td>"
-                                                +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+proveedor.getId_proveedor()+"\">"+proveedor.getProveedor()+"</a></td>"
-                                                +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+proveedor.getId_jefe()+"\">"+proveedor.getJefe()+"</a></td>"
-                                                + "<td><a class=\"btn btn-danger\" href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/ProveedorController?action=eliminar&id_proveedor="+proveedor.getId_proveedor()+"&id_jefe="+proveedor.getId_jefe()+"';};\">Eliminar</a></td>"
-                                            + "</tr>" );
+                                                    + "<td>" + (i + 1) + "</td>"
+                                                    + "<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona=" + proveedor.getId_proveedor() + "\">" + proveedor.getProveedor() + "</a></td>"
+                                                    + "<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona=" + proveedor.getId_jefe() + "\">" + proveedor.getJefe() + "</a></td>"
+                                                    + "<td><a class=\"btn btn-danger\" href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/ProveedorController?action=eliminar&id_proveedor=" + proveedor.getId_proveedor() + "';};\">Eliminar</a></td>"
+                                                    + "</tr>");
                                             i++;
                                         }
                                     %>
                                 </tbody>
                             </table><!-- Fin de tabla -->
                             <div class="agregar_element"><!-- Botón agregar elementos -->
-                              <input class="btn btn-primary" type="button" value="Agregar proveedor" onClick=" window.location.href='/aserradero/ProveedorController?action=nuevo' ">
+                                <input class="btn btn-primary" type="button" value="Agregar proveedor" onClick=" window.location.href = '/aserradero/ProveedorController?action=nuevo'">
                             </div><!-- Fin Agregar elementos-->
                         </div>
                     </div>

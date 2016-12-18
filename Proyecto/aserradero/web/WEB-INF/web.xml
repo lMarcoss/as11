@@ -14,19 +14,19 @@
     </servlet>
     <servlet>
         <servlet-name>MunicipioController</servlet-name>
-        <servlet-class>controlador.MunicipioController</servlet-class>
+        <servlet-class>controlador.registros.MunicipioController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LocalidadController</servlet-name>
-        <servlet-class>controlador.LocalidadController</servlet-class>
+        <servlet-class>controlador.registros.LocalidadController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PersonaController</servlet-name>
-        <servlet-class>controlador.PersonaController</servlet-class>
+        <servlet-class>controlador.registros.PersonaController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ClienteController</servlet-name>
-        <servlet-class>controlador.ClienteController</servlet-class>
+        <servlet-class>controlador.registros.ClienteController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EmpleadoController</servlet-name>
@@ -50,7 +50,7 @@
     </servlet>
     <servlet>
         <servlet-name>ProveedorController</servlet-name>
-        <servlet-class>controlador.ProveedorController</servlet-class>
+        <servlet-class>controlador.registros.ProveedorController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MaderaAserradaClasifController</servlet-name>
@@ -78,7 +78,7 @@
     </servlet>
     <servlet>
         <servlet-name>VehiculoController</servlet-name>
-        <servlet-class>controlador.VehiculoController</servlet-class>
+        <servlet-class>controlador.registros.VehiculoController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CostoMaderaEntradaController</servlet-name>

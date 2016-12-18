@@ -1,4 +1,4 @@
-package entidades;
+package entidades.registros;
 
 import java.math.BigDecimal;
 

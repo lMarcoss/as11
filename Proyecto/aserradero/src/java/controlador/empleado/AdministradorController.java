@@ -2,9 +2,9 @@ package controlador.empleado;
 
 import controlador.PagoCompraController;
 import dao.empleado.AdministradorCRUD;
-import dao.PersonaCRUD;
+import dao.registros.PersonaCRUD;
 import entidades.empleado.Administrador;
-import entidades.Persona;
+import entidades.registros.Persona;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;

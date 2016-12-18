@@ -1,7 +1,5 @@
 USE aserradero;
 
--- INSERT INTO EMPLEADO VALUES('MASL19931106HOCRNN','MASL19931106HOCRNN','MASL19931106HOCRNN','Administrador','Activo');
-
 -- Disparador para crear id_jefe: para administrador
 DROP TRIGGER IF EXISTS EMPLEADO;
 DELIMITER //
@@ -63,3 +61,5 @@ SELECT id_pago_empleado,
         monto,
         observacion 
 FROM PAGO_EMPLEADO,EMPLEADO WHERE PAGO_EMPLEADO.id_empleado = EMPLEADO.id_empleado;
+
+INSERT INTO EMPLEADO VALUES('MASL19931106HOCRNN','MASL19931106HOCRNN','MASL19931106HOCRNN','Administrador','Activo');

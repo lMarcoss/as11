@@ -1,6 +1,7 @@
-package dao;
+package dao.registros;
 
-import entidades.Persona;
+import dao.Conexion;
+import entidades.registros.Persona;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,7 +37,7 @@ public class PersonaCRUD extends Conexion implements OperacionesCRUD{
         List<Persona> personas;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PERSONA")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PERSONA")) {
                 personas = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -62,7 +63,7 @@ public class PersonaCRUD extends Conexion implements OperacionesCRUD{
         Persona personaM = (Persona) objeto;
         Persona persona = null;
         this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PERSONA WHERE id_persona = ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PERSONA WHERE id_persona = ?")) {
                 st.setString(1, personaM.getId_persona());
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -78,16 +79,10 @@ public class PersonaCRUD extends Conexion implements OperacionesCRUD{
         Persona persona = (Persona) objeto;
         try{
             this.abrirConexion();
-            PreparedStatement st= this.conexion.prepareStatement("UPDATE PERSONA SET nombre = ?,apellido_paterno = ?,apellido_materno = ?,localidad = ?, direccion = ?, sexo = ?,fecha_nacimiento = ?, telefono = ? WHERE id_persona = ?");
-            st.setString(1,persona.getNombre());
-            st.setString(2,persona.getApellido_paterno());
-            st.setString(3,persona.getApellido_materno());
-            st.setString(4,persona.getLocalidad());
-            st.setString(5,persona.getDireccion());
-            st.setString(6,persona.getSexo());
-            st.setDate(7,persona.getFecha_nacimiento());
-            st.setString(8,persona.getTelefono());
-            st.setString(9,persona.getId_persona());
+            PreparedStatement st= this.conexion.prepareStatement("UPDATE PERSONA SET direccion = ?, telefono = ? WHERE id_persona = ?");
+            st.setString(1,persona.getDireccion());
+            st.setString(2,persona.getTelefono());
+            st.setString(3,persona.getId_persona());
             st.executeUpdate();
         }catch(Exception e){
             System.out.println(e);
@@ -118,7 +113,7 @@ public class PersonaCRUD extends Conexion implements OperacionesCRUD{
         List<Persona> personas;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PERSONA WHERE "+nombre_campo+" like ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PERSONA WHERE "+nombre_campo+" like ?")) {
                 st.setString(1, "%"+dato+"%");
                 personas = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
@@ -142,8 +137,6 @@ public class PersonaCRUD extends Conexion implements OperacionesCRUD{
         Persona persona = new Persona();
         persona.setId_persona(rs.getString("id_persona"));
         persona.setNombre(rs.getString("nombre"));
-        persona.setApellido_paterno(rs.getString("apellido_paterno"));
-        persona.setApellido_materno(rs.getString("apellido_materno"));
         persona.setLocalidad(rs.getString("localidad"));
         persona.setDireccion(rs.getString("direccion"));
         persona.setSexo(rs.getString("sexo"));

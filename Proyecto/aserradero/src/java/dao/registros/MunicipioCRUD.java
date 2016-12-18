@@ -1,6 +1,7 @@
-package dao;
+package dao.registros;
 
-import entidades.Municipio;
+import dao.Conexion;
+import entidades.registros.Municipio;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

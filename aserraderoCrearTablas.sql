@@ -81,13 +81,13 @@ CREATE TABLE USUARIO(
 CREATE TABLE PROVEEDOR(
 	id_proveedor 	VARCHAR(26) NOT NULL,
 	id_persona 		VARCHAR(18) NOT NULL,
-	id_jefe			VARCHAR(18) NOT NULL,
+	id_jefe			VARCHAR(26) NOT NULL,
 	PRIMARY KEY (id_proveedor,id_jefe),
 	FOREIGN KEY (id_persona) REFERENCES PERSONA (id_persona),
 	FOREIGN KEY (id_jefe) REFERENCES ADMINISTRADOR (id_administrador))ENGINE=InnoDB;
 
 CREATE TABLE COSTO_MADERA_ENTRADA(
-	id_administrador 	VARCHAR(18) NOT NULL,
+	id_administrador 	VARCHAR(26) NOT NULL,
     id_empleado			VARCHAR(26) NOT NULL,
 	clasificacion		ENUM('Primario','Secundario','Terciario') NOT NULL,
 	costo 				DECIMAL(8,2),
@@ -126,7 +126,7 @@ CREATE TABLE SALIDA_MADERA_ROLLO( -- entrada_madera
 -- CREATE TABLE PAGO_COMPRA(fecha		DATE,id_compra	CHAR(7) NOT NULL,monto 		DECIMAL(10,2),pago 		ENUM('Anticipado','Normal'),PRIMARY KEY (fecha,id_compra),	FOREIGN KEY (id_compra) REFERENCES COMPRA (id_compra) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
 CREATE TABLE MADERA_ASERRADA_CLASIF(
-	id_administrador 		VARCHAR(18) NOT NULL,
+	id_administrador 		VARCHAR(26) NOT NULL,
 	id_empleado		 		VARCHAR(26) NOT NULL,
 	id_madera				VARCHAR(20) NOT NULL,
 	grueso					DECIMAL(8,2),
@@ -145,7 +145,7 @@ CREATE TABLE ENTRADA_MADERA_ASERRADA(
  	id_madera    		VARCHAR(20) NOT NULL,
  	num_piezas 			INT,
     id_empleado 		VARCHAR(26) NOT NULL,
-    id_administrador 	VARCHAR(18) NOT NULL,
+    id_administrador 	VARCHAR(26) NOT NULL,
  	PRIMARY KEY (id_entrada),
     FOREIGN KEY (id_administrador,id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_administrador,id_madera),    
     FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
@@ -155,7 +155,7 @@ CREATE TABLE ENTRADA_MADERA_ASERRADA(
 CREATE TABLE CLIENTE(
 	id_cliente 	CHAR(26) NOT NULL,
     id_persona 	CHAR(18) NOT NULL,
-	id_jefe		CHAR(18),
+	id_jefe		CHAR(26),
 	PRIMARY KEY(id_cliente,id_jefe),
 	FOREIGN KEY (id_persona) REFERENCES PERSONA (id_persona),
 	FOREIGN KEY (id_jefe) REFERENCES ADMINISTRADOR (id_administrador))ENGINE=InnoDB;
@@ -174,7 +174,7 @@ CREATE TABLE VENTA(
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 CREATE TABLE VENTA_MAYOREO(
-	id_administrador		VARCHAR(18) NOT NULL,
+	id_administrador		VARCHAR(26) NOT NULL,
 	id_venta 				VARCHAR(30),
 	id_madera 				VARCHAR(20),
 	num_piezas				INT,
@@ -186,7 +186,7 @@ CREATE TABLE VENTA_MAYOREO(
 	FOREIGN KEY (id_administrador,id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_administrador,id_madera))ENGINE=InnoDB;
 
 CREATE TABLE VENTA_PAQUETE(
-	id_administrador		VARCHAR(18) NOT NULL,
+	id_administrador		VARCHAR(26) NOT NULL,
 	id_venta 				VARCHAR(30),
 	numero_paquete			INT,
 	id_madera 				VARCHAR(20),

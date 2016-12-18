@@ -15,3 +15,6 @@ SELECT
     estatus
 FROM USUARIO,EMPLEADO
 WHERE USUARIO.id_empleado = EMPLEADO.id_empleado;
+
+
+INSERT INTO USUARIO VALUES('MASL19931106HOCRNNMASL1993','admin',sha1('admin'),'sha1','hola');

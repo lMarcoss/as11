@@ -1,7 +1,7 @@
-package dao;
+package dao.registros;
 
-import calcularID.CalcularId;
-import entidades.Proveedor;
+import dao.Conexion;
+import entidades.registros.Proveedor;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,19 +35,19 @@ public class ProveedorCRUD extends Conexion implements OperacionesCRUD {
     @Override
     public PreparedStatement cargarObject(PreparedStatement st, Object objeto) throws SQLException {
         Proveedor proveedor = (Proveedor) objeto;
-        CalcularId calcularId = new CalcularId();
-        st.setString(1, calcularId.CalcularId(proveedor.getId_persona(), proveedor.getId_jefe())); //calculamos el id con la clase CalcularId
+        st.setString(1, proveedor.getId_persona()); //calculamos el id con la clase CalcularId
         st.setString(2, proveedor.getId_persona());
         st.setString(3, proveedor.getId_jefe());
         return st;
     }
 
     @Override
-    public <T> List listar() throws Exception {
+    public <T> List listar(String id_jefe) throws Exception {
         List<Proveedor> proveedores;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PERSONAL_PROVEEDOR")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PERSONAL_PROVEEDOR WHERE id_jefe = ?")) {
+                st.setString(1, id_jefe);
                 proveedores = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -77,32 +77,6 @@ public class ProveedorCRUD extends Conexion implements OperacionesCRUD {
         proveedor.setId_jefe(rs.getString("id_jefe"));
         proveedor.setJefe(rs.getString("jefe"));
         return proveedor;
-    }
-
-    public <T> List listar(String administrador) throws Exception {
-        List<Proveedor> proveedores;
-        try {
-            this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PERSONAL_PROVEEDOR WHERE id_jefe = ?")) {
-                st.setString(1, administrador);
-                proveedores = new ArrayList();
-                try (ResultSet rs = st.executeQuery()) {
-                    while (rs.next()) {
-                        Proveedor proveedor = (Proveedor) extraerObject(rs);
-                        proveedores.add(proveedor);
-                    }
-                }
-            } catch (Exception e) {
-                proveedores = null;
-                System.out.println(e);
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-            throw e;
-        } finally {
-            this.cerrarConexion();
-        }
-        return proveedores;
     }
 
     @Override

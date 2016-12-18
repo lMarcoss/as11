@@ -4,7 +4,7 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.Localidad"%>
+<%@page import="entidades.registros.Localidad"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
@@ -38,7 +38,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">Rellene de manera correcta los campos indicados</div>
                         <div class="panel-body">
-                            <form action="/aserradero/PersonaController?action=nuevo" method="post" id="formregistro" onsubmit="return validarPersona()">
+                            <form action="/aserradero/PersonaController?action=insertar" method="post" id="formregistro" onsubmit="return validarPersona()">
                                 <div class="lado_derecho"><!-- Grupo derecho-->
                                     <div class="form-group">
                                         <label class="control-label">Id_persona:</label>
@@ -102,10 +102,10 @@
                                     <div class="form-group">
                                         <i class="glyphicon glyphicon-phone"></i>
                                         <label class="control-label">Teléfono:</label>
-                                        <input class="form-control" type="text" name="telefono" pattern="[0-9]{10}" title="10 dígitos" placeholder="951xxxxxxx"/>
+                                        <input class="form-control" type="text" name="telefono" pattern="[0-9]{10}" title="10 dígitos" placeholder="951xxxxxxx" maxlength="10"/>
                                     </div>
                                     <div class="form-group pull-right">
-                                        <a href="/aserradero/PersonaController?action=listar"><input class="btn btn-lg btn-warning" type="button" value="Cancelar"/></a>
+                                        <a href="/aserradero/PersonaController?action=listar"><input class="btn btn-warning" type="button" value="Cancelar"/></a>
                                         <input class="btn btn-success" type="submit" id="registrar" value="Guardar"/>
                                     </div>
                                 </div>

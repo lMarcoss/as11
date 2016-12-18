@@ -1,6 +1,7 @@
-package dao;
+package dao.registros;
 
-import entidades.Localidad;
+import dao.Conexion;
+import entidades.registros.Localidad;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,7 +41,7 @@ public class LocalidadCRUD extends Conexion implements OperacionesCRUD {
     }
 
     @Override
-    public <T> List listar() throws Exception {
+    public <T> List listar(String id_jefe) throws Exception {
         List<Localidad> localidades;
         try {
             this.abrirConexion();

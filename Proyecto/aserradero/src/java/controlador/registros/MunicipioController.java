@@ -1,8 +1,8 @@
 
-package controlador;
+package controlador.registros;
 
-import dao.MunicipioCRUD;
-import entidades.Municipio;
+import dao.registros.MunicipioCRUD;
+import entidades.registros.Municipio;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;

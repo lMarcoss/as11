@@ -1,5 +1,6 @@
 package controlador;
 
+import controlador.registros.PersonaController;
 import controlador.empleado.EmpleadoController;
 import dao.empleado.EmpleadoCRUD;
 import dao.MaderaAserradaClasifCRUD;

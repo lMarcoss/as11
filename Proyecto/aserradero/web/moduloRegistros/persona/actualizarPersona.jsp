@@ -4,7 +4,7 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.Persona"%>
+<%@page import="entidades.registros.Persona"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     Persona persona = (Persona) request.getAttribute("persona");
@@ -34,7 +34,7 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Actualice los campos necesarios y guarde los cambios</h3>
+                            <h3 class="panel-title">Sólo puede modificar el teléfono de la persona ya que los demás datos son importantes para el id_persona</h3>
                         </div>
                         <div class="panel-body">
                             <form action="/aserradero/PersonaController?action=actualizar" method="post" id="formregistro">
@@ -45,14 +45,6 @@
                                 <div class="form-group">
                                     <label class="control-label" >Nombre:</label>
                                     <input type="text" class="form-control" name="nombre" value="<%=persona.getNombre()%>"  pattern="[A-Za-z].{2,}" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="45" required="" readonly=""/>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label" >Apellido paterno:</label>
-                                    <input type="text" class="form-control" name="apellido_paterno" value="<%=persona.getApellido_paterno()%>" pattern="[A-Za-z].{2,}" title="Sólo letras aA-zZ, al menos 3 letras" maxlength="45" required="" readonly=""/>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label" >Apellido materno:</label>
-                                    <input type="text" class="form-control" name="apellido_materno" value="<%=persona.getApellido_materno()%>" pattern="[A-Za-z].{2,}" title="Sólo letras aA-zZ, al menos 3 letras" maxlength="45" required="" readonly=""/>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" >Localidad:</label>
@@ -76,9 +68,9 @@
                                 <div class="form-group">
                                     <i class="glyphicon glyphicon-phone"></i>
                                     <label class="control-label" >Teléfono:</label>
-                                    <input type="text" class="form-control" name="telefono" value="<%=persona.getTelefono()%>" pattern="[0-9]{10}" title="10 dígitos"/>
+                                    <input type="text" class="form-control" name="telefono" value="<%=persona.getTelefono()%>" pattern="[0-9]{10}" title="10 dígitos" maxlength="10"/>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group pull-right">
                                     <a href="/aserradero/PersonaController?action=listar"><input class="btn btn-warning" type="button" value="Cancelar"/></a>
                                     <input type="submit" class="btn btn-success" value="Guardar"/>
                                 </div>

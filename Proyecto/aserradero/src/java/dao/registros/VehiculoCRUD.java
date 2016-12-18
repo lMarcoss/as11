@@ -1,8 +1,8 @@
-package dao;
+package dao.registros;
 
-import entidades.Vehiculo;
+import dao.Conexion;
+import entidades.registros.Vehiculo;
 import interfaces.OperacionesCRUD;
-import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,11 +32,12 @@ public class VehiculoCRUD extends Conexion implements OperacionesCRUD{
     }
 
     @Override
-    public <T> List listar() throws Exception {
+    public <T> List listar(String id_jefe) throws Exception {
         List<Vehiculo> vehiculos;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_VEHICULO")){
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_VEHICULO WHERE id_jefe = ?")){
+                st.setString(1, id_jefe);
                 vehiculos = new ArrayList<>();
                 try (ResultSet rs = st.executeQuery()){
                     while (rs.next()) {

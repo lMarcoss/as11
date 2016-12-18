@@ -1,9 +1,9 @@
 package controlador.prestamo;
 
 import controlador.empleado.EmpleadoController;
-import dao.PersonaCRUD;
+import dao.registros.PersonaCRUD;
 import dao.prestamo.PrestamoCRUD;
-import entidades.Persona;
+import entidades.registros.Persona;
 import entidades.prestamo.Prestamo;
 import java.io.IOException;
 import java.math.BigDecimal;

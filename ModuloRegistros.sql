@@ -35,9 +35,10 @@ SELECT id_cliente,
 		id_persona,
         (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = CLIENTE.id_persona) as cliente,
         id_jefe,
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = id_jefe) as jefe
+        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(id_jefe,1,18)) as jefe
 	FROM CLIENTE,ADMINISTRADOR 
-	WHERE CLIENTE.id_jefe = id_administrador;
+	WHERE CLIENTE.id_jefe = id_administrador
+    ORDER BY cliente;
 -- SELECT * FROM PERSONAL_CLIENTE;
 
 -- lista a todo el personal Proveedor id_proveedor y nombre completo, id_jefe y nombre completo
@@ -47,8 +48,10 @@ SELECT id_proveedor,
 		id_persona,
         (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE id_persona = PROVEEDOR.id_persona) as proveedor,
 		id_jefe,
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = id_jefe) as jefe
-	FROM PROVEEDOR,ADMINISTRADOR WHERE PROVEEDOR.id_jefe = id_administrador;
+        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(id_jefe,1,18)) as jefe
+FROM PROVEEDOR,ADMINISTRADOR 
+WHERE PROVEEDOR.id_jefe = id_administrador
+ORDER BY proveedor;
 -- SELECT * FROM PERSONAL_PROVEEDOR;
 
 -- lista de vehículos con nombre completo del empleado
@@ -67,3 +70,36 @@ SELECT id_vehiculo,
         (select id_jefe FROM EMPLEADO,ADMINISTRADOR WHERE EMPLEADO.id_jefe = ADMINISTRADOR.id_administrador and EMPLEADO.id_empleado = VEHICULO.id_empleado) as id_jefe
 	FROM VEHICULO;
 -- SELECT * FROM VISTA_VEHICULO;
+
+-- Disparador para crear id_cliente
+DROP TRIGGER IF EXISTS CLIENTE;
+DELIMITER //
+CREATE TRIGGER CLIENTE BEFORE INSERT ON CLIENTE
+FOR EACH ROW
+BEGIN
+	SET NEW.id_cliente = CONCAT(NEW.id_cliente,SUBSTRING(NEW.id_jefe,1,8));
+END;//
+DELIMITER ;
+
+-- Disparador para crear id_cliente
+DROP TRIGGER IF EXISTS PROVEEDOR;
+DELIMITER //
+CREATE TRIGGER PROVEEDOR BEFORE INSERT ON PROVEEDOR
+FOR EACH ROW
+BEGIN
+	SET NEW.id_proveedor = CONCAT(NEW.id_proveedor,SUBSTRING(NEW.id_jefe,1,8));
+END;//
+DELIMITER ;
+
+DROP VIEW IF EXISTS VISTA_PERSONA;
+CREATE VIEW VISTA_PERSONA AS 
+SELECT 
+	id_persona,
+    concat(nombre, ' ',apellido_paterno, ' ', apellido_materno) AS nombre,
+    localidad,
+    direccion,
+    sexo,
+    fecha_nacimiento,
+    telefono
+FROM PERSONA
+ORDER BY nombre;

@@ -133,6 +133,3 @@ SELECT
     SUM(monto_pago) as monto_pagado
 FROM PAGO_PRESTAMO
 GROUP BY id_prestamo;
-
-
-SELECT * FROM VISTA_PAGO_PRESTAMO;

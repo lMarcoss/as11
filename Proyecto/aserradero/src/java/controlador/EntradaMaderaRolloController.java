@@ -2,10 +2,10 @@ package controlador;
 
 import dao.EntradaMaderaRolloCRUD;
 import dao.empleado.EmpleadoCRUD;
-import dao.ProveedorCRUD;
+import dao.registros.ProveedorCRUD;
 import entidades.EntradaMaderaRollo;
 import entidades.empleado.Empleado;
-import entidades.Proveedor;
+import entidades.registros.Proveedor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;

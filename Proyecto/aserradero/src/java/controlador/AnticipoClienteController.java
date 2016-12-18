@@ -2,10 +2,10 @@ package controlador;
 
 import controlador.empleado.EmpleadoController;
 import dao.AnticipoClienteCRUD;
-import dao.ClienteCRUD;
+import dao.registros.ClienteCRUD;
 import dao.empleado.EmpleadoCRUD;
 import entidades.AnticipoCliente;
-import entidades.Cliente;
+import entidades.registros.Cliente;
 import entidades.empleado.Empleado;
 import java.io.IOException;
 import java.io.PrintWriter;

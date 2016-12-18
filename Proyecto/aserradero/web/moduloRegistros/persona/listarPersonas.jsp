@@ -4,12 +4,12 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.Persona"%>
+<%@page import="entidades.registros.Persona"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    List <Persona> personas = (List<Persona>) request.getAttribute("personas");
-    String mensaje = (String)request.getAttribute("mensaje");
+    List<Persona> personas = (List<Persona>) request.getAttribute("listaPersonas");
+    String mensaje = (String) request.getAttribute("mensaje");
 %>
 <!DOCTYPE html>
 <html>
@@ -29,12 +29,12 @@
         <input type="hidden" name="mensaje" id="mensaje" value="<%=mensaje%>">
         <div class="container" style="margin-top:60px;">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-13">
                     <h2 class="page-header">LISTADO DE PERSONAS</h2>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-13">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title">Si la persona que busca no aparece en el listado, agréguelo</h3>
@@ -43,10 +43,7 @@
                             <div class="form-group form-busc">
                                 <form method="POST" action="/aserradero/PersonaController?action=buscar" class="form-horizontal navbar-form">
                                     <select name="nombre_campo" class="input-busc">
-                                        <option value="id_persona">Id persona</option>
                                         <option value="nombre">Nombre</option>
-                                        <option value="apellido_paterno">Apellido paterno</option>
-                                        <option value="apellido_materno">Apellido materno</option>
                                         <option value="localidad">Localidad</option>
                                         <option value="direccion">Dirección</option>
                                         <option value="sexo">Sexo</option>
@@ -61,10 +58,7 @@
                                 <thead>
                                     <tr>
                                         <th>N°</th>
-                                        <th>Id persona</th>
                                         <th>Nombre</th>
-                                        <th>Apellido paterno</th>
-                                        <th>Apellido materno</th>
                                         <th>Localidad</th>
                                         <th>Dirección</th>
                                         <th>Sexo</th>
@@ -75,25 +69,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% int i=0;
-                                    for (Persona persona : personas) {
-                                        out.print("<tr>" +"<td>"+(i+1)
-                                        +"</td>" +"<td>"+persona.getId_persona()+"</td>"
-                                        +"<td>"+persona.getNombre()+"</td>" +"<td>"+persona.getApellido_paterno()+"</td>"
-                                        +"<td>"+persona.getApellido_materno()+"</td>"
-                                        +"<td><a href=\"/aserradero/LocalidadController?action=buscar_localidad&nombre_localidad="+persona.getLocalidad()+"\">"+persona.getLocalidad()+"</a></td>"
-                                        +"<td>"+persona.getDireccion()+"</td>"
-                                        +"<td>"+persona.getSexo()+"</td>"
-                                        +"<td>"+persona.getFecha_nacimiento()+"</td>"
-                                        +"<td>"+persona.getTelefono()+"</td>"
-                                        +"<td><a class='btn btn-info' href=\"/aserradero/PersonaController?action=modificar&id_persona="+persona.getId_persona()+"\">Actualizar</a></td>"
-                                        +"<td><a class='btn btn-danger' href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/PersonaController?action=eliminar&id_persona="+persona.getId_persona()+"';};\">Eliminar</a></td>" + "</tr>" );
-                                        i++;
-                                    } %>
+                                    <% int i = 0;
+                                        for (Persona persona : personas) {
+                                            out.print("<tr>" + "<td>" + (i + 1)
+                                                    + "<td>" + persona.getNombre() + "</td>"
+                                                    + "<td><a href=\"/aserradero/LocalidadController?action=buscar_localidad&nombre_localidad=" + persona.getLocalidad() + "\">" + persona.getLocalidad() + "</a></td>"
+                                                    + "<td>" + persona.getDireccion() + "</td>"
+                                                    + "<td>" + persona.getSexo() + "</td>"
+                                                    + "<td>" + persona.getFecha_nacimiento() + "</td>"
+                                                    + "<td>" + persona.getTelefono() + "</td>"
+                                                    + "<td><a class='btn btn-info' href=\"/aserradero/PersonaController?action=modificar&id_persona=" + persona.getId_persona() + "\">Modificar</a></td>"
+                                                    + "<td><a class='btn btn-danger' href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/PersonaController?action=eliminar&id_persona=" + persona.getId_persona() + "';};\">Eliminar</a></td>" + "</tr>");
+                                            i++;
+                                        }%>
                                 </tbody>
                             </table>
                             <div class="agregar_element">
-                                <input type="button" class="btn btn-primary" value="Agregar persona" onClick=" window.location.href='/aserradero/PersonaController?action=nuevo' ">
+                                <input type="button" class="btn btn-primary" value="Agregar persona" onClick=" window.location.href = '/aserradero/PersonaController?action=nuevo'">
                             </div>
                         </div>
                     </div>
