@@ -78,7 +78,7 @@
                                     </div>
                                     <div class="form-group">                                        
                                         <label class="control-label">Estado:</label>
-                                        <select class="form-control" name="estado" id="estado" required="">
+                                        <select class="form-control" name="estado" id="estado" required="" disabled="">
                                             <option></option>
                                             <%
                                                 for (Localidad localidad : localidades) {

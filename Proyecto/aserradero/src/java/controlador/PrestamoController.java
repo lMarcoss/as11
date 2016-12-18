@@ -18,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,7 +38,56 @@ public class PrestamoController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
+
+        // Sesiones
+        HttpSession sesion = request.getSession(false);
+        String nombre_usuario = (String) sesion.getAttribute("nombre_usuario");
+        String rol = (String) sesion.getAttribute("rol");
+        if (nombre_usuario.equals("")) {
+            response.sendRedirect("/aserradero/");
+        } else if (rol.equals("Administrador")) {
+            //Acción a realizar
+            String action = request.getParameter("action");
+            switch (action) {
+                /**
+                 * *************** Respuestas a métodos POST
+                 * *********************
+                 */
+                case "insertar":
+                    registrarPrestamo(request, response, sesion, action);
+                    break;
+                case "actualizar":
+                    actualizarPrestamo(request, response, sesion, action);
+                    break;
+                case "buscar":
+                    buscarPrestamo(request, response, action);
+                    break;
+                /**
+                 * *************** Respuestas a métodos GET
+                 * *********************
+                 */
+                case "nuevo":
+                    prepararNuevoPrestamo(request, response);
+                    break;
+                case "listar":
+                    listarPrestamo(request, response, action);
+                    break;
+                case "modificar":
+                    modificarPrestamo(request, response);
+                    break;
+                case "eliminar":
+                    eliminarPrestamo(request, response);
+                    break;
+            }
+        } else {
+            try{
+                sesion.invalidate();
+            }catch(Exception e) {
+                System.out.println(e);
+                response.sendRedirect("/aserradero/");
+            }
+            response.sendRedirect("/aserradero/");
         }
     }
 
@@ -53,73 +103,7 @@ public class PrestamoController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
-        //Llegan url
-        String action = request.getParameter("action");
-        Prestamo prestamoEC; //Enviar al CRUD
-        Prestamo prestamo; //Respuesta del CRUD
-        PrestamoCRUD prestamoCRUD;
-        switch(action){
-            case "nuevo":
-                try {
-                    // enviamos la lista de personas que pueden ser prestadores
-                    PersonaCRUD personaCRUD = new PersonaCRUD();
-                    List<Persona> personas = (List<Persona>)personaCRUD.listar();
-                    request.setAttribute("personas",personas);
-                    
-                    //Consultamos la lista de administradores para asignarlos al prestador
-                    EmpleadoCRUD empleadoCRUD = new EmpleadoCRUD();
-                    List<Empleado> empleados = (List<Empleado>) empleadoCRUD.listar();
-                    request.setAttribute("empleados", empleados);
-                    
-                    RequestDispatcher view = request.getRequestDispatcher("prestamo/nuevoPrestamo.jsp");
-                    view.forward(request,response);
-                } catch (Exception ex) {
-                    listarPrestamos(request, response, "error_nuevo");
-                    System.out.println(ex);
-                    Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "listar": // se muestran los préstamos por fecha e interes
-                listarPrestamos(request, response,"");
-                break;
-            case "modificar":
-                prestamoEC = new Prestamo();
-                prestamoEC.setId_prestamo(Integer.valueOf(request.getParameter("id_prestamo")));
-                prestamoCRUD = new PrestamoCRUD();
-                try {
-                    // enviamos la lista de personas que pueden ser prestadores
-                    PersonaCRUD personaCRUD = new PersonaCRUD();
-                    List<Persona> personas = (List<Persona>)personaCRUD.listar();
-                    request.setAttribute("personas",personas);
-                    
-                    prestamo = (Prestamo) prestamoCRUD.modificar(prestamoEC);
-                    request.setAttribute("prestamo",prestamo);
-                    RequestDispatcher view = request.getRequestDispatcher("prestamo/actualizarPrestamo.jsp");
-                    view.forward(request,response);
-                } catch (Exception ex) {
-                    listarPrestamos(request, response, "error_modificar");
-                    Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "eliminar":
-                prestamoEC = new Prestamo();
-                prestamoEC.setId_prestamo(Integer.valueOf(request.getParameter("id_prestamo")));
-                prestamoCRUD = new PrestamoCRUD();
-                try {
-                    prestamoCRUD.eliminar(prestamoEC);
-                    response.sendRedirect("/aserradero/PrestamoController?action=listar");
-                } catch (Exception ex) {
-                    listarPrestamos(request, response,"error_eliminar");
-                    Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "buscar_prestamo":
-                String id_prestamo = request.getParameter("id_prestamo");
-                buscarPrestamoPorId(request, response, id_prestamo);
-                break;
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -133,57 +117,9 @@ public class PrestamoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Llegan formularios de tipo post
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
-        String action = request.getParameter("action");
-        // variables
-        Prestamo prestamo;
-        PrestamoCRUD prestamoCRUD;
-        //variables de búsqueda
-        String nombre_campo;
-        String dato;
-        switch(action){
-            case "nuevo":
-                prestamo = extraerPrestamoForm(request);
-                prestamoCRUD = new PrestamoCRUD();
-                try {
-                    prestamoCRUD.registrar(prestamo);
-                    response.sendRedirect("/aserradero/PrestamoController?action=listar");
-                } catch (Exception ex) {
-                    listarPrestamos(request, response,"error_registrar");
-                    Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "actualizar":
-                prestamo = extraerPrestamoForm(request);
-                prestamoCRUD = new PrestamoCRUD();
-                try {
-                    prestamoCRUD.actualizar(prestamo);
-                    response.sendRedirect("/aserradero/PrestamoController?action=listar");
-                } catch (Exception ex) {
-                    listarPrestamos(request, response,"error_actualizar");
-                    Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "buscar":
-                List <Prestamo> prestamos;
-                nombre_campo = request.getParameter("nombre_campo");
-                dato = request.getParameter("dato");
-                prestamoCRUD = new PrestamoCRUD();
-                try {
-                    prestamos = (List<Prestamo>)prestamoCRUD.buscar(nombre_campo, dato);
-                    request.setAttribute("prestamos",prestamos);
-                    RequestDispatcher view = request.getRequestDispatcher("prestamo/prestamos.jsp");
-                    view.forward(request,response);
-                } catch (Exception ex) {
-                    listarPrestamos(request, response, "error_buscar_campo");
-                    Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-        }
+        processRequest(request, response);
     }
-    
+
     /**
      * Returns a short description of the servlet.
      *
@@ -193,48 +129,129 @@ public class PrestamoController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-    private void listarPrestamos(HttpServletRequest request, HttpServletResponse response,String mensaje) {
-        List<Prestamo> prestamos;
-        PrestamoCRUD prestamoCrud = new PrestamoCRUD();
+
+    private void registrarPrestamo(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
+        Prestamo prestamo = extraerPrestamoForm(request, sesion, action);
+        PrestamoCRUD prestamoCRUD = new PrestamoCRUD();
         try {
-            prestamos = (List<Prestamo>)prestamoCrud.listar();
-            //Enviamos las listas al jsp
-            request.setAttribute("prestamos",prestamos);
-            //Enviar mensaje
-            request.setAttribute("mensaje",mensaje);
-         
-            RequestDispatcher view = request.getRequestDispatcher("prestamo/prestamos.jsp");
-            view.forward(request,response);
+            prestamoCRUD.registrar(prestamo);
+            response.sendRedirect("/aserradero/PrestamoController?action=listar");
         } catch (Exception ex) {
-            System.out.println(ex);
+            listarPrestamo(request, response, "error_registrar");
             Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void buscarPrestamoPorId(HttpServletRequest request, HttpServletResponse response,String id_prestamo) {
-        List<Prestamo> prestamos;
-        PrestamoCRUD prestamoCrud = new PrestamoCRUD();
-        try {
-            prestamos = (List<Prestamo>)prestamoCrud.buscarPorId(id_prestamo);
-            //Enviamos las listas al jsp
-            request.setAttribute("prestamos",prestamos);
-            RequestDispatcher view = request.getRequestDispatcher("prestamo/prestamos.jsp");
-            view.forward(request,response);
-        } catch (Exception ex) {
-            listarPrestamos(request, response, "error_buscar_id");
-            System.out.println(ex);
-            Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    // Extraer datos del formulario
-    private Prestamo extraerPrestamoForm(HttpServletRequest request) {
+
+    private Prestamo extraerPrestamoForm(HttpServletRequest request, HttpSession sesion, String action) {
         Prestamo prestamo = new Prestamo();
-        prestamo.setId_prestamo(Integer.valueOf(request.getParameter("id_prestamo")));
+        if (action.equals("actualizar")) {
+            // Se ejecuta sólo en el caso de actualizar
+            prestamo.setId_prestamo(Integer.valueOf(request.getParameter("id_prestamo")));
+        }
         prestamo.setFecha(Date.valueOf(request.getParameter("fecha")));
         prestamo.setId_prestador(request.getParameter("id_prestador"));
-        prestamo.setId_empleado(request.getParameter("id_empleado"));
+        prestamo.setId_empleado((String) sesion.getAttribute("id_empleado"));
         prestamo.setMonto_prestamo(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto_prestamo")))));
         prestamo.setInteres(Integer.valueOf(request.getParameter("interes")));
         return prestamo;
+    }
+
+    private void actualizarPrestamo(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
+        Prestamo prestamo = extraerPrestamoForm(request, sesion, action);
+        PrestamoCRUD prestamoCRUD = new PrestamoCRUD();
+        try {
+            prestamoCRUD.actualizar(prestamo);
+            response.sendRedirect("/aserradero/PrestamoController?action=listar");
+        } catch (Exception ex) {
+            listarPrestamo(request, response, "error_actualizar");
+            Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void buscarPrestamo(HttpServletRequest request, HttpServletResponse response, String action) {
+        List<Prestamo> listaPrestamo;
+        String nombre_campo = request.getParameter("nombre_campo"); //Nombre del campo asociado a la búsqueda
+        String dato = request.getParameter("dato");                 // Valor a buscar en el campo
+        PrestamoCRUD prestamoCRUD = new PrestamoCRUD();
+        try {
+            listaPrestamo = (List<Prestamo>) prestamoCRUD.buscar(nombre_campo, dato);
+            mostrarPrestamos(request, response, listaPrestamo, action);
+        } catch (Exception ex) {
+            listarPrestamo(request, response, "error_buscar_campo");
+            Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void mostrarPrestamos(HttpServletRequest request, HttpServletResponse response, List<Prestamo> listaPrestamo, String action) {
+        request.setAttribute("mensaje", action);
+        request.setAttribute("listaPrestamo", listaPrestamo);
+        RequestDispatcher view = request.getRequestDispatcher("prestamo/listarPrestamo.jsp");
+        try {
+            view.forward(request, response);
+        } catch (ServletException | IOException ex) {
+            System.err.println("No se pudo mostrar la lista de prestamo");
+            Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void prepararNuevoPrestamo(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            // enviamos la lista de personas que pueden ser prestadores
+            PersonaCRUD personaCRUD = new PersonaCRUD();
+            List<Persona> personas = (List<Persona>) personaCRUD.listar();
+            request.setAttribute("personas", personas);
+
+            RequestDispatcher view = request.getRequestDispatcher("prestamo/nuevoPrestamo.jsp");
+            view.forward(request, response);
+        } catch (Exception ex) {
+            listarPrestamo(request, response, "error_nuevo");
+            System.out.println(ex);
+            Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void listarPrestamo(HttpServletRequest request, HttpServletResponse response, String action) {
+        List<Prestamo> listaPrestamos;
+        PrestamoCRUD prestamoCRUD = new PrestamoCRUD();
+        try {
+            listaPrestamos = (List<Prestamo>) prestamoCRUD.listar();
+            mostrarPrestamos(request, response, listaPrestamos, action);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void modificarPrestamo(HttpServletRequest request, HttpServletResponse response) {
+        Prestamo prestamoEC = new Prestamo();
+        prestamoEC.setId_prestamo(Integer.valueOf(request.getParameter("id_prestamo")));
+        PrestamoCRUD prestamoCRUD = new PrestamoCRUD();
+        try {
+            // enviamos la lista de personas que pueden ser prestadores
+            PersonaCRUD personaCRUD = new PersonaCRUD();
+            List<Persona> personas = (List<Persona>) personaCRUD.listar();
+            request.setAttribute("personas", personas);
+
+            Prestamo prestamo = (Prestamo) prestamoCRUD.modificar(prestamoEC);
+            request.setAttribute("prestamo", prestamo);
+            RequestDispatcher view = request.getRequestDispatcher("prestamo/actualizarPrestamo.jsp");
+            view.forward(request, response);
+        } catch (Exception ex) {
+            listarPrestamo(request, response, "error_modificar");
+            Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void eliminarPrestamo(HttpServletRequest request, HttpServletResponse response) {
+        Prestamo prestamoEC = new Prestamo();
+        prestamoEC.setId_prestamo(Integer.valueOf(request.getParameter("id_prestamo")));
+        PrestamoCRUD prestamoCRUD = new PrestamoCRUD();
+        try {
+            prestamoCRUD.eliminar(prestamoEC);
+            response.sendRedirect("/aserradero/PrestamoController?action=listar");
+        } catch (Exception ex) {
+            listarPrestamo(request, response, "error_eliminar");
+            Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

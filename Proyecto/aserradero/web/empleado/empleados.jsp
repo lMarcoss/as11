@@ -63,10 +63,10 @@
                                           out.print("<tr>"
                                               +"<td>"+(i+1)+"</td>"
                                               +"<td><a href=\"/aserradero/PersonaController?action=buscar_persona&id_persona="+empleado.getId_empleado()+"\">"+empleado.getEmpleado()+"</a></td>"
-                                              +"<td>"+empleado.getRoll()+"</td>"
+                                              +"<td>"+empleado.getRol()+"</td>"
                                               +"<td>"+empleado.getEstatus()+"</td>"
-                                              +"<td><a  class='btn btn-warning' href=\"/aserradero/EmpleadoController?action=modificar&id_empleado="+empleado.getId_empleado()+"&roll="+empleado.getRoll()+"\">Actualizar</a></td>"
-                                              + "<td><a class='btn btn-danger' href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/EmpleadoController?action=eliminar&id_empleado="+empleado.getId_empleado()+"&roll="+empleado.getRoll()+"';};\">Eliminar</a></td>"
+                                              +"<td><a  class='btn btn-warning' href=\"/aserradero/EmpleadoController?action=modificar&id_empleado="+empleado.getId_empleado()+"&rol="+empleado.getRol()+"\">Actualizar</a></td>"
+                                              + "<td><a class='btn btn-danger' href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/EmpleadoController?action=eliminar&id_empleado="+empleado.getId_empleado()+"&rol="+empleado.getRol()+"';};\">Eliminar</a></td>"
                                           + "</tr>" );
                                           i++;
                                       }

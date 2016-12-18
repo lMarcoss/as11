@@ -211,7 +211,7 @@ public class EmpleadoController extends HttpServlet {
         empleado.setId_empleado(request.getParameter("id_empleado"));
         empleado.setId_persona(request.getParameter("id_persona"));
         empleado.setId_jefe(request.getParameter("id_jefe"));
-        empleado.setRoll(request.getParameter("roll"));
+        empleado.setRol(request.getParameter("rol"));
         empleado.setEstatus(request.getParameter("estatus"));
         return empleado;
     }
@@ -220,7 +220,7 @@ public class EmpleadoController extends HttpServlet {
         Empleado empleado = new Empleado();
         empleado.setId_empleado(request.getParameter("id_empleado"));
         empleado.setId_jefe(request.getParameter("id_jefe"));
-        empleado.setRoll(request.getParameter("roll"));
+        empleado.setRol(request.getParameter("rol"));
         return empleado;
     }
 

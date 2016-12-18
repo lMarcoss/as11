@@ -1,9 +1,7 @@
 package controlador;
 
-import dao.EmpleadoCRUD;
 import dao.PagoPrestamoCRUD;
 import dao.PrestamoCRUD;
-import entidades.Empleado;
 import entidades.PagoPrestamo;
 import entidades.Prestamo;
 import java.io.IOException;
@@ -38,42 +36,57 @@ public class PagoPrestamoController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
-        
+
         // Sesiones
         HttpSession sesion = request.getSession(false);
-        String nombre_usuario = (String)sesion.getAttribute("nombre_usuario");
-        System.out.println("usuario: " + nombre_usuario);
-        //Acción a realizar
-        String action = request.getParameter("action");
-        switch (action) {
-            /**
-             * *************** Respuestas a métodos POST *********************
-             */
-            case "insertar":
-                registrarPagoPrestamo(request, response, action);
-                break;
-            case "actualizar":
-                actualizarPagoPrestamo(request, response, action);
-                break;
-            case "buscar":
-                buscarPagoPrestamo(request, response, action);
-                break;
-            /**
-             * *************** Respuestas a métodos GET *********************
-             */
-            case "nuevo":
-                prepararNuevoPagoPrestamo(request, response);
-                break;
-            case "listar":
-                listarPagoPrestamo(request, response, action);
-                break;
-            case "modificar":
-                modificarPagoPrestamo(request, response);
-                break;
-            case "eliminar":
-                eliminarPagoPrestamo(request, response);
-                break;
+        String nombre_usuario = (String) sesion.getAttribute("nombre_usuario");
+        String rol = (String) sesion.getAttribute("rol");
+        if (nombre_usuario.equals("")) {
+            response.sendRedirect("/aserradero/");
+        } else if (rol.equals("Administrador")) {
+            //Acción a realizar
+            String action = request.getParameter("action");
+            switch (action) {
+                /**
+                 * *************** Respuestas a métodos POST
+                 * *********************
+                 */
+                case "insertar":
+                    registrarPagoPrestamo(request, response, (String) sesion.getAttribute("id_empleado"), action);
+                    break;
+                case "actualizar":
+                    actualizarPagoPrestamo(request, response, (String) sesion.getAttribute("id_empleado"), action);
+                    break;
+                case "buscar":
+                    buscarPagoPrestamo(request, response, action);
+                    break;
+                /**
+                 * *************** Respuestas a métodos GET
+                 * *********************
+                 */
+                case "nuevo":
+                    prepararNuevoPagoPrestamo(request, response);
+                    break;
+                case "listar":
+                    listarPagoPrestamo(request, response, action);
+                    break;
+                case "modificar":
+                    modificarPagoPrestamo(request, response);
+                    break;
+                case "eliminar":
+                    eliminarPagoPrestamo(request, response);
+                    break;
+            }
+        } else {
+            try{
+                sesion.invalidate();
+            }catch(Exception e) {
+                System.out.println(e);
+                response.sendRedirect("/aserradero/");
+            }
+            response.sendRedirect("/aserradero/");
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -115,8 +128,8 @@ public class PagoPrestamoController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void registrarPagoPrestamo(HttpServletRequest request, HttpServletResponse response, String action) {
-        PagoPrestamo pagoPrestamo = extraerPagoPrestamoForm(request, action);
+    private void registrarPagoPrestamo(HttpServletRequest request, HttpServletResponse response, String id_empleado, String action) {
+        PagoPrestamo pagoPrestamo = extraerPagoPrestamoForm(request, id_empleado, action);
         PagoPrestamoCRUD pagoPrestamoCRUD = new PagoPrestamoCRUD();
         try {
             pagoPrestamoCRUD.registrar(pagoPrestamo);
@@ -127,7 +140,7 @@ public class PagoPrestamoController extends HttpServlet {
         }
     }
 
-    private PagoPrestamo extraerPagoPrestamoForm(HttpServletRequest request, String action) {
+    private PagoPrestamo extraerPagoPrestamoForm(HttpServletRequest request, String id_empleado, String action) {
         PagoPrestamo pagoPrestamo = new PagoPrestamo();
         if (action.equals("actualizar")) {
             // Se ejecuta sólo en el caso de actualizar
@@ -135,13 +148,13 @@ public class PagoPrestamoController extends HttpServlet {
         }
         pagoPrestamo.setId_prestamo(Integer.valueOf(request.getParameter("id_prestamo")));
         pagoPrestamo.setFecha(Date.valueOf(request.getParameter("fecha")));
-        pagoPrestamo.setId_empleado(request.getParameter("id_empleado"));
+        pagoPrestamo.setId_empleado(id_empleado);
         pagoPrestamo.setMonto_pago(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto_pago")))));
         return pagoPrestamo;
     }
 
-    private void actualizarPagoPrestamo(HttpServletRequest request, HttpServletResponse response, String action) {
-        PagoPrestamo pagoPrestamo = extraerPagoPrestamoForm(request, action);
+    private void actualizarPagoPrestamo(HttpServletRequest request, HttpServletResponse response, String id_empleado, String action) {
+        PagoPrestamo pagoPrestamo = extraerPagoPrestamoForm(request, id_empleado, action);
         PagoPrestamoCRUD pagoPrestamoCRUD = new PagoPrestamoCRUD();
         try {
             pagoPrestamoCRUD.actualizar(pagoPrestamo);
@@ -179,16 +192,11 @@ public class PagoPrestamoController extends HttpServlet {
     }
 
     private void prepararNuevoPagoPrestamo(HttpServletRequest request, HttpServletResponse response) {
-//        String administrador = "MASL19931106HOCRNN";
         PrestamoCRUD prestamoCRUD = new PrestamoCRUD();
-        EmpleadoCRUD empleadoCRUD = new EmpleadoCRUD();
         List<Prestamo> listaPrestamo;
-        List<Empleado> listaEmpleado;
         try {
             listaPrestamo = (List<Prestamo>) prestamoCRUD.listarPrestamoPorPagar();
-            listaEmpleado = (List<Empleado>) empleadoCRUD.listar();
             request.setAttribute("listaPrestamo", listaPrestamo);
-            request.setAttribute("listaEmpleado", listaEmpleado);
             RequestDispatcher view = request.getRequestDispatcher("pagoPrestamo/nuevoPagoPrestamo.jsp");
             view.forward(request, response);
         } catch (Exception ex) {

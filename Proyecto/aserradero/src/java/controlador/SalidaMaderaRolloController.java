@@ -67,7 +67,7 @@ public class SalidaMaderaRolloController extends HttpServlet {
                 try{
                     //enviamos la lista de empleados
                     empleadoCRUD = new EmpleadoCRUD();
-                    List<Empleado> empleados = (List<Empleado>) empleadoCRUD.listarEmpleadoPorRoll("Empleado");
+                    List<Empleado> empleados = (List<Empleado>) empleadoCRUD.listarEmpleadoPorRol("Empleado");
                     request.setAttribute("empleados",empleados);
                     
                     //Enviamos el inventario de madera rollo

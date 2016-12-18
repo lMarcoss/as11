@@ -10,7 +10,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     List <Prestamo> listaPrestamo = (List<Prestamo>) request.getAttribute("listaPrestamo");
-    List <Empleado> listaEmpleado = (List<Empleado>) request.getAttribute("listaEmpleado");
 %>
 <!DOCTYPE html>
 <html>
@@ -101,19 +100,6 @@
                         <tr>
                             <td style="padding-left: 10px;"><label for="fecha">Fecha de pago:</label></td>
                             <td style="padding-left: 10px;"><input type="date" name="fecha" required="" placeholder="AAAA/MM/DD"/></td>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 10px;"><label>Empleado:</label></td>
-                            <td style="padding-left: 10px;">
-                                <select name="id_empleado" id="id_empleado" required="">
-                                    <option></option>
-                                    <%
-                                        for(Empleado empleado: listaEmpleado){
-                                            out.print("<option value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>");
-                                        }
-                                    %>
-                                </select>
-                            </td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>Monto a pagar:</label></td>

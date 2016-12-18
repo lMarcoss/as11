@@ -79,7 +79,7 @@ public class VentaExtraController extends HttpServlet {
                     
                     //Enviamos la lista de empleados
                     EmpleadoCRUD empleadoCRUD= new EmpleadoCRUD();
-                    List<Empleado> empleados = (List<Empleado>)empleadoCRUD.listarEmpleadoPorRoll("Empleado");
+                    List<Empleado> empleados = (List<Empleado>)empleadoCRUD.listarEmpleadoPorRol("Empleado");
                     request.setAttribute("empleados",empleados);
                     RequestDispatcher view = request.getRequestDispatcher("ventaExtra/nuevoVentaExtra.jsp");
                     view.forward(request,response);

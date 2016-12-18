@@ -30,9 +30,14 @@
         <!--menu-->
         <%@ include file="/TEMPLATE/menu.jsp" %>
         <%
-            String nombre = (String)sesion.getAttribute("nombre_usuario");
-            out.print("Nombre: " +nombre);
-            out.print("Nombre: " +nombre);
+            String id_empleado = (String)sesion.getAttribute("id_empleado");
+            String id_jefe = (String)sesion.getAttribute("id_jefe");
+            String rol = (String)sesion.getAttribute("rol");
+            String estatus = (String)sesion.getAttribute("estatus");
+            out.print("Empleado: " +id_empleado);
+            out.print("Jefe: " +id_jefe);
+            out.print("Rol: " +rol);
+            out.print("Estatus: " +estatus);
         %>
     </body>
 </html>

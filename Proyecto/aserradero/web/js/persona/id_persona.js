@@ -26,7 +26,7 @@ function crearIdPersona(){
     nombre = eliminarPrimerNombre(nombre);
         
     var letra_nombre = nombre.charAt(0);
-    alert('Hola 3');
+
     // Obtener fecha de nacimiento:se utilizará los 4 digitos de año
     var fecha = document.getElementById("fecha_nacimiento").value;
     fecha = obtenerFechaNacimiento(fecha);

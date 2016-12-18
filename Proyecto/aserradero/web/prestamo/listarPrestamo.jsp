@@ -8,7 +8,7 @@
 <%@page import="entidades.Prestamo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    List <Prestamo> prestamos = (List<Prestamo>) request.getAttribute("prestamos");
+    List <Prestamo> listaPrestamo = (List<Prestamo>) request.getAttribute("listaPrestamo");
     String mensaje = (String)request.getAttribute("mensaje");
 %>
 <!DOCTYPE html>
@@ -67,7 +67,7 @@
                     </tr>
                     <%
                         int i=0;
-                        for (Prestamo prestamo : prestamos) {
+                        for (Prestamo prestamo : listaPrestamo) {
                             out.print("<tr>"
                                 +"<td>"+(i+1)+"</td>"
                                 +"<td>"+prestamo.getFecha()+"</td>"

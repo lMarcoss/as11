@@ -35,17 +35,18 @@ DROP VIEW IF EXISTS PERSONAL_ADMINISTRADOR;
 CREATE VIEW PERSONAL_ADMINISTRADOR AS
 SELECT 
 		id_administrador, 
-		(SELECT concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE id_persona = id_administrador)as nombre,
+		(SELECT concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE id_persona = SUBSTRING(id_administrador,1,18))as nombre,
         cuenta_inicial
 FROM ADMINISTRADOR;
 
 -- lista de empleados
+DROP VIEW IF EXISTS PERSONAL_EMPLEADO;
 CREATE VIEW PERSONAL_EMPLEADO AS
 SELECT id_empleado,
 		id_persona,
         (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE PERSONA.id_persona = EMPLEADO.id_persona) as empleado,
         id_jefe,
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = id_jefe) as jefe, 
+        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(id_jefe,1,18)) as jefe, 
         rol,estatus FROM EMPLEADO,ADMINISTRADOR WHERE id_jefe = id_administrador;
 
 -- Lista de pago a empleados
@@ -58,3 +59,6 @@ SELECT id_pago_empleado,
         monto,
         observacion 
 FROM PAGO_EMPLEADO,EMPLEADO WHERE PAGO_EMPLEADO.id_empleado = EMPLEADO.id_empleado;
+
+SELECT * FROM EMPLEADO;
+SELECT * FROM VISTA_USUARIO;

@@ -10,7 +10,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     List <Persona> personas = (List<Persona>) request.getAttribute("personas");
-    List <Empleado> empleados = (List<Empleado>) request.getAttribute("empleados");
 %>
 <!DOCTYPE html>
 <html>
@@ -25,7 +24,7 @@
         
          <!-- ******************* Formulario de registro-->
         <div>
-            <form action="/aserradero/PrestamoController?action=nuevo" method="post" id="formregistro">
+            <form action="/aserradero/PrestamoController?action=insertar" method="post" id="formregistro">
                 <h3>Registrar préstamo</h3>
                 <fieldset id="user-details">
                     <table>
@@ -35,7 +34,7 @@
                             <td style="padding-left: 10px;"><input type="date" name="fecha" id="fecha" required="" maxlength="10"></td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 10px;"><label>Persona:</label></td>
+                            <td style="padding-left: 10px;"><label>Prestador:</label></td>
                             <td style="padding-left: 10px;">
                                 <select name="id_prestador" required="">
                                     <option></option>
@@ -48,24 +47,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 10px;"><label>Administrador:</label></td>
-                            <td style="padding-left: 10px;">
-                                <select name="id_empleado" required="">
-                                    <option></option>
-                                    <%
-                                        for (Empleado empleado : empleados) {
-                                            out.print("<option value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>");
-                                        }
-                                    %>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
                             <td style="padding-left: 10px;"><label>Monto:</label></td>
                             <td style="padding-left: 10px;"><input type="number" name="monto_prestamo" step="0.01" min="0.01" max="99999999.99"  required=""></td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 10px;"><label>% de interés mensual:</label></td>
+                            <td style="padding-left: 10px;"><label>Interés mensual:</label></td>
                             <td style="padding-left: 10px;"><input type="number" name="interes" step="1" min="1" max="100"  required=""><label>%</label></td>
                         </tr>
                         <tr>

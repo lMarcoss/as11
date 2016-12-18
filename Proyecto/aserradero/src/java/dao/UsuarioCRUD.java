@@ -16,7 +16,8 @@ public class UsuarioCRUD extends Conexion{
     public void registrar(Usuario usuario) throws Exception{
         try{
             this.abrirConexion();
-                PreparedStatement st= this.conexion.prepareStatement("INSERT INTO USUARIO (id_empleado,nombre_usuario,contrasenia,metodo,email) VALUES (?,?,SHA1(?),?,?)");
+                PreparedStatement st= this.conexion.prepareStatement(
+                        "INSERT INTO USUARIO (id_empleado,nombre_usuario,contrasenia,metodo,email) VALUES (?,?,SHA1(?),?,?)");
             st.setString(1,usuario.id_empleado);
             st.setString(2,usuario.nombre_usuario);
             st.setString(3,usuario.contrasenia);
@@ -130,9 +131,10 @@ public class UsuarioCRUD extends Conexion{
         Usuario user = null;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT  * FROM USUARIO WHERE nombre_usuario = ? AND contrasenia = (SELECT SHA1(?))")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT  * FROM VISTA_USUARIO WHERE nombre_usuario = ? AND contrasenia = (SELECT SHA1(?)) AND estatus = ?")) {
                 st.setString(1,nombre_usuario);
                 st.setString(2,contrasenia);
+                st.setString(3,"Activo");
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
                         user = extraerUsuario(rs);
@@ -152,10 +154,12 @@ public class UsuarioCRUD extends Conexion{
 
     private Usuario extraerUsuario(ResultSet rs) throws SQLException {
         Usuario usuario = new Usuario();
-        usuario.setId_empleado(rs.getString("id_empleado"));
         usuario.setNombre_usuario(rs.getString("nombre_usuario"));
         usuario.setContrasenia(rs.getString("contrasenia"));
-        usuario.setEmail(rs.getString("email"));
+        usuario.setId_empleado(rs.getString("id_empleado"));
+        usuario.setId_jefe(rs.getString("id_jefe"));
+        usuario.setRol(rs.getString("rol"));
+        usuario.setEstatus(rs.getString("estatus"));
         return usuario;
     }
     

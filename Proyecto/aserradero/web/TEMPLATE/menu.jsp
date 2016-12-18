@@ -12,7 +12,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand">Aserradero</a>
+            <!--<a class="navbar-brand">Aserradero</a>-->
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -135,6 +135,7 @@
                         <li class="reporte_compra"><a href="#">Balance cuenta</a></li>
                     </ul>
                 </li>
+                <li class="cta"><a href="/aserradero/Iniciar?action=cerrar_sesion">Salir</a></li>
                 </ul>
             </div>
         </div>

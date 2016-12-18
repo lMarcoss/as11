@@ -42,20 +42,21 @@
                         <tr>
                             <td style="padding-left: 10px;"><label>Roll:</label></td>
                             <td style="padding-left: 10px;">
-                                <select name="roll" required="">
-                                    <option></option>
-                                    <%if(empleado.getRoll().equals("Empleado")){%>
-                                        <option value="Empleado" selected="">Empleado</option>
-                                        <option value="Chofer">Chofer</option>
-                                        <option value="Vendedor">Vendedor</option>
-                                    <%}else if(empleado.getRoll().equals("Chofer")){%>
-                                        <option value="Empleado">Empleado</option>
-                                        <option value="Chofer" selected="">Chofer</option>
-                                        <option value="Vendedor">Vendedor</option>
-                                    <%}else if(empleado.getRoll().equals("Vendedor")){%>
-                                        <option value="Empleado">Empleado</option>
-                                        <option value="Chofer">Chofer</option>
-                                        <option value="Vendedor" selected="">Vendedor</option>
+                                <select name="rol" required="">
+                                    <%if (empleado.getRol().equals("Administrador")) {%>
+                                    <option value="Administrador" selected="">Administrador</option>
+                                    <%} else if (empleado.getRol().equals("Empleado")) {%>
+                                    <option value="Empleado" selected="">Empleado</option>
+                                    <option value="Chofer">Chofer</option>
+                                    <option value="Vendedor">Vendedor</option>
+                                    <%} else if (empleado.getRol().equals("Chofer")) {%>
+                                    <option value="Empleado">Empleado</option>
+                                    <option value="Chofer" selected="">Chofer</option>
+                                    <option value="Vendedor">Vendedor</option>
+                                    <%} else if (empleado.getRol().equals("Vendedor")) {%>
+                                    <option value="Empleado">Empleado</option>
+                                    <option value="Chofer">Chofer</option>
+                                    <option value="Vendedor" selected="">Vendedor</option>
                                     <%}%>
                                 </select>
                             </td>
@@ -64,13 +65,14 @@
                             <td style="padding-left: 10px;"><label>Estaus</label></td>
                             <td>
                                 <select name="estatus" required="">
-                                    <option></option>
-                                    <%if(empleado.getEstatus().equals("Activo")){ %>
-                                            <option value="Activo" selected="">Activo</option>
-                                            <option value="Inactivo">Inactivo</option>
-                                    <%}else{%>
-                                        <option value="Activo">Activo</option>
-                                        <option value="Inactivo" selected="">Inactivo</option>
+                                    <%if (empleado.getRol().equals("Administrador")) { %>
+                                    <option value="Activo" selected="">Activo</option>
+                                    <%} else if (empleado.getEstatus().equals("Activo")) { %>
+                                    <option value="Activo" selected="">Activo</option>
+                                    <option value="Inactivo">Inactivo</option>
+                                    <%} else {%>
+                                    <option value="Activo">Activo</option>
+                                    <option value="Inactivo" selected="">Inactivo</option>
                                     <%}%>
                                 </select>
                             </td>

@@ -68,7 +68,7 @@ public class EntradaMaderaRolloController extends HttpServlet {
                 try{
                     //enviamos la lista de empleados
                     empleadoCRUD = new EmpleadoCRUD();
-                    List<Empleado> empleados = (List<Empleado>) empleadoCRUD.listarEmpleadoPorRoll("Empleado");
+                    List<Empleado> empleados = (List<Empleado>) empleadoCRUD.listarEmpleadoPorRol("Empleado");
                     request.setAttribute("empleados",empleados);
                     
                     //enviamos la lista de proveedores
@@ -77,7 +77,7 @@ public class EntradaMaderaRolloController extends HttpServlet {
                     request.setAttribute("proveedores", proveedores);
                     
                     //Enviamos la lista de choferes
-                    List<Empleado> choferes = (List<Empleado>) empleadoCRUD.listarEmpleadoPorRoll("Chofer");
+                    List<Empleado> choferes = (List<Empleado>) empleadoCRUD.listarEmpleadoPorRol("Chofer");
                     request.setAttribute("choferes",choferes);
                     
                     //Enviamos la fecha actual 
@@ -111,7 +111,7 @@ public class EntradaMaderaRolloController extends HttpServlet {
                     
                     //Enviamos la lista de choferes
                     empleadoCRUD = new EmpleadoCRUD();
-                    List<Empleado> choferes = (List<Empleado>) empleadoCRUD.listarEmpleadoPorRoll("Chofer");
+                    List<Empleado> choferes = (List<Empleado>) empleadoCRUD.listarEmpleadoPorRol("Chofer");
                     request.setAttribute("choferes",choferes);
                     
                     RequestDispatcher view = request.getRequestDispatcher("entradaMaderaRollo/actualizarEntradaMaderaRollo.jsp");

@@ -1,3 +1,5 @@
+Use aserradero;
+
 -- Insertamos datos ficticios
 INSERT INTO MUNICIPIO (nombre_municipio, estado,telefono) VALUES 
 ("Miahuatlan de porfirio diaz","Oaxaca",'9876543210'),
@@ -16,6 +18,15 @@ INSERT INTO PERSONA (id_persona,nombre,apellido_paterno,apellido_materno,localid
 ("MAXP20160916HOCRXD","Pedro","Martinez","","Santa Cruz Monjas","H","2016-09-16","1234567890"),
 ("PAXA20160913HOCSXN","Antonio","Pascual","","Santa Cruz Monjas","H","2016-09-13","1234567890"),
 ("PEXF20160910HOCRXR","Francisco","Perez","","Santa Cruz Monjas","H","2016-09-10","1234567890");
+
+CREATE VIEW VISTA_LOCALIDAD AS 
+SELECT 
+	nombre_localidad,
+    LOCALIDAD.nombre_municipio as nombre_municipio,
+    LOCALIDAD.telefono AS telefono_localidad,
+    estado
+FROM LOCALIDAD,MUNICIPIO
+WHERE LOCALIDAD.nombre_municipio = MUNICIPIO.nombre_municipio;
 
 -- lista a todo el personal Cliente id_cliente y nombre completo, id_jefe y nombre completo
 DROP VIEW IF EXISTS PERSONAL_CLIENTE;

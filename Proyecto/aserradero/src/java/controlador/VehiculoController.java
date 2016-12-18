@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -34,48 +35,48 @@ public class VehiculoController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            
+        
+        
         }
-    }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+        /**
+         * Handles the HTTP <code>GET</code> method.
+         *
+         * @param request servlet request
+         * @param response servlet response
+         * @throws ServletException if a servlet-specific error occurs
+         * @throws IOException if an I/O error occurs
+         */
+        @Override
+        protected void doGet
+        (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-              response.setContentType("text/html;charset=UTF-8");
-              request.setCharacterEncoding("UTF-8");
-              //Llegan url
-              String action = request.getParameter("action");
-              Vehiculo vehiculoEC; //Enviar al CRUD
-              Vehiculo vehiculo; //Respuesta del CRUD
-              VehiculoCRUD vehiculocrud;
-              EmpleadoCRUD empleadoCRUD;
-              switch(action){
+            response.setContentType("text/html;charset=UTF-8");
+            request.setCharacterEncoding("UTF-8");
+            //Llegan url
+            String action = request.getParameter("action");
+            Vehiculo vehiculoEC; //Enviar al CRUD
+            Vehiculo vehiculo; //Respuesta del CRUD
+            VehiculoCRUD vehiculocrud;
+            EmpleadoCRUD empleadoCRUD;
+            switch (action) {
                 case "nuevo":
-                    try{
-                    empleadoCRUD = new EmpleadoCRUD();
+                    try {
+                        empleadoCRUD = new EmpleadoCRUD();
                         List<Empleado> empleados;
-                        empleados = (List<Empleado>)empleadoCRUD.listar();
-                        request.setAttribute("empleados",empleados);
+                        empleados = (List<Empleado>) empleadoCRUD.listar();
+                        request.setAttribute("empleados", empleados);
                         RequestDispatcher view = request.getRequestDispatcher("vehiculo/nuevoVehiculo.jsp");
-                        view.forward(request,response);
+                        view.forward(request, response);
                     } catch (Exception ex) {
-                        listarVehiculos(request, response,"error_nuevo");
+                        listarVehiculos(request, response, "error_nuevo");
                         System.out.println(ex);
                         Logger.getLogger(PagoRentaController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                break;
+                    break;
                 case "listar":
-                    listarVehiculos(request, response,"lista de vehículos de la empresa");
+                    listarVehiculos(request, response, "lista de vehículos de la empresa");
                     break;
                 case "modificar":
                     vehiculoEC = new Vehiculo();
@@ -84,12 +85,12 @@ public class VehiculoController extends HttpServlet {
                     try {
                         empleadoCRUD = new EmpleadoCRUD();
                         List<Empleado> empleados;
-                        empleados = (List<Empleado>)empleadoCRUD.listar();
-                        request.setAttribute("empleados",empleados);
+                        empleados = (List<Empleado>) empleadoCRUD.listar();
+                        request.setAttribute("empleados", empleados);
                         vehiculo = (Vehiculo) vehiculocrud.modificar(vehiculoEC);
-                        request.setAttribute("vehiculo",vehiculo);                        
+                        request.setAttribute("vehiculo", vehiculo);
                         RequestDispatcher view = request.getRequestDispatcher("vehiculo/actualizarVehiculo.jsp");
-                        view.forward(request,response);
+                        view.forward(request, response);
                     } catch (Exception ex) {
                         listarVehiculos(request, response, "error_modificar");
                         Logger.getLogger(VehiculoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -101,94 +102,99 @@ public class VehiculoController extends HttpServlet {
                     vehiculocrud = new VehiculoCRUD();
                     try {
                         vehiculocrud.eliminar(vehiculoEC);
-                        listarVehiculos(request, response,"eliminado");
+                        listarVehiculos(request, response, "eliminado");
                     } catch (Exception ex) {
                         listarVehiculos(request, response, "error_eliminar");
                         Logger.getLogger(VehiculoController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
-              }
-    }
+            }
+        }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        /**
+         * Handles the HTTP <code>POST</code> method.
+         *
+         * @param request servlet request
+         * @param response servlet response
+         * @throws ServletException if a servlet-specific error occurs
+         * @throws IOException if an I/O error occurs
+         */
+        @Override
+        protected void doPost
+        (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-              //Llegan formularios de tipo post
-              response.setContentType("text/html;charset=UTF-8");
-              request.setCharacterEncoding("UTF-8");
-              String action = request.getParameter("action");
-              Vehiculo vehiculo;
-              VehiculoCRUD vehiculocrud;
-              switch(action){
-                  case "nuevo":
-                      vehiculo = extraerVehiculoForm(request);
-                      vehiculocrud = new VehiculoCRUD();
-                      try {
-                          vehiculocrud.registrar(vehiculo);
-                          listarVehiculos(request, response,"registrado");
-                      } catch (Exception ex) {
-                          listarVehiculos(request, response, "error_registrar");
-                          Logger.getLogger(VehiculoController.class.getName()).log(Level.SEVERE, null, ex);
-                      }
-                      break;
-                  case "actualizar":
-                      vehiculo = extraerVehiculoForm(request);
-                      vehiculocrud = new VehiculoCRUD();
-                      try {
-                          vehiculocrud.actualizar(vehiculo);
-                          listarVehiculos(request, response,"actualizado");
-                      } catch (Exception ex) {
-                          listarVehiculos(request, response, "error_actualizar");
-                          Logger.getLogger(VehiculoController.class.getName()).log(Level.SEVERE, null, ex);
-                      }
-                      break;
-                  case "buscar":
-                      List <Vehiculo> vehiculos;
-                      String nombre_campo = request.getParameter("nombre_campo");
-                      String dato = request.getParameter("dato");
-                      vehiculocrud = new VehiculoCRUD();
-                      try {
-                          vehiculos = (List<Vehiculo>)vehiculocrud.buscar(nombre_campo, dato);
-                          request.setAttribute("vehiculos",vehiculos);
-                          RequestDispatcher view = request.getRequestDispatcher("vehiculo/vehiculos.jsp");
-                          view.forward(request,response);
-                      } catch (Exception ex) {
-                          listarVehiculos(request, response, "error_buscar_campo");
-                          Logger.getLogger(VehiculoController.class.getName()).log(Level.SEVERE, null, ex);
-                      }
-                      break;
-              }
-    }
+            //Llegan formularios de tipo post
+            response.setContentType("text/html;charset=UTF-8");
+            request.setCharacterEncoding("UTF-8");
+            String action = request.getParameter("action");
+            Vehiculo vehiculo;
+            VehiculoCRUD vehiculocrud;
+            switch (action) {
+                case "nuevo":
+                    vehiculo = extraerVehiculoForm(request);
+                    vehiculocrud = new VehiculoCRUD();
+                    try {
+                        vehiculocrud.registrar(vehiculo);
+                        listarVehiculos(request, response, "registrado");
+                    } catch (Exception ex) {
+                        listarVehiculos(request, response, "error_registrar");
+                        Logger.getLogger(VehiculoController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
+                case "actualizar":
+                    vehiculo = extraerVehiculoForm(request);
+                    vehiculocrud = new VehiculoCRUD();
+                    try {
+                        vehiculocrud.actualizar(vehiculo);
+                        listarVehiculos(request, response, "actualizado");
+                    } catch (Exception ex) {
+                        listarVehiculos(request, response, "error_actualizar");
+                        Logger.getLogger(VehiculoController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
+                case "buscar":
+                    List<Vehiculo> vehiculos;
+                    String nombre_campo = request.getParameter("nombre_campo");
+                    String dato = request.getParameter("dato");
+                    vehiculocrud = new VehiculoCRUD();
+                    try {
+                        vehiculos = (List<Vehiculo>) vehiculocrud.buscar(nombre_campo, dato);
+                        request.setAttribute("vehiculos", vehiculos);
+                        RequestDispatcher view = request.getRequestDispatcher("vehiculo/vehiculos.jsp");
+                        view.forward(request, response);
+                    } catch (Exception ex) {
+                        listarVehiculos(request, response, "error_buscar_campo");
+                        Logger.getLogger(VehiculoController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
+            }
+        }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
+        /**
+         * Returns a short description of the servlet.
+         *
+         * @return a String containing servlet description
+         */
+        @Override
+        public String getServletInfo
+        
+            () {
         return "Short description";
-    }// </editor-fold>
-    //Mostrar lista de vehiculos
+        }// </editor-fold>
+        //Mostrar lista de vehiculos
+    
+
     private void listarVehiculos(HttpServletRequest request, HttpServletResponse response, String mensaje) {
         List<Vehiculo> vehiculos;
         VehiculoCRUD vehiculocrud = new VehiculoCRUD();
         try {
-            vehiculos = (List<Vehiculo>)vehiculocrud.listar();
+            vehiculos = (List<Vehiculo>) vehiculocrud.listar();
             //Enviamos las listas al jsp
-            request.setAttribute("vehiculos",vehiculos);
+            request.setAttribute("vehiculos", vehiculos);
             //enviamos mensaje
-            request.setAttribute("mensaje",mensaje);
+            request.setAttribute("mensaje", mensaje);
             RequestDispatcher view = request.getRequestDispatcher("vehiculo/vehiculos.jsp");
-            view.forward(request,response);
+            view.forward(request, response);
         } catch (Exception ex) {
             System.out.println(ex);
             Logger.getLogger(VehiculoController.class.getName()).log(Level.SEVERE, null, ex);

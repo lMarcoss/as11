@@ -5,24 +5,25 @@ package entidades;
  * @author lmarcoss
  */
 public class Empleado {
+
     private String id_empleado;
     private String id_persona;
     private String empleado;
     private String id_jefe;
     private String jefe;
-    private String roll;
+    private String rol;
     private String estatus;
 
     public Empleado() {
     }
 
-    public Empleado(String id_empleado, String id_persona, String empleado, String id_jefe, String jefe, String roll, String estatus) {
+    public Empleado(String id_empleado, String id_persona, String empleado, String id_jefe, String jefe, String rol, String estatus) {
         this.id_empleado = id_empleado;
         this.id_persona = id_persona;
         this.empleado = empleado;
         this.id_jefe = id_jefe;
         this.jefe = jefe;
-        this.roll = roll;
+        this.rol = rol;
         this.estatus = estatus;
     }
 
@@ -46,8 +47,8 @@ public class Empleado {
         this.jefe = jefe;
     }
 
-    public void setRoll(String roll) {
-        this.roll = roll;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
     public void setEstatus(String estatus) {
@@ -74,13 +75,12 @@ public class Empleado {
         return jefe;
     }
 
-    public String getRoll() {
-        return roll;
+    public String getRol() {
+        return rol;
     }
 
     public String getEstatus() {
         return estatus;
     }
 
-    
 }
