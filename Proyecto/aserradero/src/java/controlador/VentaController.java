@@ -2,13 +2,13 @@ package controlador;
 
 import ticketVenta.DatosClienteTicket;
 import dao.ClienteCRUD;
-import dao.EmpleadoCRUD;
+import dao.empleado.EmpleadoCRUD;
 import dao.VentaCRUD;
 import dao.VentaExtraCRUD;
 import dao.VentaMayoreoCRUD;
 import dao.VentaPaqueteCRUD;
 import entidades.Cliente;
-import entidades.Empleado;
+import entidades.empleado.Empleado;
 import entidades.Venta;
 import entidades.VentaExtra;
 import entidades.VentaMayoreo;

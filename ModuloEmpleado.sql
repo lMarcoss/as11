@@ -1,6 +1,6 @@
 USE aserradero;
 
-INSERT INTO EMPLEADO VALUES('MASL19931106HOCRNN','MASL19931106HOCRNN','MASL19931106HOCRNN','Administrador','Activo');
+-- INSERT INTO EMPLEADO VALUES('MASL19931106HOCRNN','MASL19931106HOCRNN','MASL19931106HOCRNN','Administrador','Activo');
 
 -- Disparador para crear id_jefe: para administrador
 DROP TRIGGER IF EXISTS EMPLEADO;
@@ -14,6 +14,8 @@ BEGIN
         -- Actualizamos el id_empleado y el id_jefe
         SET NEW.id_jefe = id_administrador;
         SET NEW.id_empleado = id_administrador;
+	ELSE 
+		SET NEW.id_empleado = CONCAT(NEW.id_empleado,SUBSTRING(NEW.id_jefe,1,8));
     END IF;
 END;//
 DELIMITER ;
@@ -47,9 +49,11 @@ SELECT id_empleado,
         (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE PERSONA.id_persona = EMPLEADO.id_persona) as empleado,
         id_jefe,
         (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(id_jefe,1,18)) as jefe, 
-        rol,estatus FROM EMPLEADO,ADMINISTRADOR WHERE id_jefe = id_administrador;
+        rol,estatus 
+FROM EMPLEADO;
 
 -- Lista de pago a empleados
+DROP VIEW IF EXISTS VISTA_PAGO_EMPLEADO;
 CREATE VIEW VISTA_PAGO_EMPLEADO AS 
 SELECT id_pago_empleado,
 		fecha,
@@ -59,6 +63,3 @@ SELECT id_pago_empleado,
         monto,
         observacion 
 FROM PAGO_EMPLEADO,EMPLEADO WHERE PAGO_EMPLEADO.id_empleado = EMPLEADO.id_empleado;
-
-SELECT * FROM EMPLEADO;
-SELECT * FROM VISTA_USUARIO;

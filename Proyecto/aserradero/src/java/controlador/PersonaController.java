@@ -1,5 +1,6 @@
 package controlador;
 
+import controlador.empleado.EmpleadoController;
 import dao.LocalidadCRUD;
 import dao.PersonaCRUD;
 import entidades.Localidad;

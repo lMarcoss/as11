@@ -1,9 +1,9 @@
 package controlador;
 
-import dao.AdministradorCRUD;
+import dao.empleado.AdministradorCRUD;
 import dao.PersonaCRUD;
 import dao.ProveedorCRUD;
-import entidades.Administrador;
+import entidades.empleado.Administrador;
 import entidades.Persona;
 import entidades.Proveedor;
 import java.io.IOException;

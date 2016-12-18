@@ -30,7 +30,7 @@
     </servlet>
     <servlet>
         <servlet-name>EmpleadoController</servlet-name>
-        <servlet-class>controlador.EmpleadoController</servlet-class>
+        <servlet-class>controlador.empleado.EmpleadoController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>VentaController</servlet-name>
@@ -114,7 +114,7 @@
     </servlet>
     <servlet>
         <servlet-name>PagoEmpleadoController</servlet-name>
-        <servlet-class>controlador.PagoEmpleadoController</servlet-class>
+        <servlet-class>controlador.empleado.PagoEmpleadoController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PagoEntradaMaderaRolloController</servlet-name>
@@ -122,7 +122,7 @@
     </servlet>
     <servlet>
         <servlet-name>AdministradorController</servlet-name>
-        <servlet-class>controlador.AdministradorController</servlet-class>
+        <servlet-class>controlador.empleado.AdministradorController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SalidaMaderaRolloController</servlet-name>
@@ -130,7 +130,7 @@
     </servlet>
     <servlet>
         <servlet-name>PrestamoController</servlet-name>
-        <servlet-class>controlador.PrestamoController</servlet-class>
+        <servlet-class>controlador.prestamo.PrestamoController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>VentasAjaxController</servlet-name>
@@ -142,7 +142,7 @@
     </servlet>
     <servlet>
         <servlet-name>PagoPrestamoController</servlet-name>
-        <servlet-class>controlador.PagoPrestamoController</servlet-class>
+        <servlet-class>controlador.prestamo.PagoPrestamoController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>IniciarSesion</servlet-name>

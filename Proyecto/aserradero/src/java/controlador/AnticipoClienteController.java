@@ -1,11 +1,12 @@
 package controlador;
 
+import controlador.empleado.EmpleadoController;
 import dao.AnticipoClienteCRUD;
 import dao.ClienteCRUD;
-import dao.EmpleadoCRUD;
+import dao.empleado.EmpleadoCRUD;
 import entidades.AnticipoCliente;
 import entidades.Cliente;
-import entidades.Empleado;
+import entidades.empleado.Empleado;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;

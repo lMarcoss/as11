@@ -1,10 +1,10 @@
 package controlador;
 
 import dao.EntradaMaderaRolloCRUD;
-import dao.EmpleadoCRUD;
+import dao.empleado.EmpleadoCRUD;
 import dao.ProveedorCRUD;
 import entidades.EntradaMaderaRollo;
-import entidades.Empleado;
+import entidades.empleado.Empleado;
 import entidades.Proveedor;
 import java.io.IOException;
 import java.io.PrintWriter;

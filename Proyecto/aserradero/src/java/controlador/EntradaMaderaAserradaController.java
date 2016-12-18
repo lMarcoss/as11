@@ -1,9 +1,10 @@
 package controlador;
 
-import dao.EmpleadoCRUD;
+import controlador.empleado.EmpleadoController;
+import dao.empleado.EmpleadoCRUD;
 import dao.MaderaAserradaClasifCRUD;
 import dao.EntradaMaderaAserradaCRUD;
-import entidades.Empleado;
+import entidades.empleado.Empleado;
 import entidades.MaderaAserradaClasif;
 import entidades.EntradaMaderaAserrada;
 import java.io.IOException;

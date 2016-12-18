@@ -1,8 +1,8 @@
 package controlador;
 
-import dao.EmpleadoCRUD;
+import dao.empleado.EmpleadoCRUD;
 import dao.PagoLuzCRUD;
-import entidades.Empleado;
+import entidades.empleado.Empleado;
 import entidades.PagoLuz;
 import java.io.IOException;
 import java.io.PrintWriter;

@@ -32,7 +32,7 @@ public class PersonaCRUD extends Conexion implements OperacionesCRUD{
     }
 
     @Override
-    public <T> List listar() throws Exception {
+    public <T> List listar(String id_jefe) throws Exception {
         List<Persona> personas;
         try{
             this.abrirConexion();
@@ -187,6 +187,31 @@ public class PersonaCRUD extends Conexion implements OperacionesCRUD{
         }finally{
             this.cerrarConexion();
         }
+        return personas;
+    }
+    public <T> List listarPersonasParaAdmin() throws Exception {
+        List<Persona> personas;
+        try{
+            this.abrirConexion();
+            try (PreparedStatement st = this.conexion.prepareStatement(
+                    "SELECT * FROM PERSONA WHERE id_persona NOT IN (SELECT SUBSTRING(id_administrador,1,18) FROM ADMINISTRADOR)")) {
+                personas = new ArrayList();
+                try (ResultSet rs = st.executeQuery()) {
+                    while (rs.next()) {
+                        Persona persona = (Persona) extraerObject(rs);
+                        personas.add(persona);
+                    }
+                }
+            }catch(Exception e){
+                personas = null;
+                System.out.println(e);
+            }
+        }catch(Exception e){
+            System.out.println(e);
+            throw e;
+        }finally{
+            this.cerrarConexion();
+        } 
         return personas;
     }
 }

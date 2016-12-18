@@ -1,9 +1,9 @@
 package controlador;
 
-import dao.EmpleadoCRUD;
+import dao.empleado.EmpleadoCRUD;
 import dao.InventarioMaderaRolloCRUD;
 import dao.SalidaMaderaRolloCRUD;
-import entidades.Empleado;
+import entidades.empleado.Empleado;
 import entidades.InventarioMaderaRollo;
 import entidades.SalidaMaderaRollo;
 import java.io.IOException;

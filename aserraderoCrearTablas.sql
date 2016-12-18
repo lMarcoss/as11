@@ -15,7 +15,7 @@ CREATE TABLE LOCALIDAD(
 	nombre_municipio	VARCHAR(45) NOT NULL,
 	telefono 			CHAR(10),
 	PRIMARY KEY (nombre_localidad),
-	FOREIGN KEY (nombre_municipio) REFERENCES MUNICIPIO (nombre_municipio) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (nombre_municipio) REFERENCES MUNICIPIO (nombre_municipio))ENGINE=InnoDB;
 
 CREATE TABLE PERSONA(
 	id_persona			CHAR(18) NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE PERSONA(
 	fecha_nacimiento	DATE,
 	telefono			CHAR(10),
 	primary key(id_persona),
-	FOREIGN KEY (localidad) REFERENCES LOCALIDAD (nombre_localidad) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (localidad) REFERENCES LOCALIDAD (nombre_localidad))ENGINE=InnoDB;
 
 
     
@@ -49,15 +49,15 @@ CREATE TABLE EMPLEADO(
 	rol				ENUM('Administrador','Empleado','Vendedor','Chofer'),	
 	estatus			ENUM('Activo','Inactivo'),
 	PRIMARY KEY (id_empleado,id_jefe,rol),
-	FOREIGN KEY (id_persona) REFERENCES PERSONA (id_persona) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (id_jefe) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
+	FOREIGN KEY (id_persona) REFERENCES PERSONA (id_persona),
+    FOREIGN KEY (id_jefe) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
  -- CREATE TABLE EMPLEADO_JEFE(id_empleado 	VARCHAR(18) NOT NULL,id_jefe			VARCHAR(18) NOT NULL,PRIMARY KEY (id_empleado,id_jefe),FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE,	FOREIGN KEY (id_jefe) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
 CREATE TABLE ADMINISTRADOR(
 	id_administrador	VARCHAR(26) NOT NULL,
     cuenta_inicial 		DECIMAL(15,2),
 	PRIMARY KEY (id_administrador),
-	FOREIGN KEY (id_administrador) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (id_administrador) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 CREATE	TABLE PAGO_EMPLEADO(
 	id_pago_empleado INT NOT NULL AUTO_INCREMENT,
@@ -66,7 +66,7 @@ CREATE	TABLE PAGO_EMPLEADO(
 	monto 			DECIMAL(15,2),
 	observacion		VARCHAR(250),
 	PRIMARY KEY (id_pago_empleado),
-	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 CREATE TABLE USUARIO(
 	id_empleado 		VARCHAR(26) NOT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE USUARIO(
 	metodo 				ENUM('sha1'),
     email				VARCHAR(50),
     PRIMARY KEY(nombre_usuario),
-    FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+    FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 -- entrada
 CREATE TABLE PROVEEDOR(
@@ -84,7 +84,7 @@ CREATE TABLE PROVEEDOR(
 	id_jefe			VARCHAR(18) NOT NULL,
 	PRIMARY KEY (id_proveedor,id_jefe),
 	FOREIGN KEY (id_persona) REFERENCES PERSONA (id_persona),
-	FOREIGN KEY (id_jefe) REFERENCES ADMINISTRADOR (id_administrador) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (id_jefe) REFERENCES ADMINISTRADOR (id_administrador))ENGINE=InnoDB;
 
 CREATE TABLE COSTO_MADERA_ENTRADA(
 	id_administrador 	VARCHAR(18) NOT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE COSTO_MADERA_ENTRADA(
 	clasificacion		ENUM('Primario','Secundario','Terciario') NOT NULL,
 	costo 				DECIMAL(8,2),
 	PRIMARY KEY (id_administrador,clasificacion),
-    FOREIGN KEY (id_administrador) REFERENCES ADMINISTRADOR (id_administrador) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_administrador) REFERENCES ADMINISTRADOR (id_administrador),
     FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 CREATE TABLE ENTRADA_MADERA_ROLLO( -- entrada_madera	
@@ -135,7 +135,7 @@ CREATE TABLE MADERA_ASERRADA_CLASIF(
 	volumen					DECIMAL(15,3),
     costo_por_volumen		DECIMAL(15,2),
 	primary key(id_administrador,id_madera),
-    FOREIGN KEY (id_administrador) REFERENCES ADMINISTRADOR (id_administrador) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_administrador) REFERENCES ADMINISTRADOR (id_administrador),
     FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 -- producción
@@ -157,8 +157,8 @@ CREATE TABLE CLIENTE(
     id_persona 	CHAR(18) NOT NULL,
 	id_jefe		CHAR(18),
 	PRIMARY KEY(id_cliente,id_jefe),
-	FOREIGN KEY (id_persona) REFERENCES PERSONA (id_persona) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (id_jefe) REFERENCES ADMINISTRADOR (id_administrador) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (id_persona) REFERENCES PERSONA (id_persona),
+	FOREIGN KEY (id_jefe) REFERENCES ADMINISTRADOR (id_administrador))ENGINE=InnoDB;
 
 
 CREATE TABLE VENTA(
@@ -182,7 +182,7 @@ CREATE TABLE VENTA_MAYOREO(
 	monto					DECIMAL(15,2),
     tipo_madera 			ENUM('Madera','Amarre') NOT NULL,
 	PRIMARY KEY(id_venta,id_madera),
-	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta),
 	FOREIGN KEY (id_administrador,id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_administrador,id_madera))ENGINE=InnoDB;
 
 CREATE TABLE VENTA_PAQUETE(
@@ -195,7 +195,7 @@ CREATE TABLE VENTA_PAQUETE(
 	monto					DECIMAL(15,2),
     tipo_madera 			ENUM('Madera','Amarre') NOT NULL,
 	PRIMARY KEY(id_venta,numero_paquete,id_madera),
-	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta),
 	FOREIGN KEY (id_administrador,id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_administrador,id_madera))ENGINE=InnoDB;
 
 CREATE TABLE VENTA_EXTRA(
@@ -204,7 +204,7 @@ CREATE TABLE VENTA_EXTRA(
 	monto					DECIMAL(15,2),
 	observacion				VARCHAR(100),
 	PRIMARY KEY(id_venta,tipo),
-	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta))ENGINE=InnoDB;
 
 CREATE	TABLE PAGO_RENTA(
 	id_pago_renta	INT NOT NULL AUTO_INCREMENT,
@@ -227,7 +227,7 @@ CREATE	TABLE PAGO_LUZ(
 	monto 			DECIMAL(15,2),
 	observacion		VARCHAR(250),
 	PRIMARY KEY (id_pago_luz),
-	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 CREATE	TABLE OTRO_GASTO(
 	id_gasto		INT NOT NULL AUTO_INCREMENT,
@@ -237,7 +237,7 @@ CREATE	TABLE OTRO_GASTO(
 	monto 			DECIMAL(15,2),
 	observacion		VARCHAR(250),
 	PRIMARY KEY (id_gasto),
-	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 CREATE TABLE ANTICIPO_CLIENTE(
 	id_anticipo_c	INT NOT NULL AUTO_INCREMENT,
@@ -270,7 +270,7 @@ CREATE TABLE VEHICULO(
 	costo 			DECIMAL(15,2),
 	id_empleado		VARCHAR(26) NOT NULL,
 	PRIMARY KEY(id_vehiculo),
-	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
 CREATE TABLE PRESTAMO(
 	id_prestamo			INT NOT NULL AUTO_INCREMENT,

@@ -1,11 +1,12 @@
 
 package controlador;
 
+import controlador.empleado.EmpleadoController;
 import dao.AnticipoProveedorCRUD;
-import dao.EmpleadoCRUD;
+import dao.empleado.EmpleadoCRUD;
 import dao.ProveedorCRUD;
 import entidades.AnticipoProveedor;
-import entidades.Empleado;
+import entidades.empleado.Empleado;
 import entidades.Proveedor;
 import java.io.IOException;
 import java.io.PrintWriter;
