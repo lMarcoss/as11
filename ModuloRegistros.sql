@@ -19,6 +19,7 @@ INSERT INTO PERSONA (id_persona,nombre,apellido_paterno,apellido_materno,localid
 ("PAXA20160913HOCSXN","Antonio","Pascual","","Santa Cruz Monjas","H","2016-09-13","1234567890"),
 ("PEXF20160910HOCRXR","Francisco","Perez","","Santa Cruz Monjas","H","2016-09-10","1234567890");
 
+DROP VIEW IF EXISTS VISTA_LOCALIDAD;
 CREATE VIEW VISTA_LOCALIDAD AS 
 SELECT 
 	nombre_localidad,
@@ -26,7 +27,8 @@ SELECT
     LOCALIDAD.telefono AS telefono_localidad,
     estado
 FROM LOCALIDAD,MUNICIPIO
-WHERE LOCALIDAD.nombre_municipio = MUNICIPIO.nombre_municipio;
+WHERE LOCALIDAD.nombre_municipio = MUNICIPIO.nombre_municipio
+ORDER BY nombre_localidad;
 
 -- lista a todo el personal Cliente id_cliente y nombre completo, id_jefe y nombre completo
 DROP VIEW IF EXISTS PERSONAL_CLIENTE;

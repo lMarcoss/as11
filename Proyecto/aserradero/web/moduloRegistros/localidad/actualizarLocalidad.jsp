@@ -4,10 +4,11 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.Localidad"%>
+<%@page import="entidades.registros.Localidad"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<%Localidad localidad = (Localidad) request.getAttribute("localidad");%>
+<%
+    Localidad localidad = (Localidad) request.getAttribute("localidad");
+%>
 
 <!DOCTYPE html>
 <html>
@@ -52,7 +53,7 @@
                                 <div class="form-group">
                                     <i class="glyphicon glyphicon-phone"></i>
                                     <label class="control-label" for="telefono">Teléfono:</label>
-                                    <input type="text" class="form-control" name="telefono" value="<%=localidad.getTelefono()%>" pattern="[0-9]{10}" title="10 dígitos"/>
+                                    <input type="text" class="form-control" name="telefono" value="<%=localidad.getTelefono_localidad()%>" pattern="[0-9]{10}" title="10 dígitos"/>
                                 </div>
                                 <div class="form-group">
                                     <a href="/aserradero/LocalidadController?action=listar"><input class="btn btn-warning" type="button" value="Cancelar"/></a>

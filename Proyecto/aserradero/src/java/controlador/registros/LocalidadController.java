@@ -1,4 +1,3 @@
-
 package controlador.registros;
 
 import dao.registros.LocalidadCRUD;
@@ -6,7 +5,6 @@ import dao.registros.MunicipioCRUD;
 import entidades.registros.Localidad;
 import entidades.registros.Municipio;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -34,7 +33,56 @@ public class LocalidadController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
+
+        // Sesiones
+        HttpSession sesion = request.getSession(false);
+        String nombre_usuario = (String) sesion.getAttribute("nombre_usuario");
+        String rol = (String) sesion.getAttribute("rol");
+        if (nombre_usuario.equals("")) {
+            response.sendRedirect("/aserradero/");
+        } else if (rol.equals("Administrador") || rol.equals("Empleado") || rol.equals("Vendedor")) {
+            //Acción a realizar
+            String action = request.getParameter("action");
+            switch (action) {
+                /**
+                 * *************** Respuestas a métodos POST
+                 * *********************
+                 */
+                case "insertar":
+                    registrarLocalidad(request, response, sesion, action);
+                    break;
+                case "actualizar":
+                    actualizarLocalidad(request, response, sesion, action);
+                    break;
+                case "buscar":
+                    buscarLocalidad(request, response, sesion, action);
+                    break;
+                /**
+                 * *************** Respuestas a métodos GET
+                 * *********************
+                 */
+                case "nuevo":
+                    prepararNuevoLocalidad(request, response, sesion);
+                    break;
+                case "listar":
+                    listarLocalidades(request, response, sesion, action);
+                    break;
+                case "modificar":
+                    modificarLocalidad(request, response, sesion, action);
+                    break;
+                case "eliminar":
+                    eliminarLocalidad(request, response, sesion, action);
+                    break;
+            }
+        } else {
+            try {
+                sesion.invalidate();
+            } catch (Exception e) {
+                System.out.println(e);
+                response.sendRedirect("/aserradero/");
+            }
+            response.sendRedirect("/aserradero/");
         }
     }
 
@@ -50,63 +98,7 @@ public class LocalidadController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
-        //Llegan url
-        String action = request.getParameter("action");
-        Localidad localidadEC; //Enviar al CRUD
-        Localidad localidad; //Respuesta del CRUD
-        LocalidadCRUD localidadCRUD;
-        switch(action){
-            case "nuevo":
-                MunicipioCRUD municipioCRUD = new MunicipioCRUD();
-                List<Municipio> municipios;
-                try {
-                    municipios = (List<Municipio>)municipioCRUD.listar();
-                    request.setAttribute("municipios",municipios);
-                    RequestDispatcher view = request.getRequestDispatcher("localidad/nuevoLocalidad.jsp");
-                    view.forward(request,response);
-                } catch (Exception ex) {
-                    listarLocalidades(request, response,"error_nuevo");
-                    Logger.getLogger(LocalidadController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "listar":
-                listarLocalidades(request, response,"");
-                break;
-            case "modificar":
-                localidadEC = new Localidad();
-                localidadEC.setNombre_localidad(request.getParameter("nombre_localidad"));
-                localidadCRUD = new LocalidadCRUD();
-                try {
-                    localidad = (Localidad) localidadCRUD.modificar(localidadEC);
-                    request.setAttribute("localidad",localidad);
-                    RequestDispatcher view = request.getRequestDispatcher("localidad/actualizarLocalidad.jsp");
-                    view.forward(request,response);
-                } catch (Exception ex) {
-                    System.out.println(ex);
-                    listarLocalidades(request, response, "error_modificar");
-                    Logger.getLogger(LocalidadController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "eliminar":
-                localidadEC = new Localidad();
-                localidadEC.setNombre_localidad(request.getParameter("nombre_localidad"));
-                localidadCRUD = new LocalidadCRUD();
-                try {
-                    localidadCRUD.eliminar(localidadEC);
-                    listarLocalidades(request, response,"eliminado");
-                } catch (Exception ex) {
-                    System.out.println(ex);
-                    listarLocalidades(request, response, "error_eliminar");
-                    Logger.getLogger(LocalidadController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "buscar_localidad":
-                String nombre_localidad = request.getParameter("nombre_localidad");
-                buscarLocalidad(request, response, nombre_localidad);
-                break;
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -120,54 +112,9 @@ public class LocalidadController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Llegan formularios de tipo post
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
-        String action = request.getParameter("action");
-        Localidad localidad;
-        LocalidadCRUD localidadCRUD;
-        switch(action){
-            case "nuevo":
-                localidad = extraerLocalidadForm(request);
-                localidadCRUD = new LocalidadCRUD();
-                try {
-                    localidadCRUD.registrar(localidad);
-                    listarLocalidades(request, response,"registrado");
-                } catch (Exception ex) {
-                    listarLocalidades(request, response, "error_registrar");
-                    System.out.println(ex);
-                    Logger.getLogger(LocalidadController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "actualizar":
-                localidad = extraerLocalidadForm(request);
-                localidadCRUD = new LocalidadCRUD();
-                try {
-                    localidadCRUD.actualizar(localidad);
-                    listarLocalidades(request, response,"actualizado");
-                } catch (Exception ex) {
-                    listarLocalidades(request, response, "error_actualizar");
-                    Logger.getLogger(LocalidadController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "buscar":
-                List <Localidad> localidades;
-                String nombre_campo = request.getParameter("nombre_campo");
-                String dato = request.getParameter("dato");
-                localidadCRUD = new LocalidadCRUD();
-                try {
-                    localidades = (List<Localidad>)localidadCRUD.buscar(nombre_campo, dato);
-                    request.setAttribute("localidades",localidades);
-                    RequestDispatcher view = request.getRequestDispatcher("localidad/localidades.jsp");
-                    view.forward(request,response);
-                } catch (Exception ex) {
-                    listarLocalidades(request, response, "error_buscar_campo");
-                    Logger.getLogger(LocalidadController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-        }
+        processRequest(request, response);
     }
-   
+
     /**
      * Returns a short description of the servlet.
      *
@@ -178,24 +125,21 @@ public class LocalidadController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void listarLocalidades(HttpServletRequest request, HttpServletResponse response,String mensaje) {
-        List<Localidad> localidades;
-        LocalidadCRUD localidadCrud = new LocalidadCRUD();
+    private void registrarLocalidad(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
+        Localidad localidad = extraerLocalidadForm(request, sesion, action);
+        LocalidadCRUD localidadCRUD = new LocalidadCRUD();
         try {
-            localidades = (List<Localidad>)localidadCrud.listar();
-            //Enviamos las listas al jsp
-            request.setAttribute("localidades",localidades);
-            request.setAttribute("mensaje",mensaje);
-            RequestDispatcher view = request.getRequestDispatcher("localidad/localidades.jsp");
-            view.forward(request,response);
+            localidadCRUD.registrar(localidad);
+            listarLocalidades(request, response, sesion, action);
         } catch (Exception ex) {
+            listarLocalidades(request, response, sesion, "error_registrar");
             System.out.println(ex);
             Logger.getLogger(LocalidadController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    // Extraer datos del formulario
-    private Localidad extraerLocalidadForm(HttpServletRequest request) {
+
+    //Extraer datos de localidad en el formulario HTML
+    private Localidad extraerLocalidadForm(HttpServletRequest request, HttpSession sesion, String action) {
         Localidad localidad = new Localidad();
         localidad.setNombre_localidad(request.getParameter("nombre_localidad"));
         localidad.setNombre_municipio(request.getParameter("nombre_municipio"));
@@ -203,20 +147,97 @@ public class LocalidadController extends HttpServlet {
         return localidad;
     }
 
-    private void buscarLocalidad(HttpServletRequest request, HttpServletResponse response, String nombre_localidad) {
-        List<Localidad> localidades;
-        LocalidadCRUD localidadCrud = new LocalidadCRUD();
+    private void actualizarLocalidad(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
+        Localidad localidad = extraerLocalidadForm(request, sesion, action);
+        LocalidadCRUD localidadCRUD = new LocalidadCRUD();
         try {
-            localidades = (List<Localidad>)localidadCrud.buscarLocalidad(nombre_localidad);
-            //Enviamos las listas al jsp
-            request.setAttribute("localidades",localidades);
-            RequestDispatcher view = request.getRequestDispatcher("localidad/localidades.jsp");
-            view.forward(request,response);
+            localidadCRUD.actualizar(localidad);
+            listarLocalidades(request, response, sesion, action);
         } catch (Exception ex) {
-            listarLocalidades(request, response, "error_buscar_localidad");
-            System.out.println(ex);
-            Logger.getLogger(PersonaController.class.getName()).log(Level.SEVERE, null, ex);
+            listarLocalidades(request, response, sesion, "error_actualizar");
+            Logger.getLogger(LocalidadController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    private void buscarLocalidad(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
+        List<Localidad> localidades;
+        String nombre_campo = request.getParameter("nombre_campo");
+        String dato = request.getParameter("dato");
+        LocalidadCRUD localidadCRUD = new LocalidadCRUD();
+        try {
+            localidades = (List<Localidad>) localidadCRUD.buscar(nombre_campo, dato);
+            mostrarLocalidades(request, response, localidades, action);
+        } catch (Exception ex) {
+            listarLocalidades(request, response, sesion, "error_buscar_campo");
+            Logger.getLogger(LocalidadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void mostrarLocalidades(HttpServletRequest request, HttpServletResponse response, List<Localidad> listaLocalidades, String action) {
+        request.setAttribute("mensaje", action);
+        request.setAttribute("listaLocalidades", listaLocalidades);
+        RequestDispatcher view = request.getRequestDispatcher("moduloRegistros/localidad/listarLocalidades.jsp");
+        try {
+            view.forward(request, response);
+        } catch (ServletException | IOException ex) {
+            System.err.println("No se pudo mostrar la lista de localidades");
+            Logger.getLogger(LocalidadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void prepararNuevoLocalidad(HttpServletRequest request, HttpServletResponse response, HttpSession sesion) {
+        MunicipioCRUD municipioCRUD = new MunicipioCRUD();
+        List<Municipio> municipios;
+        try {
+            municipios = (List<Municipio>) municipioCRUD.listar();
+            request.setAttribute("municipios", municipios);
+            RequestDispatcher view = request.getRequestDispatcher("moduloRegistros/localidad/nuevoLocalidad.jsp");
+            view.forward(request, response);
+        } catch (Exception ex) {
+            listarLocalidades(request, response, sesion, "error_nuevo");
+            Logger.getLogger(LocalidadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void listarLocalidades(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
+        List<Localidad> listaLocalidades;
+        LocalidadCRUD localidadCRUD = new LocalidadCRUD();
+        try {
+            listaLocalidades = (List<Localidad>) localidadCRUD.listar((String) sesion.getAttribute("id_jefe"));
+            mostrarLocalidades(request, response, listaLocalidades, action);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            Logger.getLogger(LocalidadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void modificarLocalidad(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
+        Localidad localidadEC = new Localidad();
+        localidadEC.setNombre_localidad(request.getParameter("nombre_localidad"));
+        LocalidadCRUD localidadCRUD = new LocalidadCRUD();
+        try {
+            Localidad localidad = (Localidad) localidadCRUD.modificar(localidadEC);
+            request.setAttribute("localidad", localidad);
+            RequestDispatcher view = request.getRequestDispatcher("moduloRegistros/localidad/actualizarLocalidad.jsp");
+            view.forward(request, response);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            listarLocalidades(request, response, sesion, "error_modificar");
+            Logger.getLogger(LocalidadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void eliminarLocalidad(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
+        Localidad localidadEC = new Localidad();
+        localidadEC.setNombre_localidad(request.getParameter("nombre_localidad"));
+        LocalidadCRUD localidadCRUD = new LocalidadCRUD();
+        try {
+            localidadCRUD.eliminar(localidadEC);
+            listarLocalidades(request, response, sesion, action);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            listarLocalidades(request, response, sesion, "error_eliminar");
+            Logger.getLogger(LocalidadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

@@ -5,9 +5,11 @@
 --%>
 
 <%@page import="java.util.List"%>
-<%@page import="entidades.Municipio"%>
+<%@page import="entidades.registros.Municipio"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%List <Municipio> municipios = (List<Municipio>) request.getAttribute("municipios");%>
+<%
+    List <Municipio> municipios = (List<Municipio>) request.getAttribute("municipios");
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -35,7 +37,7 @@
                                 <h3 class="panel-title">Rellene los campos de manera correcta</h3>
                           </div>
                           <div class="panel-body">
-                                <form action="/aserradero/LocalidadController?action=nuevo" method="post" id="formregistro">
+                                <form action="/aserradero/LocalidadController?action=insertar" method="post" id="formregistro">
                                     <div class="form-group">
                                         <label class="control-label" for="name">Nombre localidad:</label>
                                         <input type="text" class="form-control" name="nombre_localidad"  pattern="[A-Za-z].{3,}[A-Za-z]" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="45" required=""/>

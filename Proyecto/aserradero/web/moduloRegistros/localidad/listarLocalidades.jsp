@@ -4,11 +4,11 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.Localidad"%>
+<%@page import="entidades.registros.Localidad"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    List <Localidad> localidades = (List<Localidad>) request.getAttribute("localidades");
+    List <Localidad> localidades = (List<Localidad>) request.getAttribute("listaLocalidades");
     String mensaje = (String)request.getAttribute("mensaje");
 %>
 <!DOCTYPE html>
@@ -71,7 +71,7 @@
                                             +"<td>"+localidad.getNombre_localidad()+"</td>"
                                             +"<td><a href=\"/aserradero/MunicipioController?action=buscar_municipio&nombre_municipio="+localidad.getNombre_municipio()+"\">"+localidad.getNombre_municipio()+"</a></td>"
                                             +"<td>"+localidad.getTelefono_localidad()+"</td>"
-                                            +"<td><a class=\"btn btn-warning\" href=\"/aserradero/LocalidadController?action=modificar&nombre_localidad="+localidad.getNombre_localidad()+"\">Actualizar</a></td>"
+                                            +"<td><a class=\"btn btn-warning\" href=\"/aserradero/LocalidadController?action=modificar&nombre_localidad="+localidad.getNombre_localidad()+"\">Modificar</a></td>"
                                             + "<td><a class=\"btn btn-danger\" href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/LocalidadController?action=eliminar&nombre_localidad="+localidad.getNombre_localidad()+"';};\">Eliminar</a></td>"
                                         + "</tr>" );
                                         i++;
