@@ -56,7 +56,7 @@ public class LocalidadController extends HttpServlet {
                     actualizarLocalidad(request, response, sesion, action);
                     break;
                 case "buscar":
-                    buscarLocalidad(request, response, sesion, action);
+                    buscar(request, response, sesion, action);
                     break;
                 /**
                  * *************** Respuestas a métodos GET
@@ -73,6 +73,9 @@ public class LocalidadController extends HttpServlet {
                     break;
                 case "eliminar":
                     eliminarLocalidad(request, response, sesion, action);
+                    break;
+                case "buscar_localidad":
+                    buscarLocalidad(request, response, sesion, action);
                     break;
             }
         } else {
@@ -159,7 +162,7 @@ public class LocalidadController extends HttpServlet {
         }
     }
 
-    private void buscarLocalidad(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
+    private void buscar(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
         List<Localidad> localidades;
         String nombre_campo = request.getParameter("nombre_campo");
         String dato = request.getParameter("dato");
@@ -238,6 +241,21 @@ public class LocalidadController extends HttpServlet {
             System.out.println(ex);
             listarLocalidades(request, response, sesion, "error_eliminar");
             Logger.getLogger(LocalidadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    //Busca una localidad individual
+    private void buscarLocalidad(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
+        try {
+            List<Localidad> localidad;
+            LocalidadCRUD localidadCRUD = new LocalidadCRUD();
+            String nombre_localidad = request.getParameter("nombre_localidad");
+            localidad = (List<Localidad>) localidadCRUD.buscarLocalidad(nombre_localidad);
+            mostrarLocalidades(request, response, localidad, action);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            listarLocalidades(request, response, sesion, action);
+            Logger.getLogger(MunicipioController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -4,11 +4,11 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.Municipio"%>
+<%@page import="entidades.registros.Municipio"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    List <Municipio> municipios = (List<Municipio>) request.getAttribute("municipios");
+    List <Municipio> municipios = (List<Municipio>) request.getAttribute("listaMunicipios");
     String mensaje = (String)request.getAttribute("mensaje");
 %>
 <!DOCTYPE html>

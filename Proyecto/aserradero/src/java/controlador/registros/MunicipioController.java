@@ -3,7 +3,6 @@ package controlador.registros;
 import dao.registros.MunicipioCRUD;
 import entidades.registros.Municipio;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,10 +54,7 @@ public class MunicipioController extends HttpServlet {
                     actualizarMunicipio(request, response, sesion, action);
                     break;
                 case "buscar":
-                    buscarMunicipio(request, response, sesion, action);
-                    break;
-                case "buscar_municipio":
-                    buscarMunicipio(request, response);
+                    buscar(request, response, sesion, action);
                     break;
                 /**
                  * *************** Respuestas a métodos GET
@@ -75,6 +71,9 @@ public class MunicipioController extends HttpServlet {
                     break;
                 case "eliminar":
                     eliminarMunicipio(request, response, sesion, action);
+                    break;
+                case "buscar_municipio":
+                    buscarMunicipio(request, response, sesion, action);
                     break;
             }
         } else {
@@ -100,33 +99,7 @@ public class MunicipioController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
-        //Llegan url
-        String action = request.getParameter("action");
-        Municipio municipioEC; //Enviar al CRUD
-        Municipio municipio; //Respuesta del CRUD
-        MunicipioCRUD municipioCRUD;
-        switch (action) {
-            case "listar":
-                listarMunicipios(request, response, "");
-                break;
-            case "modificar":
-
-                break;
-            case "eliminar":
-
-                break;
-            case "buscar_municipio":
-                String nombre_municipio = request.getParameter("nombre_municipio");
-                try {
-                    buscarMunicipio(request, response, nombre_municipio);
-                } catch (Exception ex) {
-                    listarMunicipios(request, response, "error_buscar");
-                    Logger.getLogger(MunicipioController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -153,30 +126,6 @@ public class MunicipioController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-//    //Mostrar lista de municipios
-//    private void listarMunicipios(HttpServletRequest request, HttpServletResponse response, String mensaje) {
-//        List<Municipio> municipios;
-//        MunicipioCRUD municipiocrud = new MunicipioCRUD();
-//        try {
-//            municipios = (List<Municipio>)municipiocrud.listar();
-//            //Enviamos las listas al jsp
-//            request.setAttribute("municipios",municipios);
-//            request.setAttribute("mensaje",mensaje);
-//            RequestDispatcher view;
-//            view = request.getRequestDispatcher("municipio/municipios.jsp");
-//            view.forward(request,response);
-//        } catch (Exception ex) {
-//            System.out.println(ex);
-//            Logger.getLogger(MunicipioController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//    
-//    // Extraer datos del formulario
-//    private Municipio extraerMunicipioForm(HttpServletRequest request) {
-//    }
-//
-//    private void buscarMunicipio(HttpServletRequest request, HttpServletResponse response, String nombre_municipio) throws Exception{
-//    }
     private void registrarMunicipio(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
         Municipio municipio = extraerMunicipioForm(request, sesion, action);
         MunicipioCRUD municipioCRUD = new MunicipioCRUD();
@@ -210,7 +159,7 @@ public class MunicipioController extends HttpServlet {
         }
     }
 
-    private void buscarMunicipio(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
+    private void buscar(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
         List<Municipio> municipios;
         String nombre_campo = request.getParameter("nombre_campo");
         String dato = request.getParameter("dato");
@@ -224,10 +173,10 @@ public class MunicipioController extends HttpServlet {
         }
     }
 
-    private void mostrarMunicipios(HttpServletRequest request, HttpServletResponse response, List<Municipio> listaMunicipioes, String action) {
+    private void mostrarMunicipios(HttpServletRequest request, HttpServletResponse response, List<Municipio> listaMunicipios, String action) {
         request.setAttribute("mensaje", action);
-        request.setAttribute("listaMunicipioes", listaMunicipioes);
-        RequestDispatcher view = request.getRequestDispatcher("moduloRegistros/localidad/listarMunicipios.jsp");
+        request.setAttribute("listaMunicipios", listaMunicipios);
+        RequestDispatcher view = request.getRequestDispatcher("moduloRegistros/municipio/listarMunicipios.jsp");
         try {
             view.forward(request, response);
         } catch (ServletException | IOException ex) {
@@ -237,24 +186,14 @@ public class MunicipioController extends HttpServlet {
     }
 
     private void prepararNuevoMunicipio(HttpServletRequest request, HttpServletResponse response, HttpSession sesion) {
-        MunicipioCRUD municipioCRUD = new MunicipioCRUD();
-        List<Municipio> municipios;
-        try {
-            municipios = (List<Municipio>) municipioCRUD.listar();
-            request.setAttribute("municipios", municipios);
-            RequestDispatcher view = request.getRequestDispatcher("moduloRegistros/localidad/nuevoMunicipio.jsp");
-            view.forward(request, response);
-        } catch (Exception ex) {
-            listarMunicipios(request, response, sesion, "error_nuevo");
-            Logger.getLogger(MunicipioController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        response.sendRedirect("/aserradero/moduloRegistros/municipio/nuevoMunicipio.jsp");
     }
 
     private void listarMunicipios(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
         List<Municipio> listaMunicipios;
         MunicipioCRUD municipioCRUD = new MunicipioCRUD();
         try {
-            listaMunicipios = (List<Municipio>)municipioCRUD.listar();
+            listaMunicipios = (List<Municipio>) municipioCRUD.listar();
             mostrarMunicipios(request, response, listaMunicipios, action);
         } catch (Exception ex) {
             System.out.println(ex);
@@ -269,7 +208,7 @@ public class MunicipioController extends HttpServlet {
         try {
             Municipio municipio = municipioCRUD.modificar(municipioEC);
             request.setAttribute("municipio", municipio);
-            RequestDispatcher view = request.getRequestDispatcher("municipio/actualizarMunicipio.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("moduloRegistros/municipio/actualizarMunicipio.jsp");
             view.forward(request, response);
         } catch (Exception ex) {
             listarMunicipios(request, response, sesion, "error_modificar");
@@ -290,7 +229,18 @@ public class MunicipioController extends HttpServlet {
         }
     }
 
-    private void buscarMunicipio(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    //Busca un municipio individual
+    private void buscarMunicipio(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
+        try {
+            List<Municipio> municipios;
+            MunicipioCRUD municipioCRUDCrud = new MunicipioCRUD();
+            String nombre_municipio = request.getParameter("nombre_municipio");
+            municipios = (List<Municipio>) municipioCRUDCrud.buscarMunicipio(nombre_municipio);
+            mostrarMunicipios(request, response, municipios, action);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            listarMunicipios(request, response, sesion, action);
+            Logger.getLogger(MunicipioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

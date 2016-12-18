@@ -4,10 +4,11 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.Municipio"%>
+<%@page import="entidades.registros.Municipio"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<%Municipio municipio = (Municipio) request.getAttribute("municipio");%>
+<%
+    Municipio municipio = (Municipio) request.getAttribute("municipio");
+%>
 
 <!DOCTYPE html>
 <html>
@@ -42,7 +43,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" for="telefono">Teléfono:</label>
-                                    <input type="text" class="form-control" name="telefono" value="<%=municipio.getTelefono()%>" pattern="[0-9]{10}" title="10 dígitos"/>
+                                    <input type="text" class="form-control" name="telefono" value="<%=municipio.getTelefono()%>" pattern="[0-9]{10}" title="10 dígitos" maxlength="10"/>
                                 </div>
                                 <div class="form-group">
                                     <a href="/aserradero/MunicipioController?action=listar"><input class="btn btn-warning" type="button" value="Cancelar"/></a>
