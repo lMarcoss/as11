@@ -72,7 +72,7 @@
                                               +"<td>"+municipio.getNombre_municipio()+"</td>"
                                               +"<td>"+municipio.getEstado()+"</td>"
                                               +"<td>"+municipio.getTelefono()+"</td>"
-                                              +"<td><a class=\"btn btn-warning\" href=\"/aserradero/MunicipioController?action=modificar&nombre_municipio="+municipio.getNombre_municipio()+"\">Actualizar</a></td>"
+                                              +"<td><a class=\"btn btn-warning\" href=\"/aserradero/MunicipioController?action=modificar&nombre_municipio="+municipio.getNombre_municipio()+"\">Modificar</a></td>"
                                               + "<td><a class=\"btn btn-danger\" href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/MunicipioController?action=eliminar&nombre_municipio="+municipio.getNombre_municipio()+"';};\">Eliminar</a></td>"
                                           + "</tr>" );
                                           i++;
@@ -81,7 +81,7 @@
                               </tbody>
                           </table>
                           <div class="agregar_element">
-                              <input type="button" class="btn btn-primary" value="Agregar municipio" onClick=" window.location.href='/aserradero/municipio/nuevoMunicipio.jsp' ">
+                              <input type="button" class="btn btn-primary" value="Agregar municipio" onClick=" window.location.href='/aserradero/MunicipioController?action=nuevo' ">
                           </div>
                       </div>
                   </div><!-- panel fin-->

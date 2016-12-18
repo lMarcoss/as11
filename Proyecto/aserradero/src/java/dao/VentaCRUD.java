@@ -36,7 +36,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
     }
 
     @Override
-    public <T> List listar() throws Exception {
+    public <T> List listar(String id_jefe) throws Exception {
         List<Venta> ventas;
         try{
             this.abrirConexion();

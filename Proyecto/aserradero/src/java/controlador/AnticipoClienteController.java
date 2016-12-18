@@ -66,12 +66,12 @@ public class AnticipoClienteController extends HttpServlet {
                 try {
                     ClienteCRUD clienteCRUD= new ClienteCRUD();
                     List<Cliente> clientes;
-                    clientes = (List<Cliente>)clienteCRUD.listar();
+                    clientes = (List<Cliente>)clienteCRUD.listar("");
                     request.setAttribute("clientes",clientes);
                     
                     EmpleadoCRUD empleadoCRUD= new EmpleadoCRUD();
                     List<Empleado> empleados;
-                    empleados = (List<Empleado>)empleadoCRUD.listar();
+                    empleados = (List<Empleado>)empleadoCRUD.listar("");
                     request.setAttribute("empleados",empleados);
                     
                     RequestDispatcher view = request.getRequestDispatcher("anticipoCliente/nuevoAnticipoCliente.jsp");
@@ -191,7 +191,7 @@ public class AnticipoClienteController extends HttpServlet {
         List<AnticipoCliente> anticipoClientes;
         AnticipoClienteCRUD anticipoClienteCrud = new AnticipoClienteCRUD();
         try {
-            anticipoClientes = (List<AnticipoCliente>) anticipoClienteCrud.listar();
+            anticipoClientes = (List<AnticipoCliente>) anticipoClienteCrud.listar("");
             //Enviamos las listas al jsp
             request.setAttribute("anticipoClientes",anticipoClientes);
             //Enviamos mensaje

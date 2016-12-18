@@ -198,7 +198,7 @@ public class PagoCompraController extends HttpServlet {
         List<PagoCompra> listaPagoCompras;
         PagoCompraCRUD pagoCompraCRUD = new PagoCompraCRUD();
         try {
-            listaPagoCompras = (List<PagoCompra>) pagoCompraCRUD.listar();
+            listaPagoCompras = (List<PagoCompra>) pagoCompraCRUD.listar("");
             mostrarPagoCompras(request, response, listaPagoCompras, action);
         } catch (Exception ex) {
             System.out.println(ex);

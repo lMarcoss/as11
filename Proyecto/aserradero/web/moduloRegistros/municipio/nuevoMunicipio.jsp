@@ -27,7 +27,7 @@
                             <h3 class="panel-title">Rellene los campos de manera correcta</h3>
                         </div>
                         <div class="panel-body">
-                            <form action="/aserradero/MunicipioController?action=nuevo" method="post" id="formregistro">
+                            <form action="/aserradero/MunicipioController?action=insertar" method="post" id="formregistro">
                                 <div class="form-group">
                                     <label class="control-label" for="name">Nombre municipio:</label>
                                     <input type="text" class="form-control" name="nombre_municipio"  pattern="[A-Za-z].{3,}[A-Za-z]" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="45" required=""/>

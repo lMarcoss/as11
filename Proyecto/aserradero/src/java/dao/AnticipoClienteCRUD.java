@@ -32,7 +32,7 @@ public class AnticipoClienteCRUD extends Conexion implements OperacionesCRUD{
     }
 
     @Override
-    public <T> List listar() throws Exception {
+    public <T> List listar(String id_jefe) throws Exception {
         List<AnticipoCliente> anticipoClientes;
         try{
             this.abrirConexion();

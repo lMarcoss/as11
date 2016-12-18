@@ -123,7 +123,7 @@ public class InventarioMaderaAserradaController extends HttpServlet {
         List<InventarioMaderaAserrada> inventarioMaderaAserrada;
         InventarioMaderaAserradaCRUD inventarioMaderaAserradaCrud = new InventarioMaderaAserradaCRUD();
         try {
-            inventarioMaderaAserrada = (List<InventarioMaderaAserrada>)inventarioMaderaAserradaCrud.listar();
+            inventarioMaderaAserrada = (List<InventarioMaderaAserrada>)inventarioMaderaAserradaCrud.listar("");
             //Enviamos las listas al jsp
             request.setAttribute("inventarioMaderaAserrada",inventarioMaderaAserrada);
             //Enviamos mensaje

@@ -74,7 +74,7 @@ public class VentaExtraController extends HttpServlet {
                     
                      //Enviamos la lista de clientes
                     ClienteCRUD clienteCRUD= new ClienteCRUD();
-                    List<Cliente> clientes = (List<Cliente>)clienteCRUD.listar();
+                    List<Cliente> clientes = (List<Cliente>)clienteCRUD.listar("");
                     request.setAttribute("clientes",clientes);
                     
                     //Enviamos la lista de empleados
@@ -204,7 +204,7 @@ public class VentaExtraController extends HttpServlet {
         List<Venta> ventaExtras;
         VentaExtraCRUD ventaExtraCrud = new VentaExtraCRUD();
         try {
-            ventaExtras = (List<Venta>)ventaExtraCrud.listar();
+            ventaExtras = (List<Venta>)ventaExtraCrud.listar("");
             //Enviamos las listas al jsp
             request.setAttribute("ventaExtras",ventaExtras);
             //enviamos mensaje al jsp

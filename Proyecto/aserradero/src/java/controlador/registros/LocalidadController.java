@@ -146,6 +146,8 @@ public class LocalidadController extends HttpServlet {
         Localidad localidad = new Localidad();
         localidad.setNombre_localidad(request.getParameter("nombre_localidad"));
         localidad.setNombre_municipio(request.getParameter("nombre_municipio"));
+        localidad.setEstado(request.getParameter("estado"));
+        System.out.println("Estado:" + localidad.getEstado());
         localidad.setTelefono_localidad(request.getParameter("telefono"));
         return localidad;
     }

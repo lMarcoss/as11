@@ -90,7 +90,7 @@ public class InventarioMaderaRolloController extends HttpServlet {
         List<InventarioMaderaRollo> listaInventario;
         InventarioMaderaRolloCRUD pagoPrestamoCRUD = new InventarioMaderaRolloCRUD();
         try {
-            listaInventario = (List<InventarioMaderaRollo>) pagoPrestamoCRUD.listar();
+            listaInventario = (List<InventarioMaderaRollo>) pagoPrestamoCRUD.listar("");
             mostrarInventarioMaderaRollo(request, response, listaInventario, mensaje);
         } catch (Exception ex) {
             System.out.println(ex);

@@ -33,7 +33,7 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
     }
 
     @Override
-    public <T> List listar() throws Exception {
+    public <T> List listar(String id_jefe) throws Exception {
         // Se consultan datos generales de las ventas extra
         List<Venta> ventas;
         try{

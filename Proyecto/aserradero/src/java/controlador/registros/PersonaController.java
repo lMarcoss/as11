@@ -57,7 +57,7 @@ public class PersonaController extends HttpServlet {
                     actualizarPersona(request, response, sesion, action);
                     break;
                 case "buscar":
-                    buscarPersona(request, response, sesion, action);
+                    buscar(request, response, sesion, action);
                     break;
                 /**
                  * *************** Respuestas a métodos GET
@@ -75,6 +75,8 @@ public class PersonaController extends HttpServlet {
                 case "eliminar":
                     eliminarPersona(request, response, sesion, action);
                     break;
+                case "buscar_persona":
+                    buscarPersona(request, response, sesion, action);
             }
         } else {
             try {
@@ -166,7 +168,7 @@ public class PersonaController extends HttpServlet {
         }
     }
 
-    private void buscarPersona(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
+    private void buscar(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
         List<Persona> listaPersonas;
         String nombre_campo = request.getParameter("nombre_campo");
         String dato = request.getParameter("dato");
@@ -248,4 +250,18 @@ public class PersonaController extends HttpServlet {
         }
     }
 
+    private void buscarPersona(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
+        List<Persona> listaPersonas;
+        String id_persona = request.getParameter("id_persona");
+        id_persona = id_persona.substring(0, 18);
+        PersonaCRUD personaCRUD = new PersonaCRUD();
+        try {
+            listaPersonas = (List<Persona>) personaCRUD.buscarPorId(id_persona);
+            mostrarPersonas(request, response, listaPersonas, action);
+        } catch (Exception ex) {
+            listarPersonas(request, response, sesion, "error_buscar_id");
+            System.out.println(ex);
+            Logger.getLogger(PersonaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

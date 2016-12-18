@@ -6,16 +6,17 @@ USE aserradero;
 
 CREATE TABLE MUNICIPIO(
 	nombre_municipio	VARCHAR(45) NOT NULL,
-    estado 				VARCHAR(60),
+    estado 				VARCHAR(60) NOT NULL,
 	telefono 			CHAR(10),
-	PRIMARY KEY (nombre_municipio))ENGINE=InnoDB;
+	PRIMARY KEY (nombre_municipio,estado))ENGINE=InnoDB;
 
 CREATE TABLE LOCALIDAD(
 	nombre_localidad	VARCHAR(45) NOT NULL,
 	nombre_municipio	VARCHAR(45) NOT NULL,
+    estado				VARCHAR(60) NOT NULL,
 	telefono 			CHAR(10),
 	PRIMARY KEY (nombre_localidad),
-	FOREIGN KEY (nombre_municipio) REFERENCES MUNICIPIO (nombre_municipio))ENGINE=InnoDB;
+	FOREIGN KEY (nombre_municipio,estado) REFERENCES MUNICIPIO (nombre_municipio,estado))ENGINE=InnoDB;
 
 CREATE TABLE PERSONA(
 	id_persona			CHAR(18) NOT NULL,

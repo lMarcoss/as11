@@ -79,7 +79,7 @@ public class IniciarSesion extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
-
+     
         // Se reciben formularios del médoto post
         // Form de inicio de sesión
         String nombre_usuario = request.getParameter("nombre_usuario");

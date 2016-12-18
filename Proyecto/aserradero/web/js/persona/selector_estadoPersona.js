@@ -1,4 +1,4 @@
-/*Seleccionar el estado que pertenece una localidad*/
+/*Seleccionar el estado que pertenece una localidad al registrar una persona*/
 function seleccionarEstadoLocalidad() {
     var localidad = document.getElementById('localidad');
     var localidad_seleccionada = localidad.selectedIndex;

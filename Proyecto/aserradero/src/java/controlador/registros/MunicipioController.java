@@ -186,7 +186,11 @@ public class MunicipioController extends HttpServlet {
     }
 
     private void prepararNuevoMunicipio(HttpServletRequest request, HttpServletResponse response, HttpSession sesion) {
-        response.sendRedirect("/aserradero/moduloRegistros/municipio/nuevoMunicipio.jsp");
+        try {
+            response.sendRedirect("/aserradero/moduloRegistros/municipio/nuevoMunicipio.jsp");
+        } catch (IOException ex) {
+            Logger.getLogger(MunicipioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void listarMunicipios(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
@@ -235,7 +239,8 @@ public class MunicipioController extends HttpServlet {
             List<Municipio> municipios;
             MunicipioCRUD municipioCRUDCrud = new MunicipioCRUD();
             String nombre_municipio = request.getParameter("nombre_municipio");
-            municipios = (List<Municipio>) municipioCRUDCrud.buscarMunicipio(nombre_municipio);
+            String estado = request.getParameter("estado");
+            municipios = (List<Municipio>) municipioCRUDCrud.buscarMunicipio(nombre_municipio,estado);
             mostrarMunicipios(request, response, municipios, action);
         } catch (Exception ex) {
             System.out.println(ex);

@@ -62,7 +62,7 @@ public class PagoRentaController extends HttpServlet {
                 try{
                     empleadoCRUD = new EmpleadoCRUD();
                     List<Empleado> empleados;
-                    empleados = (List<Empleado>)empleadoCRUD.listar();
+                    empleados = (List<Empleado>)empleadoCRUD.listar("");
                     request.setAttribute("empleados",empleados);                    
                     RequestDispatcher view = request.getRequestDispatcher("pagorenta/nuevoPagoRenta.jsp");
                     view.forward(request,response);
@@ -83,7 +83,7 @@ public class PagoRentaController extends HttpServlet {
                 try {
                     empleadoCRUD = new EmpleadoCRUD();
                     List<Empleado> empleados;
-                    empleados = (List<Empleado>)empleadoCRUD.listar();
+                    empleados = (List<Empleado>)empleadoCRUD.listar("");
                     request.setAttribute("empleados",empleados);
                     pagorenta = (PagoRenta) pagorentaCRUD.modificar(pagorentaEC);
                     request.setAttribute("pagorenta",pagorenta);
@@ -184,7 +184,7 @@ public class PagoRentaController extends HttpServlet {
         PagoRentaCRUD pagorentacrud =new PagoRentaCRUD();
         String forward;
         try {
-            pagosrenta = (List<PagoRenta>)pagorentacrud.listar();
+            pagosrenta = (List<PagoRenta>)pagorentacrud.listar("");
             request.setAttribute("pagosrenta", pagosrenta);
             request.setAttribute("mensaje", mensaje);
             forward="pagorenta/pagosrenta.jsp";

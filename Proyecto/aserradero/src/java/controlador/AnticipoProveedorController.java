@@ -69,7 +69,7 @@ public class AnticipoProveedorController extends HttpServlet {
                 try {
                     //Enviamos la lista de proveedores
                     ProveedorCRUD proveedorCRUD= new ProveedorCRUD();
-                    List<Proveedor> proveedores = (List<Proveedor>)proveedorCRUD.listar();
+                    List<Proveedor> proveedores = (List<Proveedor>)proveedorCRUD.listar("");
                     request.setAttribute("proveedores",proveedores);
                     
                     //Enviamos la lista de empleados
@@ -193,7 +193,7 @@ public class AnticipoProveedorController extends HttpServlet {
         List<AnticipoProveedor> anticipoProveedores;
         AnticipoProveedorCRUD anticipoProveedorCrud = new AnticipoProveedorCRUD();
         try {
-            anticipoProveedores = (List<AnticipoProveedor>) anticipoProveedorCrud.listar();
+            anticipoProveedores = (List<AnticipoProveedor>) anticipoProveedorCrud.listar("");
             //Enviamos las listas al jsp
             request.setAttribute("anticipoProveedores",anticipoProveedores);
             //Enviamos mensaje

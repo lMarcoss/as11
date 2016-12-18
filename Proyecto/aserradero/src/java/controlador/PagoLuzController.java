@@ -62,7 +62,7 @@ public class PagoLuzController extends HttpServlet {
                 try {
                     empleadoCRUD = new EmpleadoCRUD();
                     List<Empleado> empleados;
-                    empleados = (List<Empleado>) empleadoCRUD.listar();
+                    empleados = (List<Empleado>) empleadoCRUD.listar("");
                     request.setAttribute("empleados", empleados);
                     RequestDispatcher view = request.getRequestDispatcher("pagoLuz/nuevoPagoLuz.jsp");
                     view.forward(request, response);
@@ -82,7 +82,7 @@ public class PagoLuzController extends HttpServlet {
                 try {
                     empleadoCRUD = new EmpleadoCRUD();
                     List<Empleado> empleados;
-                    empleados = (List<Empleado>) empleadoCRUD.listar();
+                    empleados = (List<Empleado>) empleadoCRUD.listar("");
                     request.setAttribute("empleados", empleados);
                     PagoLuz pagoLuz = (PagoLuz) pagoLuzCRUD.modificar(pagoLuzEC);
                     request.setAttribute("pagoLuz", pagoLuz);
@@ -185,7 +185,7 @@ public class PagoLuzController extends HttpServlet {
         List<PagoLuz> pagosluz;
         PagoLuzCRUD pagoLuzcrud = new PagoLuzCRUD();
         try {
-            pagosluz = (List<PagoLuz>) pagoLuzcrud.listar();
+            pagosluz = (List<PagoLuz>) pagoLuzcrud.listar("");
             //Enviamos las listas al jsp
             request.setAttribute("pagosluz", pagosluz);
             request.setAttribute("mensaje", mensaje);

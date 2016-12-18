@@ -16,7 +16,7 @@ public interface OperacionesCRUD{
     public PreparedStatement cargarObject(PreparedStatement st, Object objeto) throws SQLException;
     
     //Método genérico: Devolver una lista de cualquier tipo de objeto
-    public <T> List listar(String id_jefe) throws Exception;
+    public abstract <T> List listar(String id_jefe) throws Exception;
     public Object extraerObject(ResultSet rs) throws SQLException;
     
     //Devuelve un objeto del tipo de objeto que recibe: Objeto genérico

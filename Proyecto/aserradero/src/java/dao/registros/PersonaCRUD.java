@@ -164,7 +164,7 @@ public class PersonaCRUD extends Conexion implements OperacionesCRUD{
         List<Persona> personas;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PERSONA WHERE id_persona = ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PERSONA WHERE id_persona = ?")) {
                 st.setString(1, id_persona);
                 personas = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {

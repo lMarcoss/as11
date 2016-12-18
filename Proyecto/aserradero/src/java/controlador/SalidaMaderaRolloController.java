@@ -72,7 +72,7 @@ public class SalidaMaderaRolloController extends HttpServlet {
                     
                     //Enviamos el inventario de madera rollo
                     InventarioMaderaRolloCRUD inventarioMRCRUD = new InventarioMaderaRolloCRUD();
-                    List<InventarioMaderaRollo> inventarioMR = (List<InventarioMaderaRollo>) inventarioMRCRUD.listar();
+                    List<InventarioMaderaRollo> inventarioMR = (List<InventarioMaderaRollo>) inventarioMRCRUD.listar("");
                     request.setAttribute("inventarioMR",inventarioMR);
                     
                     //Enviamos la fecha actual 
@@ -100,7 +100,7 @@ public class SalidaMaderaRolloController extends HttpServlet {
                                     
                     //enviamos el inventario de madera rollo
                     InventarioMaderaRolloCRUD inventarioMRCRUD = new InventarioMaderaRolloCRUD();
-                    List<InventarioMaderaRollo> inventarioMR = (List<InventarioMaderaRollo>) inventarioMRCRUD.listar();
+                    List<InventarioMaderaRollo> inventarioMR = (List<InventarioMaderaRollo>) inventarioMRCRUD.listar("");
                     request.setAttribute("inventarioMR",inventarioMR);
                     
                     RequestDispatcher view = request.getRequestDispatcher("salidaMaderaRollo/actualizarSalidaMaderaRollo.jsp");
@@ -187,7 +187,7 @@ public class SalidaMaderaRolloController extends HttpServlet {
         SalidaMaderaRolloCRUD salidaCRUD = new SalidaMaderaRolloCRUD();
         try {
             //enviamos la lista de entradasMadera
-            salidas = (List<SalidaMaderaRollo>)salidaCRUD.listar();
+            salidas = (List<SalidaMaderaRollo>)salidaCRUD.listar("");
             request.setAttribute("salidas", salidas);
             //Enviamos el mensaje
             request.setAttribute("mensaje", mensaje);

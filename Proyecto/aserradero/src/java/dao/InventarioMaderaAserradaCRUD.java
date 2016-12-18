@@ -18,7 +18,7 @@ public class InventarioMaderaAserradaCRUD extends Conexion implements Operacione
     }
 
     @Override
-    public <T> List listar() throws Exception{
+    public <T> List listar(String id_jefe) throws Exception{
         List<InventarioMaderaAserrada> inventarioMaderaProducciones;
         try{
             this.abrirConexion();

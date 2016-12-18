@@ -32,7 +32,7 @@ import java.util.List;
     }
 
     @Override
-    public <T> List listar() throws Exception {
+    public <T> List listar(String id_jefe) throws Exception {
         List<OtroGasto> otrosgastos;
         try {
             this.abrirConexion();

@@ -71,7 +71,7 @@ public class VentaPaqueteController extends HttpServlet {
 
                     //Enviamos la lista de clientes
                     ClienteCRUD clienteCRUD = new ClienteCRUD();
-                    List<Cliente> clientes = (List<Cliente>) clienteCRUD.listar();
+                    List<Cliente> clientes = (List<Cliente>) clienteCRUD.listar("");
                     request.setAttribute("clientes", clientes);
 
                     //Enviamos la lista de empleados
@@ -81,7 +81,7 @@ public class VentaPaqueteController extends HttpServlet {
 
                     //enviamos lista de inventario de madera aserrada
                     InventarioMaderaAserradaCRUD inventarioMACRUD = new InventarioMaderaAserradaCRUD();
-                    List<InventarioMaderaAserrada> listaInventario = (List<InventarioMaderaAserrada>) inventarioMACRUD.listar();
+                    List<InventarioMaderaAserrada> listaInventario = (List<InventarioMaderaAserrada>) inventarioMACRUD.listar("");
                     request.setAttribute("listaInventario", listaInventario);
 
                     RequestDispatcher view = request.getRequestDispatcher("ventaPaquete/nuevoVentaPaquete.jsp");
@@ -102,7 +102,7 @@ public class VentaPaqueteController extends HttpServlet {
 
                     //enviamos lista de inventario de madera aserrada
                     InventarioMaderaAserradaCRUD inventarioMACRUD = new InventarioMaderaAserradaCRUD();
-                    List<InventarioMaderaAserrada> listaInventario = (List<InventarioMaderaAserrada>) inventarioMACRUD.listar();
+                    List<InventarioMaderaAserrada> listaInventario = (List<InventarioMaderaAserrada>) inventarioMACRUD.listar("");
                     request.setAttribute("listaInventario", listaInventario);
 
                     //enviamos el paquete a modificar
@@ -213,7 +213,7 @@ public class VentaPaqueteController extends HttpServlet {
         List<VentaPaquete> ventaPaquetes;
         VentaPaqueteCRUD ventaPaqueteCrud = new VentaPaqueteCRUD();
         try {
-            ventaPaquetes = (List<VentaPaquete>) ventaPaqueteCrud.listar();
+            ventaPaquetes = (List<VentaPaquete>) ventaPaqueteCrud.listar("");
             //Enviamos las listas al jsp
             request.setAttribute("ventaPaquetes", ventaPaquetes);
             //Enviamos mensaje al jsp

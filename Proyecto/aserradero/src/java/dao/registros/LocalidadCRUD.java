@@ -20,7 +20,7 @@ public class LocalidadCRUD extends Conexion implements OperacionesCRUD {
         Localidad localidad = (Localidad) objeto;
         try {
             this.abrirConexion();
-            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO LOCALIDAD (nombre_localidad,nombre_municipio,telefono) VALUES (?,?,?)");
+            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO LOCALIDAD (nombre_localidad,nombre_municipio,estado,telefono) VALUES (?,?,?,?)");
             st = cargarObject(st, localidad);
             st.executeUpdate();
         } catch (Exception e) {
@@ -36,7 +36,8 @@ public class LocalidadCRUD extends Conexion implements OperacionesCRUD {
         Localidad localidad = (Localidad) objecto;
         st.setString(1, localidad.getNombre_localidad());
         st.setString(2, localidad.getNombre_municipio());
-        st.setString(3, localidad.getTelefono_localidad());
+        st.setString(3, localidad.getEstado());
+        st.setString(4, localidad.getTelefono_localidad());
         return st;
     }
 

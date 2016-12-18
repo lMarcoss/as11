@@ -66,7 +66,7 @@ public class VehiculoController extends HttpServlet {
                     try {
                         empleadoCRUD = new EmpleadoCRUD();
                         List<Empleado> empleados;
-                        empleados = (List<Empleado>) empleadoCRUD.listar();
+                        empleados = (List<Empleado>) empleadoCRUD.listar("");
                         request.setAttribute("empleados", empleados);
                         RequestDispatcher view = request.getRequestDispatcher("vehiculo/nuevoVehiculo.jsp");
                         view.forward(request, response);
@@ -86,7 +86,7 @@ public class VehiculoController extends HttpServlet {
                     try {
                         empleadoCRUD = new EmpleadoCRUD();
                         List<Empleado> empleados;
-                        empleados = (List<Empleado>) empleadoCRUD.listar();
+                        empleados = (List<Empleado>) empleadoCRUD.listar("");
                         request.setAttribute("empleados", empleados);
                         vehiculo = (Vehiculo) vehiculocrud.modificar(vehiculoEC);
                         request.setAttribute("vehiculo", vehiculo);
@@ -189,7 +189,7 @@ public class VehiculoController extends HttpServlet {
         List<Vehiculo> vehiculos;
         VehiculoCRUD vehiculocrud = new VehiculoCRUD();
         try {
-            vehiculos = (List<Vehiculo>) vehiculocrud.listar();
+            vehiculos = (List<Vehiculo>) vehiculocrud.listar("");
             //Enviamos las listas al jsp
             request.setAttribute("vehiculos", vehiculos);
             //enviamos mensaje

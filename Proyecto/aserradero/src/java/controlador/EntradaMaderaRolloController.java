@@ -73,7 +73,7 @@ public class EntradaMaderaRolloController extends HttpServlet {
                     
                     //enviamos la lista de proveedores
                     proveedorCRUD = new ProveedorCRUD();
-                    List<Proveedor> proveedores = (List<Proveedor>)proveedorCRUD.listar();
+                    List<Proveedor> proveedores = (List<Proveedor>)proveedorCRUD.listar("");
                     request.setAttribute("proveedores", proveedores);
                     
                     //Enviamos la lista de choferes
@@ -106,7 +106,7 @@ public class EntradaMaderaRolloController extends HttpServlet {
                     
                     //enviamos la lista de proveedores
                     proveedorCRUD = new ProveedorCRUD();
-                    List<Proveedor> proveedores = (List<Proveedor>)proveedorCRUD.listar();
+                    List<Proveedor> proveedores = (List<Proveedor>)proveedorCRUD.listar("");
                     request.setAttribute("proveedores", proveedores);
                     
                     //Enviamos la lista de choferes
@@ -211,7 +211,7 @@ public class EntradaMaderaRolloController extends HttpServlet {
         EntradaMaderaRolloCRUD entradaMaderaRolloCRUD = new EntradaMaderaRolloCRUD();
         try {
             //enviamos la lista de entradasMadera
-            entradas = (List<EntradaMaderaRollo>)entradaMaderaRolloCRUD.listar();
+            entradas = (List<EntradaMaderaRollo>)entradaMaderaRolloCRUD.listar("");
             request.setAttribute("entradas", entradas);
             //Enviamos el mensaje
             request.setAttribute("mensaje", mensaje);

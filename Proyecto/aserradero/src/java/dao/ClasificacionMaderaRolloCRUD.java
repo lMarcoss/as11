@@ -31,7 +31,7 @@ public class ClasificacionMaderaRolloCRUD extends Conexion implements Operacione
     }
 
     @Override
-    public <T> List listar() throws Exception {
+    public <T> List listar(String id_jefe) throws Exception {
         List<ClasificacionMaderaRollo> costoMaderaEntradas;
         try {
             this.abrirConexion();

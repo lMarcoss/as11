@@ -70,7 +70,7 @@ public class VentaMayoreoController extends HttpServlet {
                     
                     //Enviamos la lista de clientes
                     ClienteCRUD clienteCRUD= new ClienteCRUD();
-                    List<Cliente> clientes = (List<Cliente>)clienteCRUD.listar();
+                    List<Cliente> clientes = (List<Cliente>)clienteCRUD.listar("");
                     request.setAttribute("clientes",clientes);
                     
                     //Enviamos la lista de empleados
@@ -80,7 +80,7 @@ public class VentaMayoreoController extends HttpServlet {
                     
                     //enviamos lista de inventario madera aserrada
                     InventarioMaderaAserradaCRUD inventarioMACRUD = new InventarioMaderaAserradaCRUD();
-                    List<InventarioMaderaAserrada> listaInventario = (List<InventarioMaderaAserrada>)inventarioMACRUD.listar();
+                    List<InventarioMaderaAserrada> listaInventario = (List<InventarioMaderaAserrada>)inventarioMACRUD.listar("");
                     request.setAttribute("listaInventario", listaInventario);
                     
                     RequestDispatcher view = request.getRequestDispatcher("ventaMayoreo/nuevoVentaMayoreo.jsp");
@@ -102,7 +102,7 @@ public class VentaMayoreoController extends HttpServlet {
                 try {
                     //enviamos lista de inventario de madera aserrada
                     InventarioMaderaAserradaCRUD inventarioMACRUD = new InventarioMaderaAserradaCRUD();
-                    List<InventarioMaderaAserrada> listaInventario = (List<InventarioMaderaAserrada>)inventarioMACRUD.listar();
+                    List<InventarioMaderaAserrada> listaInventario = (List<InventarioMaderaAserrada>)inventarioMACRUD.listar("");
                     request.setAttribute("listaInventario", listaInventario);
                     
                     //enviamos la venta a actualizar
@@ -208,7 +208,7 @@ public class VentaMayoreoController extends HttpServlet {
         List<VentaMayoreo> ventaMayoreos;
         VentaMayoreoCRUD ventaMayoreoCrud = new VentaMayoreoCRUD();
         try {
-            ventaMayoreos = (List<VentaMayoreo>)ventaMayoreoCrud.listar();
+            ventaMayoreos = (List<VentaMayoreo>)ventaMayoreoCrud.listar("");
             //Enviamos las listas al jsp
             request.setAttribute("ventaMayoreos",ventaMayoreos);
             request.setAttribute("mensaje",mensaje);

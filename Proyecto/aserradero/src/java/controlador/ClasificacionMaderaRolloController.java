@@ -164,7 +164,7 @@ public class ClasificacionMaderaRolloController extends HttpServlet {
         ClasificacionMaderaRolloCRUD clasificacionMaderaEntradacrud = new ClasificacionMaderaRolloCRUD();
         String forward;
         try {
-            clasificacionMaderaEntradas = (List<ClasificacionMaderaRollo>) clasificacionMaderaEntradacrud.listar();
+            clasificacionMaderaEntradas = (List<ClasificacionMaderaRollo>) clasificacionMaderaEntradacrud.listar("");
             request.setAttribute("clasificacionMaderaEntradas", clasificacionMaderaEntradas);
             request.setAttribute("mensaje", mensaje);
             forward = "clasificacionMaderaEntrada/clasificacionMaderaEntradas.jsp";

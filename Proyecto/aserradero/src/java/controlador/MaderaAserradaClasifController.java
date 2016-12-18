@@ -168,7 +168,6 @@ public class MaderaAserradaClasifController extends HttpServlet {
     }
 
     private void prepararNuevoMaderaAserradaClasif(HttpServletRequest request, HttpServletResponse response) {
-        //        String administrador = "MASL19931106HOCRNN";
         try {    
             response.sendRedirect("maderaAserradaClasif/nuevoMaderaAserradaClasif.jsp");
         } catch (IOException ex) {
@@ -181,7 +180,7 @@ public class MaderaAserradaClasifController extends HttpServlet {
         List<MaderaAserradaClasif> listaMaderaAserradaClasif;
         MaderaAserradaClasifCRUD mAClasifCRUD = new MaderaAserradaClasifCRUD();
         try {
-            listaMaderaAserradaClasif = (List<MaderaAserradaClasif>) mAClasifCRUD.listar();
+            listaMaderaAserradaClasif = (List<MaderaAserradaClasif>) mAClasifCRUD.listar("");
             listarMaderaAserradaClasif(request, response, listaMaderaAserradaClasif, action);
         } catch (Exception ex) {            
             System.out.println(ex);

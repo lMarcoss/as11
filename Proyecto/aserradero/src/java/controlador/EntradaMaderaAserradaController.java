@@ -65,12 +65,12 @@ public class EntradaMaderaAserradaController extends HttpServlet {
                 try {
                     //Enviamos la lista de empleados
                     EmpleadoCRUD empleadoCRUD = new EmpleadoCRUD();
-                    List<Empleado> empleados = (List<Empleado>)empleadoCRUD.listar();
+                    List<Empleado> empleados = (List<Empleado>)empleadoCRUD.listar("");
                     request.setAttribute("empleados",empleados);
                     
                     //enviamos lista de maderaClasificación al jsp
                     MaderaAserradaClasifCRUD maderaClasificacionCRUD= new MaderaAserradaClasifCRUD();
-                    List<MaderaAserradaClasif> clasificaciones = (List<MaderaAserradaClasif>)maderaClasificacionCRUD.listar();
+                    List<MaderaAserradaClasif> clasificaciones = (List<MaderaAserradaClasif>)maderaClasificacionCRUD.listar("");
                     request.setAttribute("clasificaciones",clasificaciones);
                     
                     RequestDispatcher view = request.getRequestDispatcher("entradaMaderaAserrada/nuevoEntradaMaderaAserrada.jsp");
@@ -195,7 +195,7 @@ public class EntradaMaderaAserradaController extends HttpServlet {
         List<EntradaMaderaAserrada> listaMEAserrada;
         EntradaMaderaAserradaCRUD entradaMaderaAserradaCrud = new EntradaMaderaAserradaCRUD();
         try {
-            listaMEAserrada = (List<EntradaMaderaAserrada>)entradaMaderaAserradaCrud.listar();
+            listaMEAserrada = (List<EntradaMaderaAserrada>)entradaMaderaAserradaCrud.listar("");
             //Enviamos las listas al jsp
             request.setAttribute("listaMEAserrada",listaMEAserrada);
             //Enviar mensaje

@@ -61,7 +61,7 @@ public class UsuarioController extends HttpServlet {
                 EmpleadoCRUD empleadoCRUD = new EmpleadoCRUD();
                 List<Empleado> empleados;
                 try {
-                    empleados = (List<Empleado>)empleadoCRUD.listar();
+                    empleados = (List<Empleado>)empleadoCRUD.listar("");
                     request.setAttribute("empleados",empleados);
                     RequestDispatcher view = request.getRequestDispatcher("usuario/nuevoUsuario.jsp");
                     view.forward(request,response);

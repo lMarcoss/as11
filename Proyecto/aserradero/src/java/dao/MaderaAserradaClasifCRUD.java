@@ -44,7 +44,7 @@ public class MaderaAserradaClasifCRUD extends Conexion implements OperacionesCRU
     }
 
     @Override
-    public <T> List listar() throws Exception {
+    public <T> List listar(String id_jefe) throws Exception {
         List<MaderaAserradaClasif> maderaClasificaciones;
         try{
             this.abrirConexion();

@@ -34,7 +34,7 @@ public class MunicipioCRUD extends Conexion{
         List<Municipio> municipios;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM MUNICIPIO")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_MUNICIPIO")) {
                 municipios = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -58,7 +58,7 @@ public class MunicipioCRUD extends Conexion{
     public Municipio modificar(Municipio municipioM) throws Exception{
         Municipio municipio = null;
         this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM MUNICIPIO WHERE nombre_municipio = ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_MUNICIPIO WHERE nombre_municipio = ?")) {
                 st.setString(1, municipioM.getNombre_municipio());
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -103,7 +103,7 @@ public class MunicipioCRUD extends Conexion{
         List<Municipio> municipios;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM MUNICIPIO WHERE "+nombre_campo+" like ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_MUNICIPIO WHERE "+nombre_campo+" like ?")) {
                 st.setString(1, "%"+dato+"%");
                 municipios = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
@@ -130,12 +130,13 @@ public class MunicipioCRUD extends Conexion{
         return municipio;
     }
 
-    public List<Municipio> buscarMunicipio(String nombre_municipio)throws Exception{
+    public List<Municipio> buscarMunicipio(String nombre_municipio,String estado)throws Exception{
         List<Municipio> municipios;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM MUNICIPIO WHERE nombre_municipio = ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_MUNICIPIO WHERE nombre_municipio = ? AND estado = ?")) {
                 st.setString(1, nombre_municipio);
+                st.setString(2, estado);
                 municipios = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {

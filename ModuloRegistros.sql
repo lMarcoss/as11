@@ -2,15 +2,15 @@ Use aserradero;
 
 -- Insertamos datos ficticios
 INSERT INTO MUNICIPIO (nombre_municipio, estado,telefono) VALUES 
-("Miahuatlan de porfirio diaz","Oaxaca",'9876543210'),
+-- ("Miahuatlan de porfirio diaz","Oaxaca",'9876543210'),
 ("Santa Cruz Mixtepec","Oaxaca",'9876543211'),
 ("Oaxaca de Juarez","Oaxaca",'9876543212'),
 ('Santa Cruz Xitla', "Oaxaca",'951901872');
 
-INSERT INTO LOCALIDAD (nombre_localidad,nombre_municipio,telefono) VALUES 
-("San Mateo Mixtepec","Santa Cruz Mixtepec",'9870654321'),
-("Santa Cruz Monjas","Miahuatlan de porfirio diaz",'9870654322'),
-('Xitla', 'Santa Cruz Xitla', '4435628711');
+INSERT INTO LOCALIDAD (nombre_localidad,nombre_municipio,estado,telefono) VALUES 
+("San Mateo Mixtepec","Santa Cruz Mixtepec",'Oaxaca','9870654321'),
+("Santa Cruz Monjas","Miahuatlan de porfirio diaz",'Oaxaca','9870654322'),
+('Xitla', 'Santa Cruz Xitla', 'Oaxaca','4435628711');
 
 INSERT INTO PERSONA (id_persona,nombre,apellido_paterno,apellido_materno,localidad,sexo,fecha_nacimiento,telefono) VALUES 
 ("MASL19931106HOCRNN","Leonardo","Marcos","Santiago","San Mateo Mixtepec","H","1993-11-06","9876543210"),
@@ -19,13 +19,22 @@ INSERT INTO PERSONA (id_persona,nombre,apellido_paterno,apellido_materno,localid
 ("PAXA20160913HOCSXN","Antonio","Pascual","","Santa Cruz Monjas","H","2016-09-13","1234567890"),
 ("PEXF20160910HOCRXR","Francisco","Perez","","Santa Cruz Monjas","H","2016-09-10","1234567890");
 
+
+DROP VIEW IF EXISTS VISTA_MUNICIPIO;
+CREATE VIEW VISTA_MUNICIPIO AS
+SELECT 
+	nombre_municipio,
+    estado,
+    telefono
+FROM MUNICIPIO;
+SELECT * FROM LOCALIDAD;
 DROP VIEW IF EXISTS VISTA_LOCALIDAD;
 CREATE VIEW VISTA_LOCALIDAD AS 
 SELECT 
 	nombre_localidad,
     LOCALIDAD.nombre_municipio as nombre_municipio,
     LOCALIDAD.telefono AS telefono_localidad,
-    estado
+    MUNICIPIO.estado
 FROM LOCALIDAD,MUNICIPIO
 WHERE LOCALIDAD.nombre_municipio = MUNICIPIO.nombre_municipio
 ORDER BY nombre_localidad;

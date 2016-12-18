@@ -65,7 +65,7 @@ public class OtroGastoController extends HttpServlet {
                 try {
                     empleadoCRUD = new EmpleadoCRUD();
                     List<Empleado> empleados;
-                    empleados = (List<Empleado>) empleadoCRUD.listar();
+                    empleados = (List<Empleado>) empleadoCRUD.listar("");
                     request.setAttribute("empleados", empleados);
                     RequestDispatcher view = request.getRequestDispatcher("otrogasto/nuevoOtroGasto.jsp");
                     view.forward(request, response);
@@ -85,7 +85,7 @@ public class OtroGastoController extends HttpServlet {
                 try {
                     empleadoCRUD = new EmpleadoCRUD();
                     List<Empleado> empleados;
-                    empleados = (List<Empleado>) empleadoCRUD.listar();
+                    empleados = (List<Empleado>) empleadoCRUD.listar("");
                     otrogasto = (OtroGasto) otrogastoCRUD.modificar(otrogastoEC);
                     request.setAttribute("otrogasto", otrogasto);
                     request.setAttribute("empleados", empleados);
@@ -185,7 +185,7 @@ public class OtroGastoController extends HttpServlet {
         List<OtroGasto> otrosgastos;
         OtroGastoCRUD otrogastocrud = new OtroGastoCRUD();
         try {
-            otrosgastos = (List<OtroGasto>) otrogastocrud.listar();
+            otrosgastos = (List<OtroGasto>) otrogastocrud.listar("");
             //Enviamos las listas al jsp
             request.setAttribute("otrosgastos", otrosgastos);
             //enviar mensaje

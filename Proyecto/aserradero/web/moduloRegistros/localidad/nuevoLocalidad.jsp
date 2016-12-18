@@ -15,6 +15,7 @@
     <head>
         <%@ include file="/TEMPLATE/head.jsp" %>
         <title>Nuevo</title>
+        <script src="/aserradero/js/localidad/selectorEstadoMunicipio.js"></script>
         <script>
             $(document).ready(function ($) {
                 $("#registros").css("background", "#448D00");
@@ -44,8 +45,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label" for="name">Nombre de Municipio:</label>
-                                        <select name="nombre_municipio" required="" class="form-control">
-                                            <option disabled="" selected="disable">Elige el municipio</option>
+                                        <select name="nombre_municipio" id="nombre_municipio" required="" class="form-control" onblur="seleccionarEstadoMunicipio()">
+                                            <option></option>
                                             <%
                                                 for (Municipio municipio : municipios) {
                                                     out.print("<option value='"+municipio.getNombre_municipio()+"'>"+municipio.getNombre_municipio()+"</option>");
@@ -53,6 +54,18 @@
                                             %>
                                         </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="control-label" for="name">Estado:</label>
+                                        <select name="estado_municipio" id="estado_municipio" class="form-control" required="" disabled="">
+                                            <option></option>
+                                            <%
+                                                for (Municipio municipio : municipios) {
+                                                    out.print("<option value='"+municipio.getEstado()+"'>"+municipio.getEstado()+"</option>");
+                                                }
+                                            %>
+                                        </select>
+                                    </div>
+                                    <input type="hidden" name="estado" id="estado">
                                     <div class="form-group">
                                         <label class="control-label" for="telefono">Teléfono:</label>
                                         <input type="text" class="form-control" name="telefono" pattern="[0-9]{10}" title="10 dígitos"/>

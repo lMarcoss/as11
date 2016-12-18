@@ -71,7 +71,7 @@ public class VentaPaqueteCRUD extends Conexion implements OperacionesCRUD {
 //        return ventaPaquetes;
 //    }
     @Override
-    public <T> List listar() throws Exception {
+    public <T> List listar(String id_jefe) throws Exception {
         // Se consultan datos generales de las ventas extra
         List<Venta> ventas;
         try {
