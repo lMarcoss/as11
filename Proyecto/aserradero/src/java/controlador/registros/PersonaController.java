@@ -148,7 +148,9 @@ public class PersonaController extends HttpServlet {
         persona.setNombre(request.getParameter("nombre"));
         persona.setApellido_paterno(request.getParameter("apellido_paterno"));
         persona.setApellido_materno(request.getParameter("apellido_materno"));
-        persona.setLocalidad(request.getParameter("localidad"));
+        persona.setNombre_localidad(request.getParameter("nombre_localidad"));
+        persona.setNombre_municipio(request.getParameter("nombre_municipio"));
+        persona.setEstado(request.getParameter("estado"));
         persona.setDireccion(request.getParameter("direccion"));
         persona.setSexo(request.getParameter("sexo"));
         persona.setFecha_nacimiento(Date.valueOf(request.getParameter(("fecha_nacimiento"))));
@@ -174,7 +176,7 @@ public class PersonaController extends HttpServlet {
         String dato = request.getParameter("dato");
         PersonaCRUD personaCRUD = new PersonaCRUD();
         try {
-            listaPersonas = (List<Persona>) personaCRUD.buscar(nombre_campo, dato);
+            listaPersonas = (List<Persona>) personaCRUD.buscar(nombre_campo, dato, (String) sesion.getAttribute("id_jefe"));
             mostrarPersonas(request, response, listaPersonas, action);
         } catch (Exception ex) {
             listarPersonas(request, response, sesion, "error_buscar_campo");

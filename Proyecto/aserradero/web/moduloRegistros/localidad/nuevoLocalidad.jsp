@@ -41,7 +41,7 @@
                                 <form action="/aserradero/LocalidadController?action=insertar" method="post" id="formregistro">
                                     <div class="form-group">
                                         <label class="control-label" for="name">Nombre localidad:</label>
-                                        <input type="text" class="form-control" name="nombre_localidad"  pattern="[A-Za-z].{3,}[A-Za-z]" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="45" required=""/>
+                                        <input type="text" class="form-control" name="nombre_localidad"  pattern="[A-Za-z].{3,}[A-Za-z]" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="59" required=""/>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label" for="name">Nombre de Municipio:</label>

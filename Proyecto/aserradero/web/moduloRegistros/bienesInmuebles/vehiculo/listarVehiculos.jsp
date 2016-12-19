@@ -4,11 +4,11 @@
     Author     : rcortes
 --%>
 
-<%@page import="entidades.Vehiculo"%>
+<%@page import="entidades.registros.bienesInmuebles.Vehiculo"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    List <Vehiculo> vehiculos = (List<Vehiculo>) request.getAttribute("vehiculos");
+    List <Vehiculo> vehiculos = (List<Vehiculo>) request.getAttribute("listaVehiculos");
     String mensaje = (String)request.getAttribute("mensaje");
 %>
 <!DOCTYPE html>
@@ -20,6 +20,7 @@
             $(document).ready(function ($){
                  $("#registros").css("background","#448D00");
                  $("#vehiculos").css("background","#448D00");
+                 $("#vehiculos1").css("background","#448D00");
             });
         </script>
     </head>
@@ -30,7 +31,7 @@
         <div class="container" style="margin-top:60px;">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="page-header">LISTADO DE VEHÍCULOS</h1>
+                    <h1 class="page-header">Listado de vehículos</h1>
                 </div>
             </div>
             <div class="row">
@@ -42,7 +43,6 @@
                         <div class="form-group form-busc" >
                             <form method="POST" action="/aserradero/VehiculoController?action=buscar" >
                                 <select name="nombre_campo" class="input-busc">
-                                    <option value="id_vehiculo">Id Vehiculo</option>
                                     <option value="matricula">Matrícula</option>
                                     <option value="tipo">Tipo</option>
                                     <option value="color">Color</option>
@@ -50,7 +50,7 @@
                                     <option value="motor">Motor</option>
                                     <option value="modelo">Modelo</option>
                                     <option value="costo">Costo</option>
-                                    <option value="id_empleado">Id empleado</option>
+                                    <option value="empleado">Empleado</option>
                                 </select>
                                 <input type="text" class="input-busc"  name="dato" placeholder="Escriba su búsqueda" >
                                 <input type="submit" value="Buscar" class="btn btn-success">
@@ -86,7 +86,7 @@
                                         +"<td>"+vehiculo.getModelo()+"</td>"
                                         +"<td>"+vehiculo.getCosto()+"</td>"
                                         +"<td>"+vehiculo.getEmpleado()+"</td>"
-                                        +"<td><a class=\"btn btn-info\" href=\"/aserradero/VehiculoController?action=modificar&id_vehiculo="+vehiculo.getId_vehiculo()+"\">Actualizar</a></td>"
+                                        +"<td><a class=\"btn btn-info\" href=\"/aserradero/VehiculoController?action=modificar&id_vehiculo="+vehiculo.getId_vehiculo()+"\">Modificar</a></td>"
                                         + "<td><a class=\"btn btn-danger\" href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/VehiculoController?action=eliminar&id_vehiculo="+vehiculo.getId_vehiculo()+"';};\">Eliminar</a></td>"
                                     + "</tr>" );
                                     i++;

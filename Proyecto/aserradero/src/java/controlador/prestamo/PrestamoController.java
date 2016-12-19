@@ -1,6 +1,5 @@
 package controlador.prestamo;
 
-import controlador.empleado.EmpleadoController;
 import dao.registros.PersonaCRUD;
 import dao.prestamo.PrestamoCRUD;
 import entidades.registros.Persona;
@@ -172,7 +171,7 @@ public class PrestamoController extends HttpServlet {
         String dato = request.getParameter("dato");                 // Valor a buscar en el campo
         PrestamoCRUD prestamoCRUD = new PrestamoCRUD();
         try {
-            listaPrestamo = (List<Prestamo>) prestamoCRUD.buscar(nombre_campo, dato);
+            listaPrestamo = (List<Prestamo>) prestamoCRUD.buscar(nombre_campo, dato, (String) sesion.getAttribute("id_jefe"));
             mostrarPrestamos(request, response, listaPrestamo, action);
         } catch (Exception ex) {
             listarPrestamo(request, response, sesion, "error_buscar_campo");
@@ -204,7 +203,7 @@ public class PrestamoController extends HttpServlet {
         } catch (Exception ex) {
             listarPrestamo(request, response, sesion, "error_nuevo");
             System.out.println(ex);
-            Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrestamoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -26,7 +26,7 @@
         <div class="container" style="margin-top: 60px;">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>REGISTRO DE UN NUEVO PROVEEDOR</h2>
+                    <h2>Registrar proveedor</h2>
                 </div>
             </div>
             <div class="row">

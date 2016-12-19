@@ -4,7 +4,7 @@
     Author     : rcortes
 --%>
 
-<%@page import="entidades.Empleado"%>
+<%@page import="entidades.empleado.Empleado"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,6 +16,7 @@
             $(document).ready(function ($){
                 $("#registros").css("background","#448D00");
                 $("#vehiculos").css("background","#448D00");
+                $("#vehiculos1").css("background","#448D00");
             });
         </script>
     </head>
@@ -25,7 +26,7 @@
         <div class="container" style="margin-top:60px;">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="page-header">REGISTRO DE VEHÍCULOS</h1>
+                    <h1 class="page-header">Registrar nuevo vehículo</h1>
                 </div>
             </div>
             <div class="row">
@@ -35,14 +36,14 @@
                             <h3 class="panel-title">Rellene los campos de manera correcta</h3>
                         </div>
                         <div class="panel-body">
-                            <form action="/aserradero/VehiculoController?action=nuevo" method="POST" role="form">
+                            <form action="/aserradero/VehiculoController?action=insertar" method="POST" role="form">
                                 <div class="lado_derecho">
                                     <div class="form-group">
                                         <label class="control-label" for="matricula">Matrícula</label>
                                         <input type="text" name="matricula" class="form-control" />
                                     </div>
                                     <div class="form-group">
-                                        <label for="tipo" class="control-label">Tipo</label><form action="/aserradero/VehiculoController?action=nuevo" method="POST">
+                                        <label for="tipo" class="control-label">Tipo</label>
                                         <input type="text" name="tipo" class="form-control"/>
                                     </div>
                                     <div class="form-group">
@@ -65,28 +66,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="costo" class="control-label">Costo</label>
-                                        <input type="number" class="form-control" step=".01" name="costo" min="0.0"/>
+                                        <input type="number" class="form-control" step=".01" name="costo" min="0.00" max="99999999.99"/>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="id_empleado"><span class="glyphicon glyphicon-user"></span>Id empleado</label>
-                                        <select name="id_empleado" class="form-control" required="" title="Si no existe el empleado que busca, primero agreguelo en la lista de empleado">
-                                            <option disabled="" selected="disabled" >Elige al empleado</option>
-                                            <%
-                                                List <Empleado> empleados = (List<Empleado>) request.getAttribute("empleados");
-                                                try{
-                                                    for (Empleado empleado : empleados) {
-                                                    out.print("<option value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>");
-                                                }
-                                                }catch(Exception e){
-                                                    System.out.println(e);
-                                                }
-
-                                            %>
-                                        </select>
-                                    </div>
-                                    <div class="form-group pull-right" >
-                                        <a href="/aserradero/VehiculoController?action=listar"><input type="button" class="btn btn-warning" value="Cancelar"/></a>
-                                        <input type="submit" class="btn btn-success" value="Guardar"/>
+                                    <br>
+                                    <div class="form-group pull-right col-md-11" >
+                                        <a href="/aserradero/VehiculoController?action=listar"><input type="button" class="btn btn-warning col-lg-5 pull-left" value="Cancelar"/></a>
+                                        <input type="submit" class="btn btn-success col-lg-5 pull-right" value="Guardar"/>
                                     </div>
                                 </div>
                             </form>

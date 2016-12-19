@@ -1,5 +1,5 @@
 /*Seleccionar el estado que pertenece una localidad al registrar una persona*/
-function seleccionarEstadoLocalidad() {
+function seleccionarEstadoTerreno() {
     var nombre_localidad = document.getElementById('nombre_localidad');
     var localidad_seleccionada = nombre_localidad.selectedIndex;
 

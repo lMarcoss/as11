@@ -44,11 +44,21 @@
                                 <li><a href="/aserradero/ProveedorController?action=nuevo">Nuevo proveedor</a></li>
                             </ul>
                         </li>
-                        <li id="vehiculos"><a href="/aserradero/VehiculoController?action=listar">Vehículos</a>
+                        <li id="vehiculos"><a href="#">Bienes inmuebles</a>
                             <ul class="dropdown-menu">
-                                <li><a href="/aserradero/VehiculoController?action=nuevo">Nuevo vehículo</a></li>
+                                <li id="vehiculos1"><a href="/aserradero/VehiculoController?action=listar">Vehículos</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/aserradero/VehiculoController?action=nuevo">Nuevo vehículo</a></li>
+                                    </ul>
+                                </li>
+                                <li id="terrenos"><a href="/aserradero/TerrenoController?action=listar">Terrenos</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/aserradero/TerrenoController?action=nuevo">Nuevo terreno</a></li>
+                                    </ul>
+                                </li>
                             </ul>
                         </li>
+                        
                     </ul>
                 </li>
                 <li  id="empleados" class="submenu">

@@ -128,7 +128,7 @@ public class LocalidadCRUD extends Conexion implements OperacionesCRUD {
     }
 
     @Override
-    public <T> List buscar(String nombre_campo, String dato) throws Exception {
+    public <T> List buscar(String nombre_campo, String dato, String id_jefe) throws Exception {
         List<Localidad> localidades;
         try {
             this.abrirConexion();

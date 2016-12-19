@@ -5,17 +5,17 @@ CREATE DATABASE aserradero CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE aserradero;
 
 CREATE TABLE MUNICIPIO(
-	nombre_municipio	VARCHAR(45) NOT NULL,
+	nombre_municipio	VARCHAR(60) NOT NULL,
     estado 				VARCHAR(60) NOT NULL,
 	telefono 			CHAR(10),
 	PRIMARY KEY (nombre_municipio,estado))ENGINE=InnoDB;
 
 CREATE TABLE LOCALIDAD(
-	nombre_localidad	VARCHAR(45) NOT NULL,
-	nombre_municipio	VARCHAR(45) NOT NULL,
+	nombre_localidad	VARCHAR(60) NOT NULL,
+	nombre_municipio	VARCHAR(60) NOT NULL,
     estado				VARCHAR(60) NOT NULL,
 	telefono 			CHAR(10),
-	PRIMARY KEY (nombre_localidad),
+	PRIMARY KEY (nombre_localidad,nombre_municipio,estado),
 	FOREIGN KEY (nombre_municipio,estado) REFERENCES MUNICIPIO (nombre_municipio,estado))ENGINE=InnoDB;
 
 CREATE TABLE PERSONA(
@@ -23,25 +23,15 @@ CREATE TABLE PERSONA(
 	nombre				VARCHAR(30) NOT NULL,
 	apellido_paterno	VARCHAR(30) NOT NULL,
 	apellido_materno	VARCHAR(30),
-	localidad			VARCHAR(45),
+	nombre_localidad	VARCHAR(60),
+    nombre_municipio	VARCHAR(60) NOT NULL,
+    estado				VARCHAR(60) NOT NULL,
     direccion			VARCHAR(60),
 	sexo				ENUM('H','M'),
 	fecha_nacimiento	DATE,
 	telefono			CHAR(10),
 	primary key(id_persona),
-	FOREIGN KEY (localidad) REFERENCES LOCALIDAD (nombre_localidad))ENGINE=InnoDB;
-
-
-    
--- CREATE TABLE EMPLEADO(
--- 	id_empleado 	VARCHAR(26) NOT NULL,
---     id_persona		CHAR(18) NOT NULL,
---     id_jefe 		VARCHAR(18) NOT NULL,
--- 	roll			ENUM('Administrador','Empleado','Vendedor','Chofer'),	
--- 	estatus			ENUM('Activo','Inactivo'),
--- 	PRIMARY KEY (id_empleado,id_jefe,roll),
--- 	FOREIGN KEY (id_persona) REFERENCES PERSONA (id_persona) ON DELETE CASCADE ON UPDATE CASCADE,
---     FOREIGN KEY (id_jefe) REFERENCES ADMINISTRADOR (id_administrador) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+	FOREIGN KEY (nombre_localidad,nombre_municipio,estado) REFERENCES LOCALIDAD (nombre_localidad,nombre_municipio,estado))ENGINE=InnoDB;
 
 CREATE TABLE EMPLEADO(
 	id_empleado 	VARCHAR(26) NOT NULL,
@@ -52,7 +42,6 @@ CREATE TABLE EMPLEADO(
 	PRIMARY KEY (id_empleado,id_jefe,rol),
 	FOREIGN KEY (id_persona) REFERENCES PERSONA (id_persona),
     FOREIGN KEY (id_jefe) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
- -- CREATE TABLE EMPLEADO_JEFE(id_empleado 	VARCHAR(18) NOT NULL,id_jefe			VARCHAR(18) NOT NULL,PRIMARY KEY (id_empleado,id_jefe),FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE,	FOREIGN KEY (id_jefe) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
 CREATE TABLE ADMINISTRADOR(
 	id_administrador	VARCHAR(26) NOT NULL,
@@ -151,8 +140,6 @@ CREATE TABLE ENTRADA_MADERA_ASERRADA(
     FOREIGN KEY (id_administrador,id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_administrador,id_madera),    
     FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
--- FOREIGN KEY (id_administrador) REFERENCES MADERA_ASERRADA_CLASIF (id_administrador)
-
 CREATE TABLE CLIENTE(
 	id_cliente 	CHAR(26) NOT NULL,
     id_persona 	CHAR(18) NOT NULL,
@@ -160,7 +147,6 @@ CREATE TABLE CLIENTE(
 	PRIMARY KEY(id_cliente,id_jefe),
 	FOREIGN KEY (id_persona) REFERENCES PERSONA (id_persona),
 	FOREIGN KEY (id_jefe) REFERENCES ADMINISTRADOR (id_administrador))ENGINE=InnoDB;
-
 
 CREATE TABLE VENTA(
 	id_venta 	VARCHAR(30),

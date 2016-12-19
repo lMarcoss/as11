@@ -106,12 +106,13 @@ public class ProveedorCRUD extends Conexion implements OperacionesCRUD {
     }
 
     @Override
-    public <T> List buscar(String nombre_campo, String dato) throws Exception {
+    public <T> List buscar(String nombre_campo, String dato, String id_jefe) throws Exception {
         List<Proveedor> proveedores;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PERSONAL_PROVEEDOR WHERE " + nombre_campo + " like ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM PERSONAL_PROVEEDOR WHERE " + nombre_campo + " like ? AND id_jefe = ?")) {
                 st.setString(1, "%" + dato + "%");
+                st.setString(2, id_jefe);
                 proveedores = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {

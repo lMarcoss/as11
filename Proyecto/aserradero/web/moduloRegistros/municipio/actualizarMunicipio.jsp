@@ -22,7 +22,7 @@
         <div class="container" style="margin-top:60px;">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>REGISTRO DE MUNICIPIOS</h2>
+                    <h2>Modificar datos del municipio</h2>
                 </div>
             </div>
             <div class="row">
@@ -35,11 +35,11 @@
                             <form action="/aserradero/MunicipioController?action=actualizar" method="post" id="formregistro">
                                 <div class="form-group">
                                     <label class="control-label" for="name">Nombre municipio:</label>
-                                    <input type="text" class="form-control" name="nombre_municipio"  value="<%= municipio.getNombre_municipio()%>" pattern="[A-Za-z].{3,}[A-Za-z]" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="45" required="" readonly=""/>
+                                    <input type="text" class="form-control" name="nombre_municipio"  value="<%= municipio.getNombre_municipio()%>" pattern="[A-Za-z].{3,}[A-Za-z]" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="59" required="" readonly=""/>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Estado:</label>
-                                    <input class="form-control" name="estado" value="<%= municipio.getEstado()%>" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="45" required="" readonly=""/>
+                                    <input class="form-control" name="estado" value="<%= municipio.getEstado()%>" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="59" required="" readonly=""/>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" for="telefono">Teléfono:</label>

@@ -144,12 +144,13 @@ public class PagoPrestamoCRUD extends Conexion implements  OperacionesCRUD{
     }
 
     @Override
-    public <T> List buscar(String nombre_campo, String dato) throws Exception {
+    public <T> List buscar(String nombre_campo, String dato, String id_jefe) throws Exception {
         List<PagoPrestamo> pagoPrestamos;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_PRESTAMO WHERE " + nombre_campo + " like ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_PRESTAMO WHERE " + nombre_campo + " like ? AND id_administrador = ?")) {
                 st.setString(1, "%" + dato + "%");
+                st.setString(2, id_jefe);
                 pagoPrestamos = new ArrayList<>();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {

@@ -1,6 +1,5 @@
 package controlador.prestamo;
 
-import controlador.OtroGastoController;
 import dao.prestamo.PagoPrestamoCRUD;
 import dao.prestamo.PrestamoCRUD;
 import entidades.prestamo.PagoPrestamo;
@@ -172,7 +171,7 @@ public class PagoPrestamoController extends HttpServlet {
         String dato = request.getParameter("dato");                 // Valor a buscar en el campo
         PagoPrestamoCRUD pagoPrestamoCRUD = new PagoPrestamoCRUD();
         try {
-            listaPagoPrestamo = (List<PagoPrestamo>) pagoPrestamoCRUD.buscar(nombre_campo, dato);
+            listaPagoPrestamo = (List<PagoPrestamo>) pagoPrestamoCRUD.buscar(nombre_campo, dato, (String) sesion.getAttribute("id_jefe"));
             mostrarPagoPrestamos(request, response, listaPagoPrestamo, action);
         } catch (Exception ex) {
             listarPagoPrestamo(request, response, sesion, "error_buscar_campo");
@@ -231,7 +230,7 @@ public class PagoPrestamoController extends HttpServlet {
             view.forward(request, response);
         } catch (Exception ex) {
             listarPagoPrestamo(request, response, sesion, "error_modificar");
-            Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PagoPrestamoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -244,7 +243,7 @@ public class PagoPrestamoController extends HttpServlet {
             response.sendRedirect("/aserradero/PagoPrestamoController?action=listar"); // para evitar acciones repetidas al actualizar página
         } catch (Exception ex) {
             listarPagoPrestamo(request, response, sesion, "error_eliminar");
-            Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PagoPrestamoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

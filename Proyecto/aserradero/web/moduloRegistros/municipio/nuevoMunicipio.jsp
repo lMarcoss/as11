@@ -17,7 +17,7 @@
         <div class="container" style="margin-top:60px;">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>REGISTRO DE MUNICIPIOS</h2>
+                    <h2>Registrar municipio</h2>
                 </div>
             </div>
             <div class="row">
@@ -30,7 +30,7 @@
                             <form action="/aserradero/MunicipioController?action=insertar" method="post" id="formregistro">
                                 <div class="form-group">
                                     <label class="control-label" for="name">Nombre municipio:</label>
-                                    <input type="text" class="form-control" name="nombre_municipio"  pattern="[A-Za-z].{3,}[A-Za-z]" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="45" required=""/>
+                                    <input type="text" class="form-control" name="nombre_municipio"  pattern="[A-Za-z].{3,}[A-Za-z]" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="59" required=""/>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Estado:</label>

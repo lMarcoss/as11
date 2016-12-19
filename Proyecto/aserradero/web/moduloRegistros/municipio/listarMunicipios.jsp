@@ -30,7 +30,7 @@
         <div class="container" style="margin-top:60px;">
           <div class="row">
               <div class="col-lg-12">
-                  <h2>LISTADO MUNICIPIOS</h2>
+                  <h2>Lista de municipios</h2>
               </div>
           </div>
           <div class="row">

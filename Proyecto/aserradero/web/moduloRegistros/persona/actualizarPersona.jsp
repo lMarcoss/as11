@@ -27,14 +27,14 @@
         <div class="container" style="margin-top: 60px;">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>ACTUALIZACIÓN DE LOS DATOS DE UNA PERSONA</h2>
+                    <h2>Modificar datos de una persona (dirección y teléfono)</h2>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Sólo puede modificar el teléfono de la persona ya que los demás datos son importantes para el id_persona</h3>
+                            <h3 class="panel-title">Si necesitas cambiar datos personales, elimina esta persona y vuelvelo a registrar con los nuevos datos</h3>
                         </div>
                         <div class="panel-body">
                             <form action="/aserradero/PersonaController?action=actualizar" method="post" id="formregistro">
@@ -44,13 +44,21 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" >Nombre:</label>
-                                    <input type="text" class="form-control" name="nombre" value="<%=persona.getNombre()%>"  pattern="[A-Za-z].{2,}" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="45" required="" readonly=""/>
+                                    <input type="text" class="form-control" name="nombre" value="<%=persona.getNombre()%>"  pattern="[A-Za-z].{2,}" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="59" required="" readonly=""/>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" >Localidad:</label>
-                                    <input type="text" class="form-control" name="localidad" value="<%=persona.getLocalidad()%>" pattern="[A-Za-z].{3,}[A-Za-z]" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="45" required="" readonly=""/>
+                                    <input type="text" class="form-control" name="nombre_localidad" value="<%=persona.getNombre_localidad()%>" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="59" required="" readonly=""/>
                                 </div>
-                                <div class="form-group">                                    
+                                <div class="form-group">
+                                    <label class="control-label" >Municipio:</label>
+                                    <input type="text" class="form-control" name="nombre_municipio" value="<%=persona.getNombre_municipio()%>" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="59" required="" readonly=""/>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" >Estado:</label>
+                                    <input type="text" class="form-control" name="estado" value="<%=persona.getEstado()%>" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="59" required="" readonly=""/>
+                                </div>
+                                <div class="form-group">
                                     <label class="control-label" >Dirección:</label>
                                     <input type="text" class="form-control" name="direccion" value="<%=persona.getDireccion()%>" title="dirección" placeholder="ej. carr Oaxaca Puerto Ángel km 97" maxlength="60"/>
                                 </div>

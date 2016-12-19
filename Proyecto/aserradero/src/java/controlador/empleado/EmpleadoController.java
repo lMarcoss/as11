@@ -169,7 +169,7 @@ public class EmpleadoController extends HttpServlet {
         String dato = request.getParameter("dato");
         EmpleadoCRUD empleadoCRUD = new EmpleadoCRUD();
         try {
-            listaEmpleados = (List<Empleado>) empleadoCRUD.buscar(nombre_campo, dato);
+            listaEmpleados = (List<Empleado>) empleadoCRUD.buscar(nombre_campo, dato, (String) sesion.getAttribute("id_jefe"));
             mostrarEmpleados(request, response, listaEmpleados, action);
         } catch (Exception ex) {
             listarEmpleados(request, response, sesion, "error_buscar_campo");

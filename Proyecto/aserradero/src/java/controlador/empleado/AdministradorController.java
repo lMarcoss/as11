@@ -1,6 +1,5 @@
 package controlador.empleado;
 
-import controlador.PagoCompraController;
 import dao.empleado.AdministradorCRUD;
 import dao.registros.PersonaCRUD;
 import entidades.empleado.Administrador;
@@ -169,7 +168,7 @@ public class AdministradorController extends HttpServlet {
             String nombre_campo = request.getParameter("nombre_campo");
             String dato = request.getParameter("dato");
             AdministradorCRUD administradorCRUD = new AdministradorCRUD();
-            administradores = (List<Administrador>) administradorCRUD.buscar(nombre_campo, dato);
+            administradores = (List<Administrador>) administradorCRUD.buscar(nombre_campo, dato, (String) sesion.getAttribute("id_jefe"));
             mostrarListaAdministradores(request, response, administradores, action);
         } catch (Exception ex) {
             System.out.println(ex);
@@ -185,7 +184,7 @@ public class AdministradorController extends HttpServlet {
             view.forward(request, response);
         } catch (ServletException | IOException ex) {
             System.err.println("No se pudo mostrar la listaAdministrador");
-            Logger.getLogger(PagoCompraController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

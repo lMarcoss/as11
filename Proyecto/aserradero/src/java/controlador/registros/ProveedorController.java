@@ -93,67 +93,6 @@ public class ProveedorController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-//        response.setContentType("text/html;charset=UTF-8");
-//        request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
-//        //Llegan url
-//        String action = request.getParameter("action");
-//        Proveedor proveedorEC; //Enviar al CRUD
-//        Proveedor proveedor; //Respuesta del CRUD
-//        ProveedorCRUD proveedorCRUD;
-//        PersonaCRUD personaCRUD;
-//        switch(action){
-//            case "nuevo":
-//                try {
-//                    //consultamos la lista de personas para registrarlos como proveedor
-//                    personaCRUD = new PersonaCRUD();
-//                    List<Persona> personas;
-//                    personas = (List<Persona>)personaCRUD.listar();
-//                    request.setAttribute("personas",personas);
-//                    
-//                    //Consultamos la lista de administradores para asignarlos como jefe
-//                    AdministradorCRUD administradorCRUD = new AdministradorCRUD();
-//                    List<Administrador> administradores;
-//                    administradores = (List<Administrador>) administradorCRUD.listar();
-//                    request.setAttribute("administradores", administradores);
-//                    
-//                    RequestDispatcher view = request.getRequestDispatcher("proveedor/nuevoProveedor.jsp");
-//                    view.forward(request,response);
-//                } catch (Exception ex) {
-//                    listarProveedores(request, response,"error_nuevo");
-//                    System.out.println(ex);
-//                    Logger.getLogger(ProveedorController.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                break;
-//            case "listar":
-//                listarProveedores(request, response,"Lista de proveedores");
-//                break;
-//            case "modificar":
-//                proveedorEC = extraerClavesProveedor(request,response);
-//                proveedorCRUD = new ProveedorCRUD();
-//                try {
-//                    proveedor = (Proveedor) proveedorCRUD.modificar(proveedorEC);
-//                    request.setAttribute("proveedor",proveedor);
-//                    RequestDispatcher view = request.getRequestDispatcher("proveedor/actualizarProveedor.jsp");
-//                    view.forward(request,response);
-//                } catch (Exception ex) {
-//                    listarProveedores(request, response,"error_modificar");
-//                    System.out.println(ex);
-//                    Logger.getLogger(ProveedorController.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                break;
-//            case "eliminar":
-//                proveedorEC = extraerClavesProveedor(request, response);
-//                proveedorCRUD = new ProveedorCRUD();
-//                try {
-//                    proveedorCRUD.eliminar(proveedorEC);
-//                    listarProveedores(request, response,"eliminado");
-//                } catch (Exception ex) {
-//                    listarProveedores(request, response,"error_eliminar");
-//                    System.out.println(ex);
-//                    Logger.getLogger(ProveedorController.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                break;                        
-//        }
     }
 
     /**
@@ -168,54 +107,6 @@ public class ProveedorController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-//        
-//        response.setContentType("text/html;charset=UTF-8");
-//        request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
-//        String action = request.getParameter("action");
-//        Proveedor proveedor;
-//        ProveedorCRUD proveedorCRUD;
-//        switch(action){
-//            case "nuevo":
-//                proveedor = extraerProveedorForm(request);
-//                proveedorCRUD = new ProveedorCRUD();
-//                try {
-//                    proveedorCRUD.registrar(proveedor);
-//                    listarProveedores(request, response,"registrado");
-//                } catch (Exception ex) {
-//                    listarProveedores(request, response,"error_registrar");
-//                    System.out.println(ex);
-//                    Logger.getLogger(ProveedorController.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                break;
-//            case "actualizar":
-//                proveedor = extraerProveedorForm(request);
-//                proveedorCRUD = new ProveedorCRUD();
-//                try {
-//                    proveedorCRUD.actualizar(proveedor);
-//                    listarProveedores(request, response,"actualizado");
-//                } catch (Exception ex) {
-//                    listarProveedores(request, response,"error_actualizar");
-//                    System.out.println(ex);
-//                    Logger.getLogger(ProveedorController.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                break;
-//            case "buscar":
-//                List <Proveedor> proveedores;
-//                String nombre_campo = request.getParameter("nombre_campo");
-//                String dato = request.getParameter("dato");
-//                proveedorCRUD = new ProveedorCRUD();
-//                try {
-//                    proveedores = (List<Proveedor>)proveedorCRUD.buscar(nombre_campo, dato);
-//                    request.setAttribute("proveedores",proveedores);
-//                    RequestDispatcher view = request.getRequestDispatcher("proveedor/proveedores.jsp");
-//                    view.forward(request,response);
-//                } catch (Exception ex) {
-//                    listarProveedores(request, response,"error_buscar_campo");
-//                    System.out.println(ex);
-//                    Logger.getLogger(ProveedorController.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                break;
-//        }
     }
 
     /**
@@ -227,38 +118,6 @@ public class ProveedorController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-//    
-//    private void listarProveedores(HttpServletRequest request, HttpServletResponse response,String mensaje) {
-//        List<Proveedor> proveedores;
-//        ProveedorCRUD proveedorCRUD = new ProveedorCRUD();
-//        try {
-//            proveedores = (List<Proveedor>)proveedorCRUD.listar();
-//            //Enviamos las listas al jsp
-//            request.setAttribute("proveedores",proveedores);
-//            //enviamos mensaje
-//            request.setAttribute("mensaje",mensaje);
-//            RequestDispatcher view = request.getRequestDispatcher("proveedor/proveedores.jsp");
-//            view.forward(request,response);
-//        } catch (Exception ex) {
-//            System.out.println(ex);
-//            Logger.getLogger(ProveedorController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//    
-//    // Extraer datos del formulario
-//    private Proveedor extraerProveedorForm(HttpServletRequest request) {
-//        Proveedor proveedor = new Proveedor();
-//        proveedor.setId_persona(request.getParameter("id_persona"));
-//        proveedor.setId_jefe(request.getParameter("id_jefe"));
-//        return proveedor;
-//    }
-//
-//    private Proveedor extraerClavesProveedor(HttpServletRequest request, HttpServletResponse response) {
-//        Proveedor proveedor = new Proveedor();
-//        proveedor.setId_proveedor(request.getParameter("id_proveedor"));
-//        proveedor.setId_jefe(request.getParameter("id_jefe"));
-//        return proveedor;
-//    }
 
     private void registrarProveedor(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
         Proveedor proveedor = extraerProveedorForm(request, sesion, action);
@@ -287,7 +146,7 @@ public class ProveedorController extends HttpServlet {
         String dato = request.getParameter("dato");
         ProveedorCRUD proveedorCRUD = new ProveedorCRUD();
         try {
-            listaProveedores = (List<Proveedor>) proveedorCRUD.buscar(nombre_campo, dato);
+            listaProveedores = (List<Proveedor>) proveedorCRUD.buscar(nombre_campo, dato, (String) sesion.getAttribute("id_jefe"));
             mostrarProveedores(request, response, listaProveedores, action);
         } catch (Exception ex) {
             listarProveedores(request, response, sesion, "error_buscar_campo");

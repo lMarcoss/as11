@@ -173,7 +173,7 @@ public class PagoEmpleadoController extends HttpServlet {
         String dato = request.getParameter("dato");
         PagoEmpleadoCRUD empleadoCRUD = new PagoEmpleadoCRUD();
         try {
-            listaPagoEmpleados = (List<PagoEmpleado>) empleadoCRUD.buscar(nombre_campo, dato);
+            listaPagoEmpleados = (List<PagoEmpleado>) empleadoCRUD.buscar(nombre_campo, dato, (String) sesion.getAttribute("id_jefe"));
             mostrarPagoEmpleados(request, response, listaPagoEmpleados, action);
         } catch (Exception ex) {
             listarPagoEmpleados(request, response, sesion, "error_buscar_campo");

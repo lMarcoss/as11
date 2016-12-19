@@ -44,11 +44,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" for="name">Nombre localidad:</label>
-                                    <input type="text" class="form-control" name="nombre_localidad" value="<%= localidad.getNombre_localidad()%>" pattern="[A-Za-z].{3,}[A-Za-z]" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="45" required="" readonly=""/>
+                                    <input type="text" class="form-control" name="nombre_localidad" value="<%= localidad.getNombre_localidad()%>" pattern="[A-Za-z].{3,}[A-Za-z]" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="59" required="" readonly=""/>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" for="name">Nombre municipio:</label>
-                                    <input type="text" class="form-control" name="nombre_municipio" value="<%= localidad.getNombre_municipio()%>" pattern="[A-Za-z].{3,}[A-Za-z]" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="45" required="" readonly=""/>
+                                    <input type="text" class="form-control" name="nombre_municipio" value="<%= localidad.getNombre_municipio()%>" pattern="[A-Za-z].{3,}[A-Za-z]" title="Sólo letras aA-zZ, al menos 4 letras" maxlength="59" required="" readonly=""/>
                                 </div>
                                 <div class="form-group">
                                     <i class="glyphicon glyphicon-phone"></i>

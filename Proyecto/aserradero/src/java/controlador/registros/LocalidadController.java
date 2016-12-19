@@ -170,7 +170,7 @@ public class LocalidadController extends HttpServlet {
         String dato = request.getParameter("dato");
         LocalidadCRUD localidadCRUD = new LocalidadCRUD();
         try {
-            localidades = (List<Localidad>) localidadCRUD.buscar(nombre_campo, dato);
+            localidades = (List<Localidad>) localidadCRUD.buscar(nombre_campo, dato, (String) sesion.getAttribute("id_jefe"));
             mostrarLocalidades(request, response, localidades, action);
         } catch (Exception ex) {
             listarLocalidades(request, response, sesion, "error_buscar_campo");

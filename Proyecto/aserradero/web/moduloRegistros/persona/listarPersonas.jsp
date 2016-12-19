@@ -30,7 +30,7 @@
         <div class="container" style="margin-top:60px;">
             <div class="row">
                 <div class="col-md-13">
-                    <h2 class="page-header">LISTADO DE PERSONAS</h2>
+                    <h2 class="page-header">Lista de personas</h2>
                 </div>
             </div>
             <div class="row">
@@ -73,7 +73,7 @@
                                         for (Persona persona : personas) {
                                             out.print("<tr>" + "<td>" + (i + 1)
                                                     + "<td>" + persona.getNombre() + "</td>"
-                                                    + "<td><a href=\"/aserradero/LocalidadController?action=buscar_localidad&nombre_localidad=" + persona.getLocalidad() + "\">" + persona.getLocalidad() + "</a></td>"
+                                                    + "<td><a href=\"/aserradero/LocalidadController?action=buscar_localidad&nombre_localidad=" + persona.getNombre_localidad()+ "\">" + persona.getNombre_localidad()+ "</a></td>"
                                                     + "<td>" + persona.getDireccion() + "</td>"
                                                     + "<td>" + persona.getSexo() + "</td>"
                                                     + "<td>" + persona.getFecha_nacimiento() + "</td>"

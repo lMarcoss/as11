@@ -30,7 +30,7 @@
         <div class="container" style="margin-top:60px;">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="page-header">LISTADO DE PROVEEDORES</h1>
+                    <h1 class="page-header">Lista de proveedores</h1>
                 </div>
             </div>
             <div class="row">

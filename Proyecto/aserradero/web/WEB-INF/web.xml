@@ -78,7 +78,7 @@
     </servlet>
     <servlet>
         <servlet-name>VehiculoController</servlet-name>
-        <servlet-class>controlador.registros.VehiculoController</servlet-class>
+        <servlet-class>controlador.registros.bienesInmuebles.VehiculoController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CostoMaderaEntradaController</servlet-name>
@@ -143,6 +143,10 @@
     <servlet>
         <servlet-name>PagoPrestamoController</servlet-name>
         <servlet-class>controlador.prestamo.PagoPrestamoController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TerrenoController</servlet-name>
+        <servlet-class>controlador.registros.bienesInmuebles.TerrenoController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>IniciarSesion</servlet-name>
@@ -283,6 +287,10 @@
     <servlet-mapping>
         <servlet-name>PagoPrestamoController</servlet-name>
         <url-pattern>/PagoPrestamoController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TerrenoController</servlet-name>
+        <url-pattern>/TerrenoController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="entidades.empleado.Administrador"%>
-<%@page import="entidades.Persona"%>
+<%@page import="entidades.registros.Persona"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
@@ -37,7 +37,7 @@
                                     <option></option>
                                     <%
                                         for (Persona persona : personas) {
-                                            out.print("<option value='"+persona.getId_persona()+"'>"+persona.getNombre()+" "+persona.getApellido_paterno()+" "+persona.getApellido_materno()+"</option>");
+                                            out.print("<option value='"+persona.getId_persona()+"'>"+persona.getNombre()+"</option>");
                                         }
                                     %>
                                 </select>

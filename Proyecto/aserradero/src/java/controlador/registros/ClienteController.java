@@ -148,7 +148,7 @@ public class ClienteController extends HttpServlet {
         String dato = request.getParameter("dato");
         ClienteCRUD clienteCRUD = new ClienteCRUD();
         try {
-            listaClientes = (List<Cliente>) clienteCRUD.buscar(nombre_campo, dato);
+            listaClientes = (List<Cliente>) clienteCRUD.buscar(nombre_campo, dato, (String) sesion.getAttribute("id_jefe"));
             mostrarClientes(request, response, listaClientes, action);
         } catch (Exception ex) {
             listarClientes(request, response, sesion, "error_buscar_campo");

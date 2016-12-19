@@ -1,7 +1,7 @@
-package dao.registros;
+package dao.registros.bienesInmuebles;
 
 import dao.Conexion;
-import entidades.registros.Vehiculo;
+import entidades.registros.bienesInmuebles.Vehiculo;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,8 +13,9 @@ import java.util.List;
  *
  * @author rcortes
  */
-public class VehiculoCRUD extends Conexion implements OperacionesCRUD{
-  @Override
+public class VehiculoCRUD extends Conexion implements OperacionesCRUD {
+
+    @Override
     public void registrar(Object objeto) throws Exception {
         Vehiculo vehiculo = (Vehiculo) objeto;
         try {
@@ -23,10 +24,10 @@ public class VehiculoCRUD extends Conexion implements OperacionesCRUD{
                     + "INSERT INTO VEHICULO (id_vehiculo,matricula, tipo, color, carga_admitida, motor,modelo, costo, id_empleado) values (?,?,?,?,?,?,?,?,?)");
             st = cargarObject(st, vehiculo);
             st.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.err.println(e);
             throw e;
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
     }
@@ -36,10 +37,10 @@ public class VehiculoCRUD extends Conexion implements OperacionesCRUD{
         List<Vehiculo> vehiculos;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_VEHICULO WHERE id_jefe = ?")){
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_VEHICULO WHERE id_jefe = ?")) {
                 st.setString(1, id_jefe);
                 vehiculos = new ArrayList<>();
-                try (ResultSet rs = st.executeQuery()){
+                try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
                         Vehiculo vehiculo = (Vehiculo) extraerObject(rs);
                         vehiculos.add(vehiculo);
@@ -54,7 +55,7 @@ public class VehiculoCRUD extends Conexion implements OperacionesCRUD{
         } catch (Exception e) {
             System.out.println(e);
             throw e;
-        }finally{
+        } finally {
             cerrarConexion();
         }
         return vehiculos;
@@ -66,7 +67,7 @@ public class VehiculoCRUD extends Conexion implements OperacionesCRUD{
         Vehiculo vehiculo = null;
         this.abrirConexion();
         try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_VEHICULO WHERE id_vehiculo = ?")) {
-            st.setString(1, vehiculoM.getId_vehiculo());
+            st.setInt(1, vehiculoM.getId_vehiculo());
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     vehiculo = (Vehiculo) extraerObject(rs);
@@ -83,7 +84,7 @@ public class VehiculoCRUD extends Conexion implements OperacionesCRUD{
         Vehiculo vehiculo = (Vehiculo) objeto;
         try {
             this.abrirConexion();
-            PreparedStatement st = this.conexion.prepareStatement("UPDATE VEHICULO SET matricula = ?,tipo = ?, color = ?, carga_admitida = ?, motor = ?, modelo=?, costo=?,id_empleado=? where id_vehiculo=?");
+            PreparedStatement st = this.conexion.prepareStatement("UPDATE VEHICULO SET matricula = ?,tipo = ?, color = ?, carga_admitida = ?, motor = ?, modelo=?, costo=? where id_vehiculo=?");
             st.setString(1, vehiculo.getMatricula());
             st.setString(2, vehiculo.getTipo());
             st.setString(3, vehiculo.getColor());
@@ -91,13 +92,12 @@ public class VehiculoCRUD extends Conexion implements OperacionesCRUD{
             st.setString(5, vehiculo.getMotor());
             st.setString(6, vehiculo.getModelo());
             st.setString(7, String.valueOf(vehiculo.getCosto()));
-            st.setString(8, vehiculo.getId_empleado());
-            st.setString(9, vehiculo.getId_vehiculo());
+            st.setInt(8, vehiculo.getId_vehiculo());
             st.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             throw e;
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
     }
@@ -108,25 +108,26 @@ public class VehiculoCRUD extends Conexion implements OperacionesCRUD{
         try {
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement("DELETE FROM VEHICULO WHERE id_vehiculo = ?");
-            st.setString(1, vehiculo.getId_vehiculo());
+            st.setInt(1, vehiculo.getId_vehiculo());
             st.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
             throw e;
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
     }
 
     @Override
-    public <T> List buscar(String nombre_campo, String dato) throws Exception {
+    public <T> List buscar(String nombre_campo, String dato, String id_jefe) throws Exception {
         List<Vehiculo> vehiculos;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_VEHICULO WHERE "+nombre_campo+" like ?")){
-                st.setString(1, "%"+dato+"%");
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_VEHICULO WHERE " + nombre_campo + " like ? AND id_jefe = ?")) {
+                st.setString(1, "%" + dato + "%");
+                st.setString(2, id_jefe);
                 vehiculos = new ArrayList<>();
-                try (ResultSet rs = st.executeQuery()){
+                try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
                         Vehiculo vehiculo = (Vehiculo) extraerObject(rs);
                         vehiculos.add(vehiculo);
@@ -136,7 +137,7 @@ public class VehiculoCRUD extends Conexion implements OperacionesCRUD{
         } catch (Exception e) {
             System.out.println(e);
             throw e;
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
         return vehiculos;
@@ -145,7 +146,7 @@ public class VehiculoCRUD extends Conexion implements OperacionesCRUD{
     @Override
     public Object extraerObject(ResultSet rs) throws SQLException {
         Vehiculo vehiculo = new Vehiculo();
-        vehiculo.setId_vehiculo(rs.getString("id_vehiculo"));
+        vehiculo.setId_vehiculo(Integer.valueOf(rs.getString("id_vehiculo")));
         vehiculo.setMatricula(rs.getString("matricula"));
         vehiculo.setTipo(rs.getString("tipo"));
         vehiculo.setColor(rs.getString("color"));
@@ -161,14 +162,14 @@ public class VehiculoCRUD extends Conexion implements OperacionesCRUD{
     @Override
     public PreparedStatement cargarObject(PreparedStatement st, Object objeto) throws SQLException {
         Vehiculo vehiculo = (Vehiculo) objeto;
-        st.setString(1, vehiculo.getId_vehiculo());
+        st.setInt(1, vehiculo.getId_vehiculo());
         st.setString(2, vehiculo.getMatricula());
         st.setString(3, vehiculo.getTipo());
         st.setString(4, vehiculo.getColor());
-        st.setString(5, vehiculo.getCarga_admitida());       
+        st.setString(5, vehiculo.getCarga_admitida());
         st.setString(6, vehiculo.getMotor());
-        st.setString(7, vehiculo.getModelo());        
-        st.setString(8,String.valueOf(vehiculo.getCosto()));
+        st.setString(7, vehiculo.getModelo());
+        st.setBigDecimal(8, vehiculo.getCosto());
         st.setString(9, vehiculo.getId_empleado());
         return st;
     }

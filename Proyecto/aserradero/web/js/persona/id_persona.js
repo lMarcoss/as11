@@ -3,18 +3,25 @@ function crearIdPersona(){
         
     //Leer apellido paterno, convertir a mayuscula y eliminar sufijos y espacios
     var paterno = document.getElementById('apellido_paterno').value.toUpperCase();
-    paterno = eliminarSufijos(paterno);
+    var letra_paterno;
+    var vocal_paterno;
+    if(paterno.length > 0){
+        paterno = eliminarSufijos(paterno);
+        letra_paterno = paterno.charAt(0);
+        
+        //buscar primer vocal después de la primera letra del apellido paterno
+        vocal_paterno = buscarVocalApellidoPaterno(paterno);
+    }
     
-    var letra_paterno = paterno.charAt(0);
     
-    //buscar primer vocal después de la primera letra del apellido paterno
-    var vocal_paterno = buscarVocalApellidoPaterno(paterno);
     
     //leer apeellido materno eliminar espacios y convertir a mayúsculas 
     var materno = document.getElementById('apellido_materno').value.toUpperCase();
-    materno = eliminarSufijos(materno);
-    
     var letra_materno;
+    if(materno.length > 0){
+        materno = eliminarSufijos(materno);
+    }
+    
     if(materno.length > 0){
         letra_materno = materno.charAt(0);
     }else{
@@ -23,21 +30,28 @@ function crearIdPersona(){
     
     //Obtener letra nombre
     var nombre = document.getElementById('nombre').value.toUpperCase();
-    nombre = eliminarPrimerNombre(nombre);
-        
-    var letra_nombre = nombre.charAt(0);
-
+    var letra_nombre;
+    if(nombre.length > 0){
+        nombre = eliminarPrimerNombre(nombre);
+        letra_nombre = nombre.charAt(0);
+    }
+    
     // Obtener fecha de nacimiento:se utilizará los 4 digitos de año
     var fecha = document.getElementById("fecha_nacimiento").value;
-    fecha = obtenerFechaNacimiento(fecha);
+    if(fecha.length > 0){
+        fecha = obtenerFechaNacimiento(fecha);
+    }
+    
     
     //Obtener sexo
     var sexo = document.getElementById("sexo").value.toUpperCase();
     
     //obtener estado
     var estado = document.getElementById("estado").value.toUpperCase();
-    estado = obtenerEstado(estado);
-        
+    if(estado.length > 0){
+        estado = obtenerEstado(estado);
+    }
+    
     //Obtener consonante interna no inicial del apellido paterno
     var consonante_paterno = obtenerConsonanteInterna(paterno);
     if(consonante_paterno.length < 1){

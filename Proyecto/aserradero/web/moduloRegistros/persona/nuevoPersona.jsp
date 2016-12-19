@@ -30,13 +30,13 @@
         <div class="container" style="margin-top:60px;">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="page-header">REGISTRA UNA NUEVA PERSONA</h2>
+                    <h2 class="page-header">Registrar persona</h2>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-primary">
-                        <div class="panel-heading">Rellene de manera correcta los campos indicados</div>
+                        <div class="panel-heading">Es importante rellenar correctamente, ya que no se podrá modificar</div>
                         <div class="panel-body">
                             <form action="/aserradero/PersonaController?action=insertar" method="post" id="formregistro" onsubmit="return validarPersona()">
                                 <div class="lado_derecho"><!-- Grupo derecho-->
@@ -63,22 +63,34 @@
                                         <label class="control-label">Dirección:</label>
                                         <input class="form-control" type="text" name="direccion" title="dirección" placeholder="ej. carr Oaxaca Puerto Ángel km 97" maxlength="60"/>
                                     </div>
-                                </div>
-                                <div class="lado_izquierdo"><!-- Grupo Izquierdo -->
                                     <div class="form-group">
                                         <label class="control-label">Localidad:</label>
-                                        <select class="form-control" name="localidad" id="localidad" required="" onblur="seleccionarEstadoLocalidad()">
+                                        <select class="form-control" name="nombre_localidad" id="nombre_localidad" required="" onblur="seleccionarEstadoLocalidad()">
                                             <option></option>
                                             <%
                                                 for (Localidad localidad : localidades) {
-                                                    out.print("<option value='"+localidad.getNombre_localidad()+"'>"+localidad.getNombre_localidad()+"</option>");
+                                                    out.print("<option value='"+localidad.getNombre_localidad()+"'>"+localidad.getNombre_localidad()+", "+localidad.getNombre_municipio()+"</option>");
                                                 }
                                             %>
                                         </select>
                                     </div>
+                                </div>
+                                <div class="lado_izquierdo"><!-- Grupo Izquierdo -->
+                                    <div class="form-group">
+                                        <label class="control-label">Municipio</label>
+                                        <select class="form-control" name="_nombre_municipio" id="_nombre_municipio" required="" disabled="">
+                                            <option></option>
+                                            <%
+                                                for (Localidad localidad : localidades) {
+                                                    out.print("<option value='"+localidad.getNombre_municipio()+"'>"+localidad.getNombre_municipio()+"</option>");
+                                                }
+                                            %>
+                                        </select>
+                                        <input type="hidden" name="nombre_municipio" id="nombre_municipio">
+                                    </div>
                                     <div class="form-group">                                        
                                         <label class="control-label">Estado:</label>
-                                        <select class="form-control" name="estado" id="estado" required="" disabled="">
+                                        <select class="form-control" name="_estado" id="_estado" required="" disabled="">
                                             <option></option>
                                             <%
                                                 for (Localidad localidad : localidades) {
@@ -86,6 +98,7 @@
                                                 }
                                             %>
                                         </select>
+                                        <input type="hidden" name="estado" id="estado">
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Sexo:</label>
@@ -97,16 +110,17 @@
                                     <div class="form-group">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                         <label class="control-label">Fecha de nacimiento:</label>
-                                        <input class="form-control" type="date" name="fecha_nacimiento" id="fecha_nacimiento" onblur="crearIdPersona()" required="" maxlength="10" title="Es importante la fecha de nacimiento para asignar un identificador a la persona"/>
+                                        <input class="form-control" type="date" name="fecha_nacimiento" id="fecha_nacimiento" required="" maxlength="10" title="Es importante la fecha de nacimiento para asignar un identificador a la persona" onblur="crearIdPersona()"/>
                                     </div>
                                     <div class="form-group">
                                         <i class="glyphicon glyphicon-phone"></i>
                                         <label class="control-label">Teléfono:</label>
                                         <input class="form-control" type="text" name="telefono" pattern="[0-9]{10}" title="10 dígitos" placeholder="951xxxxxxx" maxlength="10"/>
                                     </div>
-                                    <div class="form-group pull-right">
-                                        <a href="/aserradero/PersonaController?action=listar"><input class="btn btn-warning" type="button" value="Cancelar"/></a>
-                                        <input class="btn btn-success" type="submit" id="registrar" value="Guardar"/>
+                                    <br>
+                                    <div class="form-group pull-right col-md-11">
+                                        <a href="/aserradero/PersonaController?action=listar"><input class="btn btn-warning col-md-5 pull-left" type="button" value="Cancelar"/></a>
+                                        <input class="btn btn-success col-md-5 pull-right" type="submit" id="registrar" value="Guardar" onclick="crearIdPersona()"/>
                                     </div>
                                 </div>
                             </form>

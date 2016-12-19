@@ -2,22 +2,22 @@ Use aserradero;
 
 -- Insertamos datos ficticios
 INSERT INTO MUNICIPIO (nombre_municipio, estado,telefono) VALUES 
--- ("Miahuatlan de porfirio diaz","Oaxaca",'9876543210'),
+("Miahuatlan de porfirio diaz","Oaxaca",'9876543210'),
 ("Santa Cruz Mixtepec","Oaxaca",'9876543211'),
 ("Oaxaca de Juarez","Oaxaca",'9876543212'),
 ('Santa Cruz Xitla', "Oaxaca",'951901872');
-
+SELECT * FROM LOCALIDAD;
 INSERT INTO LOCALIDAD (nombre_localidad,nombre_municipio,estado,telefono) VALUES 
 ("San Mateo Mixtepec","Santa Cruz Mixtepec",'Oaxaca','9870654321'),
 ("Santa Cruz Monjas","Miahuatlan de porfirio diaz",'Oaxaca','9870654322'),
 ('Xitla', 'Santa Cruz Xitla', 'Oaxaca','4435628711');
 
-INSERT INTO PERSONA (id_persona,nombre,apellido_paterno,apellido_materno,localidad,sexo,fecha_nacimiento,telefono) VALUES 
-("MASL19931106HOCRNN","Leonardo","Marcos","Santiago","San Mateo Mixtepec","H","1993-11-06","9876543210"),
-("COXN20160915HOCRXX","Noe","Cortes","","Santa Cruz Monjas","H","2016-09-15","1234567890"),
-("MAXP20160916HOCRXD","Pedro","Martinez","","Santa Cruz Monjas","H","2016-09-16","1234567890"),
-("PAXA20160913HOCSXN","Antonio","Pascual","","Santa Cruz Monjas","H","2016-09-13","1234567890"),
-("PEXF20160910HOCRXR","Francisco","Perez","","Santa Cruz Monjas","H","2016-09-10","1234567890");
+INSERT INTO PERSONA (id_persona,nombre,apellido_paterno,apellido_materno,nombre_localidad,nombre_municipio,estado,sexo,fecha_nacimiento,telefono) VALUES 
+("MASL19931106HOCRNN","Leonardo","Marcos","Santiago","San Mateo Mixtepec","Santa Cruz Mixtepec",'Oaxaca',"H","1993-11-06","9876543210"),
+("COXN20160915HOCRXX","Noe","Cortes","","Santa Cruz Monjas","Miahuatlan de porfirio diaz",'Oaxaca',"H","2016-09-15","1234567890"),
+("MAXP20160916HOCRXD","Pedro","Martinez","","Santa Cruz Monjas","Miahuatlan de porfirio diaz",'Oaxaca',"H","2016-09-16","1234567890"),
+("PAXA20160913HOCSXN","Antonio","Pascual","","Santa Cruz Monjas","Miahuatlan de porfirio diaz",'Oaxaca',"H","2016-09-13","1234567890"),
+("PEXF20160910HOCRXR","Francisco","Perez","","Santa Cruz Monjas","Miahuatlan de porfirio diaz",'Oaxaca',"H","2016-09-10","1234567890");
 
 
 DROP VIEW IF EXISTS VISTA_MUNICIPIO;
@@ -101,16 +101,59 @@ BEGIN
 	SET NEW.id_proveedor = CONCAT(NEW.id_proveedor,SUBSTRING(NEW.id_jefe,1,8));
 END;//
 DELIMITER ;
-
+SELECT * FROM PERSONA;
 DROP VIEW IF EXISTS VISTA_PERSONA;
 CREATE VIEW VISTA_PERSONA AS 
 SELECT 
 	id_persona,
     concat(nombre, ' ',apellido_paterno, ' ', apellido_materno) AS nombre,
-    localidad,
+    nombre_localidad,
+    nombre_municipio,
+    estado,
     direccion,
     sexo,
     fecha_nacimiento,
     telefono
 FROM PERSONA
 ORDER BY nombre;
+
+CREATE TABLE TERRENO(
+	id_terreno			INT NOT NULL AUTO_INCREMENT,
+	nombre 				VARCHAR(100),
+    dimension			VARCHAR(50),
+	direccion  			VARCHAR(100),
+    nombre_localidad	VARCHAR(60) NOT NULL,
+	nombre_municipio	VARCHAR(60) NOT NULL,
+    estado				VARCHAR(60) NOT NULL,
+    valor_estimado		DECIMAL(15,2),
+	id_empleado			VARCHAR(26) NOT NULL,	
+    PRIMARY KEY(id_terreno),
+    FOREIGN KEY(nombre_localidad,nombre_municipio,estado) REFERENCES LOCALIDAD(nombre_localidad,nombre_municipio,estado),
+    FOREIGN KEY(id_empleado) REFERENCES EMPLEADO(id_empleado));
+	
+SELECT * FROM EMPLEADO;
+DROP TABLE IF EXISTS TERRENO;
+describe VEHICULO;
+
+SELECT * FROM TERRENO;
+DROP VIEW IF EXISTS VISTA_TERRENO;
+CREATE VIEW VISTA_TERRENO AS 
+SELECT 
+	id_terreno,
+    nombre,
+    dimension,
+    direccion,
+    nombre_localidad,
+    nombre_municipio,
+    estado,
+    valor_estimado,
+    id_empleado,
+    (SELECT CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) FROM PERSONA WHERE id_persona = SUBSTRING(id_empleado,1,18) LIMIT 1) AS empleado,
+    (SELECT id_jefe FROM EMPLEADO WHERE id_empleado = TERRENO.id_empleado LIMIT 1) AS id_jefe
+FROM TERRENO
+ORDER BY nombre;
+
+SELECT * FROM VISTA_LOCALIDAD;
+SELECT * FROM VISTA_TERRENO;
+
+SELECT * FROM EMPLEADO;
