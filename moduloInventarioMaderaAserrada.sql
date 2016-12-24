@@ -1,5 +1,52 @@
 USE aserradero;
 
+-- Vista de clasificación de madera en rollo
+DROP VIEW IF EXISTS V_MADERA_ASERRADA_CLASIF;
+CREATE VIEW V_MADERA_ASERRADA_CLASIF AS 
+SELECT 
+	id_administrador,
+    id_empleado,
+    (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE id_persona = SUBSTRING(id_empleado,1,18) LIMIT 1) as empleado,
+    id_madera,
+    grueso,
+    ancho,
+    largo,
+    volumen,
+    costo_por_volumen
+FROM MADERA_ASERRADA_CLASIF;
+
+DROP VIEW IF EXISTS V_ENTRADA_M_ASERRADA;
+CREATE VIEW V_ENTRADA_M_ASERRADA AS
+SELECT
+	id_entrada,
+    fecha,
+    id_madera,
+    num_piezas,
+    id_empleado,
+    (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE id_persona = SUBSTRING(id_empleado,1,18) LIMIT 1) as empleado,
+    id_administrador
+FROM ENTRADA_MADERA_ASERRADA;
+
+-- MADERA ASERRADA VENDIDA
+DROP VIEW IF EXISTS MADERA_A_VENDIDA;
+CREATE VIEW MADERA_A_VENDIDA AS
+SELECT 
+	id_administrador,id_madera,num_piezas,volumen,monto,tipo_madera
+FROM VENTA AS V,VENTA_MAYOREO AS VM
+WHERE V.id_venta = VM.id_venta
+UNION
+SELECT 
+	id_administrador,id_madera,num_piezas,volumen,monto,tipo_madera
+FROM VENTA AS V,VENTA_PAQUETE AS VP
+WHERE V.id_venta = VP.id_venta;
+
+
+
+
+
+SELECT * FROM ENTRADA_MADERA_ASERRADA;
+
+SELECT * FROM V_ENTRADA_M_ASERRADA;
 -- Consulta las maderas vendidas en ventas por paquete
 DROP VIEW IF EXISTS MADERA_VENDIDA_PAQUETE;
 CREATE VIEW MADERA_VENDIDA_PAQUETE AS
@@ -54,3 +101,9 @@ SELECT
     ROUND(((MAP.num_piezas - (SELECT(C_MADERA_VENDIDA(MAP.id_madera)))) * MAC.volumen * MAC.costo_por_volumen),2) AS costo_total
 FROM MADERA_ASERRADA_PROD AS  MAP, MADERA_ASERRADA_CLASIF AS MAC
 WHERE MAP.id_madera = MAC.id_madera;
+
+SELECT * 
+FROM VENTA as V,VENTA_PAQUETE AS VP, VENTA_MAYOREO AS VM
+WHERE V.id_venta = VP.id_venta ;
+
+

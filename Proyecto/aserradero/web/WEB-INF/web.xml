@@ -34,19 +34,19 @@
     </servlet>
     <servlet>
         <servlet-name>VentaController</servlet-name>
-        <servlet-class>controlador.VentaController</servlet-class>
+        <servlet-class>controlador.venta.VentaController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>VentaExtraController</servlet-name>
-        <servlet-class>controlador.VentaExtraController</servlet-class>
+        <servlet-class>controlador.venta.VentaExtraController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>VentaMayoreoController</servlet-name>
-        <servlet-class>controlador.VentaMayoreoController</servlet-class>
+        <servlet-class>controlador.venta.VentaMayoreoController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>VentaPaqueteController</servlet-name>
-        <servlet-class>controlador.VentaPaqueteController</servlet-class>
+        <servlet-class>controlador.venta.VentaPaqueteController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ProveedorController</servlet-name>
@@ -54,7 +54,7 @@
     </servlet>
     <servlet>
         <servlet-name>MaderaAserradaClasifController</servlet-name>
-        <servlet-class>controlador.MaderaAserradaClasifController</servlet-class>
+        <servlet-class>controlador.maderaAserrada.MaderaAserradaClasifController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ClasificacionMaderaRolloController</servlet-name>
@@ -62,7 +62,7 @@
     </servlet>
     <servlet>
         <servlet-name>EntradaMaderaAserradaController</servlet-name>
-        <servlet-class>controlador.EntradaMaderaAserradaController</servlet-class>
+        <servlet-class>controlador.maderaAserrada.EntradaMaderaAserradaController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PagoRentaController</servlet-name>
@@ -110,7 +110,7 @@
     </servlet>
     <servlet>
         <servlet-name>InventarioMaderaAserradaController</servlet-name>
-        <servlet-class>controlador.InventarioMaderaAserradaController</servlet-class>
+        <servlet-class>controlador.maderaAserrada.InventarioMaderaAserradaController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PagoEmpleadoController</servlet-name>
@@ -134,7 +134,7 @@
     </servlet>
     <servlet>
         <servlet-name>VentasAjaxController</servlet-name>
-        <servlet-class>controlador.VentasAjaxController</servlet-class>
+        <servlet-class>controlador.venta.VentasAjaxController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PagoCompraController</servlet-name>
