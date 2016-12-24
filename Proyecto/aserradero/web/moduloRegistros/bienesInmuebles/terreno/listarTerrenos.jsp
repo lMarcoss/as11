@@ -48,7 +48,6 @@
                                     <option value="direccion">Direccion</option>
                                     <option value="nombre_localidad">Localidad</option>
                                     <option value="nombre_municipio">Municipio</option>
-                                    <option value="estado">Estado</option>
                                     <option value="valor_estimado">Valor estimado</option>
                                     <option value="empleado">Empleado</option>
                                 </select>
@@ -64,8 +63,6 @@
                                     <th>Dimension</th>
                                     <th>Direccion</th>
                                     <th>Localidad</th>
-                                    <th>Municipio</th>
-                                    <th>Estado</th>
                                     <th>Valor estimado</th>
                                     <th>Empleado</th>
                                     <th></th>
@@ -81,9 +78,7 @@
                                         +"<td>"+terreno.getNombre()+"</td>"
                                         +"<td>"+terreno.getDimension()+"</td>"
                                         +"<td>"+terreno.getDireccion()+"</td>"
-                                        +"<td>"+terreno.getNombre_localidad()+"</td>"
-                                        +"<td>"+terreno.getNombre_municipio()+"</td>"
-                                        +"<td>"+terreno.getEstado()+"</td>"
+                                        +"<td>"+terreno.getNombre_localidad()+", "+terreno.getNombre_municipio()+"</td>"
                                         +"<td>"+terreno.getValor_estimado()+"</td>"
                                         +"<td>"+terreno.getEmpleado()+"</td>"
                                         +"<td><a class=\"btn btn-info\" href=\"/aserradero/TerrenoController?action=modificar&id_terreno="+terreno.getId_terreno()+"\">Modificar</a></td>"

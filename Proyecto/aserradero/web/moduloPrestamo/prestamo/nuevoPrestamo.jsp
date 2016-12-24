@@ -6,7 +6,7 @@
 
 <%@page import="entidades.empleado.Empleado"%>
 <%@page import="java.util.List"%>
-<%@page import="entidades.Persona"%>
+<%@page import="entidades.registros.Persona"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     List <Persona> personas = (List<Persona>) request.getAttribute("personas");

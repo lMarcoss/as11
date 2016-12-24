@@ -73,8 +73,8 @@
                     <a href="#">Madera en rollo</a>
                     <!--<a href="/aserradero/CompraController?action=listar">Entrada de madera</a>-->
                     <ul class="dropdown-menu">
-                        <li class="detalle_compra"><a href="/aserradero/EntradaMaderaRolloController?action=listar_entrada">Entrada</a></li>
-                        <li class="detalle_compra"><a href="/aserradero/SalidaMaderaRolloController?action=listar_salida">Salida</a></li>
+                        <li class="detalle_compra"><a href="/aserradero/EntradaMaderaRolloController?action=listar">Entrada</a></li>
+                        <li class="detalle_compra"><a href="/aserradero/SalidaMaderaRolloController?action=listar">Salida</a></li>
                         <!--<li class="pagos_copra"><a href="/aserradero/PagoCompraController?action=listar">Pagos compra</a></li>-->
                         <li class="inventario_madera_entrada"><a href="/aserradero/InventarioMaderaRolloController?action=listar">Inventario</a></li>
                         <li class="costo_madera_entrada"><a href="/aserradero/ClasificacionMaderaRolloController?action=listar">Clasficación</a></li>

@@ -10,10 +10,10 @@ SELECT
 		fecha,
 		VENTA.id_venta,
 		id_cliente,
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(id_cliente,1,18)) as cliente,
-		(SELECT direccion FROM PERSONA WHERE id_persona = SUBSTRING(id_cliente,1,18)) as direccion_cliente,
-        id_empleado,
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(id_empleado,1,18)) as empleado,
+        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(id_cliente,1,18) LIMIT 1) as cliente,
+		(SELECT direccion FROM PERSONA WHERE id_persona = SUBSTRING(id_cliente,1,18) LIMIT 1) as direccion_cliente,
+        VENTA.id_empleado,
+        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(VENTA.id_empleado,1,18) LIMIT 1) as empleado,
         estatus,
         numero_paquete,
         MADERA_ASERRADA_CLASIF.id_madera,
@@ -37,11 +37,11 @@ CREATE VIEW VISTA_VENTAS_POR_MAYOREO AS
 SELECT fecha,
 		VENTA.id_venta,
         id_cliente,
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(id_cliente,1,18)) as cliente,
-        (select id_jefe from CLIENTE where id_cliente = VENTA.id_cliente) as id_jefe,
-		(SELECT direccion FROM PERSONA WHERE id_persona = SUBSTRING(id_cliente,1,18)) as direccion_cliente,
-		id_empleado, 
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE id_persona = SUBSTRING(id_empleado,1,18)) as empleado,
+        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(id_cliente,1,18) LIMIT 1) as cliente,
+        (select id_jefe from CLIENTE where id_cliente = VENTA.id_cliente LIMIT 1) as id_jefe,
+		(SELECT direccion FROM PERSONA WHERE id_persona = SUBSTRING(id_cliente,1,18) LIMIT 1) as direccion_cliente,
+		VENTA.id_empleado, 
+        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE id_persona = SUBSTRING(VENTA.id_empleado,1,18) LIMIT 1) as empleado,
 		estatus,
         MADERA_ASERRADA_CLASIF.id_madera as id_madera,
         grueso,
@@ -64,11 +64,11 @@ CREATE VIEW VISTA_VENTAS_EXTRA AS
 SELECT fecha,
 		VENTA.id_venta,
         id_cliente,
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(VENTA.id_cliente,1,18)) as cliente,
-        (SELECT direccion FROM PERSONA WHERE id_persona = SUBSTRING(VENTA.id_cliente,1,18)) as direccion_cliente,
+        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(VENTA.id_cliente,1,18) LIMIT 1) as cliente,
+        (SELECT direccion FROM PERSONA WHERE id_persona = SUBSTRING(VENTA.id_cliente,1,18) LIMIT 1) as direccion_cliente,
         id_empleado,
-        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(VENTA.id_empleado,1,18)) as empleado,
-        (SELECT id_jefe FROM EMPLEADO WHERE id_empleado = VENTA.id_empleado) AS id_jefe,
+        (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) as nombre FROM PERSONA WHERE id_persona = SUBSTRING(VENTA.id_empleado,1,18) LIMIT 1) as empleado,
+        (SELECT id_jefe FROM EMPLEADO WHERE id_empleado = VENTA.id_empleado LIMIT 1) AS id_jefe,
         estatus,
         tipo,
         monto,
@@ -82,11 +82,11 @@ CREATE VIEW VISTA_CLIENTE_TICKET AS
 SELECT VENTA.id_venta,VENTA.fecha,VENTA.tipo_venta,CLIENTE.id_jefe,CLIENTE.id_cliente,PERSONA.id_persona, 
 	concat(nombre," ", apellido_paterno, " ", apellido_materno) as cliente,
 	direccion,
-    localidad,
+    LOCALIDAD.nombre_localidad,
     MUNICIPIO.nombre_municipio as municipio,
-    estado
+    MUNICIPIO.estado
 	FROM VENTA,CLIENTE,PERSONA,LOCALIDAD,MUNICIPIO
 	WHERE VENTA.id_cliente = CLIENTE.id_cliente AND
 		CLIENTE.id_persona = PERSONA.id_persona AND
-            PERSONA.localidad = LOCALIDAD.nombre_localidad AND
+            PERSONA.nombre_localidad = LOCALIDAD.nombre_localidad AND
             LOCALIDAD.nombre_municipio = MUNICIPIO.nombre_municipio;

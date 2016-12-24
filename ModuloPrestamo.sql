@@ -97,18 +97,6 @@ DELIMITER ;
 -- Submódulo pago préstamo-- Submódulo pago préstamo-- Submódulo pago préstamo-- Submódulo pago préstamo-- Submódulo pago préstamo
 -- Submódulo pago préstamo-- Submódulo pago préstamo-- Submódulo pago préstamo-- Submódulo pago préstamo-- Submódulo pago préstamo
 
-DROP TABLE IF EXISTS PAGO_PRESTAMO;
-CREATE TABLE PAGO_PRESTAMO(
-	id_pago 		INT NOT NULL AUTO_INCREMENT,
-    id_prestamo 	INT,
-    fecha 			DATE,
-    id_empleado		VARCHAR(26),
-    monto_pago		DECIMAL(15,2),
-    PRIMARY KEY(id_pago, id_prestamo),
-    FOREIGN KEY(id_prestamo) REFERENCES PRESTAMO (id_prestamo))ENGINE=InnoDB;
-
-
-
 DROP VIEW IF EXISTS VISTA_PAGO_PRESTAMO;
 CREATE VIEW VISTA_PAGO_PRESTAMO AS
 SELECT 	

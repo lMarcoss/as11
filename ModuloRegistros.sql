@@ -6,7 +6,7 @@ INSERT INTO MUNICIPIO (nombre_municipio, estado,telefono) VALUES
 ("Santa Cruz Mixtepec","Oaxaca",'9876543211'),
 ("Oaxaca de Juarez","Oaxaca",'9876543212'),
 ('Santa Cruz Xitla', "Oaxaca",'951901872');
-SELECT * FROM LOCALIDAD;
+
 INSERT INTO LOCALIDAD (nombre_localidad,nombre_municipio,estado,telefono) VALUES 
 ("San Mateo Mixtepec","Santa Cruz Mixtepec",'Oaxaca','9870654321'),
 ("Santa Cruz Monjas","Miahuatlan de porfirio diaz",'Oaxaca','9870654322'),
@@ -27,7 +27,7 @@ SELECT
     estado,
     telefono
 FROM MUNICIPIO;
-SELECT * FROM LOCALIDAD;
+
 DROP VIEW IF EXISTS VISTA_LOCALIDAD;
 CREATE VIEW VISTA_LOCALIDAD AS 
 SELECT 
@@ -92,7 +92,7 @@ BEGIN
 END;//
 DELIMITER ;
 
--- Disparador para crear id_cliente
+-- Disparador para crear id_proveedor
 DROP TRIGGER IF EXISTS PROVEEDOR;
 DELIMITER //
 CREATE TRIGGER PROVEEDOR BEFORE INSERT ON PROVEEDOR
@@ -101,7 +101,9 @@ BEGIN
 	SET NEW.id_proveedor = CONCAT(NEW.id_proveedor,SUBSTRING(NEW.id_jefe,1,8));
 END;//
 DELIMITER ;
-SELECT * FROM PERSONA;
+
+-- SELECT * FROM PERSONA;
+
 DROP VIEW IF EXISTS VISTA_PERSONA;
 CREATE VIEW VISTA_PERSONA AS 
 SELECT 
@@ -117,25 +119,7 @@ SELECT
 FROM PERSONA
 ORDER BY nombre;
 
-CREATE TABLE TERRENO(
-	id_terreno			INT NOT NULL AUTO_INCREMENT,
-	nombre 				VARCHAR(100),
-    dimension			VARCHAR(50),
-	direccion  			VARCHAR(100),
-    nombre_localidad	VARCHAR(60) NOT NULL,
-	nombre_municipio	VARCHAR(60) NOT NULL,
-    estado				VARCHAR(60) NOT NULL,
-    valor_estimado		DECIMAL(15,2),
-	id_empleado			VARCHAR(26) NOT NULL,	
-    PRIMARY KEY(id_terreno),
-    FOREIGN KEY(nombre_localidad,nombre_municipio,estado) REFERENCES LOCALIDAD(nombre_localidad,nombre_municipio,estado),
-    FOREIGN KEY(id_empleado) REFERENCES EMPLEADO(id_empleado));
-	
-SELECT * FROM EMPLEADO;
-DROP TABLE IF EXISTS TERRENO;
-describe VEHICULO;
 
-SELECT * FROM TERRENO;
 DROP VIEW IF EXISTS VISTA_TERRENO;
 CREATE VIEW VISTA_TERRENO AS 
 SELECT 
@@ -152,8 +136,3 @@ SELECT
     (SELECT id_jefe FROM EMPLEADO WHERE id_empleado = TERRENO.id_empleado LIMIT 1) AS id_jefe
 FROM TERRENO
 ORDER BY nombre;
-
-SELECT * FROM VISTA_LOCALIDAD;
-SELECT * FROM VISTA_TERRENO;
-
-SELECT * FROM EMPLEADO;

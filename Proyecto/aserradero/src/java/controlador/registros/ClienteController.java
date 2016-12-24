@@ -174,7 +174,7 @@ public class ClienteController extends HttpServlet {
         try {
             //consultamos la lista de personas para registrarlos como cliente
             List<Persona> personas;
-            personas = personaCRUD.listar((String) sesion.getAttribute("id_jefe"));
+            personas = personaCRUD.listarPersonasPara("cliente",(String) sesion.getAttribute("id_jefe"));
             request.setAttribute("personas", personas);
 
             RequestDispatcher view = request.getRequestDispatcher("moduloRegistros/cliente/nuevoCliente.jsp");

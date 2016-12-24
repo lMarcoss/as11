@@ -2,27 +2,24 @@
  * Funcion para asignar el maximo de piezas y volumen para las salidas madera rollo
  */
 function salidaMaderaRolloPermitido(){
+    // Obtenemos cantidades en existencia
+    var num_pieza_primario = document.getElementById('num_pieza_primarioE').value;
+    var volumen_primario = document.getElementById('volumen_primarioE').value;
     
-    var pieza_existente = document.getElementById('pieza_existente').value;
-    var volumen_existente = document.getElementById('volumen_existente').value;
+    var num_pieza_secundario = document.getElementById('num_pieza_secundarioE').value;
+    var volumen_secundario = document.getElementById('volumen_secundarioE').value;
     
-    document.getElementById('num_piezas').max = pieza_existente;
-    document.getElementById('volumen_total').max = volumen_existente;
-    return null;
-}
-function salidaVolumenMinimoPermitido(){
-    // establecemos el minimo de volumen si se acaba el inventario
-    var num_piezas = document.getElementById('num_piezas').value;
+    var num_pieza_terciario = document.getElementById('num_pieza_terciarioE').value;
+    var volumen_terciario = document.getElementById('volumen_terciarioE').value;
     
-    if(num_piezas != ""){
-        var pieza_existente = document.getElementById('pieza_existente').value;
-        var volumen_existente = document.getElementById('volumen_existente').value;
-        if(num_piezas == pieza_existente){
-            document.getElementById('volumen_total').min = volumen_existente;
-        }else{
-            document.getElementById('volumen_total').min = 0.001;
-            document.getElementById('volumen_total').max = volumen_existente - 2;
-        }
-    }
+    //Establecemos cantidades en existencia como valores máximos
+    document.getElementById('num_pieza_primario').max = num_pieza_primario;
+    document.getElementById('volumen_primario').max = volumen_primario;
+    
+    document.getElementById('num_pieza_secundario').max = num_pieza_secundario;
+    document.getElementById('volumen_secundario').max = volumen_secundario;
+    
+    document.getElementById('num_pieza_terciario').max = num_pieza_terciario;
+    document.getElementById('volumen_terciario').max = volumen_terciario;
     return null;
 }

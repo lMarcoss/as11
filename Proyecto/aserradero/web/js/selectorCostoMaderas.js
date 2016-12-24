@@ -14,7 +14,6 @@ function seleccionarCostoMaderaVenta(){
     //establecemos el maximo de piezas para venta
     var pieza_existencia = document.getElementById('pieza_existencia').value;
     document.getElementById('num_piezas').max = pieza_existencia;
-    alert("hola");
     calcularVolumenTotal();
     return null;
 }

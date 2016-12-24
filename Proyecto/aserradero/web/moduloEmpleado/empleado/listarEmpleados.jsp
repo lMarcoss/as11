@@ -50,7 +50,7 @@
                                     <tr>
                                       <th>N°</th>
                                       <th>Empleado</th>
-                                      <th>Roll</th>
+                                      <th>Rol</th>
                                       <th>Status</th>
 					<th></th>
 					<th></th>

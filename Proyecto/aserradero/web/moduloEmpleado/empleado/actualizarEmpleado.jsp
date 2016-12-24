@@ -40,7 +40,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 10px;"><label>Roll:</label></td>
+                            <td style="padding-left: 10px;"><label>Rol:</label></td>
                             <td style="padding-left: 10px;">
                                 <select name="rol" required="">
                                     <%if (empleado.getRol().equals("Administrador")) {%>

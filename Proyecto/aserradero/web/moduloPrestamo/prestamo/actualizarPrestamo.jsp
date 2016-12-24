@@ -4,7 +4,7 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.Persona"%>
+<%@page import="entidades.registros.Persona"%>
 <%@page import="java.util.List"%>
 <%@page import="entidades.empleado.Administrador"%>
 <%@page import="entidades.prestamo.Prestamo"%>

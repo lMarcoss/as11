@@ -187,12 +187,29 @@ public class PersonaCRUD extends Conexion implements OperacionesCRUD {
         return personas;
     }
 
-    public <T> List listarPersonasParaAdmin() throws Exception {
+    // registro: define para qué se desea registrar las personas a consultar: para administrador, cliente o  proveedor
+    public <T> List listarPersonasPara(String registro, String id_jefe) throws Exception {
+        //Creamos la consulta
+        String consulta = "";
+        switch (registro) {
+            case "cliente": // Personas para nuevos clientes
+                consulta = "SELECT * FROM VISTA_PERSONA WHERE id_persona NOT IN (SELECT id_persona FROM CLIENTE WHERE id_jefe = ?)";
+                break;
+            case "proveedor":// Personas para nuevo proveedor
+                consulta = "SELECT * FROM VISTA_PERSONA WHERE id_persona NOT IN (SELECT id_persona FROM PROVEEDOR WHERE id_jefe = ?)";
+                break;
+            case "administrador":// Personas para nuevo administrador
+                consulta = "SELECT * FROM VISTA_PERSONA WHERE id_persona NOT IN (SELECT SUBSTRING(id_administrador,1,18) FROM ADMINISTRADOR)";
+                break;
+        }
+        //Ejecutamos la consulta
         List<Persona> personas;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement(
-                    "SELECT * FROM VISTA_PERSONA WHERE id_persona NOT IN (SELECT SUBSTRING(id_administrador,1,18) FROM ADMINISTRADOR)")) {
+            try (PreparedStatement st = this.conexion.prepareStatement(consulta)) {
+                if(registro.equals("cliente") || registro.equals("proveedor")){
+                    st.setString(1, id_jefe);
+                }
                 personas = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -212,4 +229,5 @@ public class PersonaCRUD extends Conexion implements OperacionesCRUD {
         }
         return personas;
     }
+
 }

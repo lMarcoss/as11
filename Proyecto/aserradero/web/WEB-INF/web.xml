@@ -58,7 +58,7 @@
     </servlet>
     <servlet>
         <servlet-name>ClasificacionMaderaRolloController</servlet-name>
-        <servlet-class>controlador.ClasificacionMaderaRolloController</servlet-class>
+        <servlet-class>controlador.maderaRollo.ClasificacionMaderaRolloController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EntradaMaderaAserradaController</servlet-name>
@@ -74,7 +74,7 @@
     </servlet>
     <servlet>
         <servlet-name>EntradaMaderaRolloController</servlet-name>
-        <servlet-class>controlador.EntradaMaderaRolloController</servlet-class>
+        <servlet-class>controlador.maderaRollo.EntradaMaderaRolloController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>VehiculoController</servlet-name>
@@ -82,11 +82,11 @@
     </servlet>
     <servlet>
         <servlet-name>CostoMaderaEntradaController</servlet-name>
-        <servlet-class>controlador.ClasificacionMaderaRolloController</servlet-class>
+        <servlet-class>controlador.maderaRollo.ClasificacionMaderaRolloController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>InventarioMaderaRolloController</servlet-name>
-        <servlet-class>controlador.InventarioMaderaRolloController</servlet-class>
+        <servlet-class>controlador.maderaRollo.InventarioMaderaRolloController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>OtroGastoController</servlet-name>
@@ -126,7 +126,7 @@
     </servlet>
     <servlet>
         <servlet-name>SalidaMaderaRolloController</servlet-name>
-        <servlet-class>controlador.SalidaMaderaRolloController</servlet-class>
+        <servlet-class>controlador.maderaRollo.SalidaMaderaRolloController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PrestamoController</servlet-name>
@@ -138,7 +138,7 @@
     </servlet>
     <servlet>
         <servlet-name>PagoCompraController</servlet-name>
-        <servlet-class>controlador.PagoCompraController</servlet-class>
+        <servlet-class>controlador.maderaRollo.PagoCompraController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PagoPrestamoController</servlet-name>

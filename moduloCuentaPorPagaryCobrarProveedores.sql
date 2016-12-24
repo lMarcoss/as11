@@ -40,7 +40,7 @@ RETURNS DECIMAL(15,2)
 BEGIN
 	DECLARE _monto_total DECIMAL(15,2);
     DECLARE _pago DECIMAL(15,2);
-    -- Consultamos si hay pagos
+    -- Consultamos si hay pagos al proveedor
     IF EXISTS(SELECT id_proveedor FROM PAGO_COMPRA WHERE id_proveedor =_id_proveedor) THEN
 		SELECT SUM(monto_pago) INTO _pago FROM PAGO_COMPRA WHERE id_proveedor =_id_proveedor GROUP BY id_proveedor;
 	ELSE
@@ -48,9 +48,9 @@ BEGIN
     END IF;
     
 	-- consultamos si han entrado madera del proveedor
-    IF EXISTS (SELECT id_proveedor FROM MONTO_TOTAL_ENTRADA_MADERA WHERE id_proveedor = _id_proveedor LIMIT 1) THEN 
+    IF EXISTS (SELECT id_proveedor FROM ENTRADA_M_ROLLO WHERE id_proveedor = _id_proveedor AND id_pago = 0 LIMIT 1) THEN 
 		-- consultamos el monto total de las maderas que han entrado
-        SELECT monto_total INTO _monto_total FROM MONTO_TOTAL_ENTRADA_MADERA WHERE id_proveedor = _id_proveedor;
+        SELECT monto_total INTO _monto_total FROM MONTO_TOTAL_ENTRADA_MADERA WHERE id_proveedor = _id_proveedor and id_pago = 0;
 		-- retornamos el monto total
         RETURN (_monto_total - _pago);
 	ELSE -- No hay entradas
@@ -58,7 +58,7 @@ BEGIN
     END IF;
 END;//
 DELIMITER ;
-
+SELECT * FROM ENTRADA_M_ROLLO;
 SELECT * FROM PAGO_COMPRA;
 -- funcion para consultar $ monto total de los anticipos dados al proveedor
 DROP FUNCTION IF EXISTS C_ANTICIPO_PROVEEDOR;

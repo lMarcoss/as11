@@ -10,12 +10,13 @@ window.onload=function(){
         case "error_registrar_entrada_madera_rollo":
             alert("No se pudo crear el registro \n\nVerifica que tengas registrado los costos de las clasificaciones de madera en rollo, Primario, Secundario y Terciario \n\nDebe estar registrado las tres clasificaciones \n\nPara registrar los costos ve al menú \nMadera en rollo -> Clasificación");
             break;
-        // 
         case "error_nuevo":
             alert("Ocurrió un error al intentar agregar nuevo registro");
             break;
         case "error_modificar":
             alert("Ocurrió un error al intentar modificar registro");
+        case "error_actualizar":
+            alert("Ocurrió un error al intentar guardar cambios");
             break;
         case "error_eliminar":
             alert("Ocurrió un error al intentar eliminar registro");

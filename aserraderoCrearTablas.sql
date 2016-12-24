@@ -47,7 +47,7 @@ CREATE TABLE ADMINISTRADOR(
 	id_administrador	VARCHAR(26) NOT NULL,
     cuenta_inicial 		DECIMAL(15,2),
 	PRIMARY KEY (id_administrador),
-	FOREIGN KEY (id_administrador) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
+	FOREIGN KEY (id_administrador) REFERENCES EMPLEADO (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
 
 CREATE	TABLE PAGO_EMPLEADO(
 	id_pago_empleado INT NOT NULL AUTO_INCREMENT,
@@ -76,44 +76,60 @@ CREATE TABLE PROVEEDOR(
 	FOREIGN KEY (id_persona) REFERENCES PERSONA (id_persona),
 	FOREIGN KEY (id_jefe) REFERENCES ADMINISTRADOR (id_administrador))ENGINE=InnoDB;
 
-CREATE TABLE COSTO_MADERA_ENTRADA(
-	id_administrador 	VARCHAR(26) NOT NULL,
-    id_empleado			VARCHAR(26) NOT NULL,
+-- Clasificación madera en rollo por cada proveedor
+CREATE TABLE CLASIFICACION_M_ROLLO(
+    id_proveedor		VARCHAR(26) NOT NULL,
 	clasificacion		ENUM('Primario','Secundario','Terciario') NOT NULL,
-	costo 				DECIMAL(8,2),
-	PRIMARY KEY (id_administrador,clasificacion),
-    FOREIGN KEY (id_administrador) REFERENCES ADMINISTRADOR (id_administrador),
-    FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
+	costo 				DECIMAL(8,2), 		-- costo por volumen
+	PRIMARY KEY (id_proveedor,clasificacion),
+    FOREIGN KEY (id_proveedor) REFERENCES PROVEEDOR (id_proveedor))ENGINE=InnoDB;
 
-CREATE TABLE ENTRADA_MADERA_ROLLO( -- entrada_madera	
-	id_entrada	 		INT NOT NULL AUTO_INCREMENT,
-	fecha 				DATE,
-    id_proveedor		CHAR(26) NOT NULL,
-    id_chofer			CHAR(26) NOT NULL,
-	id_empleado 		CHAR(26) NOT NULL,
-	num_piezas			INT,
-    volumen_primario	DECIMAL(15,3),	-- cantidad de volumen primaria
-    costo_primario		DECIMAL(15,2),	-- costo volumen primario
-    volumen_secundario	DECIMAL(15,3),	-- cantidad de volumen primaria
-    costo_secundario	DECIMAL(15,2),	-- cantidad de volumen primaria
-    volumen_terciario	DECIMAL(15,3),
-    costo_terciario		DECIMAL(15,2),	-- cantidad de volumen primaria
-    id_pago				INT(9) default 0, -- 0 para entradas no pagadas: Se le asigna: insertar un pago cada que se inserta entrada madera, con el campo Pago = "Pagado", "Sin pagar"
+-- Entrada madera en rollo
+CREATE TABLE ENTRADA_M_ROLLO( -- entrada_madera	
+	id_entrada	 			INT NOT NULL AUTO_INCREMENT,
+	fecha 					DATE,
+    id_proveedor			CHAR(26) NOT NULL,
+    id_chofer				CHAR(26) NOT NULL,
+	id_empleado 			CHAR(26) NOT NULL,
+	num_pieza_primario		INT(3),
+    volumen_primario		DECIMAL(15,3),	-- cantidad de volumen primaria
+    costo_primario			DECIMAL(15,2),	-- costo volumen primario
+    num_pieza_secundario	INT(3),
+    volumen_secundario		DECIMAL(15,3),	-- cantidad de volumen primaria
+    costo_secundario		DECIMAL(15,2),	-- cantidad de volumen primaria
+    num_pieza_terciario		INT(3),
+    volumen_terciario		DECIMAL(15,3),
+    costo_terciario			DECIMAL(15,2),	-- cantidad de volumen primaria
+    id_pago					INT(9) default 0, -- 0 para entradas no pagadas: Se le asigna: insertar un pago cada que se inserta entrada madera, con el campo Pago = "Pagado", "Sin pagar"
 	PRIMARY KEY (id_entrada),
     FOREIGN KEY (id_proveedor) REFERENCES PROVEEDOR (id_proveedor),
     FOREIGN KEY (id_chofer) REFERENCES EMPLEADO (id_empleado),
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
-CREATE TABLE SALIDA_MADERA_ROLLO( -- entrada_madera	
-	id_salida	 		INT NOT NULL AUTO_INCREMENT,
-	fecha 				DATE,
-	id_empleado 		CHAR(26) NOT NULL,
-	num_piezas			INT,
-    volumen_total	DECIMAL(15,3),	-- cantidad de volumen primaria
+-- Salida madera en rollo
+CREATE TABLE SALIDA_M_ROLLO( -- entrada_madera	
+	id_salida	 			INT NOT NULL AUTO_INCREMENT,
+	fecha 					DATE,
+	id_empleado 			CHAR(26) NOT NULL,
+    num_pieza_primario		INT(3),
+    volumen_primario		DECIMAL(15,3),	-- cantidad de volumen primaria
+    num_pieza_secundario	INT(3),
+    volumen_secundario		DECIMAL(15,3),	-- cantidad de volumen primaria
+    num_pieza_terciario		INT(3),
+    volumen_terciario		DECIMAL(15,3),
 	PRIMARY KEY (id_salida),
 	FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
--- CREATE TABLE PAGO_COMPRA(fecha		DATE,id_compra	CHAR(7) NOT NULL,monto 		DECIMAL(10,2),pago 		ENUM('Anticipado','Normal'),PRIMARY KEY (fecha,id_compra),	FOREIGN KEY (id_compra) REFERENCES COMPRA (id_compra) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=InnoDB;
+-- Pago de entrada madera en rollo
+CREATE TABLE PAGO_COMPRA(
+	id_pago				INT NOT NULL AUTO_INCREMENT,
+    fecha 				DATE,
+    id_proveedor		CHAR(26) NOT NULL,
+    monto_pago 			DECIMAL(15,2),
+    monto_por_pagar		DECIMAL(15,2),
+ 	PRIMARY KEY (id_pago),
+    FOREIGN KEY (id_proveedor) REFERENCES PROVEEDOR (id_proveedor))ENGINE=InnoDB;
+
 
 CREATE TABLE MADERA_ASERRADA_CLASIF(
 	id_administrador 		VARCHAR(26) NOT NULL,
@@ -269,12 +285,26 @@ CREATE TABLE PRESTAMO(
 	PRIMARY KEY(id_prestamo, id_prestador),
     FOREIGN KEY (id_empleado) REFERENCES EMPLEADO (id_empleado))ENGINE=InnoDB;
 
-CREATE TABLE PAGO_COMPRA(
-	id_pago				INT NOT NULL AUTO_INCREMENT,
-    fecha 				DATE,
-    id_proveedor		CHAR(26) NOT NULL,
-    monto_pago 			DECIMAL(15,2),
-    monto_por_pagar		DECIMAL(15,2),
- 	PRIMARY KEY (id_pago),
-    FOREIGN KEY (id_proveedor) REFERENCES PROVEEDOR (id_proveedor))ENGINE=InnoDB;
     
+CREATE TABLE TERRENO(
+	id_terreno			INT NOT NULL AUTO_INCREMENT,
+	nombre 				VARCHAR(100),
+    dimension			VARCHAR(50),
+	direccion  			VARCHAR(100),
+    nombre_localidad	VARCHAR(60) NOT NULL,
+	nombre_municipio	VARCHAR(60) NOT NULL,
+    estado				VARCHAR(60) NOT NULL,
+    valor_estimado		DECIMAL(15,2),
+	id_empleado			VARCHAR(26) NOT NULL,	
+    PRIMARY KEY(id_terreno),
+    FOREIGN KEY(nombre_localidad,nombre_municipio,estado) REFERENCES LOCALIDAD(nombre_localidad,nombre_municipio,estado),
+    FOREIGN KEY(id_empleado) REFERENCES EMPLEADO(id_empleado));
+
+CREATE TABLE PAGO_PRESTAMO(
+	id_pago 		INT NOT NULL AUTO_INCREMENT,
+    id_prestamo 	INT,
+    fecha 			DATE,
+    id_empleado		VARCHAR(26),
+    monto_pago		DECIMAL(15,2),
+    PRIMARY KEY(id_pago, id_prestamo),
+    FOREIGN KEY(id_prestamo) REFERENCES PRESTAMO (id_prestamo))ENGINE=InnoDB;

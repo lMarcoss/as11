@@ -1,6 +1,6 @@
 USE aserradero;
 
--- Disparador para actualizar los id_pago en la tabla ENTRADA_MADERA_ROLLO: 
+-- Disparador para actualizar los id_pago en la tabla ENTRADA_M_ROLLO: 
 -- Se actualizan todos los que tienen como id_pago = 0 con el nuevo id_pago de PAGO_COMPRA
 DROP TRIGGER IF EXISTS ACTUALIZAR_ENTRADA_MADERA;
 DELIMITER //
@@ -8,11 +8,12 @@ CREATE TRIGGER ACTUALIZAR_ENTRADA_MADERA AFTER INSERT ON PAGO_COMPRA
 FOR EACH ROW
 BEGIN
 	-- actualizamos todos los registros que tienen como id_pago = 0
-	UPDATE ENTRADA_MADERA_ROLLO SET id_pago = NEW.id_pago WHERE id_pago = 0 AND id_proveedor = new.id_proveedor;
+	UPDATE ENTRADA_M_ROLLO SET id_pago = NEW.id_pago WHERE id_pago = 0 AND id_proveedor = new.id_proveedor;
 END;//
 DELIMITER ;
 
--- Procedimiento para obtener monto del pago de las comprar a un proveedor sumando cuenta pendiente del ultimo pago si existe
+
+-- Procedimiento para obtener monto del pago de las compras a un proveedor sumando cuenta pendiente del ultimo pago si existe
 DROP FUNCTION IF EXISTS OBTENER_MONTO_NUEVO_PAGO;
 DELIMITER //
 CREATE FUNCTION OBTENER_MONTO_NUEVO_PAGO (_id_proveedor CHAR(26))
@@ -43,10 +44,8 @@ BEGIN
     END IF;
 END;//
 DELIMITER ;
-SELECT * FROM PROVEEDOR;
-SELECT SUM(monto_total) FROM VISTA_ENTRADA_MADERA_ROLLO WHERE id_pago = 0 AND id_proveedor = 'COXN20160915HOCRXXMASL1993';
-SELECT monto FROM C_POR_PAGAR_PROVEEDOR WHERE id_persona = 'COXN20160915HOCRXXMASL1993';
-SELECT * FROM VISTA_ENTRADA_MADERA_ROLLO;
+
+
 -- Muestra todos los pagos que se han hecho
 DROP VIEW IF EXISTS VISTA_PAGO_COMPRA;
 CREATE VIEW VISTA_PAGO_COMPRA AS
@@ -106,16 +105,7 @@ SELECT
     (SELECT concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(PROVEEDOR.id_proveedor,1,18)) as proveedor,
     (SELECT OBTENER_MONTO_NUEVO_PAGO(id_proveedor)) monto_por_pagar, -- monto por pagar hasta la fecha del pago
     (SELECT OBTENER_CUENTA_POR_COBRAR(id_proveedor)) AS cuenta_por_cobrar,
-    (SELECT EXISTE_ENTRADA_MADERA(id_proveedor)) AS existe_entrada,
+    (SELECT EXISTE_ENTRADA_MADERA(id_proveedor)) AS existe_entrada, -- si existe regresa un 1 y si no regresa 0
     id_jefe as id_administrador
 FROM PROVEEDOR;
-
-SELECT * FROM C_POR_PAGAR_PROVEEDOR;
-SELECT * FROM PROVEEDOR;
-SELECT OBTENER_CUENTA_POR_COBRAR('COXN20160915HOCRXXMASL1993');
-
-SELECT * FROM VISTA_MONTO_PAGO_COMPRA;
-SELECT * FROM VISTA_ENTRADA_MADERA_ROLLO;
-
-SELECT * FROM VISTA_ENTRADA_MADERA_ROLLO;
-SELECT * FROM ENTRADA_MADERA_ROLLO;
+SELECT * FROM VISTA_MONTO_PAGO_COMPRA WHERE existe_entrada > 0;

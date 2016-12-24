@@ -192,7 +192,7 @@ public class AdministradorController extends HttpServlet {
         try {
             PersonaCRUD personaCRUD = new PersonaCRUD();
             List<Persona> personas;
-            personas = (List<Persona>) personaCRUD.listarPersonasParaAdmin();
+            personas = (List<Persona>) personaCRUD.listarPersonasPara("administrador", (String) sesion.getAttribute("id_jefe"));
             request.setAttribute("personas", personas);
 
             RequestDispatcher view = request.getRequestDispatcher("moduloEmpleado/administrador/nuevoAdministrador.jsp");

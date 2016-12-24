@@ -41,7 +41,7 @@ public class ProveedorController extends HttpServlet {
         String rol = (String) sesion.getAttribute("rol");
         if (nombre_usuario.equals("")) {
             response.sendRedirect("/aserradero/");
-        } else if (rol.equals("Administrador") || rol.equals("Empleado")|| rol.equals("Vendedor")) {
+        } else if (rol.equals("Administrador") || rol.equals("Empleado") || rol.equals("Vendedor")) {
             //Acción a realizar
             String action = request.getParameter("action");
             switch (action) {
@@ -172,7 +172,7 @@ public class ProveedorController extends HttpServlet {
         try {
             //consultamos la lista de personas para registrarlos como proveedor
             List<Persona> personas;
-            personas = personaCRUD.listar((String) sesion.getAttribute("id_jefe"));
+            personas = personaCRUD.listarPersonasPara("proveedor", (String) sesion.getAttribute("id_jefe"));
             request.setAttribute("personas", personas);
 
             RequestDispatcher view = request.getRequestDispatcher("moduloRegistros/proveedor/nuevoProveedor.jsp");
