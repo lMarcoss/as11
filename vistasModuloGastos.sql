@@ -12,8 +12,10 @@ SELECT
     (SELECT id_jefe FROM EMPLEADO WHERE id_empleado = PAGO_RENTA.id_empleado) AS id_jefe,
     monto,
     observacion
-FROM PAGO_RENTA;
+FROM PAGO_RENTA
+ORDER BY fecha DESC;
 
+DROP VIEW IF EXISTS VISTA_PAGO_LUZ;
 CREATE VIEW VISTA_PAGO_LUZ AS 
 SELECT 
 	id_pago_luz,
@@ -23,8 +25,10 @@ SELECT
     (SELECT id_jefe FROM EMPLEADO WHERE id_empleado = PAGO_LUZ.id_empleado) AS id_jefe,
     monto,
     observacion
-FROM PAGO_LUZ;
+FROM PAGO_LUZ 
+ORDER BY fecha DESC;
 
+DROP VIEW IF EXISTS VISTA_OTRO_GASTO;
 CREATE VIEW VISTA_OTRO_GASTO AS 
 SELECT 
 	id_gasto,
@@ -35,4 +39,5 @@ SELECT
     nombre_gasto,
     monto,
     observacion
-FROM OTRO_GASTO;
+FROM OTRO_GASTO 
+ORDER BY fecha DESC;

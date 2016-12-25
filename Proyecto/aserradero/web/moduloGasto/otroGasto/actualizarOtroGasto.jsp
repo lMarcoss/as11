@@ -3,7 +3,7 @@
     Created on : 26/09/2016, 03:36:38 PM
     Author     : rcortes
 --%>
-<%@page import="entidades.OtroGasto"%>
+<%@page import="entidades.gasto.OtroGasto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     OtroGasto otrogasto = (OtroGasto) request.getAttribute("otrogasto");
@@ -30,20 +30,12 @@
                             <td style="padding-left: 10px;"><input type="date" name="fecha" value="<%=otrogasto.getFecha()%>" readonly=""></td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 10px;"><label>Empleado</label></td>
-                            <td style="padding-left: 10px;">
-                                <select name="id_empleado" required="" title="Si no existe el empleado que busca, primero agreguelo en la lista de empleados">
-                                    <option selected="" value='<%=otrogasto.getId_empleado()%>'><%=otrogasto.getEmpleado()%></option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
                             <td style="padding-left: 10px;"><label for="nombre_gasto">Nombre gasto</label></td>
                             <td style="padding-left: 10px;"><input type="text" name="nombre_gasto" value="<%=otrogasto.getNombre_gasto()%>" maxlength="249" required=""></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label for="monto">Monto</label></td>
-                            <td style="padding-left: 10px;"><input type="number" name="monto" value="<%=otrogasto.getMonto()%>" step="0.01" min="0.01" max="99999999.99" required=""></td>
+                            <td style="padding-left: 10px;"><input type="number" name="monto" value="<%=otrogasto.getMonto()%>" step="0.01" min="0.00" max="999999.99" required=""></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label for="observacion">Observacion</label></td>

@@ -1,6 +1,6 @@
 package controlador.maderaRollo;
 
-import controlador.OtroGastoController;
+import controlador.gasto.OtroGastoController;
 import dao.maderaRollo.PagoCompraCRUD;
 import entidades.maderaRollo.PagoCompra;
 import entidadesVirtuales.VistaMontoPagoCompra;

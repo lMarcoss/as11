@@ -1,6 +1,7 @@
-package dao;
+package dao.gasto;
 
-import entidades.OtroGasto;
+import dao.Conexion;
+import entidades.gasto.OtroGasto;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +13,7 @@ import java.util.List;
  *
  * @author rcortes
  */
- public class OtroGastoCRUD extends Conexion implements OperacionesCRUD{
+public class OtroGastoCRUD extends Conexion implements OperacionesCRUD {
 
     @Override
     public void registrar(Object objeto) throws Exception {
@@ -23,10 +24,10 @@ import java.util.List;
                     + "INSERT INTO OTRO_GASTO (fecha, id_empleado, nombre_gasto, monto, observacion) values (?, ?, ?, ?, ?)");
             st = cargarObject(st, otrogasto);
             st.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.err.println(e);
             throw e;
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
     }
@@ -36,14 +37,16 @@ import java.util.List;
         List<OtroGasto> otrosgastos;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_OTRO_GASTO")){
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_OTRO_GASTO WHERE id_jefe = ? ORDER BY fecha DESC")) {
+                st.setString(1, id_jefe);
                 otrosgastos = new ArrayList<>();
-                try (ResultSet rs = st.executeQuery()){
+                try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
                         OtroGasto otrogasto = (OtroGasto) extraerObject(rs);
                         otrosgastos.add(otrogasto);
                     }
                 } catch (Exception e) {
+                    System.out.println(e);
                 }
             } catch (Exception e) {
                 otrosgastos = null;
@@ -52,7 +55,7 @@ import java.util.List;
         } catch (Exception e) {
             System.out.println(e);
             throw e;
-        }finally{
+        } finally {
             cerrarConexion();
         }
         return otrosgastos;
@@ -89,10 +92,10 @@ import java.util.List;
             st.setString(5, otrogasto.getObservacion());
             st.setInt(6, otrogasto.getId_gasto());
             st.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             throw e;
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
     }
@@ -108,30 +111,37 @@ import java.util.List;
         } catch (Exception e) {
             System.out.println(e);
             throw e;
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
     }
 
     @Override
-    public <T> List buscar(String nombre_campo, String dato) throws Exception {
+    public <T> List buscar(String nombre_campo, String dato, String id_jefe) throws Exception {
         List<OtroGasto> otrosgastos;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_OTRO_GASTO WHERE "+nombre_campo+" like ?")){
-                st.setString(1, "%"+dato+"%");
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_OTRO_GASTO WHERE " + nombre_campo + " like ? AND id_jefe = ? ORDER BY fecha DESC")) {
+                st.setString(1, "%" + dato + "%");
+                st.setString(2, id_jefe);
                 otrosgastos = new ArrayList<>();
-                try (ResultSet rs = st.executeQuery()){
+                try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
                         OtroGasto otrogasto = (OtroGasto) extraerObject(rs);
                         otrosgastos.add(otrogasto);
                     }
+                } catch (Exception e) {
+                    System.out.println(e);
+                    throw e;
                 }
+            } catch (Exception e) {
+                System.out.println(e);
+                throw e;
             }
         } catch (Exception e) {
             System.out.println(e);
             throw e;
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
         return otrosgastos;
@@ -156,9 +166,9 @@ import java.util.List;
         st.setDate(1, otrogasto.getFecha());
         st.setString(2, otrogasto.getId_empleado());
         st.setString(3, otrogasto.getNombre_gasto());
-        st.setBigDecimal(4,otrogasto.getMonto());
+        st.setBigDecimal(4, otrogasto.getMonto());
         st.setString(5, otrogasto.getObservacion());
         return st;
     }
 
- }
+}

@@ -27,21 +27,34 @@ SELECT
     id_administrador
 FROM ENTRADA_MADERA_ASERRADA;
 
+
+SELECT 
+	EMA.id_administrador,EMA.id_madera,SUM(EMA.num_piezas)
+FROM ENTRADA_MADERA_ASERRADA AS EMA, MADERA_ASERRADA_CLASIF AS MAC
+WHERE EMA.id_madera = MAC.id_madera
+GROUP BY id_administrador,id_madera;
+
+
+SELECT id_madera,SUM(num_piezas) FROM ENTRADA_MADERA_ASERRADA GROUP BY id_madera;
+
+SELECT id_administrador,id_madera,SUM(num_piezas) FROM ENTRADA_MADERA_ASERRADA  GROUP BY id_administrador,id_madera ;SELECT * FROM ENTRADA_MADERA_ASERRADA;
+SELECT id_madera,SUM(num_piezas) FROM ENTRADA_MADERA_ASERRADA GROUP BY id_madera;
+SELECT * FROM ENTRADA_MADERA_ASERRADA;
 -- MADERA ASERRADA VENDIDA
 DROP VIEW IF EXISTS MADERA_A_VENDIDA;
-CREATE VIEW MADERA_A_VENDIDA AS
+CREATE VIEW MADERA_A_VENDIDA AS;
 SELECT 
-	id_administrador,id_madera,num_piezas,volumen,monto,tipo_madera
-FROM VENTA AS V,VENTA_MAYOREO AS VM
-WHERE V.id_venta = VM.id_venta
+	MAC.id_administrador, VM.id_madera AS id_madera, costo_por_volumen, num_piezas, VM.volumen AS volumen, monto, tipo_madera
+FROM VENTA AS V,VENTA_MAYOREO AS VM, MADERA_ASERRADA_CLASIF AS MAC
+WHERE V.id_venta = VM.id_venta AND VM.id_madera = MAC.id_madera
 UNION
 SELECT 
-	id_administrador,id_madera,num_piezas,volumen,monto,tipo_madera
-FROM VENTA AS V,VENTA_PAQUETE AS VP
-WHERE V.id_venta = VP.id_venta;
+	MAC.id_administrador, VP.id_madera AS id_madera, costo_por_volumen, num_piezas, VP.volumen AS volumen, monto, tipo_madera
+FROM VENTA AS V,VENTA_PAQUETE AS VP, MADERA_ASERRADA_CLASIF AS MAC
+WHERE V.id_venta = VP.id_venta AND VP.id_madera = MAC.id_madera;
 
 
-
+SELECT * FROM MADERA_ASERRADA_CLASIF;
 
 
 SELECT * FROM ENTRADA_MADERA_ASERRADA;

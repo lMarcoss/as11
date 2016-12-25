@@ -1,6 +1,7 @@
-package dao;
+package dao.gasto;
 
-import entidades.PagoRenta;
+import dao.Conexion;
+import entidades.gasto.PagoRenta;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,21 +13,21 @@ import java.util.List;
  *
  * @author rcortes
  */
-public class PagoRentaCRUD extends Conexion implements OperacionesCRUD{
+public class PagoRentaCRUD extends Conexion implements OperacionesCRUD {
 
     @Override
     public void registrar(Object objeto) throws Exception {
         PagoRenta pagorenta = (PagoRenta) objeto;
-        try{
-          this.abrirConexion();
-          PreparedStatement st = this.conexion.prepareStatement(
-            "INSERT INTO PAGO_RENTA (id_pago_renta, fecha, nombre_persona, id_empleado, monto, observacion) VALUES (?,?,?,?,?,?) ");
+        try {
+            this.abrirConexion();
+            PreparedStatement st = this.conexion.prepareStatement(
+                    "INSERT INTO PAGO_RENTA (id_pago_renta, fecha, nombre_persona, id_empleado, monto, observacion) VALUES (?,?,?,?,?,?) ");
             st = cargarObject(st, pagorenta);
             st.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.err.println(e);
             throw e;
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
     }
@@ -36,14 +37,16 @@ public class PagoRentaCRUD extends Conexion implements OperacionesCRUD{
         List<PagoRenta> pagorentas;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_RENTA;")){
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_RENTA WHERE id_jefe = ? ORDER BY fecha DESC")) {
+                st.setString(1, id_jefe);
                 pagorentas = new ArrayList<>();
-                try (ResultSet rs = st.executeQuery()){
+                try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
                         PagoRenta pagorenta = (PagoRenta) extraerObject(rs);
                         pagorentas.add(pagorenta);
                     }
                 } catch (Exception e) {
+                    System.out.println(e);
                 }
             } catch (Exception e) {
                 pagorentas = null;
@@ -52,7 +55,7 @@ public class PagoRentaCRUD extends Conexion implements OperacionesCRUD{
         } catch (Exception e) {
             System.out.println(e);
             throw e;
-        }finally{
+        } finally {
             cerrarConexion();
         }
         return pagorentas;
@@ -89,10 +92,10 @@ public class PagoRentaCRUD extends Conexion implements OperacionesCRUD{
             st.setString(5, pagorenta.getObservacion());
             st.setString(6, pagorenta.getId_pago_renta());
             st.executeUpdate();
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             throw e;
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
     }
@@ -108,31 +111,38 @@ public class PagoRentaCRUD extends Conexion implements OperacionesCRUD{
         } catch (Exception e) {
             System.out.println(e);
             throw e;
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
     }
 
     @Override
-    public <T> List buscar(String nombre_campo, String dato) throws Exception {
+    public <T> List buscar(String nombre_campo, String dato, String id_jefe) throws Exception {
         List<PagoRenta> pagorentas;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_RENTA WHERE "+nombre_campo+" like ?")){
-                st.setString(1, "%"+dato+"%");
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_RENTA WHERE " + nombre_campo + " like ? AND id_jefe = ? ORDER BY fecha DESC")) {
+                st.setString(1, "%" + dato + "%");
+                st.setString(2, id_jefe);
                 pagorentas = new ArrayList<>();
-                try (ResultSet rs = st.executeQuery()){
+                try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
                         PagoRenta pagorenta = (PagoRenta) extraerObject(rs);
                         pagorentas.add(pagorenta);
                     }
+                } catch (Exception e) {
+                    System.out.println(e);
+                    throw e;
                 }
+            } catch (Exception e) {
+                System.out.println(e);
+                throw e;
+            } finally {
+                this.cerrarConexion();
             }
         } catch (Exception e) {
             System.out.println(e);
             throw e;
-        }finally{
-            this.cerrarConexion();
         }
         return pagorentas;
     }
@@ -158,7 +168,7 @@ public class PagoRentaCRUD extends Conexion implements OperacionesCRUD{
         st.setString(2, pagorenta.getFecha());
         st.setString(3, pagorenta.getNombre_persona());
         st.setString(4, pagorenta.getId_empleado());
-        st.setString(5,String.valueOf(pagorenta.getMonto()));
+        st.setString(5, String.valueOf(pagorenta.getMonto()));
         st.setString(6, pagorenta.getObservacion());
         return st;
     }

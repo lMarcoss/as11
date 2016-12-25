@@ -4,11 +4,11 @@
     Author     : rcortes
 --%>
 
-<%@page import="entidades.PagoRenta"%>
+<%@page import="entidades.gasto.PagoRenta"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <% 
-    List <PagoRenta> pagosrenta = (List<PagoRenta>) request.getAttribute("pagosrenta");
+    List <PagoRenta> pagosrenta = (List<PagoRenta>) request.getAttribute("listaPagosRenta");
     String mensaje = (String)request.getAttribute("mensaje");
 %>
 <!DOCTYPE html>
@@ -32,7 +32,7 @@
                             <select name="nombre_campo" >
                                 <option value="fecha">Fecha</option>
                                 <option value="nombre_persona">Nombre persona</option>
-                                <option value="empleado">Empleado</option>
+                                <option value="empleado">Registró</option>
                                 <option value="monto">Monto</option>
                                 <option value="observacion">Observación</option>
                             </select>
@@ -50,9 +50,9 @@
                         <th>N°</th>
                         <th>Fecha</th>
                         <th>Nombre persona</th>
-                        <th>Empleado</th>
                         <th>Monto</th>
                         <th>Observación</th>
+                        <th>Registró</th>
                     </tr>
                     <%                        
                         int i=0;
@@ -61,10 +61,10 @@
                                 +"<td>"+(i+1)+"</td>"
                                 +"<td>"+pago_renta.getFecha()+"</td>"
                                 +"<td>"+pago_renta.getNombre_persona()+"</td>"
-                                +"<td>"+pago_renta.getEmpleado()+"</td>"
                                 +"<td>"+pago_renta.getMonto()+"</td>"
-                                +"<td>"+pago_renta.getObservacion()+"</td>"                                    
-                                +"<td><a href=\"/aserradero/PagoRentaController?action=modificar&id_pago_renta="+pago_renta.getId_pago_renta()+"\">Actualizar</a></td>"
+                                +"<td>"+pago_renta.getObservacion()+"</td>"
+                                +"<td>"+pago_renta.getEmpleado()+"</td>"
+                                +"<td><a href=\"/aserradero/PagoRentaController?action=modificar&id_pago_renta="+pago_renta.getId_pago_renta()+"\">Modificar</a></td>"
                                 + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/PagoRentaController?action=eliminar&id_pago_renta="+pago_renta.getId_pago_renta()+"';};\">Eliminar</a></td>"
                             + "</tr>" );
                             i++;

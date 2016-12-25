@@ -4,7 +4,7 @@
     Author     : rcortes
 --%>
 
-<%@page import="entidades.PagoRenta"%>
+<%@page import="entidades.gasto.PagoRenta"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%PagoRenta pagorenta = (PagoRenta) request.getAttribute("pagorenta");%>
 <!DOCTYPE html>
@@ -33,16 +33,8 @@
                             <td style="padding-left: 10px;"><input type="text" name="nombre_persona" value="<%=pagorenta.getNombre_persona()%>" maxlength="49" required=""/></td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 10px;"><label for="id_empleado">Id empleado</label></td>
-                            <td style="padding-left: 10px;">
-                                <select name="id_empleado" required="" title="Si no existe el empleado que busca, primero agreguelo en la lista de empleados">
-                                    <option selected="" value='<%=pagorenta.getId_empleado()%>'><%=pagorenta.getEmpleado()%></option>
-                                </select>
-                            </td>
-                        </tr>                        
-                        <tr>
                             <td style="padding-left: 10px;"><label for="monto">Monto</label></td>
-                            <td style="padding-left: 10px;"><input type="number" step="0.01" name="monto" value="<%=pagorenta.getMonto()%>" min="0.0" max="99999999.99" required=""/></td>
+                            <td style="padding-left: 10px;"><input type="number" step="0.01" name="monto" value="<%=pagorenta.getMonto()%>" min="0.0" max="999999.99" required=""/></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label for="observacion">Observacion</label></td>

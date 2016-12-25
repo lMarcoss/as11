@@ -66,11 +66,11 @@
     </servlet>
     <servlet>
         <servlet-name>PagoRentaController</servlet-name>
-        <servlet-class>controlador.PagoRentaController</servlet-class>
+        <servlet-class>controlador.gasto.PagoRentaController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PagoLuzController</servlet-name>
-        <servlet-class>controlador.PagoLuzController</servlet-class>
+        <servlet-class>controlador.gasto.PagoLuzController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EntradaMaderaRolloController</servlet-name>
@@ -90,7 +90,7 @@
     </servlet>
     <servlet>
         <servlet-name>OtroGastoController</servlet-name>
-        <servlet-class>controlador.OtroGastoController</servlet-class>
+        <servlet-class>controlador.gasto.OtroGastoController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CuentaPorCobrarController</servlet-name>

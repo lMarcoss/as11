@@ -1,6 +1,7 @@
-package dao;
+package dao.gasto;
+
 import dao.Conexion;
-import entidades.PagoLuz;
+import entidades.gasto.PagoLuz;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,20 +13,20 @@ import java.util.List;
  *
  * @author rcortes
  */
- public class PagoLuzCRUD extends Conexion implements OperacionesCRUD{
+public class PagoLuzCRUD extends Conexion implements OperacionesCRUD {
 
     @Override
-    public void registrar(Object objeto) throws Exception {      
+    public void registrar(Object objeto) throws Exception {
         PagoLuz pagoluz = (PagoLuz) objeto;
         try {
             this.abrirConexion();
-            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO PAGO_LUZ (id_pago_luz, fecha, id_empleado, monto, observacion) values (?,?,?,?,?)");            
+            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO PAGO_LUZ (id_pago_luz, fecha, id_empleado, monto, observacion) values (?,?,?,?,?)");
             st = cargarObject(st, pagoluz);
             st.executeUpdate();
-        } catch(Exception e){
+        } catch (Exception e) {
             System.err.println(e);
             throw e;
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
     }
@@ -35,10 +36,11 @@ import java.util.List;
         List<PagoLuz> pagosluz;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_LUZ")){
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_LUZ WHERE id_jefe = ? ORDER BY fecha DESC")) {
+                st.setString(1, id_jefe);
                 pagosluz = new ArrayList<>();
-                try (ResultSet rs = st.executeQuery()){
-                    while (rs.next()) {                        
+                try (ResultSet rs = st.executeQuery()) {
+                    while (rs.next()) {
                         PagoLuz pagoluz = (PagoLuz) extraerObject(rs);
                         pagosluz.add(pagoluz);
                     }
@@ -50,7 +52,7 @@ import java.util.List;
         } catch (Exception e) {
             System.out.println(e);
             throw e;
-        }finally{
+        } finally {
             cerrarConexion();
         }
         return pagosluz;
@@ -65,7 +67,7 @@ import java.util.List;
             st.setString(1, pagoluzM.getId_pago_luz());
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
-                    pagoluz= (PagoLuz) extraerObject(rs);
+                    pagoluz = (PagoLuz) extraerObject(rs);
                 }
             }
         } catch (Exception e) {
@@ -86,17 +88,17 @@ import java.util.List;
             st.setString(4, pagoluz.getObservacion());
             st.setString(5, pagoluz.getId_pago_luz());
             st.executeUpdate();
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             throw e;
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
     }
 
     @Override
     public void eliminar(Object objeto) throws Exception {
-        PagoLuz pagoluz = (PagoLuz) objeto;        
+        PagoLuz pagoluz = (PagoLuz) objeto;
         try {
             this.abrirConexion();
             PreparedStatement st = this.conexion.prepareStatement("DELETE FROM PAGO_LUZ WHERE id_pago_luz = ?");
@@ -105,30 +107,37 @@ import java.util.List;
         } catch (Exception e) {
             System.out.println(e);
             throw e;
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
     }
 
     @Override
-    public <T> List buscar(String nombre_campo, String dato) throws Exception {
+    public <T> List buscar(String nombre_campo, String dato, String id_jefe) throws Exception {
         List<PagoLuz> pagosluz;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_LUZ WHERE "+nombre_campo+" like ?")){
-                st.setString(1, "%"+dato+"%");
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_LUZ WHERE " + nombre_campo + " like ? AND id_jefe = ? ORDER BY fecha DESC")) {
+                st.setString(1, "%" + dato + "%");
+                st.setString(2, id_jefe);
                 pagosluz = new ArrayList<>();
-                try (ResultSet rs = st.executeQuery()){
-                    while (rs.next()) {                        
+                try (ResultSet rs = st.executeQuery()) {
+                    while (rs.next()) {
                         PagoLuz pagoluz = (PagoLuz) extraerObject(rs);
                         pagosluz.add(pagoluz);
                     }
-                } 
+                } catch (Exception e) {
+                    System.out.println(e);
+                    throw e;
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+                throw e;
             }
         } catch (Exception e) {
             System.out.println(e);
             throw e;
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
         return pagosluz;
@@ -156,5 +165,5 @@ import java.util.List;
         st.setString(5, pagoluz.getObservacion());
         return st;
     }
-   
- }
+
+}

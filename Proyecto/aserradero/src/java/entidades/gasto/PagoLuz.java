@@ -1,4 +1,4 @@
-package entidades;
+package entidades.gasto;
 
 import java.math.BigDecimal;
 
