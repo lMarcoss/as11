@@ -81,7 +81,7 @@
                     %>
             </table>
             <div>
-                <input type="button" value="Registrar nueva clasificación" onClick=" window.location.href='/aserradero/MaderaAserradaClasifController?action=nuevo' ">
+                <input type="button" value="Registrar clasificación" onClick=" window.location.href='/aserradero/MaderaAserradaClasifController?action=nuevo' ">
             </div>
         </div><!-- Resultado Consulta-->
     </body>

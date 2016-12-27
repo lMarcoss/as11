@@ -184,7 +184,7 @@ CREATE TABLE VENTA_MAYOREO(
 	volumen 				DECIMAL(8,3),
 	monto					DECIMAL(15,2),
     tipo_madera 			ENUM('Madera','Amarre') NOT NULL,
-	PRIMARY KEY(id_venta,id_madera),
+	PRIMARY KEY(id_venta,id_madera,tipo_madera),
 	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta),
 	FOREIGN KEY (id_administrador,id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_administrador,id_madera))ENGINE=InnoDB;
 
@@ -197,7 +197,7 @@ CREATE TABLE VENTA_PAQUETE(
 	volumen 				DECIMAL(15,3),
 	monto					DECIMAL(15,2),
     tipo_madera 			ENUM('Madera','Amarre') NOT NULL,
-	PRIMARY KEY(id_venta,numero_paquete,id_madera),
+	PRIMARY KEY(id_venta,numero_paquete,id_madera,tipo_madera),
 	FOREIGN KEY (id_venta) REFERENCES VENTA (id_venta),
 	FOREIGN KEY (id_administrador,id_madera) REFERENCES MADERA_ASERRADA_CLASIF (id_administrador,id_madera))ENGINE=InnoDB;
 

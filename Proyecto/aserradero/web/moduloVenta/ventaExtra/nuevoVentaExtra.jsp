@@ -4,22 +4,20 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.VentaExtra"%>
+<%@page import="entidades.venta.VentaExtra"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.sql.Date"%>
 <%@page import="java.sql.Date"%>
-<%@page import="entidades.Empleado"%>
-<%@page import="entidades.Cliente"%>
-<%@page import="entidades.Venta"%>
+<%@page import="entidades.registros.Cliente"%>
+<%@page import="entidades.venta.Venta"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     Date fecha = Date.valueOf(LocalDate.now());
-    List <Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
-    List <Empleado> empleados = (List<Empleado>) request.getAttribute("empleados");
-    List <Venta> ventas = (List<Venta>) request.getAttribute("ventas");
+    List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
+    List<Venta> ventas = (List<Venta>) request.getAttribute("ventas");
     String id_nVenta = String.valueOf(request.getAttribute("siguienteventa"));
     HttpSession sesion_ajax = request.getSession(true);
     sesion_ajax.setAttribute("detalle_venta_extra", null);
@@ -48,7 +46,7 @@
                         </div>
                         <div class="panel-body" id="PanelPrincipal">
                             <div class="col-md-12 bordebajo">
-                                <form action="/aserradero/VentaController?action=nuevo" method="post" id="formregistro"><!-- Formulario de venta -->
+                                <form action="/aserradero/VentaController?action=insertar" method="post" id="formregistro"><!-- Formulario de venta -->
                                     <div class="form-group col-md-2"><!-- agrupar inputs -->
                                         <input name="tipo_venta" value="extra" type="hidden"/>
                                         <label class="control-label">Fecha:</label>
@@ -64,27 +62,27 @@
                                             <option></option>
                                             <%
                                                 for (Cliente cliente : clientes) {
-                                                    out.print("<option value='"+cliente.getId_cliente()+"'>"+cliente.getCliente()+"</option>");
+                                                    out.print("<option value='" + cliente.getId_cliente() + "'>" + cliente.getCliente() + "</option>");
                                                 }
                                             %>
                                         </select>
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="control-label">Empleado:</label>
-                                        <select class="form-control" name="id_empleado" required="">
-                                        <option></option>
-                                        <%
-                                            for (Empleado empleado : empleados) {
-                                                out.print("<option value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>");
-                                            }
-                                        %>
-                                      </select>
+                                        <select class="form-control" name="id_empleado" >
+                                            <option></option>
+                                            <%
+                                                //                                            for (Empleado empleado : empleados) {
+                                                //                                                out.print("<option value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>");
+                                                //                                            }
+                                            %>
+                                        </select>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="control-label">Estatus:</label>
                                         <input  name="estatus" value="Sin pagar" id="estatus" class="form-control" required="" readonly=""/>
                                     </div>
-                                     <div class="form-group pull-right col-md-2"><!-- agrupar inputs -->
+                                    <div class="form-group pull-right col-md-2"><!-- agrupar inputs -->
                                         <input type="submit" class="btn btn-block btn-success margen-boton" value="Guardar venta"/>
                                         <a href="/aserradero/VentaExtraController?action=listar"><input class="btn btn-block btn-warning" type="button" value="Cancelar"/></a>
                                     </div><!-- Fin div group -->
@@ -97,7 +95,7 @@
                                 </div>
                                 <div class="col-md-2 form-group">
                                     <label class="control-label">Monto</label>
-                                    <input class="form-control" id="monto" type="number" step="0.01" name="monto" min="0.01" max="99999999.99" required="" placeholder="345.50"/>
+                                    <input class="form-control" id="monto" type="number" step="0.01" name="monto" min="0.01" max="99999.99" required="" placeholder="345.50"/>
                                 </div>
                                 <div  class="col-md-6 form-group">
                                     <label class="control-label">Observación:</label>
@@ -114,10 +112,10 @@
                             <h3 class="panel-title">Productos</h3>
                         </div>
                         <div class="panel-body detalle-producto">
-                            <%
+                            <%                                
                                 ArrayList<VentaExtra> VentaMay = (ArrayList<VentaExtra>) sesion_ajax.getAttribute("detalle");
-                                if(((sesion_ajax.getAttribute("detalle_venta_extra"))!=null)){
-                                    if(VentaMay.size()>0){//Si la cantida de productos agregados es mayor a cero
+                                if (((sesion_ajax.getAttribute("detalle_venta_extra")) != null)) {
+                                    if (VentaMay.size() > 0) {//Si la cantida de productos agregados es mayor a cero
                                         out.print("<table class='table'>");
                                         out.print("<thead>");
                                         out.print("<tr>");
@@ -128,20 +126,20 @@
                                         out.print("</tr>");
                                         out.print("</thead>");
                                         out.print("<tbody>");//Inicia el cuerpo de la tabla
-                                        for(VentaExtra a:VentaMay){
+                                        for (VentaExtra a : VentaMay) {
                                             out.print("<tr>");
-                                            out.print("<td>"+a.getTipo()+"</td>");
-                                            out.print("<td>"+a.getMonto()+"</td>");
-                                            out.print("<td>"+a.getObservacion()+"</td>");
+                                            out.print("<td>" + a.getTipo() + "</td>");
+                                            out.print("<td>" + a.getMonto() + "</td>");
+                                            out.print("<td>" + a.getObservacion() + "</td>");
                                             out.print("<td><input type='button' value='Eliminar' /></td>");
                                             out.print("</tr>");
                                         }
                                         out.print("</tbody>");
                                         out.print("</table>");
-                                    }else{
+                                    } else {
                                         out.print("<h3 class='panel-title'>No hay registros agregados</h3>");
                                     }
-                                }else{
+                                } else {
                                     out.print("<h3 class='panel-title'>No hay registros agregados</h3>");
                                 }
                             %>

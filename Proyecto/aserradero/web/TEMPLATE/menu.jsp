@@ -91,7 +91,7 @@
                 </li>
                 <li  id="ventas">
 
-                    <a href="/aserradero/VentaController?action=listar">Ventas</a>
+                    <a href="#">Ventas</a>
                     <ul class="dropdown-menu">
                         <li id="ventas_extras"><a href="/aserradero/VentaExtraController?action=listar">Ventas extras</a></li>
                         <li id="ventas_mayoreo"><a href="/aserradero/VentaMayoreoController?action=listar">Ventas Mayoreo</a></li>

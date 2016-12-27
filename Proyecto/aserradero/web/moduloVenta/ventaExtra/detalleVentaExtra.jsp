@@ -4,7 +4,7 @@
     Author     : rcortes
 --%>
 
-<%@page import="entidades.VentaExtra"%>
+<%@page import="entidades.venta.VentaExtra"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

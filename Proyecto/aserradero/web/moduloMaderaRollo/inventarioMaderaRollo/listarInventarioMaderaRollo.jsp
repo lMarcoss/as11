@@ -23,11 +23,11 @@
         <!--menu-->
         <%@ include file="/TEMPLATE/menu.jsp" %>
 
-        <input type="hidden" name="mensaje" id="mensaje" value="<%=mensaje%>"
+        <input type="hidden" name="mensaje" id="mensaje" value="<%=mensaje%>">
 
-               <% if (!listaInventario.isEmpty()) {%>
-               <!-- ************************* Resultado Consulta-->
-               <h1>Inventario madera en rollo</h1>
+        <% if (!listaInventario.isEmpty()) {%>
+        <!-- ************************* Resultado Consulta-->
+        <h1>Inventario madera en rollo</h1>
         <div>
             <table class="table-condensed">
                 <tr>
@@ -35,15 +35,15 @@
                     <th>piezas</th>
                     <th>Volúmen</th>
                     <th>Costo</th>
-<!--                    <th>piezas secundario</th>
-                    <th>Vol. secundario</th>
-                    <th>Costo secundario</th>
-                    <th>piezas terciario</th>
-                    <th>Vol. terciario</th>
-                    <th>Costo terciario</th>
-                    <th>Total piezas</th>
-                    <th>Vol. total</th>
-                    <th>Costo total</th>-->
+                    <!--                    <th>piezas secundario</th>
+                                        <th>Vol. secundario</th>
+                                        <th>Costo secundario</th>
+                                        <th>piezas terciario</th>
+                                        <th>Vol. terciario</th>
+                                        <th>Costo terciario</th>
+                                        <th>Total piezas</th>
+                                        <th>Vol. total</th>
+                                        <th>Costo total</th>-->
                 </tr>
                 <%
                     for (InventarioMaderaRollo inventario : listaInventario) {
@@ -72,8 +72,8 @@
                 %>
             </table>            
         </div><!-- Resultado Consulta-->
-        <%} else {
-                out.print("<br><br><br><h2>No hay inventario</h2>");
-            }%>
+        <%} else {%>
+        <h3 style="color: red;">No hay inventario</h3>
+        <%}%>
     </body>
 </html>

@@ -1,5 +1,6 @@
 package entidades.venta;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -17,20 +18,20 @@ public class VentaExtra {
     private String id_jefe;
     private String estatus;
     private String tipo;
-    private float monto;
+    private BigDecimal monto;
     private String observacion;
 
     public VentaExtra() {
     }
 
-    public VentaExtra(String id_venta, String tipo, float monto, String observacion) {
+    public VentaExtra(String id_venta, String tipo, BigDecimal monto, String observacion) {
         this.id_venta = id_venta;
         this.tipo = tipo;
         this.monto = monto;
         this.observacion = observacion;
     }
 
-    public VentaExtra(Date fecha, String id_venta, String id_cliente, String cliente, String direccion_cliente, String id_empleado, String empleado, String id_jefe, String estatus, String tipo, float monto, String observacion) {
+    public VentaExtra(Date fecha, String id_venta, String id_cliente, String cliente, String direccion_cliente, String id_empleado, String empleado, String id_jefe, String estatus, String tipo, BigDecimal monto, String observacion) {
         this.fecha = fecha;
         this.id_venta = id_venta;
         this.id_cliente = id_cliente;
@@ -86,7 +87,7 @@ public class VentaExtra {
         this.tipo = tipo;
     }
 
-    public void setMonto(float monto) {
+    public void setMonto(BigDecimal monto) {
         this.monto = monto;
     }
 
@@ -134,7 +135,7 @@ public class VentaExtra {
         return tipo;
     }
 
-    public float getMonto() {
+    public BigDecimal getMonto() {
         return monto;
     }
 

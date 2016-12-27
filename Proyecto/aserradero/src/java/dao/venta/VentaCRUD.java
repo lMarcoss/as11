@@ -41,7 +41,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         List<Venta> ventas;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VENTA WHERE id_jefe = ? ORDER BY estatus,tipo_venta")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_VENTA WHERE id_jefe = ? ORDER BY estatus,tipo_venta")) {
                 st.setString(1, id_jefe);
                 ventas = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
@@ -139,7 +139,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         List<Venta> ventas;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VENTA WHERE "+nombre_campo+" like ? AND id_jefe = ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_VENTA WHERE "+nombre_campo+" like ? AND id_jefe = ?")) {
                 st.setString(1, "%"+dato+"%");
                 st.setString(2, id_jefe);
                 ventas = new ArrayList();
@@ -211,7 +211,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         List<Venta> ventas;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VENTA WHERE tipo_venta = ? AND estatus = ? AND id_jefe = ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_VENTA WHERE tipo_venta = ? AND estatus = ? AND id_jefe = ? ORDER BY fecha")) {
                 st.setString(1, "Extra");
                 st.setString(2, "Sin pagar");
                 st.setString(3, id_jefe);
@@ -239,7 +239,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         List<Venta> ventas;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VENTA WHERE tipo_venta = ? AND estatus = ? AND id_jefe = ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_VENTA WHERE tipo_venta = ? AND estatus = ? AND id_jefe = ? ORDER BY fecha DESC")) {
                 st.setString(1, "Paquete");
                 st.setString(2, "Sin pagar");
                 st.setString(3, id_jefe);
@@ -267,7 +267,7 @@ public class VentaCRUD extends Conexion implements OperacionesCRUD{
         List<Venta> ventas;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VENTA WHERE tipo_venta = ? AND estatus = ? AND id_jefe = ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_VENTA WHERE tipo_venta = ? AND estatus = ? AND id_jefe = ? ORDER BY fecha DESC")) {
                 st.setString(1, "Mayoreo");
                 st.setString(2, "Sin pagar");
                 st.setString(3, id_jefe);

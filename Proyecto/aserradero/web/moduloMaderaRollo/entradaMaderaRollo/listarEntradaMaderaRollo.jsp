@@ -61,11 +61,11 @@
                 <th>Proveedor</th>
                 <th>Chofer</th>
                 <th>Registró</th>
-                <th>piezas prim</th>
+                <th>piezas primario</th>
                 <th>Vol. primario</th>
-                <th>piezas sec</th>
+                <th>piezas secundario</th>
                 <th>Vol. secundario</th>
-                <th>piezas ter</th>
+                <th>piezas terciario</th>
                 <th>Vol. Terciario</th>
                 <th>Total piezas</th>
                 <th>Vol. total</th>

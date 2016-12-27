@@ -33,6 +33,7 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
         } 
     }
 
+    //Se listan las Ventas mayoreo
     @Override
     public <T> List listar(String id_jefe) throws Exception {
         // Se consultan datos generales de las ventas extra
@@ -107,7 +108,7 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
         VentaExtra ventaExtra = new VentaExtra();
         ventaExtra.setId_venta(rs.getString("id_venta"));
         ventaExtra.setTipo(rs.getString("tipo"));
-        ventaExtra.setMonto(rs.getFloat("monto"));
+        ventaExtra.setMonto(rs.getBigDecimal("monto"));
         ventaExtra.setObservacion(rs.getString("observacion"));
         return ventaExtra;
     }
@@ -137,7 +138,7 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
             this.abrirConexion();
             PreparedStatement st= this.conexion.prepareStatement(
                     "UPDATE VENTA_EXTRA SET monto = ?, observacion = ? WHERE id_venta = ? AND tipo = ?");
-            st.setFloat(1,ventaExtra.getMonto());
+            st.setBigDecimal(1,ventaExtra.getMonto());
             st.setString(2,ventaExtra.getObservacion());
             st.setString(3,ventaExtra.getId_venta());
             st.setString(4,ventaExtra.getTipo());
@@ -221,8 +222,7 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
         ventaExtra.setEmpleado(rs.getString("empleado"));
         ventaExtra.setEstatus(rs.getString("estatus"));
         ventaExtra.setTipo(rs.getString("tipo"));
-        ventaExtra.setMonto(rs.getFloat("monto"));
-        ventaExtra.setObservacion(rs.getString("observacion"));
+        ventaExtra.setMonto(rs.getBigDecimal("monto"));
         return ventaExtra;
     }
 
@@ -231,7 +231,7 @@ public class VentaExtraCRUD extends Conexion implements OperacionesCRUD{
         VentaExtra ventaExtra = (VentaExtra) objeto;
         st.setString(1,ventaExtra.getId_venta());
         st.setString(2,ventaExtra.getTipo());
-        st.setFloat(3,ventaExtra.getMonto());
+        st.setBigDecimal(3,ventaExtra.getMonto());
         st.setString(4,ventaExtra.getObservacion());
         return st;
     }

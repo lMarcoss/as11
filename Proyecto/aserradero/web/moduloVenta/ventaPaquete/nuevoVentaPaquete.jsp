@@ -4,22 +4,21 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.InventarioMaderaAserrada"%>
+<%@page import="entidades.maderaAserrada.InventarioMaderaAserrada"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="entidades.VentaPaquete"%>
+<%@page import="entidades.venta.VentaPaquete"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.sql.Date"%>
-<%@page import="entidades.Empleado"%>
-<%@page import="entidades.Cliente"%>
-<%@page import="entidades.Venta"%>
+<%@page import="entidades.registros.Cliente"%>
+<%@page import="entidades.venta.Venta"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <% 
     Date fecha = Date.valueOf(LocalDate.now()); 
     List <InventarioMaderaAserrada> listaInventario = (List<InventarioMaderaAserrada>)request.getAttribute("listaInventario"); 
     List <Cliente> clientes = (List<Cliente>) request.getAttribute("clientes"); 
-    List <Empleado> empleados = (List<Empleado>) request.getAttribute("empleados"); 
     String id_nVenta = String.valueOf(request.getAttribute("siguienteventa")); 
+    String id_administrador = (String)request.getAttribute("id_administrador"); 
     HttpSession sesion_ajax = request.getSession(true); 
     sesion_ajax.setAttribute("detalle_venta_paquete", null); 
 %>
@@ -51,9 +50,10 @@
                         <div class="panel-body" id="PanelPrincipal">
                             <div class="col-md-12 bordebajo">
                                 <!-- agrupar inputs -->
-                                <form action="/aserradero/VentaController?action=nuevo&tipo_venta=paquete" method="post" id="formregistro">
+                                <form action="/aserradero/VentaController?action=insertar&tipo_venta=paquete" method="post" id="formregistro">
                                     <!-- Formulario de venta -->
-                                    <input class="form-control" type="hidden" value="<%=id_nVenta%>" name="id_venta" id="id_venta" required="" title="escribe un identificador para la venta">
+                                    <input class="form-control" type="hidden" value="<%=id_administrador%>" name="id_administrador" id="id_administrador" readonly="">
+                                    <input class="form-control" type="hidden" value="<%=id_nVenta%>" name="id_venta" id="id_venta" readonly="">
                                     
                                     <div class="form-group col-md-2">
                                         <!-- agrupar inputs -->
@@ -73,12 +73,12 @@
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="control-label">Empleado:</label>
-                                        <select class="form-control" name="id_empleado" required="">
+                                        <select class="form-control" name="id_empleado">
                                             <option></option>
                                             <% 
-                                                for (Empleado empleado : empleados) {
-                                                    out.print("<option value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>");
-                                                }
+//                                                for (Empleado empleado : empleados) {
+//                                                    out.print("<option value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>");
+//                                                }
                                             %>
                                         </select>
                                     </div>

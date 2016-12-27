@@ -4,8 +4,8 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.InventarioMaderaAserrada"%>
-<%@page import="entidades.VentaPaquete"%>
+<%@page import="entidades.maderaAserrada.InventarioMaderaAserrada"%>
+<%@page import="entidades.venta.VentaPaquete"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
@@ -17,6 +17,7 @@
     <head>
         <%@ include file="/TEMPLATE/head.jsp" %>
         <title>Actualizar</title>
+        <script src="/aserradero/js/SelectorCostoVenta.js"></script>
     </head>
     <body>
         <!--menu-->
@@ -69,7 +70,7 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 10px;"><a href="/aserradero/VentaPaqueteController?action=listar"><input type="button" value="Cancelar"/></a> </td>
+                            <td style="padding-left: 10px;"><a href="/aserradero/VentaPaqueteController?action=detalle&id_venta=<%=ventaPaquete.getId_venta()%>"><input type="button" value="Cancelar"/></a> </td>
                             <!--<td><input type="submit" value="Registrar" class="submit"/> </td>-->
                             <td style="padding-left: 10px;"><input type="submit" value="Guardar"/></td>
                         </tr>

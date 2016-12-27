@@ -24,7 +24,7 @@ public class InventarioMaderaAserradaCRUD extends Conexion implements Operacione
         List<InventarioMaderaAserrada> inventarioMaderaProducciones;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM INVENTARIO_MADERA_ASERRADA WHERE num_piezas > 0 AND id_jefe = ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM INVENTARIO_M_ASERRADA WHERE id_administrador = ? AND num_piezas > 0")) {
                 st.setString(1, id_jefe);
                 inventarioMaderaProducciones = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
@@ -58,7 +58,7 @@ public class InventarioMaderaAserradaCRUD extends Conexion implements Operacione
         List<InventarioMaderaAserrada> inventarioMaderaProducciones = null;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM INVENTARIO_MADERA_ASERRADA WHERE " + nombre_campo + " like ? AND id_jefe = ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM INVENTARIO_M_ASERRADA WHERE " + nombre_campo + " like ? AND id_administrador = ?")) {
                 st.setString(1, "%" + dato + "%");
                 st.setString(2, id_jefe);
                 inventarioMaderaProducciones = new ArrayList();

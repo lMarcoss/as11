@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="java.util.ArrayList"%>
-<%@page import="entidades.VentaPaquete"%>
+<%@page import="entidades.venta.VentaPaquete"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
         HttpSession sesion_ajax = request.getSession(true);
@@ -33,7 +33,7 @@
                     out.print("<td>"+a.getVolumen()+"</td>");
                     out.print("<td>"+a.getMonto()+"</td>");
                     out.print("<td>"+a.getTipo_madera()+"</td>");
-                    out.print("<td><input type='button' value='Eliminar' name='"+a.getNumero_paquete()+"' class='btn btn-danger eliminar_vp' id='"+a.getId_madera()+"' /></td>");
+                    out.print("<td><input type='button' value='Eliminar' name='"+a.getNumero_paquete()+"' id='"+a.getId_madera()+"' form='"+a.getTipo_madera()+"' class='btn btn-danger eliminar_vp'/></td>");
                     out.print("</tr>");
                 }
                 out.print("</tbody>");
