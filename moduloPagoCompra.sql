@@ -46,18 +46,6 @@ END;//
 DELIMITER ;
 
 
--- Muestra todos los pagos que se han hecho
-DROP VIEW IF EXISTS VISTA_PAGO_COMPRA;
-CREATE VIEW VISTA_PAGO_COMPRA AS
-SELECT 
-	id_pago,
-    fecha,
-    id_proveedor,
-    (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(PAGO_COMPRA.id_proveedor,1,18)) as proveedor,
-    (SELECT id_jefe FROM PROVEEDOR WHERE id_proveedor = PAGO_COMPRA.id_proveedor)AS id_administrador,
-    monto_pago,
-    monto_por_pagar
-FROM PAGO_COMPRA;
 
 -- Procedimiento para obtener cuenta por cobrar al proveedor
 DROP FUNCTION IF EXISTS OBTENER_CUENTA_POR_COBRAR;

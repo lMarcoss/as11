@@ -145,7 +145,7 @@ public class EntradaMaderaRolloCRUD extends Conexion implements OperacionesCRUD 
             st.setBigDecimal(6, entrada.getVolumen_secundario());
             st.setInt(7, entrada.getNum_pieza_terciario());
             st.setBigDecimal(8, entrada.getVolumen_terciario());
-            st.setInt(8, entrada.getId_entrada());
+            st.setInt(9, entrada.getId_entrada());
             st.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);

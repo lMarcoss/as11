@@ -1,6 +1,7 @@
-package dao;
+package dao.anticipo;
 
-import entidades.CuentaPorCobrar;
+import dao.Conexion;
+import entidades.anticipo.CuentaPorCobrar;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,11 +14,12 @@ import java.util.List;
  */
 public class CuentaPorCobrarCRUD extends Conexion {
 
-    public <T> List listar() throws Exception {
+    public <T> List listar(String id_jefe) throws Exception {
         List<CuentaPorCobrar> cuentaPorCobrares;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM CUENTA_POR_COBRAR")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM CUENTA_POR_COBRAR WHERE id_jefe = ?")) {
+                st.setString(1, id_jefe);
                 cuentaPorCobrares = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -39,12 +41,13 @@ public class CuentaPorCobrarCRUD extends Conexion {
     }
 
     // Buscar Cuenta por cobrar persona
-    public <T> List buscarCCProveedor(String nombre_campo, String dato) throws Exception {
+    public <T> List buscarCCProveedor(String nombre_campo, String dato, String id_jefe) throws Exception {
         List<CuentaPorCobrar> cuentaPorCobrares;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM C_POR_COBRAR_PROVEEDOR WHERE " + nombre_campo + " like ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM C_POR_COBRAR_PROVEEDOR WHERE " + nombre_campo + " like ? AND id_jefe = ?")) {
                 st.setString(1, "%" + dato + "%");
+                st.setString(2, id_jefe);
                 cuentaPorCobrares = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -63,12 +66,13 @@ public class CuentaPorCobrarCRUD extends Conexion {
     }
 
     // Buscar Cuenta por cobrar cliente
-    public <T> List buscarCCCliente(String nombre_campo, String dato) throws Exception {
+    public <T> List buscarCCCliente(String nombre_campo, String dato, String id_jefe) throws Exception {
         List<CuentaPorCobrar> cuentaPorCobrares;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM C_POR_COBRAR_PROVEEDOR WHERE " + nombre_campo + " like ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM C_POR_COBRAR_PROVEEDOR WHERE " + nombre_campo + " like ? AND id_jefe = ?")) {
                 st.setString(1, "%" + dato + "%");
+                st.setString(2, id_jefe);
                 cuentaPorCobrares = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -95,11 +99,12 @@ public class CuentaPorCobrarCRUD extends Conexion {
         return cuentaPorCobrar;
     }
 
-    public <T> List listarCuentasPorCobrarProveedor() throws Exception {
+    public <T> List listarCuentasPorCobrarProveedor(String id_jefe) throws Exception {
         List<CuentaPorCobrar> cuentaPorCobrares;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM C_POR_COBRAR_PROVEEDOR")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM C_POR_COBRAR_PROVEEDOR WHERE id_jefe = ?")) {
+                st.setString(1, id_jefe);
                 cuentaPorCobrares = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -120,11 +125,12 @@ public class CuentaPorCobrarCRUD extends Conexion {
         return cuentaPorCobrares;
     }
 
-    public <T> List listarCuentasPorCobrarCliente() throws Exception {
+    public <T> List listarCuentasPorCobrarCliente( String id_jefe) throws Exception {
         List<CuentaPorCobrar> cuentaPorCobrares;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM C_POR_COBRAR_CLIENTE")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM C_POR_COBRAR_CLIENTE WHERE id_jefe = ?")) {
+                st.setString(1, id_jefe);
                 cuentaPorCobrares = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {

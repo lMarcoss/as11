@@ -1,6 +1,7 @@
-package dao;
+package dao.anticipo;
 
-import entidades.AnticipoProveedor;
+import dao.Conexion;
+import entidades.anticipo.AnticipoProveedor;
 import interfaces.OperacionesCRUD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,7 +37,8 @@ public class AnticipoProveedorCRUD extends Conexion implements OperacionesCRUD{
         List<AnticipoProveedor> anticipoProveedores;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_ANTICIPO_PROVEEDOR")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_ANTICIPO_PROVEEDOR WHERE id_jefe = ? ORDER BY fecha DESC")) {
+                st.setString(1, id_jefe);
                 anticipoProveedores = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -108,12 +110,13 @@ public class AnticipoProveedorCRUD extends Conexion implements OperacionesCRUD{
     }
 
     @Override
-    public <T> List buscar(String nombre_campo, String dato) throws Exception {
+    public <T> List buscar(String nombre_campo, String dato, String id_jefe) throws Exception {
         List<AnticipoProveedor> anticipoProveedores;
         try{
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_ANTICIPO_PROVEEDOR WHERE "+nombre_campo+" like ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_ANTICIPO_PROVEEDOR WHERE "+nombre_campo+" like ? AND id_jefe = ? ORDER BY fecha DESC")) {
                 st.setString(1, "%"+dato+"%");
+                st.setString(2, id_jefe);
                 anticipoProveedores = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {

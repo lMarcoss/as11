@@ -4,13 +4,11 @@
     Author     : Marcos
 --%>
 
-<%@page import="entidades.Empleado"%>
-<%@page import="entidades.Proveedor"%>
+<%@page import="entidades.registros.Proveedor"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     List <Proveedor> proveedores = (List<Proveedor>) request.getAttribute("proveedores");
-    List <Empleado> empleados = (List<Empleado>) request.getAttribute("empleados");
 %>
 <!DOCTYPE html>
 <html>
@@ -25,7 +23,7 @@
         
         <!-- ******************* Formulario de registro-->
         <div>
-            <form action="/aserradero/AnticipoProveedorController?action=nuevo&id_anticipo_p=1" method="post" id="formregistro">
+            <form action="/aserradero/AnticipoProveedorController?action=insertar" method="post" id="formregistro">
                 <h3>Agregar anticipo proveedor</h3>
                 <fieldset id="user-details">
                     <table >
@@ -47,21 +45,6 @@
                                 </select>
                             </td>
                         </tr>
-                        <tr>
-                            <td style="padding-left: 10px;"><label>empleado:</label></td>
-                            <td style="padding-left: 10px;">
-                                <select name="id_empleado" required="" title="Si no existe el empleado que busca, primero agreguelo en la lista de empleados">
-                                    <option></option>
-                                    <%
-                                        for (Empleado empleado : empleados) {
-                                            out.print("<option value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>");
-                                        }
-                                    %>
-                                </select>
-                            </td>
-                        </tr>
-                        
-                        
                         <tr>
                             <td style="padding-left: 10px;"><label>Monto:</label></td>
                             <td style="padding-left: 10px;">

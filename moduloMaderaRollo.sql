@@ -290,12 +290,15 @@ SELECT
     num_pieza_primario,
     volumen_primario,
     costo_primario,
+    ROUND((volumen_primario * costo_primario),2) AS costo_total_primario,
     num_pieza_secundario,
     volumen_secundario,
     costo_secundario,
+    ROUND((volumen_secundario* costo_secundario),2) AS costo_total_secundario,
     num_pieza_terciario,
     volumen_terciario,
     costo_terciario,
+    ROUND((volumen_terciario * costo_terciario),2) AS costo_total_terciario,
     num_pieza_total,
     volumen_total,
     ROUND((volumen_primario * costo_primario + volumen_secundario * costo_secundario + volumen_terciario * costo_terciario),2) AS costo_total
@@ -398,3 +401,73 @@ SELECT * FROM SALIDA_M_ROLLO;
 -- DELIMITER ;
 -- DROP PROCEDURE IF EXISTS ACTUALIZAR_PAGO_COMPRA;
 -- 
+-- SELECT * FROM VISTA_PAGO_COMPRA;
+
+
+-- Submódulo pago compra-- Submódulo pago compra-- Submódulo pago compra-- Submódulo pago compra-- Submódulo pago compra
+-- Submódulo pago compra-- Submódulo pago compra-- Submódulo pago compra-- Submódulo pago compra-- Submódulo pago compra
+
+
+-- Muestra todos los pagos que se han hecho
+DROP VIEW IF EXISTS VISTA_PAGO_COMPRA;
+CREATE VIEW VISTA_PAGO_COMPRA AS
+SELECT 
+	id_pago,
+    fecha,
+    id_proveedor,
+    (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(PAGO_COMPRA.id_proveedor,1,18)) as proveedor,
+    (SELECT id_jefe FROM PROVEEDOR WHERE id_proveedor = PAGO_COMPRA.id_proveedor) AS id_administrador,
+    monto_pago,
+    monto_por_pagar
+FROM PAGO_COMPRA;
+
+-- Procedimiento para obtener cuenta por cobrar al proveedor
+DROP FUNCTION IF EXISTS OBTENER_CUENTA_POR_COBRAR;
+DELIMITER //
+CREATE FUNCTION OBTENER_CUENTA_POR_COBRAR (_id_proveedor CHAR(30))
+RETURNS DECIMAL(20,2)
+BEGIN
+	DECLARE _cuenta decimal(20,2); -- Cuenta por cobrar al proveedor
+    
+    -- Si existe cuenta por cobrar al proveedor
+    IF EXISTS (SELECT id_persona FROM C_POR_COBRAR_PROVEEDOR WHERE id_persona = _id_proveedor) THEN
+        SELECT SUM(monto) INTO _cuenta FROM C_POR_COBRAR_PROVEEDOR WHERE id_persona = _id_proveedor GROUP BY id_persona;
+	ELSE 
+		SET _cuenta = 0;
+    END IF;
+
+    return _cuenta;
+END;//
+DELIMITER ;
+
+-- Procedimiento cuenta por pagar al proveedor
+DROP FUNCTION IF EXISTS OBTENER_CUENTA_POR_PAGAR;
+DELIMITER //
+CREATE FUNCTION OBTENER_CUENTA_POR_PAGAR (_id_proveedor CHAR(30))
+RETURNS DECIMAL(20,2)
+BEGIN
+	DECLARE _cuenta decimal(20,2); -- Cuenta por cobrar al proveedor
+    
+    -- Si existe cuenta por pagar al proveedor
+    IF EXISTS (SELECT id_persona FROM C_POR_PAGAR_PROVEEDOR WHERE id_persona = _id_proveedor) THEN
+        SELECT SUM(monto) INTO _cuenta FROM C_POR_PAGAR_PROVEEDOR WHERE id_persona = _id_proveedor GROUP BY id_persona;
+	ELSE 
+		SET _cuenta = 0;
+    END IF;
+    return _cuenta;
+END;//
+DELIMITER ;
+SELECT * FROM C_POR_PAGAR_PROVEEDOR;
+
+DROP VIEW IF EXISTS CUENTA_PAGO;
+CREATE VIEW CUENTA_PAGO AS
+SELECT 
+	id_jefe,
+	id_proveedor,
+    (SELECT CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) FROM PERSONA WHERE id_persona = SUBSTRING(id_proveedor,1,18) LIMIT 1) AS proveedor,
+    SUM(costo_total) AS monto_total_madera,
+    (OBTENER_CUENTA_POR_PAGAR(id_proveedor)) AS cuenta_por_pagar,
+    (OBTENER_CUENTA_POR_COBRAR(id_proveedor)) AS cuenta_por_cobrar
+FROM VISTA_ENTRADA_M_ROLLO 
+WHERE id_pago = 0
+GROUP BY id_jefe,id_proveedor;

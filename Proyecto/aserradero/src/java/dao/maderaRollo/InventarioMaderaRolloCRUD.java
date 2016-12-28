@@ -48,12 +48,15 @@ public class InventarioMaderaRolloCRUD extends Conexion {
         inventario.setNum_pieza_primario(rs.getInt("num_pieza_primario"));
         inventario.setVolumen_primario(rs.getBigDecimal("volumen_primario"));
         inventario.setCosto_primario(rs.getBigDecimal("costo_primario"));
+        inventario.setCosto_total_primario(rs.getBigDecimal("costo_total_primario"));
         inventario.setNum_pieza_secundario(rs.getInt("num_pieza_secundario"));
         inventario.setVolumen_secundario(rs.getBigDecimal("volumen_secundario"));
         inventario.setCosto_secundario(rs.getBigDecimal("costo_secundario"));
+        inventario.setCosto_total_secundario(rs.getBigDecimal("costo_total_secundario"));
         inventario.setNum_pieza_terciario(rs.getInt("num_pieza_terciario"));
         inventario.setVolumen_terciario(rs.getBigDecimal("volumen_terciario"));
         inventario.setCosto_terciario(rs.getBigDecimal("costo_terciario"));
+        inventario.setCosto_total_terciario(rs.getBigDecimal("costo_total_terciario"));
         inventario.setNum_pieza_total(rs.getInt("num_pieza_total"));
         inventario.setVolumen_total(rs.getBigDecimal("volumen_total"));
         inventario.setCosto_total(rs.getBigDecimal("costo_total"));

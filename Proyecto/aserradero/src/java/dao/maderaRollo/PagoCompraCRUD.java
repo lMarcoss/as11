@@ -1,6 +1,7 @@
 package dao.maderaRollo;
 
 import dao.Conexion;
+import entidades.maderaRollo.CuentaPago;
 import entidades.maderaRollo.PagoCompra;
 import entidadesVirtuales.VistaMontoPagoCompra;
 import interfaces.OperacionesCRUD;
@@ -48,7 +49,8 @@ public class PagoCompraCRUD extends Conexion implements OperacionesCRUD {
         List<PagoCompra> pagoCompras;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_COMPRA")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_COMPRA WHERE id_administrador = ?")) {
+                st.setString(1, id_jefe);
                 pagoCompras = new ArrayList<>();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -56,6 +58,7 @@ public class PagoCompraCRUD extends Conexion implements OperacionesCRUD {
                         pagoCompras.add(pagoCompra);
                     }
                 } catch (Exception e) {
+                    System.out.println(e);
                 }
             } catch (Exception e) {
                 pagoCompras = null;
@@ -94,6 +97,8 @@ public class PagoCompraCRUD extends Conexion implements OperacionesCRUD {
                 while (rs.next()) {
                     pagoCompra = (PagoCompra) extraerObject(rs);
                 }
+            } catch (Exception e) {
+                System.out.println(e);
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -195,5 +200,43 @@ public class PagoCompraCRUD extends Conexion implements OperacionesCRUD {
         monto.setCuenta_por_cobrar(rs.getBigDecimal("cuenta_por_cobrar"));
         monto.setId_administrador(rs.getString("id_administrador"));
         return monto;
+    }
+
+    public <T> List listarCuentaPago(String id_jefe) throws Exception {
+        List<CuentaPago> listaCuentas;
+        try {
+            this.abrirConexion();
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM CUENTA_PAGO WHERE id_jefe = ? AND monto_total_madera > 0")) {
+                st.setString(1, id_jefe);
+                listaCuentas = new ArrayList<>();
+                try (ResultSet rs = st.executeQuery()) {
+                    while (rs.next()) {
+                        CuentaPago cuenta = (CuentaPago) extraerCuentaPago(rs);
+                        listaCuentas.add(cuenta);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            } catch (Exception e) {
+                listaCuentas = null;
+                System.out.println(e);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            throw e;
+        } finally {
+            cerrarConexion();
+        }
+        return listaCuentas;
+    }
+
+    public CuentaPago extraerCuentaPago(ResultSet rs) throws SQLException {
+        CuentaPago cuenta = new CuentaPago();
+        cuenta.setId_proveedor(rs.getString("id_proveedor"));
+        cuenta.setProveedor(rs.getString("proveedor"));
+        cuenta.setMonto_total_madera(rs.getBigDecimal("monto_total_madera"));
+        cuenta.setCuenta_por_pagar(rs.getBigDecimal("cuenta_por_pagar"));
+        cuenta.setCuenta_por_cobrar(rs.getBigDecimal("cuenta_por_cobrar"));
+        return cuenta;
     }
 }

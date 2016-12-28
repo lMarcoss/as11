@@ -4,9 +4,11 @@
     Author     : Marcos
 --%>
 
-<%@page import="entidades.AnticipoProveedor"%>
+<%@page import="entidades.anticipo.AnticipoProveedor"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%AnticipoProveedor anticipoProveedor = (AnticipoProveedor) request.getAttribute("anticipoProveedor");%>
+<%
+    AnticipoProveedor anticipoProveedor = (AnticipoProveedor) request.getAttribute("anticipoProveedor");
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,37 +19,28 @@
     <body>
         <!--menu-->
         <%@ include file="/TEMPLATE/menu.jsp" %>
-        
+
         <!-- ******************* Formulario de registro-->
         <div>
             <form action="/aserradero/AnticipoProveedorController?action=actualizar" method="post" id="formregistro">
                 <h3>Actualizar anticipo proveedor</h3>
                 <fieldset id="user-details">
-                    
                     <table>
+                        <input type="hidden" name="id_anticipo_p" value="<%=anticipoProveedor.getId_anticipo_p()%>" readonly=""/>
+
                         <tr>
-                            <td style="padding-left: 10px;"><label>Id anticipo:</label></td>
-                            <td style="padding-left: 10px;">
-                                <input name="id_anticipo_p" value="<%=anticipoProveedor.getId_anticipo_p()%>" readonly=""/>
-                            </td>
-                        </tr>
-                         <tr>
                             <td style="padding-left: 10px;"><label>Fecha:</label></td>
-                            <td style="padding-left: 10px;"><input type="date" name="fecha" value="<%=anticipoProveedor.getFecha()%>" required="" /></td>
+                            <td style="padding-left: 10px;"><input type="date" name="fecha" value="<%=anticipoProveedor.getFecha()%>" required="" readonly=""/></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>proveedor:</label></td>
                             <td style="padding-left: 10px;">
-                                <input name="id_proveedor" value="<%=anticipoProveedor.getId_proveedor()%>" readonly=""/>
+                                <select name="id_proveedor" id="id_proveedor" required="">
+                                    <option selected="" value="<%=anticipoProveedor.getId_proveedor()%>"><%=anticipoProveedor.getProveedor()%></option>
+                                </select>
                             </td>
                         </tr>
-                        <tr>
-                            <td style="padding-left: 10px;"><label>empleado:</label></td>
-                            <td style="padding-left: 10px;">
-                                <input name="id_empleado" value="<%=anticipoProveedor.getId_empleado()%>" readonly=""/>
-                            </td>
-                        </tr>
-                        
+
                         <tr>
                             <td style="padding-left: 10px;"><label>Monto:</label></td>
                             <td style="padding-left: 10px;">

@@ -94,19 +94,19 @@
     </servlet>
     <servlet>
         <servlet-name>CuentaPorCobrarController</servlet-name>
-        <servlet-class>controlador.CuentaPorCobrarController</servlet-class>
+        <servlet-class>controlador.anticipo.CuentaPorCobrarController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CuentaPorPagarController</servlet-name>
-        <servlet-class>controlador.CuentaPorPagarController</servlet-class>
+        <servlet-class>controlador.anticipo.CuentaPorPagarController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AnticipoClienteController</servlet-name>
-        <servlet-class>controlador.AnticipoClienteController</servlet-class>
+        <servlet-class>controlador.anticipo.AnticipoClienteController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AnticipoProveedorController</servlet-name>
-        <servlet-class>controlador.AnticipoProveedorController</servlet-class>
+        <servlet-class>controlador.anticipo.AnticipoProveedorController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>InventarioMaderaAserradaController</servlet-name>

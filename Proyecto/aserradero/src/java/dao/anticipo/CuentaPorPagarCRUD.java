@@ -1,6 +1,7 @@
-package dao;
+package dao.anticipo;
 
-import entidades.CuentaPorPagar;
+import dao.Conexion;
+import entidades.anticipo.CuentaPorPagar;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,12 +14,13 @@ import java.util.List;
  */
 public class CuentaPorPagarCRUD extends Conexion {
 
-    public <T> List buscarCPProveedor(String nombre_campo, String dato) throws Exception {
+    public <T> List buscarCPProveedor(String nombre_campo, String dato, String id_jefe) throws Exception {
         List<CuentaPorPagar> cuentaPorPagares;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM C_POR_PAGAR_PROVEEDOR WHERE " + nombre_campo + " like ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM C_POR_PAGAR_PROVEEDOR WHERE " + nombre_campo + " like ? AND id_jefe = ?")) {
                 st.setString(1, "%" + dato + "%");
+                st.setString(2, id_jefe);
                 cuentaPorPagares = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -36,12 +38,13 @@ public class CuentaPorPagarCRUD extends Conexion {
         return cuentaPorPagares;
     }
 
-    public <T> List buscarCPCliente(String nombre_campo, String dato) throws Exception {
+    public <T> List buscarCPCliente(String nombre_campo, String dato, String id_jefe) throws Exception {
         List<CuentaPorPagar> cuentaPorPagares;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM C_POR_PAGAR_CLIENTE WHERE " + nombre_campo + " like ?")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM C_POR_PAGAR_CLIENTE WHERE " + nombre_campo + " like ? AND id_jefe = ?")) {
                 st.setString(1, "%" + dato + "%");
+                st.setString(2, id_jefe);
                 cuentaPorPagares = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -69,11 +72,12 @@ public class CuentaPorPagarCRUD extends Conexion {
     }
 
     // listar cuenta por pagar de personaes
-    public <T> List listarCPProveedore() throws Exception {
+    public <T> List listarCPProveedore(String id_jefe) throws Exception {
         List<CuentaPorPagar> cuentaPorPagares;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM C_POR_PAGAR_PROVEEDOR")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM C_POR_PAGAR_PROVEEDOR WHERE id_jefe = ?")) {
+                st.setString(1, id_jefe);
                 cuentaPorPagares = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {
@@ -95,11 +99,12 @@ public class CuentaPorPagarCRUD extends Conexion {
     }
 
     // listar cuenta por pagar de clientes
-    public <T> List listarCPCliente() throws Exception {
+    public <T> List listarCPCliente(String id_jefe) throws Exception {
         List<CuentaPorPagar> cuentaPorPagares;
         try {
             this.abrirConexion();
-            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM C_POR_PAGAR_CLIENTE")) {
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM C_POR_PAGAR_CLIENTE WHERE id_jefe = ?")) {
+                st.setString(1, id_jefe);
                 cuentaPorPagares = new ArrayList();
                 try (ResultSet rs = st.executeQuery()) {
                     while (rs.next()) {

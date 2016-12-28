@@ -1,3 +1,5 @@
+
+
 -- Modulo pendiente
 -- Modulo pendiente
 -- Modulo pendiente
@@ -13,6 +15,7 @@
 -- Modulo pendiente
 -- Modulo pendiente
 -- Modulo pendiente
+
 USE aserradero;
 
 -- muestra el monto total de los anticipo clientes: $ monto total

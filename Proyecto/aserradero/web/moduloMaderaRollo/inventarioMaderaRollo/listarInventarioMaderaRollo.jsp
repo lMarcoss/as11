@@ -34,7 +34,8 @@
                     <th>Clasificación</th>
                     <th>piezas</th>
                     <th>Volúmen</th>
-                    <th>Costo</th>
+                    <th>Costo por volumen</th>
+                    <th>Costo total</th>
                     <!--                    <th>piezas secundario</th>
                                         <th>Vol. secundario</th>
                                         <th>Costo secundario</th>
@@ -52,20 +53,24 @@
                                 + "<td>" + inventario.getNum_pieza_primario() + "</td>"
                                 + "<td>" + inventario.getVolumen_primario() + "</td>"
                                 + "<td>" + inventario.getCosto_primario() + "</td>"
+                                + "<td>" + inventario.getCosto_total_primario() + "</td>"
                                 + "</tr><tr>"
                                 + "<td>Secundario</td>"
                                 + "<td>" + inventario.getNum_pieza_secundario() + "</td>"
                                 + "<td>" + inventario.getVolumen_secundario() + "</td>"
                                 + "<td>" + inventario.getCosto_secundario() + "</td>"
+                                + "<td>" + inventario.getCosto_total_secundario() + "</td>"
                                 + "</tr><tr>"
                                 + "<td>Terciario</td>"
                                 + "<td>" + inventario.getNum_pieza_terciario() + "</td>"
                                 + "<td>" + inventario.getVolumen_terciario() + "</td>"
                                 + "<td>" + inventario.getCosto_terciario() + "</td>"
+                                + "<td>" + inventario.getCosto_total_terciario() + "</td>"
                                 + "</tr><tr>"
                                 + "<td>Total</td>"
                                 + "<td>" + inventario.getNum_pieza_total() + "</td>"
                                 + "<td>" + inventario.getVolumen_total() + "</td>"
+                                + "<td></td>"
                                 + "<td>" + inventario.getCosto_total() + "</td>"
                                 + "</tr>");
                     }

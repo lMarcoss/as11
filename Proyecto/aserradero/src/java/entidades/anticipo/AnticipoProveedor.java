@@ -1,4 +1,4 @@
-package entidades;
+package entidades.anticipo;
 
 import java.math.BigDecimal;
 import java.sql.Date;
