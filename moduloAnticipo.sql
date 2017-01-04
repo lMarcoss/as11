@@ -33,7 +33,8 @@ SELECT id_anticipo_P,
         monto_anticipo
 FROM ANTICIPO_PROVEEDOR;
 
-
+-- Submódulo cuenta por cobrar y pagar a proveedores -- Submódulo cuenta por cobrar y pagar a proveedores-- Submódulo cuenta por cobrar y pagar a proveedores
+-- Submódulo cuenta por cobrar y pagar a proveedores -- Submódulo cuenta por cobrar y pagar a proveedores-- Submódulo cuenta por cobrar y pagar a proveedores
 
 -- funcion para consultar $ costo total de madera en rollo por cada proveedor (pagados y no pagados)
 -- Se resta el dinero de pagos
@@ -119,7 +120,120 @@ SELECT
     ABS(monto) AS monto
 FROM CUENTAS_PROVEEDOR WHERE monto > 0;
 
-SELECT * FROM ENTRADA_M_ROLLO;
+-- Submódulo cuentas por cobrar y pagar de clientes -- Submódulo cuentas por cobrar y pagar de clientes -- Submódulo cuentas por cobrar y pagar de clientes 
+-- Submódulo cuentas por cobrar y pagar de clientes -- Submódulo cuentas por cobrar y pagar de clientes -- Submódulo cuentas por cobrar y pagar de clientes 
 
-SELECT * FROM C_POR_COBRAR_PROVEEDOR;
-SELECT * FROM C_POR_PAGAR_PROVEEDOR;
+
+-- funcion para consultar $ costo total de madera vendidas al cliente tanto en mayoreo como por paquete
+DROP FUNCTION IF EXISTS COSTO_VENTA_CLIENTE;
+DELIMITER //
+CREATE FUNCTION COSTO_VENTA_CLIENTE(_id_cliente VARCHAR(30))
+RETURNS DECIMAL(20,2)
+BEGIN
+	DECLARE _monto_paquete 	DECIMAL(20,2);
+    DECLARE _monto_mayoreo 	DECIMAL(20,2);
+    DECLARE _monto_extra 	DECIMAL(20,2);
+
+	-- ventas por paquete al cliente
+    IF EXISTS (SELECT id_cliente FROM VENTA,VENTA_PAQUETE WHERE id_cliente = _id_cliente LIMIT 1) THEN 
+		-- monto total de la venta
+        SELECT SUM(monto) INTO _monto_paquete 
+        FROM VENTA, VENTA_PAQUETE 
+        WHERE VENTA.id_venta = VENTA_PAQUETE.id_venta AND id_cliente = _id_cliente 
+        GROUP BY id_cliente;
+	ELSE
+		SET _monto_paquete = 0;
+    END IF;
+    
+    -- ventas por mayoreo al cliente
+    IF EXISTS (SELECT id_cliente FROM VENTA,VENTA_MAYOREO WHERE id_cliente = _id_cliente LIMIT 1) THEN 
+		-- monto total de la venta
+        SELECT SUM(monto) INTO _monto_mayoreo 
+        FROM VENTA, VENTA_MAYOREO 
+        WHERE VENTA.id_venta = VENTA_MAYOREO.id_venta AND id_cliente = _id_cliente 
+        GROUP BY id_cliente;
+	ELSE
+		SET _monto_mayoreo = 0;
+    END IF;
+    
+    -- ventas extra al cliente
+    IF EXISTS (SELECT id_cliente FROM VENTA,VENTA_EXTRA WHERE id_cliente = _id_cliente LIMIT 1) THEN 
+		-- monto total de la venta
+        SELECT SUM(monto) INTO _monto_extra 
+        FROM VENTA, VENTA_EXTRA 
+        WHERE VENTA.id_venta = VENTA_EXTRA.id_venta AND id_cliente = _id_cliente 
+        GROUP BY id_cliente;
+	ELSE
+		SET _monto_extra = 0;
+    END IF;
+    
+    
+    RETURN (_monto_mayoreo + _monto_paquete + _monto_extra);
+END;//
+DELIMITER ;
+
+
+-- funcion para consultar $ monto total de los anticipos dados por el cliente
+DROP FUNCTION IF EXISTS C_ANTICIPO_CLIENTE;
+DELIMITER //
+CREATE FUNCTION C_ANTICIPO_CLIENTE (_id_cliente VARCHAR(30))
+RETURNS DECIMAL(20,2)
+BEGIN
+	DECLARE _anticipo DECIMAL(20,2);
+    DECLARE _pago DECIMAL(20,2);
+    
+	-- consultamos si han entrado anticipos
+    IF EXISTS (SELECT id_cliente FROM ANTICIPO_CLIENTE WHERE id_cliente = _id_cliente LIMIT 1) THEN 
+		-- consultamos el monto total de los anticipo
+        SELECT SUM(monto_anticipo) INTO _anticipo FROM ANTICIPO_CLIENTE WHERE id_cliente = _id_cliente GROUP BY id_cliente;
+	ELSE 
+		SET _anticipo = 0;
+    END IF;
+    
+    -- Consultamos si se han hecho pagos
+    IF EXISTS (SELECT id_cliente FROM VENTA WHERE id_cliente = _id_cliente LIMIT 1) THEN 
+		-- consultamos el monto total de los pagos
+        SELECT SUM(pago) INTO _pago FROM VENTA WHERE id_cliente = _id_cliente GROUP BY id_cliente;
+	ELSE 
+		SET _pago = 0;
+    END IF;
+    
+    
+    RETURN (_anticipo + _pago);
+END;//
+DELIMITER ;
+
+SELECT * FROM VENTA;
+SELECT SUM(pago) FROM VENTA GROUP BY id_cliente;
+-- Muestra cuentas por cobrar y por pagar a los clientes
+-- : los negativos representan cuenta por pagar
+-- : los positivos son cuentas por cobrar
+DROP VIEW IF EXISTS CUENTAS_CLIENTE;
+CREATE VIEW CUENTAS_CLIENTE AS
+SELECT
+	id_cliente,
+    cliente,
+    ROUND(((SELECT COSTO_VENTA_CLIENTE(id_cliente))-(SELECT C_ANTICIPO_CLIENTE(id_cliente))),2) AS monto,
+    id_jefe
+FROM PERSONAL_CLIENTE;
+
+SELECT * FROM CUENTAS_CLIENTE;
+-- Cuentas por pagar a clientes
+DROP VIEW IF EXISTS C_POR_PAGAR_CLIENTE;
+CREATE VIEW C_POR_PAGAR_CLIENTE AS
+SELECT
+	id_cliente AS id_persona,
+    cliente AS persona,
+    id_jefe,
+    ABS(monto) AS monto
+FROM CUENTAS_CLIENTE WHERE monto < 0;
+
+-- Cuentas por cobrar a clientes
+DROP VIEW IF EXISTS C_POR_COBRAR_CLIENTE;
+CREATE VIEW C_POR_COBRAR_CLIENTE AS
+SELECT
+	id_cliente AS id_persona,
+    cliente AS persona,
+    id_jefe,
+    ABS(monto) AS monto
+FROM CUENTAS_CLIENTE WHERE monto > 0;

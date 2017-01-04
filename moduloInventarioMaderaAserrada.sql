@@ -9,8 +9,11 @@ SELECT
     (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE id_persona = SUBSTRING(id_empleado,1,18) LIMIT 1) as empleado,
     id_madera,
     grueso,
+    grueso_f,
     ancho,
+    ancho_f,
     largo,
+    largo_f,
     volumen,
     costo_por_volumen
 FROM MADERA_ASERRADA_CLASIF;

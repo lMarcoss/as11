@@ -173,7 +173,7 @@ public class CuentaPorPagarController extends HttpServlet {
         List<CuentaPorPagar> cuentaPorPagares;
         CuentaPorPagarCRUD cuentaPorPagarCrud = new CuentaPorPagarCRUD();
         try {
-            cuentaPorPagares = (List<CuentaPorPagar>) cuentaPorPagarCrud.listarCPProveedore((String) sesion.getAttribute("id_jefe"));
+            cuentaPorPagares = (List<CuentaPorPagar>) cuentaPorPagarCrud.listarCPCliente((String) sesion.getAttribute("id_jefe"));
             mostrarCPPagarClientes(request, response, cuentaPorPagares);
         } catch (Exception ex) {
             System.out.println(ex);

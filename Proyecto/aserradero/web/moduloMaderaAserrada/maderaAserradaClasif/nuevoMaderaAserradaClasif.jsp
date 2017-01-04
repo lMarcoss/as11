@@ -31,14 +31,25 @@
                             <td style="padding-left: 10px;"><label>Grueso:</label></td>
                             <td style="padding-left: 10px;"><input type="number" name="grueso" id="grueso" step=".01" min="0.01" max="9999.99"  title="Sólo números" required="" onblur="calcularVolumen()"/></td>
                         </tr>
-
+                        <tr>
+                            <td style="padding-left: 10px;"><label>Grueso (fracción o pulgada):</label></td>
+                            <td style="padding-left: 10px;"><input type="text" name="grueso_f" id="grueso_f" maxlength="10" required="" placeholder='3 1/2 o "9"' title="Tal y como se mostrará en el ticket"></td>
+                        </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>Ancho:</label></td>
                             <td style="padding-left: 10px;"><input type="number"  name="ancho" id="ancho" step=".01" min="0.01" max="9999.99" title="Sólo números" required="" onblur="calcularVolumen()"/></td>
                         </tr>
                         <tr>
+                            <td style="padding-left: 10px;"><label>Ancho (fracción o pulgada):</label></td>
+                            <td style="padding-left: 10px;"><input type="text" name="ancho_f" id="ancho_f" maxlength="10" required="" placeholder='3 1/2, "9" o 9' title="Tal y como se mostrará en el ticket"></td>
+                        </tr>
+                        <tr>
                             <td style="padding-left: 10px;"><label>Largo:</label></td>
                             <td style="padding-left: 10px;"><input type="number" name="largo" id="largo" step=".01" min="0.01" max="9999.99" title="Sólo números" required="" onblur="calcularVolumen()"/></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 10px;"><label>Largo (fracción o pulgada):</label></td>
+                            <td style="padding-left: 10px;"><input type="text" name="largo_f" id="largo_f" maxlength="10" required="" placeholder='3 1/2, "9" o 9' title="Tal y como se mostrará en el ticket"></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>Volumen</label></td>

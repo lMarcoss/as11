@@ -30,9 +30,8 @@
                     <td>
                         <select name="nombre_campo" >
                             <option value="fecha">Fecha</option>
+                            <option value="id_venta">Id_venta</option>
                             <option value="cliente">Cliente</option>
-                            <option value="estatus">Estatus</option>
-                            <option value="tipo">Tipo</option>
                             <option value="monto">Monto total</option>
                             <option value="observacion">Observacion</option>
                             <option value="empleado">Registró</option>
@@ -51,11 +50,13 @@
             <tr>
                 <th>N°</th>
                 <th>Fecha</th>
+                <th>Id_venta</th>
                 <th>Cliente</th>
-                <th>Estatus</th>
-                <th>Tipo pago</th>
                 <th>Monto total</th>
+                <th>Pago en efectivo</th>
                 <th>Registró</th>
+                <th></th>
+                <th></th>
                 <th></th>
                 <th></th>
             </tr>
@@ -65,13 +66,15 @@
                     out.print("<tr>"
                             + "<td>" + (i + 1) + "</td>"
                             + "<td>" + venta.getFecha() + "</td>"
+                            + "<td>" + venta.getId_venta()+ "</td>"
                             + "<td>" + venta.getCliente() + "</td>"
-                            + "<td>" + venta.getEstatus() + "</td>"
-                            + "<td>" + venta.getTipo_pago() + "</td>"
                             + "<td>" + venta.getMonto() + "</td>"
+                            + "<td>" + venta.getPago()+ "</td>"
                             + "<td>" + venta.getEmpleado() + "</td>"
                             + "<td><a href=\"/aserradero/VentaPaqueteController?action=detalle&id_venta=" + venta.getId_venta() + "\">Detalle venta</a></td>"
-//                            + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/VentaPaqueteController?action=eliminar&id_venta=" + venta.getId_venta() + "&tipo_venta=" + venta.getTipo_venta() + "';};\">Eliminar</a></td>"
+                            + "<td><a target=\"blank\" href=\"/aserradero/VentaController?action=ticket_costo&id_venta=" + venta.getId_venta() + "\">Ticket con costo</a></td>"
+                            + "<td><a target=\"blank\" href=\"/aserradero/VentaController?action=ticket_sin_costo&id_venta=" + venta.getId_venta() + "\">Ticket sin costo</a></td>"
+                            + "<td><a href=\"/aserradero/VentaController?action=modificar&id_venta=" + venta.getId_venta() + "&tipo_venta=Paquete\">Modificar pago</a></td>"
                             + "</tr>");
                     i++;
                 }

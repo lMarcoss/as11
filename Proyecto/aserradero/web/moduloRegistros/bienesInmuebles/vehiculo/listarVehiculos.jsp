@@ -50,7 +50,7 @@
                                     <option value="motor">Motor</option>
                                     <option value="modelo">Modelo</option>
                                     <option value="costo">Costo</option>
-                                    <option value="empleado">Empleado</option>
+                                    <option value="empleado">Registró</option>
                                 </select>
                                 <input type="text" class="input-busc"  name="dato" placeholder="Escriba su búsqueda" >
                                 <input type="submit" value="Buscar" class="btn btn-success">
@@ -67,7 +67,7 @@
                                     <th>Motor</th>
                                     <th>Modelo</th>
                                     <th>Costo</th>
-                                    <th>Empleado</th>
+                                    <th>Registró</th>
                                     <th></th>
                                     <th></th>
                                 </tr>

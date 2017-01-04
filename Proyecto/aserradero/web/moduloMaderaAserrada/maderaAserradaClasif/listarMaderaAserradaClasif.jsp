@@ -31,9 +31,9 @@
                         <td>
                             <select name="nombre_campo" >
                             <option value="id_madera">madera</option>
-                            <option value="greso">Grueso</option>
-                            <option value="ancho">Ancho</option>
-                            <option value="largo">Largo</option>
+                            <option value="greso_f">Grueso</option>
+                            <option value="ancho_f">Ancho</option>
+                            <option value="largo_f">Largo</option>
                             <option value="volumen">Volumen unitario</option>
                             <option value="costo_por_volumen">Costo por volumen</option>
                             <option value="empleado">Registró</option>
@@ -67,9 +67,9 @@
                             out.print("<tr>"
                                 +"<td>"+(i+1)+"</td>"
                                 +"<td>"+maderaClasificacion.getId_madera()+"</td>"
-                                +"<td>"+maderaClasificacion.getGrueso()+"</td>"
-                                +"<td>"+maderaClasificacion.getAncho()+"</td>"
-                                +"<td>"+maderaClasificacion.getLargo()+"</td>"
+                                +"<td>"+maderaClasificacion.getGrueso_f()+"</td>"
+                                +"<td>"+maderaClasificacion.getAncho_f()+"</td>"
+                                +"<td>"+maderaClasificacion.getLargo_f()+"</td>"
                                 +"<td>"+maderaClasificacion.getVolumen()+"</td>"
                                 +"<td>"+maderaClasificacion.getCosto_por_volumen()+"</td>"
                                 +"<td>"+maderaClasificacion.getEmpleado()+"</td>"

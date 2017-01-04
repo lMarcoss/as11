@@ -49,7 +49,7 @@
                                     <option value="nombre_localidad">Localidad</option>
                                     <option value="nombre_municipio">Municipio</option>
                                     <option value="valor_estimado">Valor estimado</option>
-                                    <option value="empleado">Empleado</option>
+                                    <option value="empleado">Registró</option>
                                 </select>
                                 <input type="text" class="input-busc"  name="dato" placeholder="Escriba su búsqueda" >
                                 <input type="submit" value="Buscar" class="btn btn-success">
@@ -64,7 +64,7 @@
                                     <th>Direccion</th>
                                     <th>Localidad</th>
                                     <th>Valor estimado</th>
-                                    <th>Empleado</th>
+                                    <th>Registró</th>
                                     <th></th>
                                     <th></th>
                                 </tr>

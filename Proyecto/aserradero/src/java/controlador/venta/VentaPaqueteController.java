@@ -85,7 +85,8 @@ public class VentaPaqueteController extends HttpServlet {
         } else {
             try {
                 sesion.invalidate();
-            } catch (Exception e) {
+                response.sendRedirect("/aserradero/");
+            } catch (IOException e) {
                 System.out.println(e);
                 response.sendRedirect("/aserradero/");
             }
@@ -407,15 +408,13 @@ public class VentaPaqueteController extends HttpServlet {
     }
 
     private void buscar(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
-        List<VentaPaquete> ventaPaquetes;
+        List<Venta> ventaPaquetes;
         String nombre_campo = request.getParameter("nombre_campo");
         String dato = request.getParameter("dato");
         VentaPaqueteCRUD ventaPaqueteCRUD = new VentaPaqueteCRUD();
         try {
-            ventaPaquetes = (List<VentaPaquete>) ventaPaqueteCRUD.buscar(nombre_campo, dato, (String) sesion.getAttribute("id_jefe"));
-            request.setAttribute("ventaPaquetes", ventaPaquetes);
-            RequestDispatcher view = request.getRequestDispatcher("moduloVenta/ventaPaquete/ventaPaquetes.jsp");
-            view.forward(request, response);
+            ventaPaquetes = (List<Venta>) ventaPaqueteCRUD.buscar(nombre_campo, dato, (String) sesion.getAttribute("id_jefe"));
+            mostrarVentas(request, response, ventaPaquetes, sesion, action);
         } catch (Exception ex) {
             System.out.println(ex);
             listarVentaPaquetes(request, response, sesion, "error_buscar_campo");

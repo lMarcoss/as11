@@ -3,6 +3,7 @@ package dao.maderaAserrada;
 import dao.Conexion;
 import entidades.maderaAserrada.InventarioMaderaAserrada;
 import interfaces.OperacionesCRUD;
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -106,5 +107,30 @@ public class InventarioMaderaAserradaCRUD extends Conexion implements Operacione
 
     @Override
     public void actualizar(Object objeto) throws Exception {
+    }
+
+    public BigDecimal consultarCostoTotalInventario(String id_admin) throws Exception {
+        BigDecimal costo_total = BigDecimal.valueOf(Double.valueOf("0"));
+        try {
+            this.abrirConexion();
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT SUM(costo_total) AS costo_total FROM INVENTARIO_M_ASERRADA WHERE id_administrador = ? GROUP BY id_administrador;")) {
+                st.setString(1, id_admin);
+                try (ResultSet rs = st.executeQuery()) {
+                    while (rs.next()) {
+                        costo_total = rs.getBigDecimal("costo_total");
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            throw e;
+        } finally {
+            this.cerrarConexion();
+        }
+        return costo_total;
     }
 }

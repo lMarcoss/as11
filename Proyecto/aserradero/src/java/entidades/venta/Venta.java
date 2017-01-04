@@ -17,14 +17,15 @@ public class Venta {
     public String empleado;
     public String estatus;
     private String tipo_venta;
-    private String tipo_pago;
+    private BigDecimal pago;
     private String id_jefe;
     private BigDecimal monto; // Es el único atributo que se extrae de los tipos de ventas
+    private String ticket; // Es el único atributo que se extrae de los tipos de ventas
 
     public Venta() {
     }
 
-    public Venta(String id_venta, Date fecha, String id_cliente, String cliente, String id_empleado, String empleado, String estatus, String tipo_venta, String tipo_pago, String id_jefe, BigDecimal monto) {
+    public Venta(String id_venta, Date fecha, String id_cliente, String cliente, String id_empleado, String empleado, String estatus, String tipo_venta, BigDecimal pago, String id_jefe, BigDecimal monto, String ticket) {
         this.id_venta = id_venta;
         this.fecha = fecha;
         this.id_cliente = id_cliente;
@@ -33,17 +34,18 @@ public class Venta {
         this.empleado = empleado;
         this.estatus = estatus;
         this.tipo_venta = tipo_venta;
-        this.tipo_pago = tipo_pago;
+        this.pago = pago;
         this.id_jefe = id_jefe;
         this.monto = monto;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+        this.ticket = ticket;
     }
 
     public void setId_venta(String id_venta) {
         this.id_venta = id_venta;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public void setId_cliente(String id_cliente) {
@@ -70,8 +72,8 @@ public class Venta {
         this.tipo_venta = tipo_venta;
     }
 
-    public void setTipo_pago(String tipo_pago) {
-        this.tipo_pago = tipo_pago;
+    public void setPago(BigDecimal pago) {
+        this.pago = pago;
     }
 
     public void setId_jefe(String id_jefe) {
@@ -82,12 +84,16 @@ public class Venta {
         this.monto = monto;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public void setTicket(String ticket) {
+        this.ticket = ticket;
     }
 
     public String getId_venta() {
         return id_venta;
+    }
+
+    public Date getFecha() {
+        return fecha;
     }
 
     public String getId_cliente() {
@@ -114,8 +120,8 @@ public class Venta {
         return tipo_venta;
     }
 
-    public String getTipo_pago() {
-        return tipo_pago;
+    public BigDecimal getPago() {
+        return pago;
     }
 
     public String getId_jefe() {
@@ -124,6 +130,10 @@ public class Venta {
 
     public BigDecimal getMonto() {
         return monto;
+    }
+
+    public String getTicket() {
+        return ticket;
     }
 
 }

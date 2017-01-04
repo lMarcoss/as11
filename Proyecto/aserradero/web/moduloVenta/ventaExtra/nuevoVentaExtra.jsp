@@ -46,16 +46,13 @@
                         </div>
                         <div class="panel-body" id="PanelPrincipal">
                             <div class="col-md-12 bordebajo">
-                                <form action="/aserradero/VentaController?action=insertar" method="post" id="formregistro"><!-- Formulario de venta -->
+                                <form action="/aserradero/VentaController?action=insertar&tipo_venta=Extra" method="post" id="formregistro"><!-- Formulario de venta -->
                                     <div class="form-group col-md-2"><!-- agrupar inputs -->
                                         <input name="tipo_venta" value="extra" type="hidden"/>
                                         <label class="control-label">Fecha:</label>
                                         <input class="form-control" type="date" name="fecha" value="<%=fecha%>" required="" />
                                     </div>
-                                    <div class="col-md-2 form-group">
-                                        <label class="control-label">Id venta:</label>
-                                        <input class="form-control" type="text" value="<%=id_nVenta%>" name="id_venta" id="id_venta" required="">
-                                    </div>
+                                    <input type="hidden" value="<%=id_nVenta%>" name="id_venta" id="id_venta" required="" readonly="">
                                     <div class="form-group col-md-2">
                                         <label class="control-label">Cliente</label>
                                         <select class="form-control" name="id_cliente" required="">
@@ -67,24 +64,24 @@
                                             %>
                                         </select>
                                     </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="control-label">Pago en efectivo:</label>
+                                        <input type="number" class="form-control" step="0.01" name="pago" id="pago" min="0" max="999999.99" required="">
+                                    </div>
                                     <div class="col-md-2 form-group">
-                                        <label class="control-label">Empleado:</label>
-                                        <select class="form-control" name="id_empleado" >
-                                            <option></option>
-                                            <%
-                                                //                                            for (Empleado empleado : empleados) {
-                                                //                                                out.print("<option value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>");
-                                                //                                            }
-                                            %>
+                                        <label class="control-label">Ticket:</label>
+                                        <select class="form-control" name="ticket" id="ticket">
+                                            <option value="costo">Con costo</option>
+                                            <option value="sin_costo">Sin costo</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-2">
-                                        <label class="control-label">Estatus:</label>
-                                        <input  name="estatus" value="Sin pagar" id="estatus" class="form-control" required="" readonly=""/>
-                                    </div>
                                     <div class="form-group pull-right col-md-2"><!-- agrupar inputs -->
-                                        <input type="submit" class="btn btn-block btn-success margen-boton" value="Guardar venta"/>
+                                        <br>
                                         <a href="/aserradero/VentaExtraController?action=listar"><input class="btn btn-block btn-warning" type="button" value="Cancelar"/></a>
+                                    </div><!-- Fin div group -->
+                                    <div class="form-group pull-right col-md-2"><!-- agrupar inputs -->
+                                        <br>
+                                        <input type="submit" class="btn btn-block btn-success margen-boton" value="Guardar venta"/>
                                     </div><!-- Fin div group -->
                                 </form><!-- Formulario de venta -->
                             </div>
@@ -112,8 +109,7 @@
                             <h3 class="panel-title">Productos</h3>
                         </div>
                         <div class="panel-body detalle-producto">
-                            <%                                
-                                ArrayList<VentaExtra> VentaMay = (ArrayList<VentaExtra>) sesion_ajax.getAttribute("detalle");
+                            <%                                ArrayList<VentaExtra> VentaMay = (ArrayList<VentaExtra>) sesion_ajax.getAttribute("detalle");
                                 if (((sesion_ajax.getAttribute("detalle_venta_extra")) != null)) {
                                     if (VentaMay.size() > 0) {//Si la cantida de productos agregados es mayor a cero
                                         out.print("<table class='table'>");

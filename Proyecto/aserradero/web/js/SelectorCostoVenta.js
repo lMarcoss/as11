@@ -1,5 +1,5 @@
 /*
- * Funciones para venta mayoreo
+ * Funciones para venta mayoreo y paquete
  * 
  * Esta funcion se utiliza al registrar las ventas para seleccionar el costo de cada madera
  * :Y para calcular el monto a pagar por todas las piezas

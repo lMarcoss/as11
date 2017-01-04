@@ -4,11 +4,13 @@
     Author     : Marcos
 --%>
 
+<%@page import="java.math.BigDecimal"%>
 <%@page import="entidades.maderaAserrada.InventarioMaderaAserrada"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     List<InventarioMaderaAserrada> inventarioMaderaAserrada = (List<InventarioMaderaAserrada>) request.getAttribute("listaInventario");
+    BigDecimal costo_total = (BigDecimal) request.getAttribute("costo_total");
     String mensaje = (String) request.getAttribute("mensaje");
 %>
 <!DOCTYPE html>
@@ -72,10 +74,22 @@
                                 + "<td>" + inventario.getVolumen_unitario() + "</td>"
                                 + "<td>" + inventario.getVolumen_total() + "</td>"
                                 + "<td>" + inventario.getCosto_por_volumen() + "</td>"
-                                + "<td>" + inventario.getCosto_total() + "</td>"
+                                + "<td><b>" + inventario.getCosto_total() + "</b></td>"
                                 + "</tr>");
                         i++;
                     }
+                    if (!costo_total.toString().equals("0.0")) {
+                        out.print("<tr>"
+                                + "<td></td>"
+                                + "<td><b>Total</b></td>"
+                                + "<td></td>"
+                                + "<td></td>"
+                                + "<td></td>"
+                                + "<td></td>"
+                                + "<td><b>" + costo_total + "</b></td>"
+                                + "</tr>");
+                    }
+
                 %>
             </table>
             <div>

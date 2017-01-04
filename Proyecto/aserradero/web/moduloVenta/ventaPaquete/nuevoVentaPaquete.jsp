@@ -13,14 +13,14 @@
 <%@page import="entidades.venta.Venta"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<% 
-    Date fecha = Date.valueOf(LocalDate.now()); 
-    List <InventarioMaderaAserrada> listaInventario = (List<InventarioMaderaAserrada>)request.getAttribute("listaInventario"); 
-    List <Cliente> clientes = (List<Cliente>) request.getAttribute("clientes"); 
-    String id_nVenta = String.valueOf(request.getAttribute("siguienteventa")); 
-    String id_administrador = (String)request.getAttribute("id_administrador"); 
-    HttpSession sesion_ajax = request.getSession(true); 
-    sesion_ajax.setAttribute("detalle_venta_paquete", null); 
+<%
+    Date fecha = Date.valueOf(LocalDate.now());
+    List<InventarioMaderaAserrada> listaInventario = (List<InventarioMaderaAserrada>) request.getAttribute("listaInventario");
+    List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
+    String id_nVenta = String.valueOf(request.getAttribute("siguienteventa"));
+    String id_administrador = (String) request.getAttribute("id_administrador");
+    HttpSession sesion_ajax = request.getSession(true);
+    sesion_ajax.setAttribute("detalle_venta_paquete", null);
 %>
 <!DOCTYPE html>
 <html>
@@ -50,11 +50,12 @@
                         <div class="panel-body" id="PanelPrincipal">
                             <div class="col-md-12 bordebajo">
                                 <!-- agrupar inputs -->
-                                <form action="/aserradero/VentaController?action=insertar&tipo_venta=paquete" method="post" id="formregistro">
+                                <form action="/aserradero/VentaController?action=insertar&tipo_venta=Paquete" method="post" id="formregistro">
                                     <!-- Formulario de venta -->
                                     <input class="form-control" type="hidden" value="<%=id_administrador%>" name="id_administrador" id="id_administrador" readonly="">
                                     <input class="form-control" type="hidden" value="<%=id_nVenta%>" name="id_venta" id="id_venta" readonly="">
-                                    
+                                    <input type="hidden" name="estatus" value="Sin pagar" id="estatus" class="form-control" readonly=""/>
+
                                     <div class="form-group col-md-2">
                                         <!-- agrupar inputs -->
                                         <label class="control-label">Fecha:</label>
@@ -64,27 +65,23 @@
                                         <label class="control-label">Cliente</label>
                                         <select class="form-control" name="id_cliente" required="">
                                             <option></option>
-                                            <% 
-                                                for (Cliente cliente : clientes) { 
-                                                    out.print("<option value='"+cliente.getId_cliente()+"'>"+cliente.getCliente()+"</option>");
-                                                } 
-                                            %>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2 form-group">
-                                        <label class="control-label">Empleado:</label>
-                                        <select class="form-control" name="id_empleado">
-                                            <option></option>
-                                            <% 
-//                                                for (Empleado empleado : empleados) {
-//                                                    out.print("<option value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>");
-//                                                }
+                                            <%
+                                                for (Cliente cliente : clientes) {
+                                                    out.print("<option value='" + cliente.getId_cliente() + "'>" + cliente.getCliente() + "</option>");
+                                                }
                                             %>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label class="control-label">Estatus:</label>
-                                        <input name="estatus" value="Sin pagar" id="estatus" class="form-control" required="" readonly=""/>
+                                        <label class="control-label">Pago en efectivo:</label>
+                                        <input type="number" class="form-control" step="0.01" name="pago" id="pago" min="0" max="999999.99" required="">
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label class="control-label">Ticket:</label>
+                                        <select class="form-control" name="ticket" id="ticket">
+                                            <option value="costo">Con costo</option>
+                                            <option value="sin_costo">Sin costo</option>
+                                        </select>
                                     </div>
                                     <div class="col-md-2">
                                         <br>
@@ -109,10 +106,9 @@
                                         <label class="control-label">Madera:</label>
                                         <select name="id_madera" class="form-control" required="" id="id_madera" onblur="seleccionarCostoMaderaVenta()">
                                             <option></option>
-                                            <% 
-                                                for (InventarioMaderaAserrada inventario : listaInventario) { 
-                                                    out.print("<option value='"+inventario.getId_madera()+"'>"+inventario.getId_madera()+"</option>"); 
-                                                } 
+                                            <%                                                for (InventarioMaderaAserrada inventario : listaInventario) {
+                                                    out.print("<option value='" + inventario.getId_madera() + "'>" + inventario.getId_madera() + "</option>");
+                                                }
                                             %>
                                         </select>
                                     </div>
@@ -126,7 +122,7 @@
                                             <option></option>
                                             <%
                                                 for (InventarioMaderaAserrada inventario : listaInventario) {
-                                                    out.print("<option value='"+inventario.getNum_piezas()+"'>"+inventario.getNum_piezas()+"</option>");
+                                                    out.print("<option value='" + inventario.getNum_piezas() + "'>" + inventario.getNum_piezas() + "</option>");
                                                 }
                                             %>
                                         </select>
@@ -144,9 +140,9 @@
                                         <label class="control-label">volumen unitaria</label>
                                         <select name="volumen_unitaria" class="form-control" id="volumen_unitaria" readonly="" disabled="">
                                             <option></option>
-                                            <% 
+                                            <%
                                                 for (InventarioMaderaAserrada inventario : listaInventario) {
-                                                    out.print("<option value='"+inventario.getVolumen_unitario()+"'>"+inventario.getVolumen_unitario()+"</option>");
+                                                    out.print("<option value='" + inventario.getVolumen_unitario() + "'>" + inventario.getVolumen_unitario() + "</option>");
                                                 }
                                             %>
                                         </select>
@@ -155,10 +151,10 @@
                                         <label class="control-label">Costo volumen</label>
                                         <select class="form-control" name="costo_volumen" id="costo_volumen" readonly="" disabled="">
                                             <option></option>
-                                            <% 
-                                                for (InventarioMaderaAserrada inventario : listaInventario) { 
-                                                    out.print("<option value='"+inventario.getCosto_por_volumen()+"'>"+inventario.getCosto_por_volumen()+"</option>"); 
-                                                } 
+                                            <%
+                                                for (InventarioMaderaAserrada inventario : listaInventario) {
+                                                    out.print("<option value='" + inventario.getCosto_por_volumen() + "'>" + inventario.getCosto_por_volumen() + "</option>");
+                                                }
                                             %>
                                         </select>
                                     </div>
@@ -187,44 +183,44 @@
                             <h3 class="panel-title">Productos</h3>
                         </div>
                         <div class="panel-body" id="detalle_producto_paquete">
-                        <%
-                            ArrayList<VentaPaquete> VentaPaq = (ArrayList<VentaPaquete>) sesion_ajax.getAttribute("detalle_venta_paquete");
-                            if((sesion_ajax.getAttribute("detalle_venta_paquete"))!=null){
-                                if(VentaPaq.size()>0){//Si la cantida de productos agregados es mayor a cero
-                                    System.out.println("Hola");
-                                    out.print("<table class='table'>");
-                                    out.print("<thead>");
-                                    out.print("<tr>");
-                                    out.print("<th>Número paquete</th>");
-                                    out.print("<th>Madera</th>");
-                                    out.print("<th>Número de piezas</th>");
-                                    out.print("<th>Volumen</th>");
-                                    out.print("<th>Monto</th>");
-                                    out.print("<th>Tipo madera</th>");
-                                    out.print("<th></th>");
-                                    out.print("</tr>");
-                                    out.print("</thead>");
-                                    out.print("<tbody>");//Inicia el cuerpo de la tabla
-                                    for(VentaPaquete a:VentaPaq){
+                            <%
+                                ArrayList<VentaPaquete> VentaPaq = (ArrayList<VentaPaquete>) sesion_ajax.getAttribute("detalle_venta_paquete");
+                                if ((sesion_ajax.getAttribute("detalle_venta_paquete")) != null) {
+                                    if (VentaPaq.size() > 0) {//Si la cantida de productos agregados es mayor a cero
+                                        System.out.println("Hola");
+                                        out.print("<table class='table'>");
+                                        out.print("<thead>");
                                         out.print("<tr>");
-                                        out.print("<td>"+a.getNumero_paquete()+"</td>");
-                                        out.print("<td>"+a.getId_madera()+"</td>");
-                                        out.print("<td>"+a.getNum_piezas()+"</td>");
-                                        out.print("<td>"+a.getVolumen()+"</td>");
-                                        out.print("<td>"+a.getMonto()+"</td>");
-                                        out.print("<td>"+a.getTipo_madera()+"</td>");
-                                        out.print("<td><input type='button' value='Eliminar' class='btn btn-danger eliminar_ventap' id='"+a.getId_madera()+"' /></td>");
+                                        out.print("<th>Número paquete</th>");
+                                        out.print("<th>Madera</th>");
+                                        out.print("<th>Número de piezas</th>");
+                                        out.print("<th>Volumen</th>");
+                                        out.print("<th>Monto</th>");
+                                        out.print("<th>Tipo madera</th>");
+                                        out.print("<th></th>");
                                         out.print("</tr>");
+                                        out.print("</thead>");
+                                        out.print("<tbody>");//Inicia el cuerpo de la tabla
+                                        for (VentaPaquete a : VentaPaq) {
+                                            out.print("<tr>");
+                                            out.print("<td>" + a.getNumero_paquete() + "</td>");
+                                            out.print("<td>" + a.getId_madera() + "</td>");
+                                            out.print("<td>" + a.getNum_piezas() + "</td>");
+                                            out.print("<td>" + a.getVolumen() + "</td>");
+                                            out.print("<td>" + a.getMonto() + "</td>");
+                                            out.print("<td>" + a.getTipo_madera() + "</td>");
+                                            out.print("<td><input type='button' value='Eliminar' class='btn btn-danger eliminar_ventap' id='" + a.getId_madera() + "' /></td>");
+                                            out.print("</tr>");
+                                        }
+                                        out.print("</tbody>");
+                                        out.print("</table>");
+                                    } else {
+                                        out.print("<h3 class='panel-title'>No hay registros agregados</h3>");
                                     }
-                                    out.print("</tbody>");
-                                    out.print("</table>");
-                                }else{
+                                } else {
                                     out.print("<h3 class='panel-title'>No hay registros agregados</h3>");
                                 }
-                            }else{
-                                out.print("<h3 class='panel-title'>No hay registros agregados</h3>");
-                            }
-                        %>
+                            %>
                         </div>
                     </div>
                     <!-- Fin panel lista de productos -->

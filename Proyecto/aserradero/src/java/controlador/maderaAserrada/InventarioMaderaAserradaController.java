@@ -3,6 +3,7 @@ package controlador.maderaAserrada;
 import dao.maderaAserrada.InventarioMaderaAserradaCRUD;
 import entidades.maderaAserrada.InventarioMaderaAserrada;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -112,20 +113,26 @@ public class InventarioMaderaAserradaController extends HttpServlet {
         List<InventarioMaderaAserrada> inventarioMaderaAserrada;
         String nombre_campo = request.getParameter("nombre_campo");
         String dato = request.getParameter("dato");
-        InventarioMaderaAserradaCRUD inventarioMaderaAserradaCRUD = new InventarioMaderaAserradaCRUD();
-        try {
-            inventarioMaderaAserrada = (List<InventarioMaderaAserrada>) inventarioMaderaAserradaCRUD.buscar(nombre_campo, dato, (String) sesion.getAttribute("id_jefe"));
-            mostrarInventario(request, response, inventarioMaderaAserrada, sesion, action);
+        if (dato.equals("")) {
+            listarInventarioMaderaAserrada(request, response, sesion, action);
+        } else {
+            InventarioMaderaAserradaCRUD inventarioMaderaAserradaCRUD = new InventarioMaderaAserradaCRUD();
+            try {
+                inventarioMaderaAserrada = (List<InventarioMaderaAserrada>) inventarioMaderaAserradaCRUD.buscar(nombre_campo, dato, (String) sesion.getAttribute("id_jefe"));
+                mostrarInventario(request, response, inventarioMaderaAserrada, BigDecimal.valueOf(Double.valueOf("0")), sesion, action);
 
-        } catch (Exception ex) {
-            System.out.println(ex);
-            listarInventarioMaderaAserrada(request, response, sesion, "error_buscar_campo");
-            Logger.getLogger(InventarioMaderaAserradaController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                System.out.println(ex);
+                listarInventarioMaderaAserrada(request, response, sesion, "error_buscar_campo");
+                Logger.getLogger(InventarioMaderaAserradaController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
     }
 
-    private void mostrarInventario(HttpServletRequest request, HttpServletResponse response, List<InventarioMaderaAserrada> listaInventario, HttpSession sesion, String action) {
+    private void mostrarInventario(HttpServletRequest request, HttpServletResponse response, List<InventarioMaderaAserrada> listaInventario, BigDecimal costo_total, HttpSession sesion, String action) {
         request.setAttribute("listaInventario", listaInventario);
+        request.setAttribute("costo_total", costo_total);
         request.setAttribute("mensaje", action);
         RequestDispatcher view = request.getRequestDispatcher("moduloMaderaAserrada/inventarioMaderaAserrada/listarInventario.jsp");
         try {
@@ -138,10 +145,12 @@ public class InventarioMaderaAserradaController extends HttpServlet {
 
     private void listarInventarioMaderaAserrada(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
         List<InventarioMaderaAserrada> inventarioMaderaAserrada;
+        BigDecimal costo_total;
         InventarioMaderaAserradaCRUD inventarioMaderaAserradaCrud = new InventarioMaderaAserradaCRUD();
         try {
             inventarioMaderaAserrada = (List<InventarioMaderaAserrada>) inventarioMaderaAserradaCrud.listar((String) sesion.getAttribute("id_jefe"));
-            mostrarInventario(request, response, inventarioMaderaAserrada, sesion, action);
+            costo_total = (BigDecimal) inventarioMaderaAserradaCrud.consultarCostoTotalInventario((String) sesion.getAttribute("id_jefe"));
+            mostrarInventario(request, response, inventarioMaderaAserrada, costo_total, sesion, action);
         } catch (Exception ex) {
             System.out.println(ex);
             Logger.getLogger(InventarioMaderaAserradaController.class.getName()).log(Level.SEVERE, null, ex);

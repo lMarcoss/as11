@@ -132,9 +132,8 @@ public class VentasAjaxController extends HttpServlet {
                 id_venta = request.getParameter("id_venta");
                 Madera = request.getParameter("id_madera");
                 tipo_madera = request.getParameter("tipo_madera");
-                System.out.println(tipo_madera);
                 BigDecimal volumen = BigDecimal.valueOf(Double.valueOf(request.getParameter("volumen")));
-                Integer num_piezas = Integer.valueOf(request.getParameter("num_piezas"));
+                int num_piezas = Integer.valueOf(request.getParameter("num_piezas"));
                 BigDecimal Monto = BigDecimal.valueOf(Double.valueOf(request.getParameter("monto")));
                 try {
                     ArrayList<VentaMayoreo> VentaMay = sesion_ajax.getAttribute("detalle_venta_mayoreo") == null ? new ArrayList<>() : (ArrayList) sesion_ajax.getAttribute("detalle_venta_mayoreo");
@@ -154,7 +153,6 @@ public class VentasAjaxController extends HttpServlet {
                     }
                     if (!bandera) {
                         VentaMay.add(new VentaMayoreo(id_administrador,id_venta, Madera, num_piezas, volumen, Monto, tipo_madera));
-                        System.out.println(id_venta);
                     }
                     jsonreturn.addProperty("success", "true");
                     out.print(jsonreturn.toString());
@@ -217,7 +215,6 @@ public class VentasAjaxController extends HttpServlet {
                     }
                     if (!bandera) {
                         VentaPaq.add(new VentaPaquete(id_administrador,id_venta, numero_paquete, Madera, num_piezas, volumen, Monto, tipo_madera));
-                        System.err.println("tipo: " + tipo_madera);
                     }
                     sesion_ajax.setAttribute("detalle_venta_paquete", VentaPaq);
                     jsonreturn.addProperty("success", "true");

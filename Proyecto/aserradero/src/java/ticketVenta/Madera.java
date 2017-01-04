@@ -1,28 +1,30 @@
 package ticketVenta;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author lmarcoss
  */
 public class Madera {
     private String id_madera;
-    private float  grueso;
-    private float  ancho;
-    private float  largo;
-    private float  volumen_unitario;
+    private String  grueso_f;
+    private String  ancho_f;
+    private String  largo_f;
+    private BigDecimal  volumen_unitario;
     private int num_piezas;
-    private float costo_volumen;
-    private float volumen_total;
-    private float costo_total;
+    private BigDecimal costo_volumen;
+    private BigDecimal volumen_total;
+    private BigDecimal costo_total;
 
     public Madera() {
     }
 
-    public Madera(String id_madera, float grueso, float ancho, float largo, float volumen_unitario, int num_piezas, float costo_volumen, float volumen_total, float costo_total) {
+    public Madera(String id_madera, String grueso_f, String ancho_f, String largo_f, BigDecimal volumen_unitario, int num_piezas, BigDecimal costo_volumen, BigDecimal volumen_total, BigDecimal costo_total) {
         this.id_madera = id_madera;
-        this.grueso = grueso;
-        this.ancho = ancho;
-        this.largo = largo;
+        this.grueso_f = grueso_f;
+        this.ancho_f = ancho_f;
+        this.largo_f = largo_f;
         this.volumen_unitario = volumen_unitario;
         this.num_piezas = num_piezas;
         this.costo_volumen = costo_volumen;
@@ -34,19 +36,19 @@ public class Madera {
         this.id_madera = id_madera;
     }
 
-    public void setGrueso(float grueso) {
-        this.grueso = grueso;
+    public void setGrueso_f(String grueso_f) {
+        this.grueso_f = grueso_f;
     }
 
-    public void setAncho(float ancho) {
-        this.ancho = ancho;
+    public void setAncho_f(String ancho_f) {
+        this.ancho_f = ancho_f;
     }
 
-    public void setLargo(float largo) {
-        this.largo = largo;
+    public void setLargo_f(String largo_f) {
+        this.largo_f = largo_f;
     }
 
-    public void setVolumen_unitario(float volumen_unitario) {
+    public void setVolumen_unitario(BigDecimal volumen_unitario) {
         this.volumen_unitario = volumen_unitario;
     }
 
@@ -54,15 +56,15 @@ public class Madera {
         this.num_piezas = num_piezas;
     }
 
-    public void setCosto_volumen(float costo_volumen) {
+    public void setCosto_volumen(BigDecimal costo_volumen) {
         this.costo_volumen = costo_volumen;
     }
 
-    public void setVolumen_total(float volumen_total) {
+    public void setVolumen_total(BigDecimal volumen_total) {
         this.volumen_total = volumen_total;
     }
 
-    public void setCosto_total(float costo_total) {
+    public void setCosto_total(BigDecimal costo_total) {
         this.costo_total = costo_total;
     }
 
@@ -70,19 +72,19 @@ public class Madera {
         return id_madera;
     }
 
-    public float getGrueso() {
-        return grueso;
+    public String getGrueso_f() {
+        return grueso_f;
     }
 
-    public float getAncho() {
-        return ancho;
+    public String getAncho_f() {
+        return ancho_f;
     }
 
-    public float getLargo() {
-        return largo;
+    public String getLargo_f() {
+        return largo_f;
     }
 
-    public float getVolumen_unitario() {
+    public BigDecimal getVolumen_unitario() {
         return volumen_unitario;
     }
 
@@ -90,15 +92,15 @@ public class Madera {
         return num_piezas;
     }
 
-    public float getCosto_volumen() {
+    public BigDecimal getCosto_volumen() {
         return costo_volumen;
     }
 
-    public float getVolumen_total() {
+    public BigDecimal getVolumen_total() {
         return volumen_total;
     }
 
-    public float getCosto_total() {
+    public BigDecimal getCosto_total() {
         return costo_total;
     }
     

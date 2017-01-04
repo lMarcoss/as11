@@ -17,7 +17,7 @@
     Date fecha = Date.valueOf(LocalDate.now());
     List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
     String id_nVenta = String.valueOf(request.getAttribute("siguienteventa"));
-    String id_administrador = (String)request.getAttribute("id_administrador");
+    String id_administrador = (String) request.getAttribute("id_administrador");
     List<InventarioMaderaAserrada> listaInventario = (List<InventarioMaderaAserrada>) request.getAttribute("listaInventario");
 
 %>
@@ -49,8 +49,8 @@
                         </div>
                         <div class="panel-body" id="PanelPrincipal">
                             <div class="col-lg-12">
-                                <form action="/aserradero/VentaController?action=insertar&tipo_venta=mayoreo" method="post" id="formregistro"><!-- Formulario de venta -->
-                                    
+                                <form action="/aserradero/VentaController?action=insertar&tipo_venta=Mayoreo" method="post" id="formregistro"><!-- Formulario de venta -->
+
                                     <input class="form-control" type="hidden" value="<%=id_administrador%>" name="id_administrador" id="id_administrador" required="">
                                     <input class="form-control" type="hidden" value="<%=id_nVenta%>" name="id_venta" id="id_venta" required="">
 
@@ -69,20 +69,16 @@
                                             %>
                                         </select>
                                     </div>
-                                    <div class="col-md-2 form-group">
-                                        <label class="control-label">Empleado:</label>
-                                        <select class="form-control" name="id_empleado">
-                                            <option></option>
-                                            <%
-    //                                            for (Empleado empleado : empleados) {
-    //                                                out.print("<option value='"+empleado.getId_empleado()+"'>"+empleado.getEmpleado()+"</option>");
-    //                                            }
-                                            %>
-                                        </select>
-                                    </div>
                                     <div class="form-group col-md-2">
-                                        <label class="control-label">Estatus:</label>
-                                        <input  name="estatus" value="Sin pagar" id="estatus" class="form-control" required="" readonly=""/>
+                                        <label class="control-label">Pago en efectivo:</label>
+                                        <input type="number" class="form-control" step="0.01" name="pago" id="pago" min="0" max="999999.99" required="">
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label class="control-label">Ticket:</label>
+                                        <select class="form-control" name="ticket" id="ticket">
+                                            <option value="costo">Con costo</option>
+                                            <option value="sin_costo">Sin costo</option>
+                                        </select>
                                     </div>
                                     <div class="col-md-2">
                                         <br>
@@ -99,7 +95,7 @@
                                         <label class="control-label">Madera:</label>
                                         <select class="form-control" name="id_madera" required="" id="id_madera" onblur="seleccionarCostoMaderaVenta()">
                                             <option></option>
-                                            <%                                                
+                                            <%
                                                 for (InventarioMaderaAserrada inventario : listaInventario) {
                                                     out.print("<option value='" + inventario.getId_madera() + "'>" + inventario.getId_madera() + "</option>");
                                                 }
@@ -134,14 +130,7 @@
                                         <label class="control-label" >Monto:</label>
                                         <input type="number" name="monto" class="form-control" id="monto" step="0.01" min="0.01" max="999999.99"  required="" readonly=""/>
                                     </div>
-                                    <div class="col-md-2">
-                                        <label class="control-label" >Tipo madera</label>
-                                        <select name="tipo_madera" class="form-control" id="tipo_madera">
-                                            <option value="Madera">Madera</option>
-                                            <option value="Amarre">Amarre</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-3 form-group">
                                         <label class="control-label" >volumen unitario</label>
                                         <select name="volumen_unitaria" class="form-control" id="volumen_unitaria" readonly="" disabled="">
                                             <option></option>
@@ -151,6 +140,16 @@
                                                 }
                                             %>
                                         </select>
+                                        <label class="control-label" >Tipo madera</label>
+                                        <select name="tipo_madera" class="form-control" id="tipo_madera">
+                                            <option value="Madera">Madera</option>
+                                            <option value="Amarre">Amarre</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <br>
+                                        <br>
+                                        <br>
                                         <br>
                                         <input id="agregar_venta_mayoreo" type="button" class="btn btn-info col-md-12" value="Agregar producto"/>
                                     </div>
