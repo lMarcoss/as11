@@ -1,7 +1,9 @@
 package controlador.maderaRollo;
 
+import dao.maderaRollo.EntradaMaderaRolloCRUD;
 import dao.maderaRollo.PagoCompraCRUD;
 import entidades.maderaRollo.CuentaPago;
+import entidades.maderaRollo.EntradaMaderaRollo;
 import entidades.maderaRollo.PagoCompra;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -74,6 +76,9 @@ public class PagoCompraController extends HttpServlet {
                     break;
                 case "eliminar":
                     eliminarPagoCompra(request, response, sesion, action);
+                    break;
+                case "detalle":
+                    detallePagoCompra(request, response, sesion, action);
                     break;
             }
         } else {
@@ -216,7 +221,7 @@ public class PagoCompraController extends HttpServlet {
         List<PagoCompra> listaPagoCompras;
         PagoCompraCRUD pagoCompraCRUD = new PagoCompraCRUD();
         try {
-            listaPagoCompras = (List<PagoCompra>) pagoCompraCRUD.listar((String)sesion.getAttribute("id_jefe"));
+            listaPagoCompras = (List<PagoCompra>) pagoCompraCRUD.listar((String) sesion.getAttribute("id_jefe"));
             mostrarPagoCompras(request, response, listaPagoCompras, action);
         } catch (Exception ex) {
             System.out.println(ex);
@@ -250,5 +255,23 @@ public class PagoCompraController extends HttpServlet {
             listarPagoCompra(request, response, sesion, action);
             Logger.getLogger(PagoCompraController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void detallePagoCompra(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) throws Exception {
+        int id_pago = Integer.valueOf(request.getParameter("id_pago"));
+        String id_proveedor = request.getParameter("id_proveedor");
+        EntradaMaderaRolloCRUD entradaCRUD = new EntradaMaderaRolloCRUD();
+        //Entrada de madera en rollo
+        List<EntradaMaderaRollo> listaEntrada = entradaCRUD.consultarMaderaPago(id_pago, id_proveedor);
+        EntradaMaderaRollo totalEntrada = entradaCRUD.consultarTotalMaderaPago(id_pago, id_proveedor);
+        //Pago compra
+        PagoCompraCRUD pagoCRUD = new PagoCompraCRUD();
+        PagoCompra pago = pagoCRUD.consultarPagoCompraPorID(id_pago);
+        
+        request.setAttribute("listaEntrada", listaEntrada);
+        request.setAttribute("totalEntrada", totalEntrada);
+        request.setAttribute("pago", pago);
+        RequestDispatcher view = request.getRequestDispatcher("moduloMaderaRollo/pagoCompra/detallePagoCompra.jsp");
+        view.forward(request, response);
     }
 }

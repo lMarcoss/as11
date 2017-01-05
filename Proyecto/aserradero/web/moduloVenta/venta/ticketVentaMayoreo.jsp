@@ -34,6 +34,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Ticket venta por mayoreo</title>
         <link rel="stylesheet" href="/aserradero/dist/css/bootstrap.css">
+        <style>
+            tr th{
+                text-align: right;
+            }
+        </style>
     </head>
     <body>
         <div class="container">
@@ -64,7 +69,7 @@
             </div>
             <br>
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-hover" style="text-align: right;">
                     <tr>
                         <th>Madera</th>
                         <th>Grueso</th>
@@ -154,7 +159,7 @@
                         <%
                             if (tipo_ticket.equals("costo")) {
                                 out.print("<td><b>" + costo_venta + "</b></td>");
-                            }else{
+                            } else {
                                 out.print("<td></td>");
                             }
                         %>
@@ -164,7 +169,7 @@
                     if (!listaMadera.isEmpty()) {
                 %>
                 <div class="table-responsive" style="width: 50%;">
-                    <table class="table table-hover">
+                    <table class="table table-hover" style="text-align: right;">
                         <%
                             out.print("<tr>");
                             out.print("<td colspan='4'><center><b>Total madera por clasificación</b></center></td>");

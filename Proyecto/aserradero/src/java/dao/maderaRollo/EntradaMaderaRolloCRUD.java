@@ -196,4 +196,75 @@ public class EntradaMaderaRolloCRUD extends Conexion implements OperacionesCRUD 
         return entradas;
     }
 
+    public List<EntradaMaderaRollo> consultarMaderaPago(int id_pago, String id_proveedor) throws Exception {
+        List<EntradaMaderaRollo> entradas;
+        try {
+            this.abrirConexion();
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_ENTRADA_M_ROLLO WHERE id_proveedor = ? AND id_pago = ? ORDER BY fecha DESC")) {
+                st.setString(1, id_proveedor);
+                st.setInt(2, id_pago);
+                entradas = new ArrayList<>();
+                try (ResultSet rs = st.executeQuery()) {
+                    while (rs.next()) {
+                        EntradaMaderaRollo entrada = (EntradaMaderaRollo) extraerObject(rs);
+                        entradas.add(entrada);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            throw e;
+        } finally {
+            this.cerrarConexion();
+        }
+        return entradas;
+    }
+
+    public EntradaMaderaRollo consultarTotalMaderaPago(int id_pago, String id_proveedor) throws Exception {
+        EntradaMaderaRollo entrada = null;
+        try {
+            this.abrirConexion();
+            try (PreparedStatement st = this.conexion.prepareStatement(
+                    "SELECT "
+                    + "SUM(num_pieza_primario) AS num_pieza_primario, "
+                    + "SUM(volumen_primario) AS volumen_primario, "
+                    + "SUM(num_pieza_secundario) AS num_pieza_secundario, "
+                    + "SUM(volumen_secundario) AS volumen_secundario, "
+                    + "SUM(num_pieza_terciario) AS num_pieza_terciario, "
+                    + "SUM(volumen_terciario) AS volumen_terciario, "
+                    + "SUM(num_pieza_total) AS num_pieza_total, "
+                    + "SUM(volumen_total) AS volumen_total, "
+                    + "SUM(costo_total) AS costo_total "
+                    + "FROM VISTA_ENTRADA_M_ROLLO WHERE id_proveedor = ? AND id_pago = ? GROUP BY id_pago, id_proveedor")) {
+                st.setString(1, id_proveedor);
+                st.setInt(2, id_pago);
+                try (ResultSet rs = st.executeQuery()) {
+                    while (rs.next()) {
+                        entrada = (EntradaMaderaRollo) extraerTotalEntrada(rs);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            throw e;
+        } finally {
+            this.cerrarConexion();
+        }
+        return entrada;
+    }
+
+    private EntradaMaderaRollo extraerTotalEntrada(ResultSet rs) throws SQLException {
+        EntradaMaderaRollo entrada = new EntradaMaderaRollo();
+        entrada.setNum_pieza_primario(rs.getInt("num_pieza_primario"));
+        entrada.setVolumen_primario(rs.getBigDecimal("volumen_primario"));
+        entrada.setNum_pieza_secundario(rs.getInt("num_pieza_secundario"));
+        entrada.setVolumen_secundario(rs.getBigDecimal("volumen_secundario"));
+        entrada.setNum_pieza_terciario(rs.getInt("num_pieza_terciario"));
+        entrada.setVolumen_terciario(rs.getBigDecimal("volumen_terciario"));
+        entrada.setNum_pieza_total(rs.getInt("num_pieza_total"));
+        entrada.setVolumen_total(rs.getBigDecimal("volumen_total"));
+        entrada.setCosto_total(rs.getBigDecimal("costo_total"));
+        return entrada;
+    }
+
 }

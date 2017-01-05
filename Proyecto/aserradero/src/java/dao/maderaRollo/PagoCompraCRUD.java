@@ -239,4 +239,30 @@ public class PagoCompraCRUD extends Conexion implements OperacionesCRUD {
         cuenta.setCuenta_por_cobrar(rs.getBigDecimal("cuenta_por_cobrar"));
         return cuenta;
     }
+
+    public PagoCompra consultarPagoCompraPorID(int id_pago) throws Exception {
+        PagoCompra pagoCompra = null;
+        try {
+            this.abrirConexion();
+            try (PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM VISTA_PAGO_COMPRA WHERE id_pago = ?")) {
+                st.setInt(1, id_pago);
+                try (ResultSet rs = st.executeQuery()) {
+                    while (rs.next()) {
+                        pagoCompra = (PagoCompra) extraerObject(rs);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            } catch (Exception e) {
+                pagoCompra = null;
+                System.out.println(e);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            throw e;
+        } finally {
+            cerrarConexion();
+        }
+        return pagoCompra;
+    }
 }

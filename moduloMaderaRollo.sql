@@ -1,5 +1,76 @@
 USE aserradero;
 
+-- Disparador para insertar costos de madera entrada
+DROP TRIGGER IF EXISTS MODIFICAR_ENTRADA_M_ROLLO;
+DELIMITER //
+CREATE TRIGGER MODIFICAR_ENTRADA_M_ROLLO BEFORE INSERT ON ENTRADA_M_ROLLO
+FOR EACH ROW
+BEGIN
+    DECLARE _costo_primario DECIMAL(15,2);
+    DECLARE _costo_secundario DECIMAL(15,2);
+    DECLARE _costo_terciario DECIMAL(15,2);
+    
+    -- Verificamos si existe los costos de clasificación madera entrada
+    IF NOT EXISTS (SELECT costo FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Primario' AND id_proveedor = NEW.id_proveedor) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Clasificación primaria no existe';
+    END IF;
+    IF NOT EXISTS (SELECT costo FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Secundario' AND id_proveedor = NEW.id_proveedor) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Clasificación secundaria no existe';
+    END IF;
+    IF NOT EXISTS (SELECT costo FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Terciario' AND id_proveedor = NEW.id_proveedor) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Clasificación terciaria no existe';
+    END IF;
+    
+	-- consultamos los costos de cada tipo de volumen;
+    SELECT costo INTO _costo_primario FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Primario' AND id_proveedor = NEW.id_proveedor;
+    SELECT costo INTO _costo_secundario FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Secundario' AND id_proveedor = NEW.id_proveedor;
+    SELECT costo INTO _costo_terciario FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Terciario' AND id_proveedor = NEW.id_proveedor;
+	
+    -- actualizamos los costo de volumen madera en cada EntradaMadera
+    SET NEW.costo_primario = _costo_primario;
+    SET NEW.costo_secundario = _costo_secundario;
+    SET NEW.costo_terciario = _costo_terciario;
+    
+END;//
+DELIMITER ;
+
+
+-- Actualizar datos cada que se modifica una entrada de madera
+DROP TRIGGER IF EXISTS ACTUALIZAR_ENTRADA_M_ROLLO;
+DELIMITER //
+CREATE TRIGGER ACTUALIZAR_ENTRADA_M_ROLLO BEFORE UPDATE ON ENTRADA_M_ROLLO
+FOR EACH ROW
+BEGIN
+    DECLARE _costo_primario DECIMAL(15,2);
+    DECLARE _costo_secundario DECIMAL(15,2);
+    DECLARE _costo_terciario DECIMAL(15,2);
+    DECLARE _monto_total_new DECIMAL(15,2);			-- monto para actualizar pago compra
+    DECLARE _monto_total_old DECIMAL(15,2);			-- monto para actualizar pago compra
+    DECLARE _volumen_total_old DECIMAL(15,3);
+    
+    -- Verificamos si existe los costos de clasificación madera entrada
+    IF NOT EXISTS (SELECT costo FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Primario' AND id_proveedor = NEW.id_proveedor) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Clasificación primaria no existe';
+    END IF;
+    IF NOT EXISTS (SELECT costo FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Secundario' AND id_proveedor = NEW.id_proveedor) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Clasificación secundaria no existe';
+    END IF;
+    IF NOT EXISTS (SELECT costo FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Terciario' AND id_proveedor = NEW.id_proveedor) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Clasificación terciaria no existe';
+    END IF;
+    
+	-- consultamos los costos de cada tipo de volumen;
+    SELECT costo INTO _costo_primario FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Primario' AND id_proveedor = NEW.id_proveedor;
+    SELECT costo INTO _costo_secundario FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Secundario' AND id_proveedor = NEW.id_proveedor;
+    SELECT costo INTO _costo_terciario FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Terciario' AND id_proveedor = NEW.id_proveedor;
+	
+    -- actualizamos los costo de volumen madera en cada EntradaMadera
+    SET NEW.costo_primario = _costo_primario;
+    SET NEW.costo_secundario = _costo_secundario;
+    SET NEW.costo_terciario = _costo_terciario;
+END;//
+DELIMITER ;
+
 -- clasificación madera en rollo
 DROP VIEW IF EXISTS V_CLASIFICACION_M_ROLLO;
 CREATE VIEW V_CLASIFICACION_M_ROLLO AS 
@@ -59,77 +130,8 @@ SELECT
     ROUND((volumen_primario + volumen_secundario + volumen_terciario),3) AS volumen_total
 FROM SALIDA_M_ROLLO as SMR;
     
--- Disparador para insertar costos de madera entrada
-DROP TRIGGER IF EXISTS MODIFICAR_ENTRADA_M_ROLLO;
-DELIMITER //
-CREATE TRIGGER MODIFICAR_ENTRADA_M_ROLLO BEFORE INSERT ON ENTRADA_M_ROLLO
-FOR EACH ROW
-BEGIN
-    DECLARE _costo_primario DECIMAL(15,2);
-    DECLARE _costo_secundario DECIMAL(15,2);
-    DECLARE _costo_terciario DECIMAL(15,2);
-    
-    -- Verificamos si existe los costos de clasificación madera entrada
-    IF NOT EXISTS (SELECT costo FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Primario' AND id_proveedor = NEW.id_proveedor) THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Clasificación primaria no existe';
-    END IF;
-    IF NOT EXISTS (SELECT costo FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Secundario' AND id_proveedor = NEW.id_proveedor) THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Clasificación secundaria no existe';
-    END IF;
-    IF NOT EXISTS (SELECT costo FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Terciario' AND id_proveedor = NEW.id_proveedor) THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Clasificación terciaria no existe';
-    END IF;
-    
-	-- consultamos los costos de cada tipo de volumen;
-    SELECT costo INTO _costo_primario FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Primario' AND id_proveedor = NEW.id_proveedor;
-    SELECT costo INTO _costo_secundario FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Secundario' AND id_proveedor = NEW.id_proveedor;
-    SELECT costo INTO _costo_terciario FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Terciario' AND id_proveedor = NEW.id_proveedor;
-	
-    -- actualizamos los costo de volumen madera en cada EntradaMadera
-    SET NEW.costo_primario = _costo_primario;
-    SET NEW.costo_secundario = _costo_secundario;
-    SET NEW.costo_terciario = _costo_terciario;
-    
-END;//
-DELIMITER ;
 
 
-
--- Actualizar datos cada que se modifica una entrada de madera
-DROP TRIGGER IF EXISTS ACTUALIZAR_ENTRADA_M_ROLLO;
-DELIMITER //
-CREATE TRIGGER ACTUALIZAR_ENTRADA_M_ROLLO BEFORE UPDATE ON ENTRADA_M_ROLLO
-FOR EACH ROW
-BEGIN
-    DECLARE _costo_primario DECIMAL(15,2);
-    DECLARE _costo_secundario DECIMAL(15,2);
-    DECLARE _costo_terciario DECIMAL(15,2);
-    DECLARE _monto_total_new DECIMAL(15,2);			-- monto para actualizar pago compra
-    DECLARE _monto_total_old DECIMAL(15,2);			-- monto para actualizar pago compra
-    DECLARE _volumen_total_old DECIMAL(15,3);
-    
-    -- Verificamos si existe los costos de clasificación madera entrada
-    IF NOT EXISTS (SELECT costo FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Primario' AND id_proveedor = NEW.id_proveedor) THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Clasificación primaria no existe';
-    END IF;
-    IF NOT EXISTS (SELECT costo FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Secundario' AND id_proveedor = NEW.id_proveedor) THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Clasificación secundaria no existe';
-    END IF;
-    IF NOT EXISTS (SELECT costo FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Terciario' AND id_proveedor = NEW.id_proveedor) THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Clasificación terciaria no existe';
-    END IF;
-    
-	-- consultamos los costos de cada tipo de volumen;
-    SELECT costo INTO _costo_primario FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Primario' AND id_proveedor = NEW.id_proveedor;
-    SELECT costo INTO _costo_secundario FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Secundario' AND id_proveedor = NEW.id_proveedor;
-    SELECT costo INTO _costo_terciario FROM CLASIFICACION_M_ROLLO WHERE clasificacion = 'Terciario' AND id_proveedor = NEW.id_proveedor;
-	
-    -- actualizamos los costo de volumen madera en cada EntradaMadera
-    SET NEW.costo_primario = _costo_primario;
-    SET NEW.costo_secundario = _costo_secundario;
-    SET NEW.costo_terciario = _costo_terciario;
-END;//
-DELIMITER ;
 -- Funciones para facilitar la vista inventario de madera en rollo
 
 -- funcion para consultar número de piezas de clasificación primario de madera en rollo que ha salido
@@ -304,106 +306,6 @@ SELECT
     ROUND((volumen_primario * costo_primario + volumen_secundario * costo_secundario + volumen_terciario * costo_terciario),2) AS costo_total
 FROM TOTAL_ENT_SAL_M_ROLLO_COSTO;
 
-SELECT * FROM INVENTARIO_M_ROLLO;
-SELECT * FROM SALIDA_M_ROLLO;
--- 
--- -----------------------------------------------------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------------------------------------------------
--- Continuar aquí --------------------------------------------------------------------------------------------------------------
--- Continuar aquí --------------------------------------------------------------------------------------------------------------
--- Continuar aquí --------------------------------------------------------------------------------------------------------------
--- Continuar aquí --------------------------------------------------------------------------------------------------------------
--- Continuar aquí --------------------------------------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------------------------------------------------
-
--- 
--- 
--- SELECT * FROM TOTAL_ENTRADA_MADERA_ROLLO;
--- DELETE FROM SALIDA_M_ROLLO WHERE id_salida = 6;
--- -- funcion para consultar numero de piezas de madera rollo han salido: se ha enviado para aserrar
--- DROP FUNCTION IF EXISTS C_MADERA_ASERRADA_SALIDA_PIEZA;
--- DELIMITER //
--- CREATE FUNCTION C_MADERA_ASERRADA_SALIDA_PIEZA (_id_administrador VARCHAR(30))
--- RETURNS INT
--- BEGIN
--- 	DECLARE _num_piezas INT;
---     
--- 	-- consultamos si han salido madera rollo
---     IF EXISTS (SELECT num_piezas FROM TOTAL_SALIDA_MADERA_ROLLO WHERE id_administrador = _id_administrador) THEN 
--- 		SELECT num_piezas INTO _num_piezas FROM TOTAL_SALIDA_MADERA_ROLLO WHERE id_administrador = _id_administrador;
---         RETURN _num_piezas;
--- 	ELSE -- No existe cuenta por cobrar al proveedor
--- 		RETURN 0;
---     END IF;
--- END;//
--- DELIMITER ;
--- 
--- -- funcion para consultar el volumen total de madera rollo salida 
--- DROP FUNCTION IF EXISTS C_MADERA_ASERRADA_SALIDA_VOL;
--- DELIMITER //
--- CREATE FUNCTION C_MADERA_ASERRADA_SALIDA_VOL (_id_administrador VARCHAR(30))
--- RETURNS DECIMAL(15,3)
--- BEGIN
--- 	DECLARE _volumen_total DECIMAL(15,3);
---     
--- 	-- consultamos si han salido madera rollo
---     IF EXISTS (SELECT volumen_total FROM TOTAL_SALIDA_MADERA_ROLLO WHERE id_administrador = _id_administrador) THEN 
--- 		SELECT volumen_total INTO _volumen_total FROM TOTAL_SALIDA_MADERA_ROLLO WHERE id_administrador = _id_administrador;
---         RETURN _volumen_total;
--- 	ELSE -- si no existe salida 
--- 		RETURN 0;
---     END IF;
--- END;//
--- DELIMITER ;
--- 
--- 
--- -- DROP VIEW IF EXISTS INVENTARIO_MADERA_ROLLO;
--- -- CREATE VIEW INVENTARIO_MADERA_ROLLO AS 
--- -- SELECT 
--- -- 	ENTRADA.id_administrador,
--- --     (ENTRADA.num_piezas - (SELECT C_MADERA_ASERRADA_SALIDA_PIEZA(ENTRADA.id_administrador))) AS num_piezas,
--- --     ROUND((ENTRADA.volumen_total - (SELECT C_MADERA_ASERRADA_SALIDA_VOL(ENTRADA.id_administrador))),3) AS volumen_total
--- -- FROM TOTAL_ENTRADA_MADERA_ROLLO AS ENTRADA;
--- -- 
--- 
--- 
--- -- ACTUALIZAR PAGO COMPRA
--- DROP PROCEDURE IF EXISTS ACTUALIZAR_PAGO_COMPRA;
--- DELIMITER //
--- CREATE PROCEDURE ACTUALIZAR_PAGO_COMPRA(IN _id_pago INT, IN _monto_total_new DECIMAL(15,2), IN _monto_total_old DECIMAL(15,2))
--- BEGIN
---     DECLARE monto_compra_existente DECIMAL(15,2);	-- monto existente a modificar de pago compra 
---     DECLARE nuevo_monto DECIMAL(15,2);			-- nuevo monto para desplazar al existente
---     
--- 	IF EXISTS (SELECT monto_por_pagar FROM PAGO_COMPRA WHERE id_pago = _id_pago) THEN
--- 		SELECT monto_por_pagar INTO monto_compra_existente FROM PAGO_COMPRA WHERE id_pago = _id_pago;
---         -- si el nuevo monto total de la nueva entrada es mayor al valor anterior: restamos el nuevo valor;
--- 		IF (_monto_total_new < _monto_total_old) THEN
--- 			SET nuevo_monto = _monto_total_old - _monto_total_new;
---             UPDATE PAGO_COMPRA SET monto_por_pagar = nuevo_monto WHERE id_pago = _id_pago;
--- 		ELSE
--- 			IF(_monto_total_new > _monto_total_old)THEN
--- 				SET nuevo_monto = _monto_total_new - _monto_total_old;
---                 UPDATE PAGO_COMPRA SET monto_por_pagar = monto_por_pagar + nuevo_monto WHERE id_pago = _id_pago;
---             END IF;
--- 		END IF;
---     END IF;
--- END;//
--- DELIMITER ;
--- DROP PROCEDURE IF EXISTS ACTUALIZAR_PAGO_COMPRA;
--- 
--- SELECT * FROM VISTA_PAGO_COMPRA;
-
-
 -- Submódulo pago compra-- Submódulo pago compra-- Submódulo pago compra-- Submódulo pago compra-- Submódulo pago compra
 -- Submódulo pago compra-- Submódulo pago compra-- Submódulo pago compra-- Submódulo pago compra-- Submódulo pago compra
 
@@ -457,7 +359,6 @@ BEGIN
     return _cuenta;
 END;//
 DELIMITER ;
-SELECT * FROM C_POR_PAGAR_PROVEEDOR;
 
 DROP VIEW IF EXISTS CUENTA_PAGO;
 CREATE VIEW CUENTA_PAGO AS
@@ -471,3 +372,6 @@ SELECT
 FROM VISTA_ENTRADA_M_ROLLO 
 WHERE id_pago = 0
 GROUP BY id_jefe,id_proveedor;
+
+SELECT * FROM CLASIFICACION_M_ROLLO;
+SELECT * FROM ENTRADA_M_ROLLO;

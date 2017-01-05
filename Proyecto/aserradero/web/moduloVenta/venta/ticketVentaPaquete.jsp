@@ -34,12 +34,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Ticket venta por paquete</title>
         <link rel="stylesheet" href="/aserradero/dist/css/bootstrap.css">
-        <!--        <script type="text/javascript">
-                    window.onunload = window.onbeforeunload = function(){
-                        document.location.target = "_blank";
-                        document.location.href="/aserradero/VentaController?action=listar";
-                    };
-                </script>-->
+        <style>
+            tr th{
+                text-align: right;
+            }
+        </style>
     </head>
     <body>
         <div class="container">
@@ -48,29 +47,56 @@
                 <p>COMPRA-VENTA DE PRODUCTOS FORESTALES<p>
                 <p>MADERA EN ROLLO Y ASERRADA</p>
             </header>
-            <div>
-                <table style="width: 100%;">
+            <div style="width: 100%;">
+                <table style="width: 170%;">
                     <tr>
-                        <td>Cliente: <%= datosCliente.getCliente()%></td>
-                        <td>Municipio: <%= datosCliente.getMunicipio()%></td>
-                    </tr>
-                    <tr>
-                        <td>Dirección: <%= datosCliente.getDireccion()%></td>
-                        <td>Estado: <%= datosCliente.getEstado()%></td>
-                    </tr>
-                    <tr>
-                        <td>Localidad: <%= datosCliente.getLocalidad()%></td>
-                        <td>Fecha: <%= datosCliente.getFecha()%></td>
-                    </tr>
-                    <tr>
-                        <td>Id_venta: <%= id_venta%></td>
-                        <td></td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>Cliente: <%= datosCliente.getCliente()%></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Dirección: <%= datosCliente.getDireccion()%></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Localidad: <%= datosCliente.getLocalidad()%></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Id_venta: <%= id_venta%></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td></td>
+                                    <td>Municipio: <%= datosCliente.getMunicipio()%></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Estado: <%= datosCliente.getEstado()%></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Fecha: <%= datosCliente.getFecha()%></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Id_venta: <%= id_venta%></td>
+                                </tr>
+                            </table>
+                        </td>
                     </tr>
                 </table>
+
             </div>
             <br>
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-hover" style="text-align: right;">
                     <tr>
                         <th>Paquete</th>
                         <th>Madera</th>
@@ -111,8 +137,8 @@
                                 out.print("</tr>");
                             }
                             out.print("<tr>"
-                                    + "<td colspan='7'></td>"
-                                    + "<td>subtotal(Paquete): </td>");
+                                    + "<td colspan='5'></td>"
+                                    + "<td colspan='3'>subtotal(Paquete): </td>");
                             out.print("<td>" + paquete.getVolumen_total_paquete() + "</td>");
                             if (tipo_ticket.equals("costo")) {
                                 out.print("<td>" + paquete.getMonto_total_paquete() + "</td>");
@@ -122,8 +148,8 @@
                             out.print("</tr>");
                         }
                         out.print("<tr>"
-                                + "<td colspan='7'></td>"
-                                + "<td><b>subtotal (Madera): </b></td>");
+                                + "<td colspan='5'></td>"
+                                + "<td colspan='3'><b>subtotal (Madera): </b></td>");
                         out.print("<td><b>" + volumen_madera + "</b></td>");
                         if (tipo_ticket.equals("costo")) {
                             out.print("<td><b>" + costo_madera + "</b></td>");
@@ -166,8 +192,8 @@
                                     out.print("</tr>");
                                 }
                                 out.print("<tr>"
-                                        + "<td colspan='7'></td>"
-                                        + "<td>subtotal (Paquete): </td>");
+                                        + "<td colspan='5'></td>"
+                                        + "<td colspan='3'>subtotal (Paquete): </td>");
                                 out.print("<td>" + paquete.getVolumen_total_paquete() + "</td>");
                                 if (tipo_ticket.equals("costo")) {
                                     out.print("<td>" + paquete.getMonto_total_paquete() + "</td>");
@@ -177,8 +203,8 @@
                                 out.print("</tr>");
                             }
                             out.print("<tr>"
-                                    + "<td colspan='7'></td>"
-                                    + "<td><b>subtotal (Amarre): </b></td>");
+                                    + "<td colspan='5'></td>"
+                                    + "<td colspan='3'><b>subtotal (Amarre): </b></td>");
                             out.print("<td><b>" + volumen_amarre + "</b></td>");
                             if (tipo_ticket.equals("costo")) {
                                 out.print("<td><b>" + costo_amarre + "</b></td>");
@@ -205,7 +231,7 @@
                     if (!listaMadera.isEmpty()) {
                 %>
                 <div class="table-responsive" style="width: 50%;">
-                    <table class="table table-hover">
+                    <table class="table table-hover" style="text-align: right;">
                         <%
                             out.print("<tr>");
                             out.print("<td colspan='4'><center><b>Total madera por clasificación</b></center></td>");

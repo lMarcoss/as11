@@ -4,6 +4,7 @@
     Author     : lmarcoss
 --%>
 
+<%@page import="java.math.BigDecimal"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.sql.Date"%>
 <%@page import="entidades.venta.Venta"%>
@@ -11,18 +12,27 @@
 
 <%
     Venta venta = (Venta) request.getAttribute("venta");
+    BigDecimal mayor = BigDecimal.valueOf(Double.valueOf("0"));
+    Double monto = Double.valueOf(venta.getMonto().toString());
+    Double pago = Double.valueOf(venta.getPago().toString());
+    if (monto > pago) {
+        mayor = venta.getMonto();
+    } else if (pago > monto) {
+        mayor = venta.getPago();
+    } else if (monto >= pago) { // entra si las dos anteriores no cumplen
+        mayor = venta.getMonto();
+    }
 %>
 <!DOCTYPE html>
 <html>
     <head>
         <%@ include file="/TEMPLATE/head.jsp" %>
         <title>Actualizar</title>
-        <script src="/aserradero/js/venta/actualizarPagoVenta.js"></script>
+        <!--<script src="/aserradero/js/venta/actualizarPagoVenta.js"></script>-->
     </head>
     <body>
         <!--menu-->
         <%@ include file="/TEMPLATE/menu.jsp" %>
-
         <div>
             <form action="/aserradero/VentaController?action=actualizar" method="post" id="formregistro">
                 <h3>Actualizar datos venta</h3>
@@ -54,7 +64,7 @@
                         <tr>
                             <td style="padding-left: 10px;"><label>Pago en efectivo:</label></td>
                             <td style="padding-left: 10px;">
-                                <input type="number" name="pago" id="pago" step="0.01" value="<%=venta.getPago()%>" min="0" max="999999.99" required="" onclick="actualizarPagoVenta()">
+                                <input type="number" name="pago" id="pago" step="0.01" value="<%=venta.getPago()%>" min="0" max="<%=mayor%>" required="" onclick="actualizarPagoVenta()">
                             </td>
                         </tr>
                         <tr>
