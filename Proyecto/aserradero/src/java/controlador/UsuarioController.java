@@ -1,8 +1,8 @@
 package controlador;
 
-import dao.EmpleadoCRUD;
+import dao.empleado.EmpleadoCRUD;
 import dao.UsuarioCRUD;
-import entidades.Empleado;
+import entidades.empleado.Empleado;
 import entidades.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -61,7 +61,7 @@ public class UsuarioController extends HttpServlet {
                 EmpleadoCRUD empleadoCRUD = new EmpleadoCRUD();
                 List<Empleado> empleados;
                 try {
-                    empleados = (List<Empleado>)empleadoCRUD.listar();
+                    empleados = (List<Empleado>)empleadoCRUD.listar("");
                     request.setAttribute("empleados",empleados);
                     RequestDispatcher view = request.getRequestDispatcher("usuario/nuevoUsuario.jsp");
                     view.forward(request,response);

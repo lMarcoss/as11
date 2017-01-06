@@ -1,4 +1,3 @@
-
 package controlador;
 
 import dao.UsuarioCRUD;
@@ -19,11 +18,11 @@ import javax.servlet.http.HttpSession;
 public class IniciarSesion extends HttpServlet {
 
     @Override
-    public void init(ServletConfig conf) throws ServletException{
+    public void init(ServletConfig conf) throws ServletException {
         super.init(conf);
-        
-        
+
     }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,18 +36,7 @@ public class IniciarSesion extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletConvocatorias</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ServletConvocatorias at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -68,14 +56,14 @@ public class IniciarSesion extends HttpServlet {
 
         // cerrar sesión
         String action = request.getParameter("action");
-        if(action.equals("cerrar_sesion")){
+        if (action.equals("cerrar_sesion")) {
             HttpSession sesion = request.getSession(true);
             sesion.invalidate();
             response.sendRedirect("/aserradero/");
-        }else{
+        } else {
             response.sendRedirect("/aserradero/");
         }
-        
+
     }
 
     /**
@@ -91,29 +79,32 @@ public class IniciarSesion extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");// Forzar a usar codificación UTF-8 iso-8859-1
-
+     
         // Se reciben formularios del médoto post
-        
         // Form de inicio de sesión
         String nombre_usuario = request.getParameter("nombre_usuario");
         String contrasenia = request.getParameter("contrasenia");
         UsuarioCRUD usuarioCRUD = new UsuarioCRUD();
         try {
             Usuario usuario = usuarioCRUD.validarUsuario(nombre_usuario, contrasenia);
-            if(usuario!= null){
+            if (usuario != null) {
                 //Creamos la sesión
                 HttpSession sesion = request.getSession(true);
-                sesion.setAttribute("nombre_usuario", nombre_usuario);
+                sesion.setAttribute("nombre_usuario", usuario.getNombre_usuario());
+                sesion.setAttribute("id_empleado", usuario.getId_empleado());
+                sesion.setAttribute("id_jefe", usuario.getId_jefe());
+                sesion.setAttribute("rol", usuario.getRol());
+                sesion.setAttribute("estatus", usuario.getEstatus());
+                //Mostramos la página de inicio
                 response.sendRedirect("/aserradero/inicio/inicio.jsp");
-            }else{
+            } else {
                 response.sendRedirect("/aserradero/");
             }
         } catch (Exception ex) {
+            System.out.println(ex);
             response.sendRedirect("/aserradero/");
-            //Logger.getLogger(IniciarSesion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
     }
 
     /**

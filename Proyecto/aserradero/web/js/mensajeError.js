@@ -1,19 +1,22 @@
-    window.onload=function(){
+    /* global alertify */
+
+window.onload=function(){
     var mensaje = document.getElementById('mensaje').value;
     switch (mensaje){
         // Mensajes de error para modulo Madera en rollo
-        case "inventario_entrada_inalcansable":
+        case "inventario_entrada_inalcanzable":
             alert("Verifica que los datos sea correctos\n\n\nNo se puede registrar una salida con número de piezas o volumen mayor al inventario existente\n\n");
             break;
         case "error_registrar_entrada_madera_rollo":
-            alert("No se pudo crear el registro\n\n Verifica que tengas registrado los costos de las clasificaciones de madera en rollo, Primario, Secundario y Terciario\n\n Debe estar registrado las tres clasificaciones");
+            alert("No se pudo crear el registro \n\nVerifica que tengas registrado los costos de las clasificaciones de madera en rollo, Primario, Secundario y Terciario \n\nDebe estar registrado las tres clasificaciones \n\nPara registrar los costos ve al menú \nMadera en rollo -> Clasificación");
             break;
-        // 
         case "error_nuevo":
             alert("Ocurrió un error al intentar agregar nuevo registro");
             break;
         case "error_modificar":
             alert("Ocurrió un error al intentar modificar registro");
+        case "error_actualizar":
+            alert("Ocurrió un error al intentar guardar cambios");
             break;
         case "error_eliminar":
             alert("Ocurrió un error al intentar eliminar registro");
@@ -25,16 +28,16 @@
             alert("Ocurrió un error al intentar la búsqueda");
             break;
         case "error_buscar_id":
-            alert("El registro fue eliminado exitosamente");
+            alert("Error al buscar Id");
             break;
-        case "registrado":
-            alert("El nuevo registro fue exitoso");
+        case "registrado":                        
+            alertify.alert("El nuevo registro fue exitoso");
             break;
         case "actualizado":
-            alert("Los datos se actualizaron correctamente");
+            alertify.alert("Los datos se actualizaron correctamente");
             break;
         case "eliminado":
-            alert("El registro fue eliminado exitosamente");
+            alertify.alert("El registro fue eliminado exitosamente");
             break;
         //MENSAJES DE PAGO_COMPRA
         case "pagado":

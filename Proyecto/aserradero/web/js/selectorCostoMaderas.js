@@ -1,11 +1,19 @@
+/*
+ * Esta funcion se utiliza al registrar las ventas para seleccionar el costo de cada madera
+ * :Y para calcular el monto a pagar por todas las piezas
+ */
 function seleccionarCostoMaderaVenta(){
     var id_madera = document.getElementById('id_madera');
     var madera_seleccionada = id_madera.selectedIndex;
     
+    document.getElementById('pieza_existencia').selectedIndex = madera_seleccionada;
     document.getElementById('volumen_unitaria').selectedIndex = madera_seleccionada;
     document.getElementById('costo_volumen').selectedIndex = madera_seleccionada;
     document.getElementById('costo_pieza').selectedIndex = madera_seleccionada;
     
+    //establecemos el maximo de piezas para venta
+    var pieza_existencia = document.getElementById('pieza_existencia').value;
+    document.getElementById('num_piezas').max = pieza_existencia;
     calcularVolumenTotal();
     return null;
 }

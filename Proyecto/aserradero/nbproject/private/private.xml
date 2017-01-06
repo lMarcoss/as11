@@ -2,6 +2,10 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/lmarcoss/workspaceNetbeans/aserradero/Proyecto/aserradero/web/moduloPrestamo/pagoPrestamo/listarPagoPrestamo.jsp</file>
+            <file>file:/home/lmarcoss/workspaceNetbeans/aserradero/Proyecto/aserradero/web/moduloPrestamo/pagoPrestamo/nuevoPagoPrestamo.jsp</file>
+            <file>file:/home/lmarcoss/workspaceNetbeans/aserradero/Proyecto/aserradero/web/moduloPrestamo/pagoPrestamo/actualizarPagoPrestamo.jsp</file>
+        </group>
     </open-files>
 </project-private>
