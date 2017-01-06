@@ -54,7 +54,11 @@
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>Monto pendiente (por pagar):</label></td>
-                            <td style="padding-left: 10px;"><input type="number" step="0.01" name="monto_por_pagar" value="<%=pagoCompra.getMonto_por_pagar()%>" id="monto_por_pagar" min="" max="" required="" readonly=""></td>
+                            <td style="padding-left: 10px;"><input type="number" step="0.01" name="monto_por_pagar" value="<%=pagoCompra.getMonto_por_pagar()%>" id="monto_por_pagar" min="0.00" max="" required="" readonly=""></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 10px;"><label>Cuenta por cobrar:</label></td>
+                            <td style="padding-left: 10px;"><input type="number" step="0.01" name="monto_por_cobrar" value="<%=pagoCompra.getMonto_por_cobrar()%>" id="monto_por_pagar" min="0.00" max="" required="" readonly=""></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><a href="/aserradero/PagoCompraController?action=listar"><input type="button" value="Cancelar"/></a> </td>

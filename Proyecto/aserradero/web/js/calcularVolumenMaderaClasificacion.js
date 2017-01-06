@@ -9,7 +9,12 @@ function calcularVolumen(){
     var ancho = document.getElementById('ancho').value;
     var largo = document.getElementById('largo').value;
     var volumen = (grueso * ancho * largo)/12;
-    volumen = volumen.toFixed(3);
+    
+//    volumen = volumen.;
+    
+//    volumen = volumen.toFixed(3);
+//    volumen = volumen.toFixed(3);
+//    alert(volumen);
     //Escribimos el volumen
     document.getElementById('volumen').value = volumen;
 }

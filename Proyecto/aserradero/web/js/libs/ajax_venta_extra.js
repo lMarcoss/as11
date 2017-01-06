@@ -16,12 +16,12 @@ $(function(){
                 $("#monto").val('');
                 $("#tipo").val('');
                 $("#observacion").val('');
-                $(".detalle-producto").load('ventaExtra/detalleVentaExtra.jsp');
-                $(".detalle-producto").load('ventaExtra/detalleVentaExtra.jsp');
+                $(".detalle-producto").load('moduloVenta/ventaExtra/detalleVentaExtra.jsp');
+                $(".detalle-producto").load('moduloVenta/ventaExtra/detalleVentaExtra.jsp');
                 alertify.success("El producto fue agregado con éxito");
             }else{
                 alertify.error("El producto no puede ser agregado a lista");
-                $(".detalle-producto").load('ventaExtra/detalleVentaExtra.jsp');
+                $(".detalle-producto").load('moduloVenta/ventaExtra/detalleVentaExtra.jsp');
             }
         });
     });
@@ -41,12 +41,12 @@ $(function(){
         }).done(function(data){
             if(data.success==="true"){
                 alertify.success("El producto fue borrado de la lista");
-                $(".detalle-producto").load('ventaExtra/detalleVentaExtra.jsp');
+                $(".detalle-producto").load('moduloVenta/ventaExtra/detalleVentaExtra.jsp');
             }else{
                 alertify.error("El producto no pudo ser borrado");
-                $(".detalle-producto").load('ventaExtra/detalleVentaExtra.jsp');
+                $(".detalle-producto").load('moduloVenta/ventaExtra/detalleVentaExtra.jsp');
             }
         });
-        $(".detalle-producto").load('ventaExtra/detalleVentaExtra.jsp');
+        $(".detalle-producto").load('moduloVenta/ventaExtra/detalleVentaExtra.jsp');
     });
 });

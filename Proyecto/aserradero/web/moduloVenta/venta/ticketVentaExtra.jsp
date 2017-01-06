@@ -4,22 +4,24 @@
     Author     : lmarcoss
 --%>
 
+<%@page import="java.math.BigDecimal"%>
+<%@page import="entidades.venta.VentaExtra"%>
 <%@page import="ticketVenta.DatosClienteTicket"%>
-<%@page import="ticketVenta.DatosVentaExtra"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    List <DatosVentaExtra> listaDatosVentaExtra = (List<DatosVentaExtra>) request.getAttribute("listaDatosVentaExtra");
-    DatosClienteTicket datosCliente = (DatosClienteTicket)request.getAttribute("datosCliente");
-    String monto_total = (String) request.getAttribute("monto_total");    
-    String tipo_ticket = (String) request.getAttribute("tipo_ticket");    
+    DatosClienteTicket datosCliente = (DatosClienteTicket) request.getAttribute("datosCliente");
+    List<VentaExtra> listaMaderaExtra = (List<VentaExtra>) request.getAttribute("listaMaderaExtra");
+    BigDecimal costo_venta = (BigDecimal) request.getAttribute("costo_venta");
+    String tipo_ticket = (String) request.getAttribute("tipo_ticket");
+    String id_venta = (String) request.getAttribute("id_venta");
 %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Ticket venta extra</title>
-        <link rel="stylesheet" href="/aserradero/css/menu/bootstrap.css">
+        <link rel="stylesheet" href="/aserradero/dist/css/bootstrap.css">
     </head>
     <body>
         <div class="container">
@@ -42,6 +44,10 @@
                         <td>Localidad: <%= datosCliente.getLocalidad()%></td>
                         <td>Fecha: <%= datosCliente.getFecha()%></td>
                     </tr>
+                    <tr>
+                        <td>Id_venta: <%= id_venta%></td>
+                        <td></td>
+                    </tr>
                 </table>
             </div>
             <br>
@@ -49,28 +55,32 @@
                 <table class="table table-hover">
                     <tr>
                         <th>Tipo</th>
-                        <th>observacion</th>
                         <th>monto</th>
+                        <th>observacion</th>
                     </tr>
                     <%
-                        for(DatosVentaExtra datosVE: listaDatosVentaExtra){
+                        for (VentaExtra venta : listaMaderaExtra) {
                             out.print("<tr>");
-                            out.print("<td>"+datosVE.getTipo()+"</td>");
-                            out.print("<td>"+datosVE.getObservacion()+"</td>");
-                            if(tipo_ticket.equals("costo")){
-                                out.print("<td>"+datosVE.getMonto()+"</td>");
+                            out.print("<td>" + venta.getTipo() + "</td>");
+                            if (tipo_ticket.equals("costo")) {
+                                out.print("<td>" + venta.getMonto() + "</td>");
+                            } else {
+                                out.print("<td></td>");
                             }
+                            out.print("<td>" + venta.getObservacion() + "</td>");
                             out.print("</tr>");
                         }
-                   %>
-                    <tr>
-                        <td></td>
-                        <td>Total a pagar:</td>
-                    <%
-                        if(tipo_ticket.equals("costo")){
-                            out.print("<td>"+monto_total+"</td>");
-                        }
                     %>
+                    <tr>
+                        <td><b>Total</b></td>
+                        <%
+                            if (tipo_ticket.equals("costo")) {
+                                out.print("<td><b>" + costo_venta + "</b></td>");
+                            } else {
+                                out.print("<td></td>");
+                            }
+                        %>
+                        <td></td>
                     </tr>
                 </table>      
             </div>

@@ -67,7 +67,7 @@
                         <td style="padding-left: 10px;"><input type="number" name="num_pieza_primario" id="num_pieza_primario" value="<%= salida.getNum_pieza_primario()%>" min="0" max="999" required="" onclick="salidaMaderaRolloPermitido()"></td>
                         <tr>
                             <td style="padding-left: 10px;"><label>Volumen a sacar</label></td>
-                            <td style="padding-left: 10px;"><input type="number" step=".001" name="volumen_primario" id="volumen_primario" value="<%= salida.getVolumen_primario()%>" min="0" max="99999.999" required=""></td>
+                            <td style="padding-left: 10px;"><input type="number" step=".001" name="volumen_primario" id="volumen_primario" value="<%= salida.getVolumen_primario()%>" min="0" max="99999.999" required="" onclick="salidaMaderaRolloPermitido()"></td>
                         </tr>
 
                         <tr>
@@ -101,7 +101,7 @@
                         <td style="padding-left: 10px;"><input type="number" name="num_pieza_secundario" id="num_pieza_secundario" value="<%= salida.getNum_pieza_secundario()%>" min="0" max="999" required="" onclick="salidaMaderaRolloPermitido()"></td>
                         <tr>
                             <td style="padding-left: 10px;"><label>Volumen a sacar</label></td>
-                            <td style="padding-left: 10px;"><input type="number" step=".001" name="volumen_secundario" id="volumen_secundario" value="<%= salida.getVolumen_terciario()%>" min="0" max="99999.999" required=""></td>
+                            <td style="padding-left: 10px;"><input type="number" step=".001" name="volumen_secundario" id="volumen_secundario" value="<%= salida.getVolumen_secundario()%>" min="0" max="99999.999" required="" onclick="salidaMaderaRolloPermitido()"></td>
                         </tr>
 
                         <tr>
@@ -135,7 +135,7 @@
                         <td style="padding-left: 10px;"><input type="number" name="num_pieza_terciario" id="num_pieza_terciario" value="<%= salida.getNum_pieza_terciario()%>" min="0" max="999" required="" onclick="salidaMaderaRolloPermitido()"></td>
                         <tr>
                             <td style="padding-left: 10px;"><label>Volumen a sacar</label></td>
-                            <td style="padding-left: 10px;"><input type="number" step=".001" name="volumen_terciario" id="volumen_terciario" value="<%= salida.getVolumen_terciario()%>" min="0" max="99999.999" required=""></td>
+                            <td style="padding-left: 10px;"><input type="number" step=".001" name="volumen_terciario" id="volumen_terciario" value="<%= salida.getVolumen_terciario()%>" min="0" max="99999.999" required="" onclick="salidaMaderaRolloPermitido()"></td>
                         </tr>
 
                         <tr>

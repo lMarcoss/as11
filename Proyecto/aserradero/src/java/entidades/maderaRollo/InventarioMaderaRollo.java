@@ -12,12 +12,15 @@ public class InventarioMaderaRollo {
     private int num_pieza_primario;
     private BigDecimal volumen_primario;
     private BigDecimal costo_primario;
+    private BigDecimal costo_total_primario;
     private int num_pieza_secundario;
     private BigDecimal volumen_secundario;
     private BigDecimal costo_secundario;
+    private BigDecimal costo_total_secundario;
     private int num_pieza_terciario;
     private BigDecimal volumen_terciario;
     private BigDecimal costo_terciario;
+    private BigDecimal costo_total_terciario;
     private int num_pieza_total;
     private BigDecimal volumen_total;
     private BigDecimal costo_total;
@@ -25,17 +28,20 @@ public class InventarioMaderaRollo {
     public InventarioMaderaRollo() {
     }
 
-    public InventarioMaderaRollo(String id_jefe, int num_pieza_primario, BigDecimal volumen_primario, BigDecimal costo_primario, int num_pieza_secundario, BigDecimal volumen_secundario, BigDecimal costo_secundario, int num_pieza_terciario, BigDecimal volumen_terciario, BigDecimal costo_terciario, int num_pieza_total, BigDecimal volumen_total, BigDecimal costo_total) {
+    public InventarioMaderaRollo(String id_jefe, int num_pieza_primario, BigDecimal volumen_primario, BigDecimal costo_primario, BigDecimal costo_total_primario, int num_pieza_secundario, BigDecimal volumen_secundario, BigDecimal costo_secundario, BigDecimal costo_total_secundario, int num_pieza_terciario, BigDecimal volumen_terciario, BigDecimal costo_terciario, BigDecimal costo_total_terciario, int num_pieza_total, BigDecimal volumen_total, BigDecimal costo_total) {
         this.id_jefe = id_jefe;
         this.num_pieza_primario = num_pieza_primario;
         this.volumen_primario = volumen_primario;
         this.costo_primario = costo_primario;
+        this.costo_total_primario = costo_total_primario;
         this.num_pieza_secundario = num_pieza_secundario;
         this.volumen_secundario = volumen_secundario;
         this.costo_secundario = costo_secundario;
+        this.costo_total_secundario = costo_total_secundario;
         this.num_pieza_terciario = num_pieza_terciario;
         this.volumen_terciario = volumen_terciario;
         this.costo_terciario = costo_terciario;
+        this.costo_total_terciario = costo_total_terciario;
         this.num_pieza_total = num_pieza_total;
         this.volumen_total = volumen_total;
         this.costo_total = costo_total;
@@ -57,6 +63,10 @@ public class InventarioMaderaRollo {
         this.costo_primario = costo_primario;
     }
 
+    public void setCosto_total_primario(BigDecimal costo_total_primario) {
+        this.costo_total_primario = costo_total_primario;
+    }
+
     public void setNum_pieza_secundario(int num_pieza_secundario) {
         this.num_pieza_secundario = num_pieza_secundario;
     }
@@ -69,6 +79,10 @@ public class InventarioMaderaRollo {
         this.costo_secundario = costo_secundario;
     }
 
+    public void setCosto_total_secundario(BigDecimal costo_total_secundario) {
+        this.costo_total_secundario = costo_total_secundario;
+    }
+
     public void setNum_pieza_terciario(int num_pieza_terciario) {
         this.num_pieza_terciario = num_pieza_terciario;
     }
@@ -79,6 +93,10 @@ public class InventarioMaderaRollo {
 
     public void setCosto_terciario(BigDecimal costo_terciario) {
         this.costo_terciario = costo_terciario;
+    }
+
+    public void setCosto_total_terciario(BigDecimal costo_total_terciario) {
+        this.costo_total_terciario = costo_total_terciario;
     }
 
     public void setNum_pieza_total(int num_pieza_total) {
@@ -109,6 +127,10 @@ public class InventarioMaderaRollo {
         return costo_primario;
     }
 
+    public BigDecimal getCosto_total_primario() {
+        return costo_total_primario;
+    }
+
     public int getNum_pieza_secundario() {
         return num_pieza_secundario;
     }
@@ -121,6 +143,10 @@ public class InventarioMaderaRollo {
         return costo_secundario;
     }
 
+    public BigDecimal getCosto_total_secundario() {
+        return costo_total_secundario;
+    }
+
     public int getNum_pieza_terciario() {
         return num_pieza_terciario;
     }
@@ -131,6 +157,10 @@ public class InventarioMaderaRollo {
 
     public BigDecimal getCosto_terciario() {
         return costo_terciario;
+    }
+
+    public BigDecimal getCosto_total_terciario() {
+        return costo_total_terciario;
     }
 
     public int getNum_pieza_total() {

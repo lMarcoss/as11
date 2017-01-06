@@ -5,11 +5,11 @@
 --%>
 
 <%@page import="java.util.List"%>
-<%@page import="entidades.VentaMayoreo"%>
+<%@page import="entidades.venta.Venta"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    List <VentaMayoreo> ventaMayoreos = (List<VentaMayoreo>) request.getAttribute("ventaMayoreos");
-    String mensaje = (String)request.getAttribute("mensaje");
+    List<Venta> ventaMayoreos = (List<Venta>) request.getAttribute("listaVentas");
+    String mensaje = (String) request.getAttribute("mensaje");
 %>
 <!DOCTYPE html>
 <html>
@@ -20,62 +20,68 @@
     <body>
         <!--menu-->
         <%@ include file="/TEMPLATE/menu.jsp" %>
-        
-        <input type="hidden" name="mensaje" id="mensaje" value="<%=mensaje%>"
+
+        <input type="hidden" name="mensaje" id="mensaje" value="<%=mensaje%>">
 
         <!-- ************************** opción de búsqueda-->
-            <form method="POST" action="/aserradero/VentaMayoreoController?action=buscar">
-                <table>
-                    <tr>
-                        <td>
-                            <select name="nombre_campo" >
-                            <option value="id_venta">Id venta</option>
-                            <option value="id_madera">Madera</option>
-                            <option value="num_piezas">Número piezas</option>
-                            <option value="volumen">Volumen</option>
-                            <option value="monto">Monto</option>
-                        </select>
-                        </td>
-                        <td><input type="search" name="dato" placeholder="Escriba su búsqueda"></td>
-                        <td colspan="2"><input type="submit" value="Buscar"></td>
-                    </tr>
-                </table>
-            </form>
-        </div> <!-- Fin opción de búsqueda-->
-        
-        <!-- ************************* Resultado Consulta-->
-        <div>
-            <table class="table-condensed">
+        <form method="POST" action="/aserradero/VentaMayoreoController?action=buscar">
+            <table>
                 <tr>
-                    <th>N°</th>
-                    <th>Id venta</th>
-                    <th>Madera</th>
-                    <th>Núm piezas</th>
-                    <th>Volúmen</th>
-                    <th>Monto</th>
-                    <th></th>
-                    <th></th>
+                    <td>
+                        <select name="nombre_campo" >
+                            <option value="fecha">Fecha</option>
+                            <option value="cliente">Cliente</option>
+                            <option value="monto">Monto total</option>
+                            <option value="observacion">Observacion</option>
+                            <option value="empleado">Registró</option>
+                        </select>
+                    </td>
+                    <td><input type="search" name="dato" placeholder="Escriba su búsqueda"></td>
+                    <td colspan="2"><input type="submit" value="Buscar"></td>
                 </tr>
-                <%
-                    int i=0;
-                    for (VentaMayoreo ventaMayoreo : ventaMayoreos) {
-                        out.print("<tr>"
-                            +"<td>"+(i+1)+"</td>"
-                            +"<td><a href=\"/aserradero/VentaController?action=buscar_venta&id_venta="+ventaMayoreo.getId_venta()+"\">"+ventaMayoreo.getId_venta()+"</a></td>"
-                            +"<td><a href=\"/aserradero/MaderaClasificacionController?action=buscar_maderaClasificacion&id_madera="+ventaMayoreo.getId_madera()+"\">"+ventaMayoreo.getId_madera()+"</a></td>"
-                            +"<td>"+ventaMayoreo.getNum_piezas()+"</td>"
-                            +"<td>"+ventaMayoreo.getVolumen()+"</td>"
-                            +"<td>"+ventaMayoreo.getMonto()+"</td>"
-                            +"<td><a href=\"/aserradero/VentaMayoreoController?action=modificar&id_venta="+ventaMayoreo.getId_venta()+"&id_madera="+ventaMayoreo.getId_madera()+"\">Actualizar</a></td>"
-                            + "<td><a href=\"javascript:if (confirm('¿Estás seguro de eliminar?')){parent.location='/aserradero/VentaMayoreoController?action=eliminar&id_venta="+ventaMayoreo.getId_venta()+"&id_madera="+ventaMayoreo.getId_madera()+"';};\">Eliminar</a></td>"
-                        + "</tr>" );
-                        i++;
-                    }
-                %>
             </table>
-            <div>
-                <input type="button" value="Agregar venta venta Mayoreo" onClick=" window.location.href='/aserradero/VentaMayoreoController?action=nuevo' ">
-            </div>
-        </div><!-- Resultado Consulta-->
-    </body>
+        </form>
+    </div> <!-- Fin opción de búsqueda-->
+
+    <!-- ************************* Resultado Consulta-->
+    <div>
+        <table class="table-condensed">
+            <tr>
+                <th>N°</th>
+                <th>Fecha</th>
+                <th>Id_venta</th>
+                <th>Cliente</th>
+                <th>Monto total</th>
+                <th>Pago en efectivo</th>
+                <th>Registró</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <%
+                int i = 0;
+                for (Venta venta : ventaMayoreos) {
+                    out.print("<tr>"
+                            + "<td>" + (i + 1) + "</td>"
+                            + "<td>" + venta.getFecha() + "</td>"
+                            + "<td>" + venta.getId_venta()+ "</td>"
+                            + "<td>" + venta.getCliente() + "</td>"
+                            + "<td>" + venta.getMonto() + "</td>"
+                            + "<td>" + venta.getPago()+ "</td>"
+                            + "<td>" + venta.getEmpleado() + "</td>"
+                            + "<td><a href=\"/aserradero/VentaMayoreoController?action=detalle&id_venta=" + venta.getId_venta() + "\">Detalle venta</a></td>"
+                            + "<td><a target=\"blank\" href=\"/aserradero/VentaController?action=ticket_costo&id_venta=" + venta.getId_venta() + "\">Ticket con costo</a></td>"
+                            + "<td><a target=\"blank\" href=\"/aserradero/VentaController?action=ticket_sin_costo&id_venta=" + venta.getId_venta() + "\">Ticket sin costo</a></td>"
+                            + "<td><a href=\"/aserradero/VentaController?action=modificar&id_venta=" + venta.getId_venta() + "&tipo_venta=Mayoreo\">Modificar pago</a></td>"
+                            + "</tr>");
+                    i++;
+                }
+            %>
+        </table>
+        <div>
+            <input type="button" value="Agregar venta Mayoreo" onClick=" window.location.href = '/aserradero/VentaMayoreoController?action=nuevo'">
+        </div>
+    </div><!-- Resultado Consulta-->
+</body>
 </html>

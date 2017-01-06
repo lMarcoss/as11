@@ -29,14 +29,14 @@ $(function(){
                     $("#tipo_madera").val('Madera');
                     $("#numero_paquete").val('');
                     alertify.success("El producto fue agregado a la lista");
-                    $("#detalle_producto_paquete").load('ventaPaquete/detalleVentaPaquete.jsp');
+                    $("#detalle_producto_paquete").load('moduloVenta/ventaPaquete/detalleVentaPaquete.jsp');
                 }else{
                     //alert(data.success);
                   alertify.error("El producto no fue agregado a la lista");
-                  $("#detalle_producto_paquete").load('ventaPaquete/detalleVentaPaquete.jsp');
+                  $("#detalle_producto_paquete").load('moduloVenta/ventaPaquete/detalleVentaPaquete.jsp');
                 }
             });
-        $("#detalle_producto_paquete").load('ventaPaquete/detalleVentaPaquete.jsp');
+        $("#detalle_producto_paquete").load('moduloVenta/ventaPaquete/detalleVentaPaquete.jsp');
     });
         //en caso de que se elimine una fila
     $(".eliminar_vp").off("click");
@@ -44,27 +44,27 @@ $(function(){
         /* Función para eliminar productos de la cola de venta*/
         var id = $(this).attr("id");
         var numero_paquete = $(this).attr("name");
+        var tipo_madera = $(this).attr("form");
         var id_venta=$("#id_venta").val();
         var volumen = $("#volumen").val();
         var id_madera = $("#id_madera").val();
         var num_piezas = $("#num_piezas").val();
         var monto = $("#monto").val();
-        var tipo_madera = $("#tipo_madera").val();
         $.ajax({
             url: 'VentasAjaxController',
             type: 'POST',
-            data: {'accion':"del_venta_paquete",'id_venta':id_venta,'id_madera':id,'volumen':0,'num_piezas':0,'monto':0,'tipo_madera':tipo_madera,'numero_paquete':numero_paquete},
+            data: {'accion':"del_venta_paquete",'id_venta':id_venta,'numero_paquete':numero_paquete,'id_madera':id,'tipo_madera':tipo_madera},
             dataType: 'json'
         }).done(function(data){
             if(data.success==="true"){
                 alertify.success("El producto se borró con éxito");
-                $("#detalle_producto_paquete").load('ventaPaquete/detalleVentaPaquete.jsp');
+                $("#detalle_producto_paquete").load('moduloVenta/ventaPaquete/detalleVentaPaquete.jsp');
             }else{
                 alertify.error("El producto no pudo ser borrado");
                 //alertify.error(data.msj);
-                $("#detalle_producto_paquete").load('ventaPaquete/detalleVentaPaquete.jsp');
+                $("#detalle_producto_paquete").load('moduloVenta/ventaPaquete/detalleVentaPaquete.jsp');
             }
         });
-        $("#detalle_producto_paquete").load('ventaPaquete/detalleVentaPaquete.jsp');
+        $("#detalle_producto_paquete").load('moduloVenta/ventaPaquete/detalleVentaPaquete.jsp');
     });
 });

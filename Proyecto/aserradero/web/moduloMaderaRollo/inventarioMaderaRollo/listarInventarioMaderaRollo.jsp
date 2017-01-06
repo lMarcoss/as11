@@ -23,27 +23,19 @@
         <!--menu-->
         <%@ include file="/TEMPLATE/menu.jsp" %>
 
-        <input type="hidden" name="mensaje" id="mensaje" value="<%=mensaje%>"
+        <input type="hidden" name="mensaje" id="mensaje" value="<%=mensaje%>">
 
-               <% if (!listaInventario.isEmpty()) {%>
-               <!-- ************************* Resultado Consulta-->
-               <h1>Inventario madera en rollo</h1>
+        <% if (!listaInventario.isEmpty()) {%>
+        <!-- ************************* Resultado Consulta-->
+        <h1>Inventario madera en rollo</h1>
         <div>
             <table class="table-condensed">
                 <tr>
                     <th>Clasificación</th>
                     <th>piezas</th>
                     <th>Volúmen</th>
-                    <th>Costo</th>
-<!--                    <th>piezas secundario</th>
-                    <th>Vol. secundario</th>
-                    <th>Costo secundario</th>
-                    <th>piezas terciario</th>
-                    <th>Vol. terciario</th>
-                    <th>Costo terciario</th>
-                    <th>Total piezas</th>
-                    <th>Vol. total</th>
-                    <th>Costo total</th>-->
+                    <th>Costo por volumen</th>
+                    <th>Costo total</th>
                 </tr>
                 <%
                     for (InventarioMaderaRollo inventario : listaInventario) {
@@ -52,28 +44,32 @@
                                 + "<td>" + inventario.getNum_pieza_primario() + "</td>"
                                 + "<td>" + inventario.getVolumen_primario() + "</td>"
                                 + "<td>" + inventario.getCosto_primario() + "</td>"
+                                + "<td><b>" + inventario.getCosto_total_primario() + "</b></td>"
                                 + "</tr><tr>"
                                 + "<td>Secundario</td>"
                                 + "<td>" + inventario.getNum_pieza_secundario() + "</td>"
                                 + "<td>" + inventario.getVolumen_secundario() + "</td>"
                                 + "<td>" + inventario.getCosto_secundario() + "</td>"
+                                + "<td><b>" + inventario.getCosto_total_secundario() + "</b></td>"
                                 + "</tr><tr>"
                                 + "<td>Terciario</td>"
                                 + "<td>" + inventario.getNum_pieza_terciario() + "</td>"
                                 + "<td>" + inventario.getVolumen_terciario() + "</td>"
                                 + "<td>" + inventario.getCosto_terciario() + "</td>"
+                                + "<td><b>" + inventario.getCosto_total_terciario() + "</b></td>"
                                 + "</tr><tr>"
                                 + "<td>Total</td>"
-                                + "<td>" + inventario.getNum_pieza_total() + "</td>"
-                                + "<td>" + inventario.getVolumen_total() + "</td>"
-                                + "<td>" + inventario.getCosto_total() + "</td>"
+                                + "<td><b>" + inventario.getNum_pieza_total() + "</b></td>"
+                                + "<td><b>" + inventario.getVolumen_total() + "</b></td>"
+                                + "<td></td>"
+                                + "<td><b>" + inventario.getCosto_total() + "</b></td>"
                                 + "</tr>");
                     }
                 %>
             </table>            
         </div><!-- Resultado Consulta-->
-        <%} else {
-                out.print("<br><br><br><h2>No hay inventario</h2>");
-            }%>
+        <%} else {%>
+        <h3 style="color: red;">No hay inventario</h3>
+        <%}%>
     </body>
 </html>

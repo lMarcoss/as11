@@ -1,16 +1,6 @@
 USE aserradero;
 
--- Disparador para actualizar los id_pago en la tabla ENTRADA_M_ROLLO: 
--- Se actualizan todos los que tienen como id_pago = 0 con el nuevo id_pago de PAGO_COMPRA
-DROP TRIGGER IF EXISTS ACTUALIZAR_ENTRADA_MADERA;
-DELIMITER //
-CREATE TRIGGER ACTUALIZAR_ENTRADA_MADERA AFTER INSERT ON PAGO_COMPRA
-FOR EACH ROW
-BEGIN
-	-- actualizamos todos los registros que tienen como id_pago = 0
-	UPDATE ENTRADA_M_ROLLO SET id_pago = NEW.id_pago WHERE id_pago = 0 AND id_proveedor = new.id_proveedor;
-END;//
-DELIMITER ;
+
 
 
 -- Procedimiento para obtener monto del pago de las compras a un proveedor sumando cuenta pendiente del ultimo pago si existe
@@ -46,18 +36,6 @@ END;//
 DELIMITER ;
 
 
--- Muestra todos los pagos que se han hecho
-DROP VIEW IF EXISTS VISTA_PAGO_COMPRA;
-CREATE VIEW VISTA_PAGO_COMPRA AS
-SELECT 
-	id_pago,
-    fecha,
-    id_proveedor,
-    (select concat (nombre,' ',apellido_paterno,' ',apellido_materno) FROM PERSONA WHERE PERSONA.id_persona = SUBSTRING(PAGO_COMPRA.id_proveedor,1,18)) as proveedor,
-    (SELECT id_jefe FROM PROVEEDOR WHERE id_proveedor = PAGO_COMPRA.id_proveedor)AS id_administrador,
-    monto_pago,
-    monto_por_pagar
-FROM PAGO_COMPRA;
 
 -- Procedimiento para obtener cuenta por cobrar al proveedor
 DROP FUNCTION IF EXISTS OBTENER_CUENTA_POR_COBRAR;

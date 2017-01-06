@@ -244,6 +244,11 @@ public class SalidaMaderaRolloController extends HttpServlet {
             //enviamos el inventario de madera rollo
             InventarioMaderaRolloCRUD inventarioMRCRUD = new InventarioMaderaRolloCRUD();
             List<InventarioMaderaRollo> inventarioMR = (List<InventarioMaderaRollo>) inventarioMRCRUD.listar((String) sesion.getAttribute("id_jefe"));
+            if(inventarioMR.isEmpty()){
+                InventarioMaderaRollo inventario = new InventarioMaderaRollo(
+                        "", 0, BigDecimal.valueOf(0), BigDecimal.valueOf(0), BigDecimal.valueOf(0), 0, BigDecimal.valueOf(0), BigDecimal.valueOf(0), BigDecimal.valueOf(0), 0, BigDecimal.valueOf(0), BigDecimal.valueOf(0), BigDecimal.valueOf(0), 0, BigDecimal.valueOf(0), BigDecimal.valueOf(0));
+                inventarioMR.add(inventario);
+            }
             request.setAttribute("inventarioMR", inventarioMR);
 
             RequestDispatcher view = request.getRequestDispatcher("moduloMaderaRollo/salidaMaderaRollo/actualizarSalidaMaderaRollo.jsp");

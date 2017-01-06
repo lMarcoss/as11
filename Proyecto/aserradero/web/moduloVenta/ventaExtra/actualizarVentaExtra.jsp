@@ -4,7 +4,7 @@
     Author     : lmarcoss
 --%>
 
-<%@page import="entidades.VentaExtra"%>
+<%@page import="entidades.venta.VentaExtra"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     VentaExtra ventaExtra = (VentaExtra) request.getAttribute("ventaExtra");
@@ -42,7 +42,7 @@
                             <td style="padding-left: 10px;"><textarea name="observacion" required=""><%=ventaExtra.getObservacion()%></textarea></td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 10px;"><a href="/aserradero/VentaExtraController?action=listar"><input type="button" value="Cancelar"/></a> </td>
+                            <td style="padding-left: 10px;"><a href="/aserradero/VentaExtraController?action=detalle&id_venta=<%=ventaExtra.getId_venta()%>"><input type="button" value="Cancelar"/></a> </td>
                             <td style="padding-left: 10px;"><input type="submit" value="Guardar"/></td>
                         </tr>
                     </table>

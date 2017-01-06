@@ -37,7 +37,7 @@
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label for="monto">Monto</label></td>
-                            <td style="padding-left: 10px;"><input type="number" step="0.00" name="monto" value="<%=pagoluz.getMonto()%>" min="0.01" max="999999.99" required=""></td>
+                            <td style="padding-left: 10px;"><input type="number" step="0.01" name="monto" value="<%=pagoluz.getMonto()%>" min="0.00" max="999999.99" required=""></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label for="observacion">Observacion</label></td>

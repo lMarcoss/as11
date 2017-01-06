@@ -40,7 +40,7 @@
                                     <option></option>
                                     <%
                                         for (Persona persona : personas) {
-                                            out.print("<option value='"+persona.getId_persona()+"'>"+persona.getNombre()+" "+persona.getApellido_paterno()+" "+persona.getApellido_materno()+"</option>");
+                                            out.print("<option value='"+persona.getId_persona()+"'>"+persona.getNombre()+"</option>");
                                         }
                                     %>
                                 </select>
@@ -52,7 +52,7 @@
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>Interés mensual:</label></td>
-                            <td style="padding-left: 10px;"><input type="number" name="interes" step="1" min="1" max="100"  required=""><label>%</label></td>
+                            <td style="padding-left: 10px;"><input type="number" name="interes" step="1" min="0" max="100"  required=""><label>%</label></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><a href="/aserradero/PrestamoController?action=listar"><input type="button" value="Cancelar"/></a> </td>

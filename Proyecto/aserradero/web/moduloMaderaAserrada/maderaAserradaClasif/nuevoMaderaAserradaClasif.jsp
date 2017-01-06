@@ -9,8 +9,6 @@
 <html>
     <head>
         <%@ include file="/TEMPLATE/head.jsp" %>
-        <!--Script para calcular el volumen de la madera-->
-        <script src="/aserradero/js/calcularVolumenMaderaClasificacion.js"></script>
         <title>Nuevo</title>
     </head>
     <body>
@@ -31,22 +29,33 @@
                             <td style="padding-left: 10px;"><label>Grueso:</label></td>
                             <td style="padding-left: 10px;"><input type="number" name="grueso" id="grueso" step=".01" min="0.01" max="9999.99"  title="Sólo números" required="" onblur="calcularVolumen()"/></td>
                         </tr>
-
+                        <tr>
+                            <td style="padding-left: 10px;"><label>Grueso (fracción o pulgada):</label></td>
+                            <td style="padding-left: 10px;"><input type="text" name="grueso_f" id="grueso_f" maxlength="10" required="" placeholder='3 1/2 o "9"' title="Tal y como se mostrará en el ticket"></td>
+                        </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>Ancho:</label></td>
                             <td style="padding-left: 10px;"><input type="number"  name="ancho" id="ancho" step=".01" min="0.01" max="9999.99" title="Sólo números" required="" onblur="calcularVolumen()"/></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 10px;"><label>Ancho (fracción o pulgada):</label></td>
+                            <td style="padding-left: 10px;"><input type="text" name="ancho_f" id="ancho_f" maxlength="10" required="" placeholder='3 1/2, "9" o 9' title="Tal y como se mostrará en el ticket"></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><label>Largo:</label></td>
                             <td style="padding-left: 10px;"><input type="number" name="largo" id="largo" step=".01" min="0.01" max="9999.99" title="Sólo números" required="" onblur="calcularVolumen()"/></td>
                         </tr>
                         <tr>
+                            <td style="padding-left: 10px;"><label>Largo (fracción o pulgada):</label></td>
+                            <td style="padding-left: 10px;"><input type="text" name="largo_f" id="largo_f" maxlength="10" required="" placeholder='3 1/2, "9" o 9' title="Tal y como se mostrará en el ticket"></td>
+                        </tr>
+<!--                        <tr>
                             <td style="padding-left: 10px;"><label>Volumen</label></td>
                             <td style="padding-left: 10px;"><input type="number" name="volumen" id="volumen" step=".001" min="0.001" max="99999.999" title="Sólo números" required="" readonly=""/></td>
-                        </tr>
+                        </tr>-->
                         <tr>
                             <td style="padding-left: 10px;"><label>Costo por volumen</label></td>
-                            <td style="padding-left: 10px;"><input type="number" name="costo_por_volumen" id="volumen" step=".01" min="0.01" max="999.99" title="Sólo números" required="" /></td>
+                            <td style="padding-left: 10px;"><input type="number" name="costo_por_volumen" id="costo_por_volumen" step=".01" min="0.01" max="999.99" title="Sólo números" required="" /></td>
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><a href="/aserradero/MaderaAserradaClasifController?action=listar"><input type="button" value="Cancelar"/></a> </td>

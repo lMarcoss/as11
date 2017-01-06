@@ -39,14 +39,7 @@
                             <td style="padding-left: 10px;"><label>Fecha</label></td>
                             <td style="padding-left: 10px;"><input type="date" name="fecha" value="<%=pagoPrestamo.getFecha()%>" readonly=""></td>
                         </tr>
-                        <tr>
-                            <td style="padding-left: 10px;"><label>Prestador</label></td>
-                            <td style="padding-left: 10px;">
-                                <select name="id_empleado" required="">
-                                    <option selected="" value='<%=pagoPrestamo.getId_empleado()%>'><%=pagoPrestamo.getEmpleado()%></option>
-                                </select>
-                            </td>
-                        </tr>
+
                         <tr>
                             <td style="padding-left: 10px;"><label>Prestador</label></td>
                             <td style="padding-left: 10px;">
@@ -61,7 +54,6 @@
                         </tr>
                         <tr>
                             <td style="padding-left: 10px;"><a href="/aserradero/PagoPrestamoController?action=listar"><input type="button" value="Cancelar"/></a> </td>
-                            <!--<td><input type="submit" value="Registrar" class="submit"/> </td>-->
                             <td style="padding-left: 10px;"><input type="submit" value="Guardar"/></td>
                         </tr>
                     </table>

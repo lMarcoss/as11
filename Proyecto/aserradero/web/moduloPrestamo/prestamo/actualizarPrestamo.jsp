@@ -42,7 +42,7 @@
                                     <%
                                         for (Persona persona : personas) {
                                             if(prestamo.getId_prestador().substring(0, 18).equals(persona.getId_persona())){
-                                                out.print("<option selected=\"\" value='"+prestamo.getId_prestador()+"'>"+persona.getNombre()+" "+persona.getApellido_paterno()+" "+persona.getApellido_materno()+"</option>");
+                                                out.print("<option selected=\"\" value='"+prestamo.getId_prestador()+"'>"+persona.getNombre()+"</option>");
                                             }
                                         }
                                     %>

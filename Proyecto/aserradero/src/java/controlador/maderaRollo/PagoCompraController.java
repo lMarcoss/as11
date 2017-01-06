@@ -1,9 +1,10 @@
 package controlador.maderaRollo;
 
-import controlador.gasto.OtroGastoController;
+import dao.maderaRollo.EntradaMaderaRolloCRUD;
 import dao.maderaRollo.PagoCompraCRUD;
+import entidades.maderaRollo.CuentaPago;
+import entidades.maderaRollo.EntradaMaderaRollo;
 import entidades.maderaRollo.PagoCompra;
-import entidadesVirtuales.VistaMontoPagoCompra;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -16,7 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 /**
  *
@@ -44,7 +44,7 @@ public class PagoCompraController extends HttpServlet {
         String rol = (String) sesion.getAttribute("rol");
         if (nombre_usuario.equals("")) {
             response.sendRedirect("/aserradero/");
-        } else if (rol.equals("Administrador") || rol.equals("Empleado") || rol.equals("Vendedor")) {
+        } else if (rol.equals("Administrador")) {
             //Acción a realizar
             String action = request.getParameter("action");
             switch (action) {
@@ -56,26 +56,29 @@ public class PagoCompraController extends HttpServlet {
                     registrarPagoCompra(request, response, sesion, action);
                     break;
                 case "actualizar":
-                    actualizarPagoCompra(request, response, sesion,action);
+                    actualizarPagoCompra(request, response, sesion, action);
                     break;
                 case "buscar":
-                    buscarPagoCompra(request, response,sesion, action);
+                    buscarPagoCompra(request, response, sesion, action);
                     break;
                 /**
                  * *************** Respuestas a métodos GET
                  * *********************
                  */
                 case "nuevo":
-                    prepararNuevoPagoCompra(request, response,sesion);
+                    prepararNuevoPagoCompra(request, response, sesion);
                     break;
                 case "listar":
-                    listarPagoCompra(request, response, sesion,action);
+                    listarPagoCompra(request, response, sesion, action);
                     break;
                 case "modificar":
-                    modificarPagoCompra(request, response,sesion,action);
+                    modificarPagoCompra(request, response, sesion, action);
                     break;
                 case "eliminar":
-                    eliminarPagoCompra(request, response,sesion,action);
+                    eliminarPagoCompra(request, response, sesion, action);
+                    break;
+                case "detalle":
+                    detallePagoCompra(request, response, sesion, action);
                     break;
             }
         } else {
@@ -159,6 +162,7 @@ public class PagoCompraController extends HttpServlet {
         pagoCompra.setId_proveedor(request.getParameter("id_proveedor"));
         pagoCompra.setMonto_pago(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto_pago")))));
         pagoCompra.setMonto_por_pagar(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto_por_pagar")))));
+        pagoCompra.setMonto_por_cobrar(BigDecimal.valueOf((Double.valueOf(request.getParameter("monto_por_cobrar")))));
         return pagoCompra;
     }
 
@@ -202,10 +206,10 @@ public class PagoCompraController extends HttpServlet {
 
     private void prepararNuevoPagoCompra(HttpServletRequest request, HttpServletResponse response, HttpSession sesion) {
         PagoCompraCRUD pagoCompraCRUD = new PagoCompraCRUD();
-        List<VistaMontoPagoCompra> listaMontoPagoCompra;
+        List<CuentaPago> listaCuentaPago;
         try {
-            listaMontoPagoCompra = (List<VistaMontoPagoCompra>) pagoCompraCRUD.listarMontoPagoCompra((String) sesion.getAttribute("id_jefe"));
-            request.setAttribute("listaMontoPagoCompra", listaMontoPagoCompra);
+            listaCuentaPago = (List<CuentaPago>) pagoCompraCRUD.listarCuentaPago((String) sesion.getAttribute("id_jefe"));
+            request.setAttribute("listaCuentaPago", listaCuentaPago);
             RequestDispatcher view = request.getRequestDispatcher("moduloMaderaRollo/pagoCompra/nuevoPagoCompra.jsp");
             view.forward(request, response);
         } catch (Exception ex) {
@@ -218,7 +222,7 @@ public class PagoCompraController extends HttpServlet {
         List<PagoCompra> listaPagoCompras;
         PagoCompraCRUD pagoCompraCRUD = new PagoCompraCRUD();
         try {
-            listaPagoCompras = (List<PagoCompra>) pagoCompraCRUD.listar("");
+            listaPagoCompras = (List<PagoCompra>) pagoCompraCRUD.listar((String) sesion.getAttribute("id_jefe"));
             mostrarPagoCompras(request, response, listaPagoCompras, action);
         } catch (Exception ex) {
             System.out.println(ex);
@@ -237,7 +241,7 @@ public class PagoCompraController extends HttpServlet {
             view.forward(request, response);
         } catch (Exception ex) {
             listarPagoCompra(request, response, sesion, "error_modificar");
-            Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PagoCompraController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -250,7 +254,33 @@ public class PagoCompraController extends HttpServlet {
             response.sendRedirect("/aserradero/PagoCompraController?action=listar"); // para evitar acciones repetidas al actualizar página
         } catch (Exception ex) {
             listarPagoCompra(request, response, sesion, action);
-            Logger.getLogger(OtroGastoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PagoCompraController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void detallePagoCompra(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String action) {
+        int id_pago = Integer.valueOf(request.getParameter("id_pago"));
+        String id_proveedor = request.getParameter("id_proveedor");
+
+        //Entrada de madera en rollo
+        List<EntradaMaderaRollo> listaEntrada;
+        try {
+            EntradaMaderaRolloCRUD entradaCRUD = new EntradaMaderaRolloCRUD();
+            listaEntrada = entradaCRUD.consultarMaderaPago(id_pago, id_proveedor);
+            EntradaMaderaRollo totalEntrada = entradaCRUD.consultarTotalMaderaPago(id_pago, id_proveedor);
+            //Pago compra
+            PagoCompraCRUD pagoCRUD = new PagoCompraCRUD();
+            PagoCompra pago = pagoCRUD.consultarPagoCompraPorID(id_pago);
+
+            request.setAttribute("listaEntrada", listaEntrada);
+            request.setAttribute("totalEntrada", totalEntrada);
+            request.setAttribute("pago", pago);
+            RequestDispatcher view = request.getRequestDispatcher("moduloMaderaRollo/pagoCompra/detallePagoCompra.jsp");
+            view.forward(request, response);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            Logger.getLogger(PagoCompraController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }

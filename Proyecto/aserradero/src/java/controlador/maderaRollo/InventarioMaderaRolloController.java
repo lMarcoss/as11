@@ -108,9 +108,9 @@ public class InventarioMaderaRolloController extends HttpServlet {
 
     private void listarInventarioMaderaRollo(HttpServletRequest request, HttpServletResponse response, HttpSession sesion, String mensaje) {
         List<InventarioMaderaRollo> listaInventario;
-        InventarioMaderaRolloCRUD pagoPrestamoCRUD = new InventarioMaderaRolloCRUD();
+        InventarioMaderaRolloCRUD inventarioCRUD = new InventarioMaderaRolloCRUD();
         try {
-            listaInventario = (List<InventarioMaderaRollo>) pagoPrestamoCRUD.listar((String) sesion.getAttribute("id_jefe"));
+            listaInventario = (List<InventarioMaderaRollo>) inventarioCRUD.listar((String) sesion.getAttribute("id_jefe"));
             mostrarInventarioMaderaRollo(request, response, listaInventario, mensaje);
         } catch (Exception ex) {
             System.out.println(ex);
